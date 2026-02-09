@@ -1,0 +1,23 @@
+Testing Cost Calculator...
+[CostCalc] Actor: apify/instagram-scraper, Count: 1000
+[CostCalc] BaseRate (USD): 4.7, BaseCost (USD): 4.7000
+[CostCalc] BaseGBP: 3.7600 (Rate: 0.8)
+[CostCalc] Margin: 1.5, Final: 5.64
+Test 1 (Standard Scraper, 1000 recs):
+Base Rate (Expected): $4.70
+Result: GBP 5.64 (Base GBP: 3.76)
+Ô£à PASS
+[CostCalc] Actor: apify/instagram-profile-scraper, Count: 1000
+[CostCalc] BaseRate (USD): 4.6, BaseCost (USD): 4.6000
+[CostCalc] BaseGBP: 3.6800 (Rate: 0.8)
+[CostCalc] Margin: 1.5, Final: 5.52
+Test 2 (Profile Scraper, 1000 recs):
+Result: GBP 5.52
+Ô£à PASS
+[CostCalc] Actor: unknown/actor, Count: 1000
+[CostCalc] BaseRate (USD): 5, BaseCost (USD): 5.0000
+[CostCalc] BaseGBP: 4.0000 (Rate: 0.8)
+[CostCalc] Margin: 1.5, Final: 6.00
+Test 3 (Fallback, 1000 recs):
+Result: GBP 6
+Ô£à PASS

@@ -1,0 +1,6 @@
+[dotenv@17.2.3] injecting env (81) from .env.local -- tip: ÔÜÖ´©Å  specify custom .env file path with { path: '/custom/path/.env' }
+[MongoService] Connected to MongoDB
+[MongoService] All indexes created successfully
+[MongoService] Indexes created
+Admin Users:
+- vanillabrand@googlemail.com (admin)

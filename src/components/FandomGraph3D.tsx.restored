@@ -1,0 +1,600 @@
+
+import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
+import ForceGraph3D from 'react-force-graph-3d';
+import * as THREE from 'three';
+import SpriteText from 'three-spritetext';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { Node, Link } from '../../types.js';
+import GraphLegend from './GraphLegend.js';
+
+interface FandomGraph3DProps {
+    nodes?: Node[];
+    links?: Link[];
+    overrideData?: any;
+    highlightedLabel?: string | null;
+    focusedNodeId?: string | null;
+    profileImage?: string;
+    profileFullName?: string;
+    showLegend?: boolean; // [NEW] Optional prop to toggle UI
+    bloomStrength?: number; // [NEW] Optional prop to control bloom intensity
+    initialZoom?: number; // [NEW] Optional prop to control initial camera zoom
+    onNodeClick?: (nodeId: string) => void;
+}
+
+const getNodeColor = (group: string) => {
+    // Handle dynamic brand comparison groups
+    if (group.endsWith('-brand')) {
+        if (group === 'shared-brand') {
+            return '#9333EA'; // Purple for shared brands
+        } else if (group.includes('nike')) {
+            return '#0066CC'; // Nike blue
+        } else if (group.includes('mrbeast')) {
+            return '#FFB800'; // MrBeast yellow
+        } else {
+            // Generic brand comparison colors
+            const profileName = group.replace('-brand', '');
+            // Generate a consistent color based on profile name
+            const hash = profileName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const hue = hash % 360;
+            return `hsl(${hue}, 70%, 60%)`;
+        }
+    }
+
+    switch (group) {
+        case 'main': return '#ffffff';
+        case 'cluster': return '#10b981';
+        case 'creator': return '#f472b6';
+        case 'brand': return '#3b82f6';
+        case 'profile': return '#9ca3af'; // Gray-400 (Generic Profile)
+        case 'nonRelatedInterest': return '#f59e0b';
+        case 'overindexed': return '#f97316';
+        case 'topic': return '#8b5cf6';
+        case 'subtopic': return '#c4b5fd';
+        case 'post': return '#38bdf8'; // Sky-400
+        case 'hashtag': return '#14b8a6'; // Teal-500
+        default: return '#9ca3af';
+    }
+};
+
+const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
+    nodes = [],
+    links = [],
+    overrideData,
+    highlightedLabel,
+    focusedNodeId,
+    showLegend = true, // Default to true
+    bloomStrength = 0.2, // Default to reduced intensity for readability
+    initialZoom = 200, // Default zoom level
+    onNodeClick
+}) => {
+    const fgRef = useRef<any>(null);
+    const rotationTimer = useRef<NodeJS.Timeout | null>(null);
+    const isUserInteracting = useRef(false);
+    const rotationFrameId = useRef<number | null>(null);
+
+    // [FIX] Manual Rotation Loop
+    const animateRotation = useCallback(() => {
+        if (fgRef.current && !isUserInteracting.current) {
+            const camPos = fgRef.current.cameraPosition();
+            const dist = Math.sqrt(camPos.x * camPos.x + camPos.z * camPos.z);
+            const currentAngle = Math.atan2(camPos.x, camPos.z);
+
+            // Increment angle (Speed: 0.001 radian per frame)
+            const newAngle = currentAngle + 0.001;
+
+            const newX = dist * Math.sin(newAngle);
+            const newZ = dist * Math.cos(newAngle);
+
+            fgRef.current.cameraPosition(
+                { x: newX, y: camPos.y, z: newZ }, // New position
+                { x: 0, y: 0, z: 0 },              // LookAt (Center)
+                0                                  // Transition duration (0 = Instant/Smooth for loop)
+            );
+
+            rotationFrameId.current = requestAnimationFrame(animateRotation);
+        }
+
+        // [NEW] Starfield Animation (Always Rotate)
+        if (fgRef.current) {
+            const scene = fgRef.current.scene();
+            const starfield = scene.getObjectByName('starfield');
+            if (starfield) {
+                starfield.rotation.y += 0.0003; // Slow rotation
+                starfield.rotation.x += 0.0001;
+            }
+        }
+    }, []);
+
+    const startRotation = useCallback((delayMs = 1000) => {
+        isUserInteracting.current = false;
+        if (rotationTimer.current) clearTimeout(rotationTimer.current);
+
+        // Cancel any existing loop to prevent double-speed
+        if (rotationFrameId.current) cancelAnimationFrame(rotationFrameId.current);
+
+        rotationTimer.current = setTimeout(() => {
+            if (!isUserInteracting.current) {
+                animateRotation();
+            }
+        }, delayMs);
+    }, [animateRotation]);
+
+    const stopRotation = useCallback(() => {
+        isUserInteracting.current = true;
+        if (rotationTimer.current) clearTimeout(rotationTimer.current);
+        if (rotationFrameId.current) cancelAnimationFrame(rotationFrameId.current);
+    }, []);
+
+    useEffect(() => {
+        startRotation(1000); // Start fast on load
+        return () => {
+            if (rotationTimer.current) clearTimeout(rotationTimer.current);
+            if (rotationFrameId.current) cancelAnimationFrame(rotationFrameId.current);
+        };
+    }, [startRotation]);
+
+
+
+    const activeNodes = (overrideData ? overrideData.nodes : nodes) || [];
+    const activeLinks = (overrideData ? overrideData.links : links) || [];
+
+    // fix for data mutation by force-graph
+    const graphData = useMemo(() => {
+        const clonedNodes = JSON.parse(JSON.stringify(activeNodes));
+
+        // --- PINNING LOGIC ---
+        // Find the 'main' node and lock it to (0,0,0)
+        const mainNode = clonedNodes.find((n: any) => n.group === 'main');
+        if (mainNode) {
+            mainNode.fx = 0;
+            mainNode.fy = 0;
+            mainNode.fz = 0;
+        }
+
+        return {
+            nodes: clonedNodes,
+            links: JSON.parse(JSON.stringify(activeLinks))
+        };
+    }, [activeNodes, activeLinks]);
+
+    useEffect(() => {
+        // Add lighting to scene
+        if (fgRef.current) {
+            const scene = fgRef.current.scene();
+            // Clear existing lights to prevent accumulation on re-renders if necessary, 
+            // but usually scene is stable. Ideally check if lights exist.
+
+            // Ambient Light (Soft base)
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            // Directional Light (Sun-like, creates shadows/depth)
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(100, 100, 100);
+            scene.add(dirLight);
+
+            // Point Light (fill)
+            const pointLight = new THREE.PointLight(0x8b5cf6, 0.5); // Violet tint
+            pointLight.position.set(-50, -50, 50);
+            scene.add(pointLight);
+
+            // --- PHYSICS TWEAKS ---
+            fgRef.current.d3Force('charge').strength(-45);
+            fgRef.current.d3Force('link').distance((link: any) => link.distance || 30);
+
+            // --- PREMIUM VISUALS: BLOOM & STARFIELD ---
+            // 1. STARFIELD BACKGROUND
+            // Check if starfield already exists to avoid duplication
+            if (!scene.getObjectByName('starfield')) {
+                const starGeo = new THREE.BufferGeometry();
+                const starCount = 3000; // Increased count
+                const posArray = new Float32Array(starCount * 3);
+
+                for (let i = 0; i < starCount * 3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 3000; // Spread stars wider
+                }
+
+                starGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                const starMat = new THREE.PointsMaterial({
+                    size: 1.5, // Brighter stars
+                    color: 0x4ade80, // Emerald tint to match theme
+                    transparent: true,
+                    opacity: 0.6,
+                    blending: THREE.AdditiveBlending,
+                    sizeAttenuation: true
+                });
+                const starMesh = new THREE.Points(starGeo, starMat);
+                starMesh.name = 'starfield';
+                scene.add(starMesh);
+            }
+
+            // 2. BLOOM EFFECT (Post-Processing)
+            // Access the internal composer provided by react-force-graph
+            const composer = fgRef.current.postProcessingComposer();
+            if (composer) {
+                const bloomPass = new UnrealBloomPass(
+                    new THREE.Vector2(window.innerWidth, window.innerHeight),
+                    bloomStrength,  // [FIX] Use prop
+                    0.1,  // radius (tightened significantly)
+                    0.85   // threshold (only very bright elements glow)
+                );
+                composer.addPass(bloomPass);
+            }
+        }
+    }, []);
+
+    // --- CAMERA & AUTOPILOT LOGIC ---
+    const isFirstLoad = useRef(true);
+
+    // --- CAMERA INITIALIZATION (Run Once) ---
+    useEffect(() => {
+        if (fgRef.current && isFirstLoad.current && graphData.nodes.length > 0) {
+            const timer = setTimeout(() => {
+                if (!fgRef.current) return;
+                const controls = fgRef.current.controls();
+                if (controls) {
+                    controls.enablePan = true;
+                    controls.enableDamping = true;
+                    controls.dampingFactor = 0.1;
+                    controls.rotateSpeed = 0.5;
+                    controls.target.set(0, 0, 0);
+
+                    // Initial Camera Position
+                    fgRef.current.cameraPosition(
+                        { x: 0, y: 0, z: initialZoom }, // [FIX] Use prop for zoom
+                        { x: 0, y: 0, z: 0 },
+                        1000
+                    );
+                }
+            }, 1000);
+
+            isFirstLoad.current = false;
+            return () => clearTimeout(timer);
+        }
+    }, [graphData.nodes.length, initialZoom]);
+
+    // [REMOVED] Legacy Auto-Rotation Manager (Conflicted with new 10s timer)
+    // The new logic uses onPointer events on the container to manage rotation state.
+
+    // --- FOCUS NODE LOGIC ---
+    useEffect(() => {
+        if (focusedNodeId && fgRef.current) {
+            const targetNode = graphData.nodes.find((n: any) =>
+                (n.id && n.id === focusedNodeId) ||
+                (n.label && typeof n.label === 'string' && n.label.toLowerCase() === focusedNodeId.toLowerCase()) ||
+                (n.id && typeof n.id === 'string' && n.id.toLowerCase() === focusedNodeId.toLowerCase())
+            );
+
+            if (targetNode && targetNode.x !== undefined) {
+                const distance = 80;
+                const dist = Math.hypot(targetNode.x, targetNode.y, targetNode.z);
+
+                // Handle case where node is at (0,0,0)
+                const newPos = dist < 1
+                    ? { x: 0, y: 0, z: distance }
+                    : {
+                        x: targetNode.x * (1 + distance / dist),
+                        y: targetNode.y * (1 + distance / dist),
+                        z: targetNode.z * (1 + distance / dist)
+                    };
+
+                fgRef.current.cameraPosition(
+                    newPos,
+                    targetNode,
+                    2000
+                );
+            }
+        }
+    }, [focusedNodeId, graphData]);
+
+    // --- NODE RENDERING ---
+    const textureLoader = useMemo(() => new THREE.TextureLoader(), []);
+
+    const nodeThreeObject = useCallback((node: any) => {
+        const color = node.color || getNodeColor(node.group);
+        let radius = 1.5;
+
+        if (node.val && node.val > 10) {
+            radius = node.val / 6;
+        } else {
+            switch (node.group) {
+                case 'main': radius = 8; break;
+                case 'cluster': radius = 5; break;
+                case 'creator': radius = 3.5; break;
+                case 'brand': radius = 3.5; break;
+                case 'overindexed': radius = 3; break;
+                case 'post': radius = 2.2; break;
+                default: radius = 1.2;
+            }
+        }
+        radius *= (0.9 + Math.random() * 0.2);
+
+        const group = new THREE.Group();
+
+        // 1. CHECK FOR PROFILE IMAGE
+        const imgUrl = (node.data && (node.data.profilePicUrlHD || node.data.profilePicUrl || node.data.profile_pic_url || node.data.img || node.data.image)) ||
+            node.img || node.image || node.profilePic;
+
+        if (imgUrl && ['main', 'creator', 'brand'].includes(node.group)) {
+            // RENDER AS IMAGE SPRITE
+            // [FIX] Use Proxy for Main Node / Remote Images to bypass CORS
+            let finalUrl = imgUrl;
+            if (node.group === 'main' || node.group === 'creator') {
+                // Check if already proxied or needs proxy
+                if (!imgUrl.includes('/api/proxy-image')) {
+                    finalUrl = `/api/proxy-image?url=${encodeURIComponent(imgUrl)}`;
+                }
+                if (node.group === 'main') {
+                    console.log('[Graph3D] Main Node Image Logic:', {
+                        original: imgUrl,
+                        final: finalUrl,
+                        nodeData: node.data
+                    });
+                }
+            }
+
+            const map = textureLoader.load(finalUrl);
+            const material = new THREE.SpriteMaterial({ map: map });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(radius * 2.5, radius * 2.5, 1);
+
+            // Add a "Ring" border
+            const borderGeo = new THREE.RingGeometry(radius * 1.2, radius * 1.3, 32);
+            const borderMat = new THREE.MeshBasicMaterial({ color: color, side: THREE.DoubleSide });
+            const borderMesh = new THREE.Mesh(borderGeo, borderMat); // [FIX] Create Mesh
+
+            // Background sphere
+            const bgGeo = new THREE.SphereGeometry(radius * 1.0, 16, 16);
+            const bgMat = new THREE.MeshBasicMaterial({ color: color });
+            const bgSphere = new THREE.Mesh(bgGeo, bgMat);
+
+            group.add(bgSphere);
+            group.add(sprite);
+            // group.add(borderMesh); // Optional: Add ring if desired, but sprite covers it mostly
+        } else {
+            // RENDER AS PROCEDURAL GEOMETRY
+            const createStripedTexture = (color1: string, color2: string) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 128; canvas.height = 128;
+                const ctx = canvas.getContext('2d')!;
+                for (let i = 0; i < 16; i++) {
+                    ctx.fillStyle = i % 2 === 0 ? color1 : color2;
+                    ctx.fillRect(0, i * 8, 128, 8);
+                }
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                return texture;
+            };
+
+            const createDottedTexture = (baseColor: string, dotColor: string) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 128; canvas.height = 128;
+                const ctx = canvas.getContext('2d')!;
+                ctx.fillStyle = baseColor;
+                ctx.fillRect(0, 0, 128, 128);
+                ctx.fillStyle = dotColor;
+                for (let x = 0; x < 128; x += 16) {
+                    for (let y = 0; y < 128; y += 16) {
+                        ctx.beginPath();
+                        ctx.arc(x + 8, y + 8, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                return new THREE.CanvasTexture(canvas);
+            };
+
+            const createGridTexture = (color1: string, color2: string) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 128; canvas.height = 128;
+                const ctx = canvas.getContext('2d')!;
+                ctx.fillStyle = color1;
+                ctx.fillRect(0, 0, 128, 128);
+                ctx.strokeStyle = color2;
+                ctx.lineWidth = 2;
+                for (let i = 0; i <= 128; i += 16) {
+                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 128); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(128, i); ctx.stroke();
+                }
+                return new THREE.CanvasTexture(canvas);
+            };
+
+            let geometry: THREE.BufferGeometry;
+            let material: THREE.Material;
+
+            switch (node.group) {
+                case 'main':
+                    geometry = new THREE.IcosahedronGeometry(radius, 0);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createStripedTexture(color, '#ffffff'),
+                        color: color, metalness: 0.7, roughness: 0.2, clearcoat: 1.0,
+                        clearcoatRoughness: 0.1, emissive: new THREE.Color(color), emissiveIntensity: 0.2
+                    });
+                    break;
+                case 'creator':
+                    geometry = new THREE.SphereGeometry(radius, 32, 32);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createDottedTexture(color, '#ffffff'),
+                        color: color, metalness: 0.1, roughness: 0.1, clearcoat: 1.0,
+                        clearcoatRoughness: 0.05, transmission: 0.15, thickness: 0.8
+                    });
+                    break;
+                case 'brand':
+                    geometry = new THREE.BoxGeometry(radius * 1.5, radius * 1.5, radius * 1.5);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createGridTexture(color, '#000000'),
+                        color: color, metalness: 0.8, roughness: 0.2, clearcoat: 0.5, clearcoatRoughness: 0.3
+                    });
+                    break;
+                case 'overindexed':
+                    geometry = new THREE.SphereGeometry(radius, 8, 8);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createStripedTexture(color, '#ff6600'),
+                        color: color, metalness: 0.5, roughness: 0.4, clearcoat: 0.6,
+                        emissive: new THREE.Color('#ff6600'), emissiveIntensity: 0.3
+                    });
+                    break;
+                case 'topic':
+                case 'subtopic':
+                case 'concept':
+                    geometry = new THREE.SphereGeometry(radius, 24, 24);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createDottedTexture(color, new THREE.Color(color).offsetHSL(0, 0, 0.2).getHexString()),
+                        color: color, metalness: 0.0, roughness: 1.0, transmission: 0.1, thickness: 1.5
+                    });
+                    break;
+                case 'cluster':
+                    geometry = new THREE.DodecahedronGeometry(radius, 0);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createGridTexture(color, '#ffffff'),
+                        color: color, metalness: 0.0, roughness: 0.9, clearcoat: 0.2
+                    });
+                    break;
+                default:
+                    geometry = new THREE.SphereGeometry(radius, 20, 20);
+                    material = new THREE.MeshPhysicalMaterial({
+                        map: createDottedTexture(color, new THREE.Color(color).offsetHSL(0, 0, -0.2).getHexString()),
+                        color: color, metalness: 0.3, roughness: 0.4, clearcoat: 0.7, clearcoatRoughness: 0.2
+                    });
+            }
+            const mesh = new THREE.Mesh(geometry, material);
+            group.add(mesh);
+        }
+
+        // Label Rendering
+        if (node.group === 'main' || node.group === 'cluster' || node.val > 8) {
+            const sprite = new SpriteText(node.label);
+            sprite.fontFace = 'Courier';
+            sprite.fontWeight = 'bold';
+            sprite.textHeight = 2;
+            sprite.backgroundColor = 'rgba(0,0,0,0)';
+            sprite.padding = 0; sprite.borderWidth = 0; sprite.color = '#ffffff';
+
+            const spriteObj = sprite as any;
+            spriteObj.renderOrder = 999;
+            spriteObj.material.depthTest = false;
+            spriteObj.material.depthWrite = false;
+            spriteObj.position.y = -(radius + 2);
+            spriteObj.position.z = (radius + 2);
+
+            group.add(spriteObj);
+        }
+
+        return group;
+    }, [textureLoader]);
+
+    const handleNodeHover = (node: any | null, prevNode: any | null) => {
+        if (prevNode && prevNode.__threeObj) {
+            const sphere = prevNode.__threeObj.children[0];
+            if (sphere) transitionScale(sphere, 1.0);
+        }
+        if (node && node.__threeObj) {
+            const sphere = node.__threeObj.children[0];
+            if (sphere) transitionScale(sphere, 1.3);
+            document.body.style.cursor = 'pointer';
+        } else {
+            document.body.style.cursor = 'default';
+        }
+    };
+
+    const handleNodeClick = (node: any) => {
+        if (onNodeClick) onNodeClick(node.id);
+
+        if (fgRef.current) {
+            const distance = 80;
+            const dist = Math.hypot(node.x, node.y, node.z);
+
+            // Handle case where node is at (0,0,0) -> Fallback to predefined offset
+            const newPos = dist < 1
+                ? { x: 0, y: 0, z: distance }
+                : {
+                    x: node.x * (1 + distance / dist),
+                    y: node.y * (1 + distance / dist),
+                    z: node.z * (1 + distance / dist)
+                };
+
+            fgRef.current.cameraPosition(
+                newPos,
+                node,
+                2000
+            );
+        }
+    };
+
+    const handleBackgroundClick = useCallback(() => {
+        // Optional: Reset view logic here
+    }, []);
+
+    const transitionScale = (obj: any, targetScale: number) => {
+        if (!obj) return;
+        const startScale = obj.scale.x;
+        const startTime = Date.now();
+        const duration = 200;
+
+        const animate = () => {
+            const now = Date.now();
+            const progress = Math.min((now - startTime) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const current = startScale + (targetScale - startScale) * ease;
+            obj.scale.setScalar(current);
+
+            if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    };
+
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                const { width, height } = entry.contentRect;
+                setDimensions({ width, height });
+            }
+        });
+        resizeObserver.observe(containerRef.current);
+        return () => resizeObserver.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={containerRef}
+            className="w-full h-full bg-[#051810] relative"
+            onPointerDown={stopRotation}
+            onPointerUp={() => startRotation(10000)}
+            onPointerLeave={() => startRotation(10000)}
+        >
+            <ForceGraph3D
+                ref={fgRef}
+                width={dimensions.width}
+                height={dimensions.height}
+                graphData={graphData}
+                nodeLabel="label"
+                nodeThreeObject={nodeThreeObject}
+                linkColor={(link: any) => '#a78bfa'} // Lighter violet for better glow
+                linkWidth={0.6}
+                linkOpacity={0.6} // INCREASED for bloom
+                backgroundColor="#000000" // [FIX] Pure black for high contrast
+                showNavInfo={false}
+                onNodeClick={handleNodeClick}
+                onNodeHover={handleNodeHover}
+                onBackgroundClick={handleBackgroundClick}
+                cooldownTicks={100}
+                onEngineStop={() => {
+                    if (fgRef.current) {
+                        fgRef.current.controls().target.set(0, 0, 0);
+                    }
+                }}
+            />
+            <div className="absolute bottom-4 left-4 text-[10px] text-emerald-500/50 font-mono pointer-events-none">
+                LEFT CLICK: ROTATE • SCROLL: ZOOM • RIGHT CLICK: PAN • BG CLICK: RESET
+            </div>
+
+            {/* [NEW] Legend Component - Controlled by Prop */}
+            {showLegend && <GraphLegend />}
+        </div>
+    );
+};
+
+export default FandomGraph3D;

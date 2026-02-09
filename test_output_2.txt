@@ -1,0 +1,10 @@
+Starting Subject Matter Graph Verification...
+Generated 5 nodes and 4 links.
+PASS: Found Topic Node 'Dune 2'
+   -> Val (Size): 24 (Expected > 20)
+   -> Sentiment: 0.8500000000000001 (Expected ~0.85)
+PASS: Found Topic Node 'Hans Zimmer'
+PASS: Found MAIN Hub Node
+PASS: Found Link MAIN -> Dune 2
+
+>>> VERIFICATION SUCCESSFUL: Subject Matter Identity Confirmed.

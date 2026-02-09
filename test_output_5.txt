@@ -1,0 +1,161 @@
+Parsed Keys: [
+  'APIFY_PROXY_COUNTRY',
+  'APIFY_TOKEN',
+  'APIFY_API_TOKEN',
+  'GEMINI_API_NAME',
+  'GEMINI_API_KEY',
+  'GEMINI_MODEL',
+  'GEMINI_FALLBACK_MODEL',
+  'APIFY_PROXY_GROUPS',
+  'APIFY_PROXY_ROTATION',
+  'APIFY_PROXY_USERNAME',
+  'APIFY_PROXY_PASSWORD',
+  'RATE_LIMIT_INSTAGRAM',
+  'RATE_LIMIT_TIKTOK',
+  'RATE_LIMIT_YOUTUBE',
+  'RATE_LIMIT_LINKEDIN',
+  'RATE_LIMIT_TWITTER',
+  'RATE_LIMIT_FACEBOOK',
+  'MAX_FILE_SIZE_MB',
+  'COMPRESSION_THRESHOLD_MB',
+  'IMAGE_COMPRESSION_QUALITY',
+  'VIDEO_TARGET_RESOLUTION',
+  'AUDIO_TARGET_BITRATE',
+  'AI_TEMPERATURE',
+  'AI_MAX_TOKENS',
+  'AI_CONFIDENCE_THRESHOLD',
+  'AI_RETRY_ATTEMPTS',
+  'AI_RETRY_DELAY',
+  'DEFAULT_GROWTH_RATE',
+  'DEFAULT_MIN_RESULTS',
+  'MAX_DISCOVERY_RESULTS',
+  'PROFILE_VALIDATION_TIMEOUT',
+  'MAX_CONCURRENT_REQUESTS',
+  'LOG_LEVEL',
+  'LOG_FORMAT',
+  'LOG_FILE',
+  'SCRAPFLY_TEST_API_KEY',
+  'SCRAPFLY_LIVE_API_KEY',
+  'SCRAPFLY_KEY',
+  'APIFY_ACTOR_ID',
+  'APIFY_TIKTOK_ACTOR_ID',
+  'APIFY_YOUTUBE_ACTOR_ID',
+  'APIFY_LINKEDIN_ACTOR_ID',
+  'APIFY_FACEBOOK_ACTOR_ID',
+  'LOCAL_MEDIA_CAP',
+  'DISCOVERY_ACTOR_INSTAGRAM',
+  'DISCOVERY_ACTOR_TIKTOK',
+  'DISCOVERY_ACTOR_YOUTUBE',
+  'DISCOVERY_ACTOR_LINKEDIN',
+  'DISCOVERY_ACTOR_FACEBOOK',
+  'EXTRACT_USER_YOUTUBE_ACTOR',
+  'EXTRACT_USER_TIKTOK_ACTOR',
+  'INSTAGRAM_FOLLOWERS_APIFY_ACTOR',
+  'INSTAGRAM_FOLLOWERS_DEFAULT_SAMPLE',
+  'INSTAGRAM_FOLLOWING_APIFY_ACTOR',
+  'INSTAGRAM_FOLLOWING_DEFAULT_SAMPLE',
+  'INSTAGRAM_HASHTAG_SEARCH_APIFY_ACTOR',
+  'PROFILE_SCRAPE_ACTOR_INSTAGRAM',
+  'PROFILE_SCRAPE_ACTOR_YOUTUBE',
+  'MAX_TIME_ACTOR',
+  'GOOGLE_SERP_CUSTOM_SEARCH_API_KEY',
+  'GOOGLE_SERP_CUSTOM_SEARCH_ENGINE_ID',
+  'VITE_APIFY_API_TOKEN',
+  'VITE_PROFILE_SCRAPE_ACTOR_INSTAGRAM'
+]
+>>> [LIVE TEST] Starting REAL Execution against External APIs...
+> Apify Token: apify...
+> Gemini Key: AIzaS...
+
+> Query: "What snacks and movies does @therock like?"
+> Semantic Trigger: true (Expected: true)
+
+>>> [STEP B] LIVE APIFY SCRAPE (instagram-api-scraper)...
+Raw Apify Response: {
+  "data": {
+    "id": "uKwWUc8fzqemad6xz",
+    "actId": "RB9HEZitC8hIUXAha",
+    "userId": "REWwBSFAmeQMWb5WZ",
+    "startedAt": "2025-12-21T18:45:03.239Z",
+    "finishedAt": null,
+    "status": "READY",
+    "meta": {
+      "origin": "API",
+      "userAgent": "node"
+    },
+    "stats": {
+      "inputBodyLen": 137,
+      "migrationCount": 0,
+      "rebootCount": 0,
+      "restartCount": 0,
+      "resurrectCount": 0,
+      "computeUnits": 0
+    },
+    "options": {
+      "build": "latest",
+      "timeoutSecs": 0,
+      "memoryMbytes": 1024,
+      "maxTotalChargeUsd": 158.918056,
+      "diskMbytes": 2048
+    },
+    "buildId": "Q0jVUt4aoKqdc3b6J",
+    "defaultKeyValueStoreId": "QqhbT3Fdq1DMAaPlf",
+    "defaultDatasetId": "MRISVwBJxrj6da10r",
+    "defaultRequestQueueId": "GYA5rxBtOx5fy0dbv",
+    "pricingInfo": {
+      "minimalMaxTotalChargeUsd": 0.006,
+      "pricingModel": "PAY_PER_EVENT",
+      "isPriceChangeNotificationSuppressed": true,
+      "createdAt": "2025-09-26T15:22:54.658Z",
+      "startedAt": "2025-09-26T15:22:54.658Z",
+      "apifyMarginPercentage": 0.2,
+      "pricingPerEvent": {
+        "actorChargeEvents": {
+          "actor-start": {
+            "eventTitle": "Actor start",
+            "eventDescription": "Flat fee for starting an Actor run.",
+            "isOneTimeEvent": true,
+            "eventPriceUsd": 0.005
+          },
+          "result": {
+            "eventTitle": "Result",
+            "eventDescription": "Each result written to the dataset by the URL.",
+            "eventPriceUsd": 0.002
+          },
+          "search-result": {
+            "eventTitle": "Search result",
+            "eventDescription": "Each search result written to the dataset by the Search query.",
+            "eventPriceUsd": 0.005
+          },
+          "filter-applied": {
+            "eventTitle": "Add-on: Date filter",
+            "eventDescription": "Extra cost per post scraped with a date filter.",
+            "eventPriceUsd": 0.001
+          }
+        }
+      }
+    },
+    "chargedEventCounts": {
+      "actor-start": 0,
+      "result": 0,
+      "search-result": 0,
+      "filter-applied": 0
+    },
+    "platformUsageBillingModel": "DEVELOPER",
+    "accountedChargedEventCounts": {
+      "actor-start": 0,
+      "result": 0,
+      "search-result": 0,
+      "filter-applied": 0
+    },
+    "generalAccess": "FOLLOW_USER_SETTING",
+    "buildNumber": "0.1.393",
+    "containerUrl": "https://cl14fhj016ok.runs.apify.net",
+    "usageTotalUsd": 0
+  }
+}
+> Actor Started. Run ID: uKwWUc8fzqemad6xz
+> Waiting for results (max 60s)...
+API Error TypeError: Cannot read properties of undefined (reading 'status')
+    at runRealTest (C:\Users\bruce\Documents\Clients\Fandom\scripts\live_test_real_execution.ts:92:38)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

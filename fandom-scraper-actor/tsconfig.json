@@ -1,0 +1,23 @@
+{
+    "extends": "@apify/tsconfig",
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2022",
+        "outDir": "dist",
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ESNext"
+        ],
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true
+    },
+    "include": [
+        "src/**/*",
+        "tests/**/*"
+    ]
+}

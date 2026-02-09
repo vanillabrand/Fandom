@@ -1,0 +1,10 @@
+node_modules/
+dist/
+dist-server/
+logs/
+.git/
+.env
+.DS_Store
+*.log
+tests/
+test_results/

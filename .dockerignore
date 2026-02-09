@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.env
+.env.local
+env.yaml
+env_vars.yaml
+.DS_Store
+coverage
+.vscode

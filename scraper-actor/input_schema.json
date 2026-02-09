@@ -1,0 +1,36 @@
+{
+    "title": "Fandom Velocity Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "usernames": {
+            "title": "Usernames",
+            "type": "array",
+            "description": "List of usernames to scrape",
+            "items": {
+                "type": "string"
+            }
+        },
+        "mode": {
+            "title": "Mode",
+            "type": "string",
+            "description": "Operation mode",
+            "enum": [
+                "enrich",
+                "followers",
+                "posts"
+            ],
+            "default": "enrich"
+        },
+        "limit": {
+            "title": "Limit",
+            "type": "integer",
+            "description": "Max items per user (for followers/posts)",
+            "default": 100
+        }
+    },
+    "required": [
+        "usernames",
+        "mode"
+    ]
+}

@@ -1,0 +1,12 @@
+server/services/costCalculator.ts(2,32): error TS2792: Cannot find module '../../scraper_detail.json'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+server/services/costCalculator.ts(2,60): error TS2823: Import attributes are only supported when the '--module' option is set to 'esnext', 'node18', 'nodenext', or 'preserve'.
+server/services/jobOrchestrator.ts(6,29): error TS2792: Cannot find module '@google/genai'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+server/services/jobOrchestrator.ts(8,32): error TS2792: Cannot find module '../../scraper_detail.json'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+server/services/jobOrchestrator.ts(8,60): error TS2823: Import attributes are only supported when the '--module' option is set to 'esnext', 'node18', 'nodenext', or 'preserve'.
+server/services/jobOrchestrator.ts(1040,122): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', or 'nodenext'.
+server/services/mongoService.ts(1,55): error TS2792: Cannot find module 'mongodb'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+services/geminiService.ts(1,63): error TS2792: Cannot find module '@google/genai'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+services/geminiService.ts(106,8): error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', or 'nodenext'.
+services/geminiService.ts(1664,28): error TS1323: Dynamic imports are only supported when the '--module' flag is set to 'es2020', 'es2022', 'esnext', 'commonjs', 'amd', 'system', 'umd', 'node16', 'node18', or 'nodenext'.
+utils/jsonUtils.ts(1,28): error TS2792: Cannot find module 'jsonrepair'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?
+utils/notifications.ts(2,23): error TS2792: Cannot find module 'sonner'. Did you mean to set the 'moduleResolution' option to 'nodenext', or to add aliases to the 'paths' option?

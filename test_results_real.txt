@@ -1,0 +1,309 @@
+Parsed Keys: [
+  'APIFY_PROXY_COUNTRY',
+  'APIFY_TOKEN',
+  'APIFY_API_TOKEN',
+  'GEMINI_API_NAME',
+  'GEMINI_API_KEY',
+  'GEMINI_MODEL',
+  'GEMINI_FALLBACK_MODEL',
+  'APIFY_PROXY_GROUPS',
+  'APIFY_PROXY_ROTATION',
+  'APIFY_PROXY_USERNAME',
+  'APIFY_PROXY_PASSWORD',
+  'RATE_LIMIT_INSTAGRAM',
+  'RATE_LIMIT_TIKTOK',
+  'RATE_LIMIT_YOUTUBE',
+  'RATE_LIMIT_LINKEDIN',
+  'RATE_LIMIT_TWITTER',
+  'RATE_LIMIT_FACEBOOK',
+  'MAX_FILE_SIZE_MB',
+  'COMPRESSION_THRESHOLD_MB',
+  'IMAGE_COMPRESSION_QUALITY',
+  'VIDEO_TARGET_RESOLUTION',
+  'AUDIO_TARGET_BITRATE',
+  'AI_TEMPERATURE',
+  'AI_MAX_TOKENS',
+  'AI_CONFIDENCE_THRESHOLD',
+  'AI_RETRY_ATTEMPTS',
+  'AI_RETRY_DELAY',
+  'DEFAULT_GROWTH_RATE',
+  'DEFAULT_MIN_RESULTS',
+  'MAX_DISCOVERY_RESULTS',
+  'PROFILE_VALIDATION_TIMEOUT',
+  'MAX_CONCURRENT_REQUESTS',
+  'LOG_LEVEL',
+  'LOG_FORMAT',
+  'LOG_FILE',
+  'SCRAPFLY_TEST_API_KEY',
+  'SCRAPFLY_LIVE_API_KEY',
+  'SCRAPFLY_KEY',
+  'APIFY_ACTOR_ID',
+  'APIFY_TIKTOK_ACTOR_ID',
+  'APIFY_YOUTUBE_ACTOR_ID',
+  'APIFY_LINKEDIN_ACTOR_ID',
+  'APIFY_FACEBOOK_ACTOR_ID',
+  'LOCAL_MEDIA_CAP',
+  'DISCOVERY_ACTOR_INSTAGRAM',
+  'DISCOVERY_ACTOR_TIKTOK',
+  'DISCOVERY_ACTOR_YOUTUBE',
+  'DISCOVERY_ACTOR_LINKEDIN',
+  'DISCOVERY_ACTOR_FACEBOOK',
+  'EXTRACT_USER_YOUTUBE_ACTOR',
+  'EXTRACT_USER_TIKTOK_ACTOR',
+  'INSTAGRAM_FOLLOWERS_APIFY_ACTOR',
+  'INSTAGRAM_FOLLOWERS_DEFAULT_SAMPLE',
+  'INSTAGRAM_FOLLOWING_APIFY_ACTOR',
+  'INSTAGRAM_FOLLOWING_DEFAULT_SAMPLE',
+  'INSTAGRAM_HASHTAG_SEARCH_APIFY_ACTOR',
+  'PROFILE_SCRAPE_ACTOR_INSTAGRAM',
+  'PROFILE_SCRAPE_ACTOR_YOUTUBE',
+  'MAX_TIME_ACTOR',
+  'GOOGLE_SERP_CUSTOM_SEARCH_API_KEY',
+  'GOOGLE_SERP_CUSTOM_SEARCH_ENGINE_ID',
+  'VITE_APIFY_API_TOKEN',
+  'VITE_PROFILE_SCRAPE_ACTOR_INSTAGRAM'
+]
+>>> [LIVE TEST] Starting REAL Execution against External APIs...
+> Apify Token: apify...
+> Gemini Key: AIzaS...
+
+> Query: "map the movies and food that followers of @therock are into"
+> Semantic Trigger: true (Expected: true)
+
+>>> [STEP B] LIVE APIFY SCRAPE (instagram-api-scraper)...
+
+====== [1] REAL APIFY INPUT PAYLOAD ======
+{
+  "directUrls": [
+    "https://www.instagram.com/therock/"
+  ],
+  "resultsType": "posts",
+  "resultsLimit": 3
+}
+==========================================
+> Actor Started. Run ID: l7iJU6gsVMGbgW4N2
+> Waiting for results (max 60s)...
+......
+> Actor Status: SUCCEEDED
+
+====== [2] REAL APIFY OUTPUT (Raw Sample Item) ======
+{
+  "id": "3720930387125450937",
+  "type": "Video",
+  "shortCode": "DOjZnkGkbi5",
+  "caption": "HereÔÇÖs our newest trailer for THE SMASHING MACHINE, written and directed by Silver Lion Best Directo...",
+  "hashtags": [],
+  "mentions": [
+    "bowedtie",
+    "a24"
+  ],
+  "url": "https://www.instagram.com/p/DOjZnkGkbi5/",
+  "commentsCount": 4691,
+  "firstComment": "┘à┘å ┘àÏº█î┌®┘ä Ï¼┌®Ï│┘ê┘å ┌»█î┘äÏº┘å┘à ÔØñ´©ÅÔØñ´©Å­ƒÖî­ƒöÑ┘üÏº┘ä┘ê█îÏºÏ»Ï¬ ┘åÏ▒┘ç.┌»┘à ┘å┌®┘å█î­ƒî╣­ƒî╣­ƒî╣­ƒî╣­ƒî╣­ƒç«­ƒçÀ­ƒç«­ƒçÀ­ƒç«­ƒçÀ­ƒç«­ƒçÀ┘ü┘éÏÀ Ï│Ï▒┌å ┌®┘å Ï¬┘ê Ïº█î┘åÏ│Ï¬Ïº.┘à█îÏ½┘à Ï▒ÏºÏ▓█î­ƒÜ®­ƒÜ®­ƒÜ®",
+  "latestComments": [
+    {
+      "id": "18170322199377041",
+      "text": "┘à┘å ┘àÏº█î┌®┘ä Ï¼┌®Ï│┘ê┘å ┌»█î┘äÏº┘å┘à ÔØñ´©ÅÔØñ´©Å­ƒÖî­ƒöÑ┘üÏº┘ä┘ê█îÏºÏ»Ï¬ ┘åÏ▒┘ç.┌»┘à ┘å┌®┘å█î­ƒî╣­ƒî╣­ƒî╣­ƒî╣­ƒî╣­ƒç«­ƒçÀ­ƒç«­ƒçÀ­ƒç«­ƒçÀ­ƒç«­ƒçÀ┘ü┘éÏÀ Ï│Ï▒┌å ┌®┘å Ï¬┘ê Ïº█î┘åÏ│Ï¬Ïº.┘à█îÏ½┘à Ï▒ÏºÏ▓█î­ƒÜ®­ƒÜ®­ƒÜ®",
+      "ownerUsername": "maysam__razii",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/460683872_8219054244808819_3374101890419377759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=ne8JUiXsbg4Q7kNvwEQFULl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afl0-PquMNxGoj9PmXRiB7tiyigr4h0kHdy6eUauIX1CWA&oe=694E405D&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T16:57:22.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "69101617326",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/460683872_8219054244808819_3374101890419377759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=ne8JUiXsbg4Q7kNvwEQFULl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afl0-PquMNxGoj9PmXRiB7tiyigr4h0kHdy6eUauIX1CWA&oe=694E405D&_nc_sid=10d13b",
+        "username": "maysam__razii"
+      }
+    },
+    {
+      "id": "18137057152486670",
+      "text": "┘à┘å ┘àÏº█î┌®┘ä Ï¼┌®Ï│┘ê┘å ┌»█î┘äÏº┘å┘à ÔØñ´©ÅÔØñ´©Å­ƒÖî­ƒöÑ┘üÏº┘ä┘ê█îÏºÏ»Ï¬ ┘åÏ▒┘ç.┌»┘à ┘å┌®┘å█î­ƒî╣­ƒî╣­ƒî╣­ƒî╣­ƒî╣­ƒç«­ƒçÀ­ƒç«­ƒçÀ­ƒç«­ƒçÀ­ƒç«­ƒçÀ┘ü┘éÏÀ Ï│Ï▒┌å ┌®┘å Ï¬┘ê Ïº█î┘åÏ│Ï¬Ïº.┘à█îÏ½┘à Ï▒ÏºÏ▓█î­ƒÜ®­ƒÜ®­ƒÜ®",
+      "ownerUsername": "maysam__razii",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/460683872_8219054244808819_3374101890419377759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=ne8JUiXsbg4Q7kNvwEQFULl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afl0-PquMNxGoj9PmXRiB7tiyigr4h0kHdy6eUauIX1CWA&oe=694E405D&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T16:57:21.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "69101617326",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/460683872_8219054244808819_3374101890419377759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=ne8JUiXsbg4Q7kNvwEQFULl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afl0-PquMNxGoj9PmXRiB7tiyigr4h0kHdy6eUauIX1CWA&oe=694E405D&_nc_sid=10d13b",
+        "username": "maysam__razii"
+      }
+    },
+    {
+      "id": "17858326692571276",
+      "text": "@meysam_razi_official",
+      "ownerUsername": "maysam__razii",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/460683872_8219054244808819_3374101890419377759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=ne8JUiXsbg4Q7kNvwEQFULl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afl0-PquMNxGoj9PmXRiB7tiyigr4h0kHdy6eUauIX1CWA&oe=694E405D&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T16:57:15.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "69101617326",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/460683872_8219054244808819_3374101890419377759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=ne8JUiXsbg4Q7kNvwEQFULl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afl0-PquMNxGoj9PmXRiB7tiyigr4h0kHdy6eUauIX1CWA&oe=694E405D&_nc_sid=10d13b",
+        "username": "maysam__razii"
+      }
+    },
+    {
+      "id": "18379741261149273",
+      "text": "Great Job Rock­ƒÿì",
+      "ownerUsername": "strychowicz",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/603614026_17844084885657725_1246177029103939880_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MzYuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=YKj2kRABFTwQ7kNvwG3wMkQ&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfmpTR2X_YhPKPEM1IM4LbZ7F5xApHndJnIPen9ffRx-dQ&oe=694E3707&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T14:18:07.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "79748377724",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/603614026_17844084885657725_1246177029103939880_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MzYuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=YKj2kRABFTwQ7kNvwG3wMkQ&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfmpTR2X_YhPKPEM1IM4LbZ7F5xApHndJnIPen9ffRx-dQ&oe=694E3707&_nc_sid=10d13b",
+        "username": "strychowicz"
+      }
+    },
+    {
+      "id": "17903013003323059",
+      "text": "­ƒæÅ­ƒæÅ",
+      "ownerUsername": "alvin.091",
+      "ownerProfilePicUrl": "https://instagram.fsac1-1.fna.fbcdn.net/v/t51.2885-19/587951366_17981822858921087_717461545511182595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsac1-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=n-uZLkdxcGoQ7kNvwFY5G3R&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afk6WcLiXIiD5VOotqtC3WvuFeEBCjNOBD6kV39YzwkGTg&oe=694E2402&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T13:55:48.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "57718089086",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-1.fna.fbcdn.net/v/t51.2885-19/587951366_17981822858921087_717461545511182595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsac1-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=n-uZLkdxcGoQ7kNvwFY5G3R&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afk6WcLiXIiD5VOotqtC3WvuFeEBCjNOBD6kV39YzwkGTg&oe=694E2402&_nc_sid=10d13b",
+        "username": "alvin.091"
+      }
+    },
+    {
+      "id": "17950579242063607",
+      "text": "hello my friend How can I tell you something?",
+      "ownerUsername": "iman_shafiye",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T13:45:56.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "37594089394",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+        "username": "iman_shafiye"
+      }
+    },
+    {
+      "id": "17862694107548754",
+      "text": "hello my friend How can I tell you something?",
+      "ownerUsername": "iman_shafiye",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T13:45:54.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "37594089394",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+        "username": "iman_shafiye"
+      }
+    },
+    {
+      "id": "17867421390521827",
+      "text": "hello my friend How can I tell you something?",
+      "ownerUsername": "iman_shafiye",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T13:45:51.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "37594089394",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+        "username": "iman_shafiye"
+      }
+    },
+    {
+      "id": "18555118738004184",
+      "text": "hello my friend How can I tell you something?",
+      "ownerUsername": "iman_shafiye",
+      "ownerProfilePicUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T13:45:47.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "37594089394",
+        "is_verified": false,
+        "profile_pic_url": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-19/390889251_1721511225016694_5659279092720743302_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=102&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=SRxAqNcLhlkQ7kNvwF3YgdN&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkOPMgAHTfBvrLG_Q27ftFS58_8SrH0GzNL3iZXwTgbVQ&oe=694E13FB&_nc_sid=10d13b",
+        "username": "iman_shafiye"
+      }
+    }
+  ],
+  "dimensionsHeight": 1920,
+  "dimensionsWidth": 1080,
+  "displayUrl": "https://instagram.fsac1-2.fna.fbcdn.net/v/t51.2885-15/548889711_18572661697000183_4407449403262740128_n.jpg?stp=dst-jpg_e35_p1080x1080_sh0.08_tt6&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QF5MtFwnjAiFX_ncneGlOtLiPVeA09CU9tZE89QVi8CcO0tkJyoXVKuUQC2ICQdFp8&_nc_ohc=nCo8yG3FAAIQ7kNvwGNJjsl&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfmyAQaT-l3E73O2gjFiHLEoRtzGzgauyaVPzT-mp8VEjA&oe=694E31F2&_nc_sid=10d13b",
+  "images": [],
+  "videoUrl": "https://instagram.fsac1-2.fna.fbcdn.net/o1/v/t16/f2/m86/AQP51ctV4Q5-p_Ho6Oy3-KTQ9CGRPBBDoR6LIbCMpcz3fPi4PvegYql_A68RGT21b9qdEjA6wYLwAX7SLwGju8brX38QMQdCQcbWARA.mp4?stp=dst-mp4&efg=eyJxZV9ncm91cHMiOiJbXCJpZ193ZWJfZGVsaXZlcnlfdnRzX290ZlwiXSIsInZlbmNvZGVfdGFnIjoidnRzX3ZvZF91cmxnZW4uY2xpcHMuYzIuMTI3OC5iYXNlbGluZSJ9&_nc_cat=107&vs=1701745344173429_3087724011&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8xMzRFMUYyNDU3NUM0QTA5RTZDQ0Y4MDc3MDZGMDY5RF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HUFRvanlBcGZEbUNCSThDQU9acFFRaGZ6bUJmYnFfRUFBQUYVAgLIARIAKAAYABsAFQAAJvLj58%2BCxLJAFQIoAkMzLBdAYslP3ztkWhgSZGFzaF9iYXNlbGluZV8xX3YxEQB1%2Fgdl5p0BAA%3D%3D&_nc_rid=d42334695e&ccb=9-4&oh=00_AfmKLGQ_Ll0QXJ29aMXUPgR_3XFNg-xJ6tzjynr9izfkgw&oe=694A257A&_nc_sid=10d13b",
+  "likesCount": 151463,
+  "videoViewCount": 1320807,
+  "timestamp": "2025-09-13T18:53:03.000Z",
+  "childPosts": [],
+  "ownerFullName": "Dwayne Johnson",
+  "ownerUsername": "therock",
+  "ownerId": "232192182",
+  "productType": "clips",
+  "isPinned": true,
+  "isCommentsDisabled": false,
+  "inputUrl": "https://www.instagram.com/therock/",
+  "audioUrl": "https://instagram.fsac1-2.fna.fbcdn.net/o1/v/t16/f2/m69/AQPy5sgyYBJe8Y7Pwzd56BO35xhjhf2jZBO_KxEi6gUALffCwUo2m5P0MbKhPgdzOoog72NO1Id72JUq4pdt22Sr.mp4?strext=1&_nc_cat=107&_nc_oc=AdnmrfBAwj1rVEAuRsN2rbgMpm6Ar1rpmm98VJhLtIFC0Y92M2zdOm3f1C7dI0TqqPI&_nc_sid=9ca052&_nc_ht=instagram.fsac1-2.fna.fbcdn.net&_nc_ohc=mGf5H1u1ax0Q7kNvwFime9j&efg=eyJ2ZW5jb2RlX3RhZyI6ImlnLXhwdmRzLmNsaXBzLmMyLUMzLmRhc2hfbG5faGVhYWNfdmJyM19hdWRpbyIsInZpZGVvX2lkIjpudWxsLCJvaWxfdXJsZ2VuX2FwcF9pZCI6OTM2NjE5NzQzMzkyNDU5LCJjbGllbnRfbmFtZSI6ImlnIiwieHB2X2Fzc2V0X2lkIjoxMzQ3NDc1MjI2OTA1NzkwLCJhc3NldF9hZ2VfZGF5cyI6OTksInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjoxNTAsImJpdHJhdGUiOjY1ODYzLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&_nc_gid=EaO0P2Z3OPkY1ARamnZ44A&_nc_zt=28&oh=00_AflBJ1nqpn7X3szoy5aiSgIPuOpccuZXLjFE-sE5yG7P1w&oe=694E2B99",
+  "alt": null,
+  "videoPlayCount": 7672801,
+  "videoDuration": 150.291,
+  "musicInfo": {
+    "artist_name": "therock",
+    "song_name": "Original audio",
+    "uses_original_audio": true,
+    "should_mute_audio": false,
+    "should_mute_audio_reason": "",
+    "audio_id": "1682429995756669"
+  }
+}
+=====================================================
+
+>>> [STEP C] LIVE GEMINI 3 ANALYSIS (gemini-2.0-flash-exp)...
+
+====== [3] REAL GEMINI PROMPT ======
+DATASET: [{"u":"therock","t":"HereÔÇÖs our newest trailer for THE SMASHING MACHINE, written and directed by Silver Lion Best Director winner, Benny Safdie @bowedtie \n\nEmily is phenomenal and extraordinarily heartbreaking in the film, and BennyÔÇÖs infinite humanity created our safe place to touch very raw nerves. \n\nExcited for you all to see our film.\n\nIn theaters October 3rd. \n\n@a24","l":"https://www.instagram.com/p/DOjZnkGkbi5/"},{"u":"a24","t":"Excited to share the official trailer for Benny SafdieÔÇÖs THE SMASHING MACHINE, starring Dwayne Johnson and Academy Award nominee Emily Blunt. In theaters October 3rd.","l":"https://www.instagram.com/p/DJCAM2oxl1l/"},{"u":"therock","t":"WhereÔÇÖs your mama and whose  kid is this? ­ƒÿé­ƒÄà­ƒÅ¥ \n\nI asked this a dozen times as parents leave their kids with me in the madness of the moment ­ƒñ¬\n\nA wild crazy day at @walmart, as Dwanta­ƒÄà­ƒÅ¥+ @papatui_ gave away free shopping ­ƒøÆ ­ƒøì´©Å ­ƒº© sprees for kids and their families. As insane as these moments are, theyÔÇÖre also so joyful and for many families who are going through tough times and struggling - this means everything to them. \n\nIve been there, so creating experiences like this for families will always be the best part of fame. \nFull stop. \n\nNow kids take this cart and hit the electronics section ­ƒÿ£­ƒøÆ­ƒô╗ \n\n@walmart \n@papatui_","l":"https://www.instagram.com/p/DSiR_NokhHC/"}]
+            TASK: Extract specific Food and Movie entities mentioned in these posts.
+            QUERY: "map the movies and food that followers of @therock are into"
+            OUTPUT: JSON Array [{ "matchedContent": "...", "category": "...", "originalPost": "...", "context": "...", "username": "..." }]
+            CRITICAL: 'originalPost' MUST contain the FULL text of the post where the match was found.
+====================================
+
+====== [4] REAL GEMINI OUTPUT ======
+[
+  {
+    "matchedContent": "THE SMASHING MACHINE",
+    "category": "Movie",
+    "originalPost": "HereÔÇÖs our newest trailer for THE SMASHING MACHINE, written and directed by Silver Lion Best Director winner, Benny Safdie @bowedtie \n\nEmily is phenomenal and extraordinarily heartbreaking in the film, and BennyÔÇÖs infinite humanity created our safe place to touch very raw nerves. \n\nExcited for you all to see our film.\n\nIn theaters October 3rd. \n\n@a24",
+    "context": "trailer for THE SMASHING MACHINE",
+    "username": "therock"
+  },
+  {
+    "matchedContent": "THE SMASHING MACHINE",
+    "category": "Movie",
+    "originalPost": "Excited to share the official trailer for Benny SafdieÔÇÖs THE SMASHING MACHINE, starring Dwayne Johnson and Academy Award nominee Emily Blunt. In theaters October 3rd.",
+    "context": "official trailer for Benny SafdieÔÇÖs THE SMASHING MACHINE",
+    "username": "a24"
+  }
+]
+====================================
+
+>>> [SUCCESS] REAL END-TO-END EXECUTION VERIFIED.

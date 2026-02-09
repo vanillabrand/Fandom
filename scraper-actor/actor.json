@@ -1,0 +1,23 @@
+{
+    "actorSpecification": 1,
+    "name": "fandom-velocity-scraper",
+    "title": "Fandom Velocity Scraper",
+    "version": "0.1",
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "title": "Fandom Scraper Results",
+            "description": "Results from the Fandom Velocity Scraper"
+        }
+    },
+    "dockerfile": "./Dockerfile",
+    "environmentVariables": {
+        "IG_SESSION_ID": {
+            "name": "IG_SESSION_ID",
+            "title": "Instagram Session ID",
+            "type": "STRING",
+            "description": "Session ID for authenticated scraping",
+            "isSecret": true
+        }
+    }
+}

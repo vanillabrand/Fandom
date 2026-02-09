@@ -1,0 +1,9 @@
+{
+    "platform": "instagram",
+    "dataType": "profile",
+    "targets": [
+        "https://www.instagram.com/cristiano/"
+    ],
+    "limit": 1,
+    "debug": true
+}

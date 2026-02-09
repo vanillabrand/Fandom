@@ -1,0 +1,28 @@
+[dotenv@17.2.3] injecting env (81) from .env.local -- tip: ­ƒöÉ prevent committing .env to code: https://dotenvx.com/precommit
+­ƒº¬ Running Isolated Gemini 3D Model Test...
+
+­ƒôØ PROMPT SENT TO GEMINI:
+---------------------------------------------------
+
+        QUERY: "@nike sneaker culture"
+        CONTEXT: [Mock Data: 50 tweets about sneakers, air jordans, and running]
+        
+    ** ROLE: THE ARCHITECT **
+    Your job is to define the "Shape" of the analysis.
+    1. Identify 6 - 8 distinct ** Clusters ** (Tribes) based on the data.
+    2. Identify 5 - 10 major ** Topics **.
+    3. Analyze the ** Visual Theme ** and ** Vibe **.
+
+    ** JSON SCHEMA:**
+    {
+      "root": { "children": [{ "label": "Mock Cluster", "type": "cluster", "data": { 
+... [TRUNCATED] ...
+---------------------------------------------------
+ÔÅ│ Sending request to gemini-2.0-flash-exp (or gemini-1.5-flash)...
+Trying model: gemini-3-flash-preview...
+
+Ô£à RESPONSE RECEIVED:
+---------------------------------------------------
+ÔØî Test Failed: TypeError: response.text is not a function
+    at runIsolatedTest (C:\Users\bruce\Documents\Clients\Fandom\test-gemini-3d.ts:99:46)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

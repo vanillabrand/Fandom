@@ -1,0 +1,19 @@
+{
+    "platform": "tiktok",
+    "dataType": "posts",
+    "targets": [
+        "https://www.tiktok.com/@chipotle"
+    ],
+    "limit": 5,
+    "proxyConfiguration": {
+        "useApifyProxy": false,
+        "fallbackProxyUrls": [
+            "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8001",
+            "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8002",
+            "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8003",
+            "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8004",
+            "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8005"
+        ]
+    },
+    "debug": true
+}

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fandom Mapper - Architecture Guide</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #10b981;
+            --text: #334155;
+            --bg: #f8fafc;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        nav {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        nav h3 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        main {
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 0;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 3rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 2rem;
+        }
+
+        .diagram {
+            background: white;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            color: #d946ef;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .infra-card {
+            background: #f8fafc;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-be {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-fe {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-inf {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <nav>
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">1. Executive Summary</a></li>
+                <li><a href="#system-arch">2. System Architecture</a></li>
+                <li><a href="#frontend">3. Frontend Application</a></li>
+                <li><a href="#backend">4. Backend Services</a></li>
+                <li><a href="#hosted-infra">5. Hosted Infrastructure</a></li>
+                <li><a href="#data-pipelines">6. Data Pipelines</a></li>
+                <li><a href="#database">7. Database Schema</a></li>
+                <li><a href="#references">8. References</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <h1>Fandom Mapper Architecture Guide</h1>
+            <p><strong>Version:</strong> 2.0.0 | <strong>Last Updated:</strong> January 2026</p>
+            <p>This document provides a comprehensive technical overview of the Fandom Mapper application. It details
+                the full-stack architecture, including the React frontend, Node.js backend, and the sophisticated cloud
+                infrastructure that powers the AI-driven scraping and analysis engine.</p>
+
+            <section id="overview">
+                <h2>1. Executive Summary</h2>
+                <p>Fandom Mapper is a <strong>full-stack web application</strong> designed to visualize and analyze
+                    social media communities (Fandoms). It treats social data as a graph, allowing users to query, map,
+                    and explore relationships between creators, brands, and fans.</p>
+                <p>The core innovation is the <strong>"Zero-Touch" Orchestration Engine</strong>, which allows users to
+                    express complex intents (e.g., "Compare Nike and Adidas") in natural language. The system
+                    autonomously translates this into a multi-step scraping and analysis plan, executes it server-side,
+                    and returns a rich interactive graph.</p>
+            </section>
+
+            <section id="system-arch">
+                <h2>2. System Architecture</h2>
+                <p>The system follows a <strong>Decoupled Client-Server</strong> architecture with an asynchronous job
+                    queue. This ensures high availability and resilience, as long-running jobs (scraping) do not block
+                    the user interface.</p>
+
+                <div class="diagram">
+                    <div class="mermaid">
+                        graph TD
+                        subgraph Client ["Frontend (Vite/React)"]
+                        UI[User Interface]
+                        Auth[Auth Context]
+                        Graph[Cosmograph Canvas]
+                        end
+
+                        subgraph Cloud ["Google Cloud Run"]
+                        API[Express API Server]
+                        Worker[Job Orchestrator Service]
+                        end
+
+                        subgraph Infra ["External Infrastructure"]
+                        Mongo[(MongoDB Atlas)]
+                        Apify[Apify Cloud Platform]
+                        Gemini[Google Gemini AI]
+                        end
+
+                        UI -->|HTTPS/REST| API
+                        API -->|Read/Write| Mongo
+                        Worker -->|Poll Jobs| Mongo
+                        Worker -->|Scrape| Apify
+                        Worker -->|Analyze| Gemini
+                        Apify -->|Proxy Data| Worker
+                    </div>
+                </div>
+            </section>
+
+            <section id="frontend">
+                <h2>3. Frontend Application <span class="badge badge-fe">React</span></h2>
+                <p>Built with <strong>React 18</strong> and <strong>Vite</strong>, styled with <strong>Tailwind
+                        CSS</strong>.</p>
+
+                <h3>Key Components</h3>
+                <ul>
+                    <li><strong><code>SidebarQueryBuilder.tsx</code></strong>: The command center. Handles user input,
+                        calls the Preview API (`/api/plan-query`), and submits jobs (`/api/orchestration`).</li>
+                    <li><strong><code>FandomGraph3D.tsx</code></strong>: A high-performance WebGL graph visualizer
+                        powered by `react-force-graph` and `Cosmograph`. It handles thousands of nodes smoothly.</li>
+                    <li><strong><code>AnalyticsPanel.tsx</code></strong>: Displays the "Left Brain" analysis (tables,
+                        lists, insights) while the graph shows the "Right Brain" (visuals).</li>
+                </ul>
+            </section>
+
+            <section id="backend">
+                <h2>4. Backend Services <span class="badge badge-be">Node.js</span></h2>
+                <p>A robust <strong>Express</strong> server written in <strong>TypeScript</strong>.</p>
+
+                <h3>Core Services</h3>
+                <ul>
+                    <li><strong><code>JobOrchestrator.ts</code></strong>: The heart of the backend. It polls MongoDB for
+                        `queued` jobs, executes scraping plans, manages Apify actors, and aggregates results. It runs
+                        independently of the HTTP request cycle.</li>
+                    <li><strong><code>GeminiService.ts</code></strong>: Interface for Google's Gemini 1.5 Flash/Pro.
+                        Handles prompt engineering, token management, and JSON response parsing.</li>
+                    <li><strong><code>CostCalculator.ts</code></strong>: Predicts the cost of every query before
+                        execution. It aggregates Actor costs, Proxy bandwidth, and AI tokens.</li>
+                </ul>
+            </section>
+
+            <section id="hosted-infra">
+                <h2>5. Hosted Infrastructure <span class="badge badge-inf">Cloud</span></h2>
+                <p>The application relies on four pillars of managed infrastructure.</p>
+
+                <div class="infra-card">
+                    <h3>1. Google Cloud Run (Compute)</h3>
+                    <p><strong>Role:</strong> Hosts the Dockerized Application (Frontend + Backend).</p>
+                    <ul>
+                        <li><strong>Service Type:</strong> Stateless Container (Auto-scaling).</li>
+                        <li><strong>Configuration:</strong> 2GB - 4GB RAM (needed for in-memory graph processing).</li>
+                        <li><strong>Environment:</strong> Production & Staging revisions.</li>
+                    </ul>
+                </div>
+
+                <div class="infra-card">
+                    <h3>2. Apify (Data Extraction)</h3>
+                    <p><strong>Role:</strong> Distributed Web Scraping & Proxy Management.</p>
+                    <ul>
+                        <li><strong>Actors:</strong> Microservices that perform specific scrapes (e.g.,
+                            `instagram-api-scraper`, `followers-scraper`).</li>
+                        <li><strong>Proxy:</strong> Residential proxies to bypass rate limits (`apify-proxy`).</li>
+                        <li><strong>Storage:</strong> Temporary KV Stores for raw scrape data before processing.</li>
+                    </ul>
+                </div>
+
+                <div class="infra-card">
+                    <h3>3. Google Gemini (Intelligence)</h3>
+                    <p><strong>Role:</strong> The "Brain" of the operation.</p>
+                    <ul>
+                        <li><strong>Models:</strong> `gemini-1.5-flash` (Speed/Cost) and `gemini-1.5-pro` (Deep
+                            Reasoning).</li>
+                        <li><strong>Tasks:</strong>
+                            <ul>
+                                <li><strong>Planning:</strong> Converting "Map Nike" into JSON execution steps.</li>
+                                <li><strong>Analysis:</strong> Reading 500+ bios to find "Common Interests".</li>
+                                <li><strong>Structure:</strong> Generating the Node/Edge graph structure.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="infra-card">
+                    <h3>4. MongoDB Atlas (Persistence)</h3>
+                    <p><strong>Role:</strong> Primary Database.</p>
+                    <ul>
+                        <li><strong>Collections:</strong> `Users`, `Jobs` (Queue), `Datasets` (Snapshots),
+                            `PricingConfig`.</li>
+                        <li><strong>Features:</strong> Compressed BSON storage for large graph datasets.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="data-pipelines">
+                <h2>6. Data Pipelines</h2>
+                <p>The standard workflow for a "Query Builder" request.</p>
+                <div class="diagram">
+                    <div class="mermaid">
+                        sequenceDiagram
+                        participant U as User
+                        participant S as Server
+                        participant DB as MongoDB
+                        participant A as Apify
+                        participant AI as Gemini
+
+                        U->>S: 1. Submit Query
+                        S->>DB: 2. Enqueue Job
+                        loop Async Worker
+                        S->>DB: 3. Poll Job
+                        S->>AI: 4. Generate Plan
+                        S->>A: 5. Execute Scrapers
+                        A-->>S: 6. Return Data
+                        S->>S: 7. Process/Filter
+                        S->>AI: 8. Deep Dive Analysis
+                        S->>DB: 9. Save Results
+                        end
+                        S-->>U: 10. Email Notification
+                    </div>
+                </div>
+            </section>
+
+            <section id="database">
+                <h2>7. Database Schema</h2>
+                <ul>
+                    <li><strong>User</strong>: `_id`, `email`, `credits` (Balance), `role`.</li>
+                    <li><strong>Job</strong>:
+                        <ul>
+                            <li>`status`: 'queued' | 'processing' | 'completed' | 'failed'</li>
+                            <li>`metadata`: Stores the `plan`, `query`, and cost info.</li>
+                            <li>`result`: Stores the final Graph and Analytics JSON.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Dataset</strong>: Archival snapshots of graph data for "History" views.</li>
+                </ul>
+            </section>
+
+            <section id="references">
+                <h2>8. References</h2>
+                <ul>
+                    <li><a href="../server_side_query_workflow.md">Server-Side Query Workflow (Detailed)</a></li>
+                    <li><code>server/services/jobOrchestrator.ts</code> - Main worker logic.</li>
+                    <li><code>src/components/SidebarQueryBuilder.tsx</code> - UI Logic.</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2026 Fandom Mapper. Internal Architecture Documentation.
+        </footer>
+    </div>
+
+</body>
+
+</html>

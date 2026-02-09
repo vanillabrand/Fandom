@@ -1,0 +1,4 @@
+src/components/AnalyticsPanel.tsx(1047,13): error TS17014: JSX fragment has no corresponding closing tag.
+src/components/AnalyticsPanel.tsx(1920,15): error TS1003: Identifier expected.
+src/components/AnalyticsPanel.tsx(1922,1): error TS1381: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+src/components/AnalyticsPanel.tsx(1926,1): error TS1005: '</' expected.

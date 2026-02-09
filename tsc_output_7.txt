@@ -1,0 +1,6 @@
+server/services/emailService.ts(2,8): error TS1192: Module '"C:/Users/bruce/Documents/Clients/Fandom/node_modules/@types/nodemailer/index"' has no default export.
+server/services/emailService.ts(3,8): error TS1192: Module '"fs"' has no default export.
+server/services/emailService.ts(4,8): error TS1259: Module '"path"' can only be default-imported using the 'esModuleInterop' flag
+server/services/jobOrchestrator.ts(7,32): error TS2732: Cannot find module '../../scraper_detail.json'. Consider using '--resolveJsonModule' to import module with '.json' extension.
+server/services/jobOrchestrator.ts(7,60): error TS2823: Import attributes are only supported when the '--module' option is set to 'esnext', 'node18', 'nodenext', or 'preserve'.
+services/geminiService.ts(99,8): error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', or 'nodenext'.

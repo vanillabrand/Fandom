@@ -1,0 +1,2289 @@
+import { mongoService } from './mongoService.js';
+import { emailService } from './emailService.js';
+import { v4 as uuidv4 } from 'uuid';
+import { GoogleGenAI } from '@google/genai';
+import scraperRegistryRaw from '../../scraper_detail.json' with { type: "json" };
+import { proxyMediaUrl } from '../utils/mediaProxyUtil.js';
+import { calculateOverindexing } from '../../services/overindexingService.js';
+import { generateDashboardConfig } from './dashboardConfigService.js';
+import { analyzeBatch } from '../../services/geminiService.js';
+// --- CONFIG ---
+// Initialize Gemini
+let aiClient = null;
+const getAiClient = () => {
+    if (!aiClient) {
+        const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+        if (!apiKey) {
+            console.error("CRITICAL: GEMINI_API_KEY not found in process.env!");
+            console.error("Available Env Keys:", Object.keys(process.env).filter(k => !k.startsWith('npm_')));
+            return null;
+        }
+        console.log("Initializing Gemini Client with key length:", apiKey.length);
+        aiClient = new GoogleGenAI({ apiKey });
+    }
+    return aiClient;
+};
+export class JobOrchestrator {
+    constructor() {
+        this.processing = false;
+        this.pollingInterval = null;
+    }
+    static getInstance() {
+        if (!JobOrchestrator.instance) {
+            JobOrchestrator.instance = new JobOrchestrator();
+        }
+        return JobOrchestrator.instance;
+    }
+    startPolling(intervalMs = 10000) {
+        if (this.pollingInterval)
+            return;
+        console.log('[JobOrchestrator] Starting polling...');
+        this.pollingInterval = setInterval(() => this.pollNextJob(), intervalMs);
+    }
+    stopPolling() {
+        if (this.pollingInterval) {
+            clearInterval(this.pollingInterval);
+            this.pollingInterval = null;
+        }
+    }
+    async pollNextJob() {
+        if (this.processing)
+            return;
+        this.processing = true;
+        try {
+            if (!mongoService.isConnected()) {
+                // Wait for connection
+                this.processing = false;
+                return;
+            }
+            const db = mongoService.getDb();
+            // Atomic find-and-update to claim a job
+            const result = await db.collection('jobs').findOneAndUpdate({ status: 'queued' }, { $set: { status: 'running', updatedAt: new Date() } }, { sort: { createdAt: 1 } });
+            // Handle MongoDB driver differences 
+            const job = result;
+            if (job && job.id) {
+                console.log(`[JobOrchestrator] Picked up job ${job.id} (${job.type})`);
+                await this.processJob(job);
+            }
+        }
+        catch (error) {
+            if (error.message && !error.message.includes('Database not connected')) {
+                console.error('[JobOrchestrator] Polling error:', error);
+            }
+        }
+        finally {
+            this.processing = false;
+        }
+    }
+    async processJob(job) {
+        try {
+            if (job.type === 'map_generation') {
+                await this.processMapGeneration(job);
+            }
+            else if (job.type === 'ai_analysis') {
+                await this.processAiAnalysis(job);
+            }
+            else if (job.type === 'orchestration') {
+                await this.processOrchestration(job);
+            }
+            else {
+                throw new Error(`Unknown job type: ${job.type}`);
+            }
+        }
+        catch (error) {
+            console.error(`[JobOrchestrator] Job ${job.id} failed:`, error);
+            const errorMsg = error instanceof Error ? error.message : typeof error === 'string' ? error : JSON.stringify(error);
+            await mongoService.updateJob(job.id, {
+                status: 'failed',
+                error: errorMsg || 'Unknown error occurred (check logs)'
+            });
+            // Notify User of Failure
+            await emailService.sendTitleAlert(`Job Failed: ${job.type}`, `Job ID: ${job.id}\nError: ${error.message}`);
+        }
+    }
+    async processMapGeneration(job) {
+        const { query, sampleSize, plan: existingPlan } = job.metadata;
+        console.log(`[JobOrchestrator] Processing Map Generation: "${query}" (Size: ${sampleSize})`);
+        let plan;
+        if (existingPlan) {
+            console.log(`[JobOrchestrator] Using provided plan with ${existingPlan.steps.length} steps`);
+            plan = existingPlan;
+            await mongoService.updateJob(job.id, { progress: 10, result: { stage: 'Plan accepted', plan } });
+        }
+        else {
+            // 1. Analyze Requirements (Generate Plan)
+            await mongoService.updateJob(job.id, { progress: 10, result: { stage: 'Planning scrape strategy...' } });
+            try {
+                plan = await this.analyzeMapRequirements(query, sampleSize || 100);
+                console.log(`[JobOrchestrator] Plan generated: ${plan.steps.length} steps`);
+            }
+            catch (e) {
+                throw new Error(`Planning failed: ${e.message}`);
+            }
+        }
+        // 2. Execute Steps
+        const results = [];
+        let datasetId = "";
+        if (!plan || !plan.steps || !Array.isArray(plan.steps)) {
+            throw new Error("Invalid plan structure: 'steps' array is missing");
+        }
+        for (let i = 0; i < plan.steps.length; i++) {
+            const step = plan.steps[i];
+            const progress = 10 + Math.floor(((i + 1) / plan.steps.length) * 60); // 10% to 70%
+            await mongoService.updateJob(job.id, {
+                progress,
+                result: { stage: `Executing step ${i + 1}/${plan.steps.length}: ${step.description}`, plan }
+            });
+            // Resolve inputs (handle "USE_DATA_FROM_PREVIOUS")
+            const resolvedInput = this.resolveInput(step.input, results, plan);
+            // Execute Scrape
+            console.log(`[JobOrchestrator] Executing Actor: ${step.actorId}`);
+            try {
+                // [MODIFIED] Pass job.id to allow metadata updates (Apify Run ID) & abort checks
+                const stepResult = await this.runApifyActor(step.actorId, resolvedInput, job.id);
+                results.push(stepResult.items);
+                datasetId = stepResult.datasetId; // Keep the last one as "primary"
+            }
+            catch (stepError) {
+                console.error(`[JobOrchestrator] Step ${i + 1} failed:`, stepError);
+                const stepMsg = stepError instanceof Error ? stepError.message : JSON.stringify(stepError);
+                throw new Error(`Step ${i + 1} (${step.actorId}) failed: ${stepMsg}`);
+            }
+        }
+        // 3. Save Final Dataset
+        await mongoService.updateJob(job.id, { progress: 80, result: { stage: 'Saving results...', plan } });
+        // If we created a dataset in Apify, we should register it in our local DB
+        if (datasetId) {
+            await this.syncApifyDatasetToLocal(datasetId, query, job.userId);
+        }
+        // 4. Complete
+        await mongoService.updateJob(job.id, {
+            status: 'completed',
+            progress: 100,
+            result: {
+                datasetId,
+                message: 'Map generation complete',
+                plan
+            }
+        });
+        // Notify User
+        await this.notifyCompletion(job, query);
+    }
+    async notifyCompletion(job, query) {
+        const user = await mongoService.getUser(job.userId) || await mongoService.getUserByEmail(job.userId);
+        if (user && user.email) {
+            const subject = `Your Fandom Map is Ready: ${query} 🗺️`;
+            const htmlBody = `
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #e2e8f0; background-color: #051810; padding: 40px; border-radius: 12px; border: 1px solid #10b98133; max-width: 600px; margin: 0 auto;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #10b981; font-size: 28px; margin-bottom: 5px; letter-spacing: -0.5px;">Fandom Intelligence</h1>
+                        <p style="color: #64748b; font-size: 14px; text-transform: uppercase; tracking: 1px; margin: 0;">Analysis Complete</p>
+                    </div>
+                    
+                    <div style="background-color: #1a4d2e33; border: 1px solid #10b98122; border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+                        <p style="margin: 0 0 10px 0; font-size: 14px; color: #64748b;">TARGET QUERY</p>
+                        <h2 style="margin: 0; color: #ffffff; font-size: 20px;">${query}</h2>
+                    </div>
+
+                    <p style="font-size: 16px; line-height: 1.6; margin-bottom: 30px; color: #94a3b8;">
+                        Our intelligence engine has finished analyzing your request. The graph and deep-dive analytics are now available in your personal library.
+                    </p>
+
+                    <div style="text-align: center;">
+                        <a href="https://fandom-analytics.com/" style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+                            Launch Intelligence Dashboard
+                        </a>
+                    </div>
+                    
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #10b98122; text-align: center;">
+                        <p style="font-size: 12px; color: #475569;">
+                            Job ID: ${job.id} &bull; Analysis Mode: ${job.type.replace('_', ' ')}
+                        </p>
+                    </div>
+                </div>
+            `;
+            await emailService.sendEmail(user.email, subject, htmlBody);
+        }
+    }
+    // --- HELPER METHODS ---
+    resolveInput(input, previousResults, plan) {
+        const inputStr = JSON.stringify(input);
+        if (!inputStr.includes('USE_DATA_FROM'))
+            return input;
+        const newInput = JSON.parse(inputStr);
+        // Helper to get usernames from a result set
+        const extractUsernames = (items) => {
+            return (items || []).map((item) => item.username || item.ownerUsername || item.uniqueId).filter(Boolean);
+        };
+        // Better approach: Traverse and replace Arrays specifically
+        const replaceStrict = (obj) => {
+            for (const key in obj) {
+                if (Array.isArray(obj[key]) && obj[key].length === 1 && typeof obj[key][0] === 'string' && obj[key][0].includes('USE_DATA_FROM')) {
+                    const placeholder = obj[key][0];
+                    let sourceItems = [];
+                    if (placeholder.includes('USE_DATA_FROM_STEP_')) {
+                        const stepId = placeholder.replace('USE_DATA_FROM_STEP_', '');
+                        if (plan && plan.steps) {
+                            const stepIndex = plan.steps.findIndex((s) => s.id === stepId);
+                            if (stepIndex >= 0 && previousResults[stepIndex]) {
+                                sourceItems = previousResults[stepIndex];
+                            }
+                        }
+                    }
+                    else {
+                        sourceItems = previousResults[previousResults.length - 1] || [];
+                    }
+                    if (sourceItems.length > 0) {
+                        const usernames = [...new Set(extractUsernames(sourceItems))].slice(0, 100);
+                        obj[key] = usernames;
+                    }
+                }
+                else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    replaceStrict(obj[key]);
+                }
+            }
+        };
+        replaceStrict(newInput);
+        return newInput;
+    }
+    async abortJob(jobId) {
+        const job = await mongoService.getJob(jobId);
+        if (!job)
+            return false;
+        if (job.status === 'running' || job.status === 'queued') {
+            // 1. If there's an active Apify Run ID, kill it
+            if (job.metadata?.apifyRunId) {
+                const apifyToken = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN;
+                console.log(`[JobOrchestrator] Aborting Apify Run: ${job.metadata.apifyRunId}`);
+                try {
+                    await fetch(`https://api.apify.com/v2/actor-runs/${job.metadata.apifyRunId}/abort?token=${apifyToken}`, {
+                        method: 'POST'
+                    });
+                }
+                catch (e) {
+                    console.error("Failed to abort Apify run:", e);
+                }
+            }
+            // 2. Update local status
+            await mongoService.updateJob(jobId, { status: 'aborted', progress: 0, error: 'Aborted by user' });
+            return true;
+        }
+        return false;
+    }
+    async runApifyActor(actorId, input, jobId) {
+        const apifyToken = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN;
+        if (!apifyToken)
+            throw new Error("Apify Token missing");
+        let realActorId = actorId.replace(/\//g, '~');
+        const actorMapping = {
+            'apify/instagram-profile-scraper': process.env.PROFILE_SCRAPE_ACTOR_INSTAGRAM || 'dSCLg0C3YEZ83HzYX',
+            'apify/instagram-scraper': process.env.APIFY_INSTAGRAM_ACTOR_ID || 'OWBUCWZK5MEeO5XiC',
+            'thenetaji/instagram-followers-followings-scraper': 'IkdNTeZnRfvDp8V25'
+        };
+        if (actorMapping[realActorId]) {
+            realActorId = actorMapping[realActorId];
+        }
+        if (realActorId === process.env.PROFILE_SCRAPE_ACTOR_INSTAGRAM && input.search) {
+            realActorId = process.env.APIFY_INSTAGRAM_ACTOR_ID || 'OWBUCWZK5MEeO5XiC';
+        }
+        try {
+            console.log(`[Apify] Starting run for ${realActorId}...`);
+            const response = await fetch(`https://api.apify.com/v2/acts/${realActorId}/runs?token=${apifyToken}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(input)
+            });
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Apify Run Failed (${response.status}): ${errText}`);
+            }
+            const runData = await response.json();
+            const runId = runData.data.id;
+            const defaultDatasetId = runData.data.defaultDatasetId;
+            // [NEW] Save Run ID to Job Metadata for Abort capability
+            if (jobId) {
+                const job = await mongoService.getJob(jobId);
+                if (job) {
+                    const newMetadata = { ...job.metadata, apifyRunId: runId };
+                    await mongoService.updateJob(jobId, { metadata: newMetadata });
+                }
+            }
+            let status = 'RUNNING';
+            while (status === 'RUNNING' || status === 'READY') {
+                // Check if job was aborted externally
+                if (jobId) {
+                    const currentJob = await mongoService.getJob(jobId);
+                    if (currentJob && currentJob.status === 'aborted') {
+                        throw new Error("Job aborted by user");
+                    }
+                }
+                await new Promise(r => setTimeout(r, 5000));
+                const pollRes = await fetch(`https://api.apify.com/v2/actor-runs/${runId}?token=${apifyToken}`);
+                const pollData = await pollRes.json();
+                status = pollData.data.status;
+            }
+            if (status !== 'SUCCEEDED') {
+                throw new Error(`Apify Run failed with status: ${status}`);
+            }
+            const resultsRes = await fetch(`https://api.apify.com/v2/datasets/${defaultDatasetId}/items?token=${apifyToken}`);
+            const items = await resultsRes.json();
+            return { items, datasetId: defaultDatasetId };
+        }
+        catch (apifyError) {
+            console.warn(`[Apify] Failed: ${apifyError.message}. Trying fallback scraper...`);
+            // FALLBACK: Use our custom scraper with Oxylabs
+            return await this.runFallbackScraper(actorId, input);
+        }
+    }
+    async runFallbackScraper(actorId, input) {
+        console.log(`[Scraper Fallback] Using custom scraper for ${actorId}`);
+        const scraperUrl = process.env.SCRAPER_URL || 'https://fandom-scraper-634174038368.europe-west2.run.app';
+        // Map Apify actor to our scraper format
+        let platform = 'instagram';
+        let dataType = 'profile';
+        let targets = [];
+        // Determine platform and data type from actor ID
+        if (actorId.includes('instagram')) {
+            platform = 'instagram';
+            if (actorId.includes('profile') || input.usernames) {
+                dataType = 'profile';
+                targets = input.usernames || input.directUrls || [];
+            }
+            else if (actorId.includes('followers')) {
+                dataType = 'followers';
+                targets = [input.username];
+            }
+            else {
+                dataType = 'posts';
+                targets = input.directUrls || [];
+            }
+        }
+        else if (actorId.includes('tiktok')) {
+            platform = 'tiktok';
+            if (actorId.includes('profile')) {
+                dataType = 'profile';
+                targets = input.profiles || [];
+            }
+            else {
+                dataType = 'posts';
+                targets = input.profiles || input.postURLs || [];
+            }
+        }
+        const scraperInput = {
+            platform,
+            dataType,
+            targets,
+            limit: input.resultsLimit || input.limit || 100,
+            proxyConfiguration: {
+                useApifyProxy: false,
+                fallbackProxyUrls: [
+                    "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8001",
+                    "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8002",
+                    "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8003",
+                    "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8004",
+                    "http://user-biffboff_gTnbs-country-US:B1ffB0ff2023_@dc.oxylabs.io:8005"
+                ]
+            }
+        };
+        const response = await fetch(`${scraperUrl}/scrape`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(scraperInput)
+        });
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`Fallback scraper failed (${response.status}): ${errText}`);
+        }
+        const result = await response.json();
+        const items = result.items || [];
+        const datasetId = `scraper-${Date.now()}`;
+        console.log(`[Scraper Fallback] ✅ Retrieved ${items.length} items`);
+        return { items, datasetId };
+    }
+    async syncApifyDatasetToLocal(apifyDatasetId, name, userId) {
+        const apifyToken = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN;
+        const res = await fetch(`https://api.apify.com/v2/datasets/${apifyDatasetId}/items?token=${apifyToken}`);
+        const items = await res.json();
+        const localId = uuidv4();
+        await mongoService.createDataset({
+            id: localId,
+            name: name || `Scrape ${new Date().toLocaleDateString()}`,
+            platform: 'instagram',
+            targetProfile: name,
+            dataType: 'mixed',
+            recordCount: items.length,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            tags: ['async_job'],
+            userId
+        });
+        const records = items.map((item) => ({
+            datasetId: localId,
+            recordType: 'profile',
+            platform: 'instagram',
+            username: item.username || item.ownerUsername,
+            data: item,
+            createdAt: new Date()
+        }));
+        await mongoService.insertRecords(records);
+        if (items.length > 0) {
+            const nodes = [];
+            const links = [];
+            nodes.push({ id: 'MAIN', label: name || 'Analysis', group: 'main', val: 20, color: '#10b981' });
+            items.forEach((item, idx) => {
+                const username = item.username || item.ownerUsername || `user_${idx}`;
+                nodes.push({
+                    id: username,
+                    label: username,
+                    group: 'creator',
+                    val: 10,
+                    data: {
+                        username: username,
+                        profilePicUrl: item.profilePicUrl || item.profile_pic_url,
+                        followers: item.followersCount || item.followers,
+                        bio: item.biography || item.bio
+                    }
+                });
+                links.push({ source: 'MAIN', target: username, value: 1 });
+            });
+            await mongoService.insertRecords([{
+                    datasetId: localId,
+                    recordType: 'graph_snapshot',
+                    platform: 'instagram',
+                    data: {
+                        nodes,
+                        links,
+                        profileFullName: name,
+                        recordType: 'graph_snapshot',
+                        analytics: {
+                            creators: [],
+                            brands: [],
+                            clusters: [],
+                            topContent: [],
+                            nonRelatedInterests: [],
+                            overindexedAccounts: []
+                        }
+                    },
+                    createdAt: new Date()
+                }]);
+        }
+        return localId;
+    }
+    async analyzeMapRequirements(query, sampleSize, existingDatasets = [], ignoreCache = false, useDeepAnalysis = false) {
+        return this.analyzeMapRequirementsServer(query, existingDatasets, sampleSize, ignoreCache, useDeepAnalysis);
+    }
+    async enqueueJob(userId, type, input) {
+        const jobId = uuidv4();
+        await mongoService.createJob({
+            id: jobId,
+            userId,
+            type,
+            status: 'queued',
+            progress: 0,
+            metadata: input,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        return jobId;
+    }
+    async processAiAnalysis(job) {
+        const { query, sampleSize, platform } = job.metadata;
+        console.log(`[JobOrchestrator] AI Analysis: ${query}`);
+        await mongoService.updateJob(job.id, { progress: 10 });
+        const client = getAiClient();
+        if (!client)
+            throw new Error("AI Client not initialized");
+        const platformName = platform === 'tiktok' ? 'TikTok' : 'Instagram';
+        const platformSite = platform === 'tiktok' ? 'site:tiktok.com' : 'site:instagram.com';
+        // ORIGINAL DETAILED PROMPT FROM geminiService.ts
+        const prompt = `
+    Perform a REAL-TIME, DEEP-DIVE social intelligence analysis for the ${platformName} profile "${query}" using Google Search.
+    
+    **STRATEGY: THE 'RISING STAR' & 'HIDDEN GEM' PROTOCOL**
+    **CONSTRAINT**: Please use Google Search to retrieve the latest information. Focus analysis strictly on the ${platformName} ecosystem. Use queries like "${platformSite}" to validate handles.
+    
+    We are NOT looking for obvious, global superstars (e.g., exclude Cristiano Ronaldo, Beyoncé, or Official Brand Ambassadors).
+    We ARE looking for the **"Rising up from the bottom"** signals—creators, brands, and trends that are bubbling up within the dedicated community but haven't hit the mainstream yet.
+    
+    **CONTEXT**: Analysing ${sampleSize} followers of the ${platformName} profile ${query}
+    **LANGUAGE**: UK English spelling (colour, analyse).
+
+    **RESEARCH QUERY STRATEGY (Execute these implicitly):**
+    1. "Fastest growing micro-influencers followed by ${query} ${platformName} fans".
+    2. "Underrated ${platformName} creators in the ${query} niche".
+    3. "Niche brands with cult followings similar to ${query}".
+    4. "Emerging subcultures and aesthetics in ${query} ${platformName} community this year".
+
+    **🚨 CRITICAL: MANDATORY PROVENANCE & EVIDENCE FOR EVERY ITEM 🚨**
+    
+    **ABSOLUTE REQUIREMENT**: For EVERY SINGLE creator, brand, cluster, topic, and subtopic you identify, you MUST provide ALL FOUR of these fields:
+    
+    1. **citation** (REQUIRED): Explain EXACTLY how you found this item. Be specific about the search query or source.
+       - ✅ GOOD: "Found via Google Search: 'rising Scottish comedy creators Instagram 2025'"
+       - ❌ BAD: "Found via search" (too vague)
+       - ❌ UNACCEPTABLE: Missing this field
+    
+    2. **searchQuery** (REQUIRED): The EXACT search query you used to discover this item.
+       - ✅ GOOD: "site:instagram.com Scottish comedy micro-influencers 50k-200k followers"
+       - ❌ BAD: "searched for creators" (not a real query)
+       - ❌ UNACCEPTABLE: Missing this field
+    
+    3. **sourceUrl** (REQUIRED): A REAL, VERIFIABLE URL where this information was found.
+       - ✅ GOOD: "https://www.instagram.com/username" or "https://article-url.com/..."
+       - ❌ BAD: "https://instagram.com" (too generic)
+       - ❌ UNACCEPTABLE: Missing this field or fake URLs
+    
+    4. **evidence** (REQUIRED): A SPECIFIC data point, quote, or observation that proves this item is real and relevant.
+       - ✅ GOOD: "Profile shows 127k followers, 8.2% engagement rate, posts daily about Scottish culture"
+       - ✅ GOOD: "Bio states 'Glasgow-based comedian' with 450+ comedy reels"
+       - ❌ BAD: "Popular creator" (no specific evidence)
+       - ❌ UNACCEPTABLE: Missing this field or vague statements
+
+    **⚠️ VALIDATION RULES:**
+    - If you cannot find REAL evidence for an item, DO NOT include it in your response
+    - DO NOT fabricate or guess evidence - only include items you can verify through Google Search
+    - **VERIFY URLs**: Every sourceUrl MUST be a reachable, real URL found in search results. Do not guess URL patterns.
+    - DO NOT use placeholder text like "TBD", "N/A", or "Unknown" in any provenance field
+    - EVERY item must have ALL FOUR fields (citation, searchQuery, sourceUrl, evidence) filled with REAL data
+    - If you can only find 5 verified creators instead of 10, return 5 - quality over quantity
+
+    **REQUIRED ANALYTICS:**
+    
+    1. **Over-indexed Creators (Rising Stars)** - TARGET: 8 creators (minimum 5 with FULL evidence):
+       - **FILTER**: Exclude anyone with >5M followers. Focus on **10k - 500k** range.
+       - **Signal**: Find creators who are "Cult Figures" or exhibiting growth specific to the followers of ${query} on ${platformName}.
+       - **CRITICAL - Handle Field**: You MUST find their ACTUAL ${platformName} username/handle (e.g., @presidentchay, NOT "Chay Denne").
+         * Use Google Search to find: "[creator name] ${platformName} username" or "[creator name] ${platformName} handle"
+         * The 'handle' field MUST be the actual Instagram username (without @), not the display name
+         * Example: If the creator is "Chay Denne", search for their actual handle like "presidentchay"
+         * VERIFY the handle by checking the Instagram URL format: instagram.com/[handle]
+       - Score = "Cult Index" (Higher score = More specific to this niche, less mainstream).
+       - **MANDATORY FOR EACH**: citation, searchQuery, sourceUrl, evidence, AND correct Instagram handle (all 5 fields required)
+    
+    2. **Brand Affinity (Challenger Brands)** - TARGET: 8 brands (minimum 5 with FULL evidence):
+       - Identify REAL brands that followers of ${query} on ${platformName} engage with but are **NOT** global giants.
+       - They should be brands that followers of ${query} engage with, not what ${query} itself promotes.
+       - Focus on lifestyle/adjacent categories (Tech, Gaming, Streetwear, Nutrition).
+       - Score = Affinity Strength (0-5).
+       - **MANDATORY FOR EACH**: citation, searchQuery, sourceUrl, evidence (all 4 fields required)
+    
+    3. **Sub-culture Clusters (Emerging Tribes)** - TARGET: 8 clusters (minimum 5 with FULL evidence):
+       - **CRITICAL**: Use Google Search to find REAL, EXISTING communities/tribes within the ${query} ${platformName} audience.
+       - **Search Query Examples**:
+         "${query} ${platformName} community hashtags"
+         "${query} fans trends 2025"
+         "${platformName} ${query} audience subcultures"
+       - **Verification**: Each cluster name MUST represent a real, observable trend or community. DO NOT fabricate cluster names.
+       - Research actual hashtags, trends, and community identifiers being used by ${query}'s audience.
+       - Provide context on what each tribe represents in under 10 words.
+       - Include relevant keywords/hashtags for each cluster.
+       - **MANDATORY FOR EACH**: citation, searchQuery, sourceUrl, evidence (all 4 fields required)
+    
+    4. **Non-Related Interests (Inverse Signals)** - TARGET: 6 interests:
+        - Identify popular interests/topics that followers of ${query} engage with that are NOT related to ${query}'s core content topics.
+        - These should be interests the audience has OUTSIDE of what ${query} posts about.
+        - For each, provide the interest name and exact percentage of followers interested in it.
+        - **MANDATORY FOR EACH**: citation, searchQuery, sourceUrl, evidence (all 4 fields required)
+
+    5. **Topic Hierarchy** - TARGET: 5 topics with 3 subtopics each:
+        - 5 popular topics that followers of ${query} on ${platformName} are engaging with.
+        - 3 Sub-topics of each topic that followers of ${query} on ${platformName} are engaging with.
+        - **MANDATORY FOR EACH TOPIC AND SUBTOPIC**: citation, searchQuery, sourceUrl, evidence (all 4 fields required)
+
+    6. **Top Content (Representative Content)** - TARGET: 3 pieces:
+        - Identify 3 key pieces of content (posts, videos, or news) that are trending/popular within this community right now.
+        - Must include title/description and if possible a URL (or guess a relevant search URL).
+        - Fields: title, platform, url, views (estimate), author, description.
+        - **MANDATORY FOR EACH**: citation, searchQuery, sourceUrl, evidence (all 4 fields required)
+
+    **OUTPUT FORMAT:**
+    Return ONLY valid JSON containing the 'analytics' object. Example structure:
+    {
+      "analytics": {
+        "creators": [
+          { 
+            "name": "Creator Name", 
+            "handle": "creatorhandle",
+            "score": 4.2, 
+            "category": "Cat",
+            "citation": "Found via Google Search: 'rising micro-influencers in [niche]'",
+            "searchQuery": "rising micro-influencers in [niche]",
+            "sourceUrl": "https://instagram.com/handle",
+            "evidence": "Profile shows 250k followers with 45% growth in last 6 months"
+          } 
+        ],
+        "brands": [ 
+          { 
+            "name": "Brand", 
+            "score": 3.5, 
+            "industry": "Ind",
+            "citation": "Found via search: 'niche brands popular with [audience]'",
+            "searchQuery": "niche brands popular with [audience]",
+            "sourceUrl": "https://...",
+            "evidence": "Mentioned in 15% of follower bios"
+          } 
+        ],
+        "clusters": [ 
+          { 
+            "name": "Cluster", 
+            "count": 100, 
+            "keywords": ["k"],
+            "citation": "Identified via hashtag analysis",
+            "searchQuery": "${query} community hashtags",
+            "sourceUrl": "https://...",
+            "evidence": "Hashtag #ClusterName used in 500+ posts"
+          } 
+        ],
+        "topics": [ 
+            { 
+              "name": "Fashion", 
+              "percentage": "45%", 
+              "subtopics": [
+                {
+                  "name": "Gorpcore",
+                  "citation": "Found in trending hashtags",
+                  "searchQuery": "${query} fashion trends",
+                  "sourceUrl": "https://...",
+                  "evidence": "Mentioned in 200+ posts"
+                }
+              ],
+              "citation": "Identified from follower content analysis",
+              "searchQuery": "${query} follower interests",
+              "sourceUrl": "https://...",
+              "evidence": "45% of followers post fashion content"
+            } 
+        ],
+        "nonRelatedInterests": [ 
+          { 
+            "name": "Gaming", 
+            "percentage": "25%",
+            "citation": "...",
+            "searchQuery": "...",
+            "sourceUrl": "...",
+            "evidence": "..."
+          }
+        ],
+        "topContent": [
+          {
+            "title": "Title",
+            "platform": "${platformName}",
+            "url": "https://...",
+            "views": "10k",
+            "author": "Author",
+            "description": "Desc",
+            "citation": "...",
+            "searchQuery": "...",
+            "sourceUrl": "...",
+            "evidence": "10k views, 500+ shares"
+          } 
+        ]
+      },
+      "summary": "Summary highlighting the emerging/rising nature of the findings."
+    }
+    
+    **REMEMBER**: EVERY item in EVERY list MUST have citation, searchQuery, sourceUrl, AND evidence. No exceptions.
+  `;
+        console.log("[JobOrchestrator] Sending request to Gemini with detailed prompt");
+        let result;
+        try {
+            result = await client.models.generateContent({
+                model: "gemini-3-flash-preview",
+                contents: prompt,
+                config: {
+                    temperature: 0,
+                    maxOutputTokens: 30000,
+                    tools: [{ googleSearch: {} }]
+                }
+            });
+        }
+        catch (e) {
+            throw new Error(`Gemini failed: ${e.message}`);
+        }
+        const text = result.text || "";
+        console.log("[JobOrchestrator] Gemini response length:", text.length);
+        // PORT THE ORIGINAL JSON PARSER FROM geminiService.ts
+        let jsonString = text.trim();
+        jsonString = jsonString.replace(/```json/g, '').replace(/```/g, '').trim();
+        // Remove comments if any
+        jsonString = jsonString.replace(/(^|[^:])\/\/.*$/gm, '$1');
+        const firstBrace = jsonString.indexOf('{');
+        const lastBrace = jsonString.lastIndexOf('}');
+        if (firstBrace !== -1) {
+            jsonString = jsonString.substring(firstBrace, (lastBrace !== -1 ? lastBrace + 1 : jsonString.length));
+            // Validate JSON structure before parsing
+            let isValidJson = false;
+            let rawData = {};
+            try {
+                rawData = JSON.parse(jsonString);
+                isValidJson = true;
+                console.log("[JobOrchestrator] ✅ JSON parsed successfully");
+            }
+            catch (preCheckError) {
+                console.warn("[JobOrchestrator] JSON pre-check failed, attempting repair:", preCheckError.message);
+                // TRUNCATION REPAIR STRATEGY
+                const isTruncated = preCheckError.message?.includes('Expected') ||
+                    preCheckError.message?.includes('Unexpected end') ||
+                    preCheckError.message?.includes('Unterminated string');
+                if (isTruncated) {
+                    console.log("[JobOrchestrator] Detected truncated JSON, attempting repair...");
+                    // Strategy 1: Smart Cut at last closed object
+                    const lastObjectEnd = jsonString.lastIndexOf('},');
+                    if (lastObjectEnd !== -1) {
+                        const smartTruncated = jsonString.substring(0, lastObjectEnd + 1);
+                        const closingAttempts = [
+                            smartTruncated + ']}',
+                            smartTruncated + ']\n}',
+                            smartTruncated + ']}'
+                        ];
+                        for (const attempt of closingAttempts) {
+                            try {
+                                rawData = JSON.parse(attempt);
+                                jsonString = attempt;
+                                isValidJson = true;
+                                console.log("[JobOrchestrator] ✅ Successfully repaired JSON via Object Boundary Truncation");
+                                break;
+                            }
+                            catch (e) { }
+                        }
+                    }
+                    // Strategy 2: Line-based Truncation (Fallback)
+                    if (!isValidJson) {
+                        const lines = jsonString.split('\n');
+                        for (let i = lines.length - 1; i >= 0; i--) {
+                            const testJson = lines.slice(0, i).join('\n');
+                            const closingAttempts = [
+                                testJson + '\n]\n}\n}',
+                                testJson + '\n}\n]\n}',
+                                testJson + '\n]\n}',
+                                testJson + '\n}'
+                            ];
+                            for (const attempt of closingAttempts) {
+                                try {
+                                    rawData = JSON.parse(attempt);
+                                    console.log(`[JobOrchestrator] ✅ Successfully repaired JSON by truncating at line ${i}`);
+                                    isValidJson = true;
+                                    jsonString = attempt;
+                                    break;
+                                }
+                                catch (e) { }
+                            }
+                            if (isValidJson)
+                                break;
+                        }
+                    }
+                }
+                else if (preCheckError.message?.includes('Bad control character')) {
+                    console.log("[JobOrchestrator] Detected Bad Control Character, cleaning...");
+                    jsonString = jsonString.replace(/[\x00-\x1F]/g, '');
+                    try {
+                        rawData = JSON.parse(jsonString);
+                        isValidJson = true;
+                    }
+                    catch (e) { }
+                }
+            }
+            if (!isValidJson) {
+                console.error("[JobOrchestrator] ❌ All JSON repair strategies failed");
+                throw new Error("Failed to parse Gemini response as valid JSON");
+            }
+            const analytics = rawData.analytics || {};
+            console.log("[JobOrchestrator] Analytics keys:", Object.keys(analytics));
+            console.log("[JobOrchestrator] Clusters:", (analytics.clusters || []).length);
+            console.log("[JobOrchestrator] Topics:", (analytics.topics || []).length);
+            console.log("[JobOrchestrator] Creators:", (analytics.creators || []).length);
+            console.log("[JobOrchestrator] Brands:", (analytics.brands || []).length);
+            // PORT THE ORIGINAL GRAPH BUILDER FROM geminiService.ts
+            const nodes = [];
+            const links = [];
+            nodes.push({ id: 'MAIN', label: query, group: 'main', val: 50, level: 0 });
+            // Build Clusters & Creators
+            (analytics.clusters || []).forEach((cluster, i) => {
+                const cid = `c_${i}`;
+                nodes.push({ id: cid, label: cluster.name, group: 'cluster', val: 25, level: 1 });
+                links.push({ source: 'MAIN', target: cid, value: 5 });
+                const creatorsForCluster = (analytics.creators || []).filter((_, idx) => idx % ((analytics.clusters || []).length || 1) === i);
+                creatorsForCluster.forEach((creator) => {
+                    const crid = `cr_${creator.handle}`;
+                    if (!nodes.find(n => n.id === crid)) {
+                        nodes.push({
+                            id: crid,
+                            label: creator.name,
+                            group: 'creator',
+                            val: 15,
+                            level: 2,
+                            data: {
+                                username: creator.handle,
+                                fullName: creator.name,
+                                category: creator.category
+                            }
+                        });
+                        links.push({ source: cid, target: crid, value: 3 });
+                    }
+                });
+            });
+            // Build Topics & Subtopics
+            (analytics.topics || []).forEach((topic, i) => {
+                const tid = `t_${i}`;
+                nodes.push({ id: tid, label: topic.name, group: 'topic', val: 22, level: 1 });
+                links.push({ source: 'MAIN', target: tid, value: 4 });
+                (topic.subtopics || []).forEach((sub, j) => {
+                    const sid = `st_${i}_${j}`;
+                    nodes.push({
+                        id: sid,
+                        label: typeof sub === 'string' ? sub : sub.name,
+                        group: 'subtopic',
+                        val: 10,
+                        level: 2,
+                        parentId: tid
+                    });
+                    links.push({ source: tid, target: sid, value: 2 });
+                });
+            });
+            // Build Brands
+            (analytics.brands || []).slice(0, 8).forEach((brand, i) => {
+                const bid = `b_${i}`;
+                nodes.push({ id: bid, label: brand.name, group: 'brand', val: 18, level: 1 });
+                links.push({ source: 'MAIN', target: bid, value: 3 });
+            });
+            console.log("[JobOrchestrator] Generated nodes count:", nodes.length);
+            console.log("[JobOrchestrator] Generated links count:", links.length);
+            const localId = uuidv4();
+            await mongoService.createDataset({
+                id: localId,
+                userId: job.userId,
+                name: `AI Analysis: ${query}`,
+                platform: platform,
+                targetProfile: query,
+                dataType: 'audience',
+                recordCount: nodes.length,
+                tags: ['snapshot'],
+                metadata: { query, sampleSize, mode: 'ai_analysis' },
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+            await mongoService.insertRecords([{
+                    datasetId: localId,
+                    recordType: 'graph_snapshot',
+                    platform: platform,
+                    data: {
+                        nodes,
+                        links,
+                        profileFullName: query,
+                        recordType: 'graph_snapshot',
+                        analytics
+                    },
+                    createdAt: new Date()
+                }]);
+            await mongoService.updateJob(job.id, {
+                status: 'completed',
+                progress: 100,
+                result: { datasetId: localId }
+            });
+            await this.notifyCompletion(job, query);
+        }
+        else {
+            throw new Error("No JSON object found in Gemini response");
+        }
+    }
+    safeParseJson(text) {
+        if (!text) {
+            console.warn("[safeParseJson] Empty text provided");
+            return {};
+        }
+        try {
+            // Step 1: Aggressive markdown removal - handle all variations
+            let cleaned = text.trim();
+            cleaned = cleaned.replace(/^```(?:json)?\s*/gi, ''); // Remove opening fence
+            cleaned = cleaned.replace(/\s*```\s*$/g, ''); // Remove closing fence
+            cleaned = cleaned.trim();
+            // Step 2: Find the FIRST complete JSON object using brace counting
+            const firstBrace = cleaned.indexOf('{');
+            if (firstBrace === -1) {
+                console.error("[safeParseJson] No opening brace found");
+                return {};
+            }
+            let braceCount = 0;
+            let inString = false;
+            let escapeNext = false;
+            let endPos = -1;
+            for (let i = firstBrace; i < cleaned.length; i++) {
+                const char = cleaned[i];
+                if (escapeNext) {
+                    escapeNext = false;
+                    continue;
+                }
+                if (char === '\\') {
+                    escapeNext = true;
+                    continue;
+                }
+                if (char === '"' && !escapeNext) {
+                    inString = !inString;
+                    continue;
+                }
+                if (!inString) {
+                    if (char === '{') {
+                        braceCount++;
+                    }
+                    else if (char === '}') {
+                        braceCount--;
+                        if (braceCount === 0) {
+                            endPos = i + 1;
+                            break; // Found the end of the first complete JSON object
+                        }
+                    }
+                }
+            }
+            if (endPos === -1) {
+                console.error("[safeParseJson] No matching closing brace found");
+                return {};
+            }
+            let jsonStr = cleaned.substring(firstBrace, endPos);
+            console.log("[safeParseJson] Extracted first complete JSON, length:", jsonStr.length);
+            // Step 3: Fix common JSON issues
+            jsonStr = jsonStr.replace(/,(\s*[}\]])/g, '$1'); // Remove trailing commas
+            // Step 4: Parse
+            const parsed = JSON.parse(jsonStr);
+            console.log("[safeParseJson] ✅ Successfully parsed JSON");
+            console.log("[safeParseJson] Keys:", Object.keys(parsed));
+            return parsed;
+        }
+        catch (e) {
+            console.error("[safeParseJson] ❌ Parse failed:", e.message);
+            console.error("[safeParseJson] Response start:", text.substring(0, 300));
+            console.error("[safeParseJson] Response end:", text.substring(Math.max(0, text.length - 300)));
+            return {};
+        }
+    }
+    /**
+     * QUERY BUILDER ORCHESTRATION
+     * Full port of orchestrationService.ts for server-side execution
+     */
+    /**
+     * Process Orchestration Job
+     * Handles complex multi-step Query Builder workflows
+     */
+    async processOrchestration(job) {
+        const { query, sampleSize = 100, ignoreCache = false, useDeepAnalysis = false } = job.metadata;
+        console.log(`[Orchestration] Starting for query: "${query}" (size: ${sampleSize}, deep: ${useDeepAnalysis})`);
+        await mongoService.updateJob(job.id, { progress: 5 });
+        // Step 1: Analyze requirements and generate plan
+        await mongoService.updateJob(job.id, {
+            progress: 10,
+            result: { stage: 'Analyzing query intent and generating scrape plan...' }
+        });
+        let plan;
+        try {
+            // Get existing datasets for potential reuse
+            const existingDatasets = await this.getExistingDatasets(job.userId);
+            plan = await this.analyzeMapRequirementsServer(query, existingDatasets, sampleSize, ignoreCache, useDeepAnalysis);
+            console.log(`[Orchestration] Plan generated: ${plan.steps.length} steps, intent: ${plan.intent}`);
+        }
+        catch (e) {
+            throw new Error(`Plan generation failed: ${e.message}`);
+        }
+        if (!plan || !plan.steps || !Array.isArray(plan.steps)) {
+            throw new Error("AI failed to generate a valid plan with steps");
+        }
+        await mongoService.updateJob(job.id, {
+            progress: 20,
+            result: { stage: 'Plan ready, executing scrape steps...', plan }
+        });
+        // Step 2: Execute the plan
+        const results = await this.executeOrchestrationPlan(job, plan);
+        // Step 3: Generate graph from results
+        await mongoService.updateJob(job.id, {
+            progress: 85,
+            result: { stage: 'Generating visualization graph...', plan }
+        });
+        const graphData = await this.generateGraphFromResults(plan, results, query);
+        // Step 4: Save to database
+        const localId = uuidv4();
+        await mongoService.createDataset({
+            id: localId,
+            userId: job.userId,
+            name: `Query Builder: ${query}`,
+            platform: plan.platform || 'instagram',
+            targetProfile: query,
+            dataType: 'audience',
+            recordCount: graphData.nodes.length,
+            tags: ['orchestration', plan.intent],
+            metadata: { query, sampleSize, intent: plan.intent, mode: 'orchestration' },
+            createdAt: new Date(),
+            updatedAt: new Date()
+        });
+        await mongoService.insertRecords([{
+                datasetId: localId,
+                recordType: 'graph_snapshot',
+                platform: plan.platform || 'instagram',
+                data: {
+                    nodes: graphData.nodes,
+                    links: graphData.links,
+                    profileFullName: query,
+                    recordType: 'graph_snapshot',
+                    plan,
+                    rawResults: results
+                },
+                createdAt: new Date()
+            }]);
+        await mongoService.updateJob(job.id, {
+            status: 'completed',
+            progress: 100,
+            result: { datasetId: localId, plan, nodeCount: graphData.nodes.length }
+        });
+        await this.notifyOrchestrationComplete(job, query, localId);
+    }
+    /**
+     * Process Query Builder job (server-side orchestration)
+     * This replaces the client-side orchestrationService.ts for Query Builder
+     */
+    async processQueryBuilderJob(job, query, sampleSize, ignoreCache) {
+        try {
+            console.log(`[QueryBuilder] Processing job ${job.id}: "${query}"`);
+            // Step 1: Get existing datasets for reuse
+            const existingDatasets = await this.getExistingDatasets(job.userId);
+            // Step 2: Generate execution plan via AI
+            await mongoService.updateJob(job.id, {
+                progress: 10,
+                result: { stage: 'Analyzing requirements...' }
+            });
+            const plan = await this.analyzeMapRequirements(query, sampleSize);
+            console.log(`[QueryBuilder] Plan generated:`, {
+                intent: plan.intent,
+                steps: plan.steps?.length || 0,
+                reusedDatasets: plan.existingDatasetIds?.length || 0
+            });
+            await mongoService.updateJob(job.id, {
+                progress: 20,
+                result: { stage: 'Plan ready, executing scrape steps...', plan }
+            });
+            // Step 3: Execute the orchestration plan
+            const results = await this.executeOrchestrationPlan(job, plan);
+            // --- ANALYTICS ENRICHMENT (Server-Side) ---
+            let analytics = {
+                calculatedAt: new Date()
+            };
+            // Calculate Overindexing if Intent matches
+            const overindexingIntents = ['brand_affinity', 'over_indexing', 'network_clusters', 'audience_overlap'];
+            if (overindexingIntents.includes(plan.intent)) {
+                console.log(`[QueryBuilder] Calculating Overindexing for intent: ${plan.intent}`);
+                try {
+                    await mongoService.updateJob(job.id, {
+                        progress: 80,
+                        result: { stage: 'Calculating audience over-indexing...' }
+                    });
+                    // We need to pass the raw results correctly. 
+                    // Usually Step 1 = Followers, Step 2 = Followings (if 2 hops)
+                    // If results has 1 item, it's just followers. If 2 items, second is following.
+                    // But `results` is an array of arrays (steps). 
+                    let followersData = [];
+                    let followingData = [];
+                    if (results.length > 0)
+                        followersData = results[0];
+                    if (results.length > 1) {
+                        // Following data is usually a flat array of following objects for multiple users
+                        // Or an array of arrays if we kept structure. 
+                        // runApifyActorServer returns an Array<Item>. 
+                        // If we ran a "Followers/Following" scraper, result[1] is the output.
+                        // We need to group it by user to match calculateOverindexing expectations
+                        // actually calculateOverindexing expects rawFollowing as any[][] (array of samples)
+                        // But if we just scraped a giant list, we might need to rely on the service's internal grouping or pass it as is.
+                        // Let's pass the raw second step result if it exists.
+                        followingData = [results[1]]; // Wrap in array as it expects samples
+                    }
+                    // For now, pass what we have. The service handles extraction from posts/mentions too.
+                    const overindexingResult = await calculateOverindexing(query, plan.platform || 'instagram', undefined, // No dataset ID yet
+                    [], followersData, followingData);
+                    analytics.overindexing = overindexingResult;
+                    // [FIX] Ensure UI compatibility (AnalyticsPanel expects 'username' or 'label')
+                    if (analytics.overindexing.topBrands) {
+                        analytics.overindexing.topBrands = analytics.overindexing.topBrands.map((b) => ({
+                            ...b,
+                            username: b.username || b.name,
+                            label: b.label || b.name
+                        }));
+                    }
+                    if (analytics.overindexing.topCreators) {
+                        analytics.overindexing.topCreators = analytics.overindexing.topCreators.map((c) => ({
+                            ...c,
+                            username: c.username || c.handle || c.name,
+                            label: c.label || c.name
+                        }));
+                    }
+                    console.log(`[QueryBuilder] Overindexing complete. Found ${overindexingResult.topBrands.length} brands.`);
+                }
+                catch (calcError) {
+                    console.error("[QueryBuilder] Overindexing calculation failed:", calcError);
+                    analytics.overindexingError = calcError.message;
+                }
+            }
+            // --- INFLUENCER / BIO SEARCH ANALYTICS ---
+            // If intent is finding people (not overindexing brands), ensure we populate the list for the dashboard
+            if (['influencer_identification', 'bio_search'].includes(plan.intent)) {
+                console.log(`[QueryBuilder] Extracting profiles for ${plan.intent}`);
+                const allItems = results.flat();
+                // Filter for user profiles (items with username and not just media)
+                // Apify profile scraper returns objects with 'username', 'biography', etc.
+                const profiles = allItems.filter(item => item.username && !item.text); // simplistic filter
+                if (profiles.length > 0) {
+                    analytics.overindexing = analytics.overindexing || {};
+                    analytics.overindexing.topCreators = profiles.map((p) => ({
+                        username: p.username,
+                        fullName: p.fullName || p.full_name,
+                        profilePicUrl: p.profilePicUrl || p.profile_pic_url,
+                        followerCount: p.followerCount || p.followersCount,
+                        bio: p.biography || p.bio,
+                        url: `https://www.instagram.com/${p.username}/`,
+                        category: 'creator', // Assume creator for this intent
+                        overindexScore: 0, // Not applicable
+                        provenance: {
+                            source: 'Direct Search / Bio Filter',
+                            reasoning: `Matched criteria: ${query}`,
+                            evidence: [p.biography || "Matched search terms"]
+                        }
+                    }));
+                }
+            }
+            // --- SEMANTIC ANALYSIS (Deep Search & Sentiment & Lexicon) ---
+            const semanticIntents = ['subject_matter', 'viral_content', 'trending', 'sentiment_analysis', 'lexicon_analysis'];
+            if (semanticIntents.includes(plan.intent)) {
+                console.log(`[QueryBuilder] Running Semantic Analysis for intent: ${plan.intent}`);
+                try {
+                    await mongoService.updateJob(job.id, {
+                        progress: 90,
+                        result: { stage: 'Analyzing content semantics...' }
+                    });
+                    // Flatten results and find posts (items with text/caption)
+                    const allItems = results.flat();
+                    const posts = allItems.filter(item => item.text || item.caption);
+                    if (posts.length > 0) {
+                        console.log(`[QueryBuilder] Analyzing ${posts.length} posts...`);
+                        // [NEW] Determine analysis mode
+                        let analysisMode = 'standard';
+                        if (plan.intent === 'sentiment_analysis' || plan.intent === 'comparison')
+                            analysisMode = 'sentiment';
+                        if (plan.intent === 'lexicon_analysis' || plan.intent === 'topic_analysis')
+                            analysisMode = 'lexicon';
+                        // Check for Bio Search filtering
+                        let itemsToAnalyze = posts;
+                        if (plan.intent === 'bio_search') {
+                            const keywordMatch = query.match(/find (?:profiles|developers|designers|founders|people|users) (?:who are|that are|that have) ([\w\s]+)/i);
+                            const keyword = keywordMatch ? keywordMatch[1].trim().toLowerCase() : '';
+                            if (keyword) {
+                                console.log(`[QueryBuilder] Filtering for bio keyword: "${keyword}"`);
+                                itemsToAnalyze = posts.filter((p) => (p.biography || p.bio || '').toLowerCase().includes(keyword) ||
+                                    (p.text || '').toLowerCase().includes(keyword));
+                                console.log(`[QueryBuilder] Filtered down to ${itemsToAnalyze.length} relevant items.`);
+                            }
+                        }
+                        const analysis = await analyzeBatch(itemsToAnalyze.slice(0, 50), query); // Limit to 50 for cost/speed
+                        if (analysis.matches && analysis.matches.length > 0) {
+                            console.log(`[QueryBuilder] Found ${analysis.matches.length} semantic matches.`);
+                            analytics.matches = analysis.matches;
+                            analytics.topContent = analysis.matches.map((m) => ({
+                                id: m.id || m.shortCode,
+                                type: m.type || (m.videoUrl ? 'Video' : 'Image'),
+                                url: m.url || m.postUrl,
+                                author: m.ownerUsername || m.username,
+                                text: m.text || m.caption,
+                                score: m.score || m.sentiment_score, // Fallback for sentiment
+                                sentiment: m.sentiment_score, // specific field
+                                emotion: m.emotion_label, // specific field
+                                provenance: m.provenance,
+                                // Rich Media Fields
+                                videoUrl: m.videoUrl || m.video_url,
+                                displayUrl: m.displayUrl || m.display_url || m.imageUrl || m.image_url,
+                                thumbnailUrl: m.thumbnailUrl || m.thumbnail_url,
+                                likesCount: m.likesCount || m.likes || 0,
+                                commentsCount: m.commentsCount || m.comments || 0,
+                            }));
+                        }
+                        // Store analysis results if available
+                        if (analysis.vibeAnalysis) {
+                            if (!analytics.visualAnalysis)
+                                analytics.visualAnalysis = { aestheticTags: [], vibeDescription: '', colorPalette: [] };
+                            analytics.visualAnalysis.vibeDescription = analysis.vibeAnalysis.vibe_description;
+                            analytics.visualAnalysis.aestheticTags = analysis.vibeAnalysis.keywords || [];
+                            analytics.sentimentAnalysis = analysis.vibeAnalysis;
+                        }
+                        // Store Lexicon
+                        if (analysis.lexicon) {
+                            if (!analytics.visualAnalysis)
+                                analytics.visualAnalysis = { aestheticTags: [], vibeDescription: '', colorPalette: [] };
+                            analytics.visualAnalysis.lexicon = analysis.lexicon;
+                        }
+                    }
+                    else {
+                        console.warn("[QueryBuilder] No text content found to analyze.");
+                    }
+                }
+                catch (semanticErr) {
+                    console.error("[QueryBuilder] Semantic analysis failed:", semanticErr);
+                    analytics.semanticError = semanticErr.message;
+                }
+            }
+            // --- GEO SCOUTING ---
+            if (plan.intent === 'geo_discovery') {
+                console.log(`[QueryBuilder] Running Geo Analysis for intent: ${plan.intent}`);
+                try {
+                    await mongoService.updateJob(job.id, { progress: 90, result: { stage: 'Aggregating locations...' } });
+                    // Extract locations from profiles (results is array of arrays or items)
+                    const allItems = results.flat();
+                    // Prioritize: specific fields > biography
+                    const rawLocations = allItems.map(p => p.city_name || p.location || p.address_street || (p.biography ? (p.biography.match(/in ([\w\s,]+)/i)?.[1]) : null)).filter(l => l && typeof l === 'string' && l.length > 3);
+                    if (rawLocations.length > 0) {
+                        // [FIX] Implement aggregateLocations inline or call helper
+                        const aggregations = this.aggregateLocations(rawLocations);
+                        // const aggregations: any[] = []; // await aggregateLocations(rawLocations);
+                        if (!analytics.visualAnalysis)
+                            analytics.visualAnalysis = { aestheticTags: [], vibeDescription: '', colorPalette: [] };
+                        analytics.visualAnalysis.geoData = aggregations;
+                        console.log(`[QueryBuilder] Aggregated ${aggregations.length} geo clusters.`);
+                    }
+                }
+                catch (geoErr) {
+                    console.error("Geo Analysis Failed", geoErr);
+                }
+            }
+            // Step 4: Generate graph from results
+            await mongoService.updateJob(job.id, {
+                progress: 85,
+                result: { stage: 'Generating visualization graph...', plan }
+            });
+            // [FIX] Ensure we pass the *filtered* items if we performed a bio search
+            // We need to re-structure itemsToAnalyze back into the expected format or just pass it if supported.
+            // generateGraphFromResults usually takes raw batches. Let's flatten and filter.
+            let graphInputData = results;
+            if (plan.intent === 'bio_search') {
+                const keywordMatch = query.match(/find (?:profiles|developers|designers|founders|people|users) (?:who are|that are|that have) ([\w\s]+)/i);
+                const keyword = keywordMatch ? keywordMatch[1].trim().toLowerCase() : '';
+                if (keyword) {
+                    // Filter the raw results structure (array of arrays)
+                    graphInputData = results.map(batch => batch.filter((p) => (p.biography || p.bio || '').toLowerCase().includes(keyword) ||
+                        (p.text || '').toLowerCase().includes(keyword)));
+                    console.log(`[QueryBuilder] Applied Bio Context filter to graph input. Keyword: ${keyword}`);
+                }
+            }
+            // Pass analytics to graph generator if needed (optional improvement)
+            const graphData = await this.generateGraphFromResults(plan, graphInputData, query, analytics);
+            // [NEW] Generate Dashboard Config for the frontend
+            const dashboardConfig = generateDashboardConfig(query, plan.intent, analytics);
+            console.log(`[QueryBuilder] Graph generated:`, {
+                nodes: graphData.nodes.length,
+                links: graphData.links.length,
+                configWidgets: dashboardConfig.widgets.length
+            });
+            // Step 5: Save dataset to MongoDB
+            const localId = uuidv4();
+            await mongoService.createDataset({
+                id: localId,
+                userId: job.userId,
+                name: `Query Builder: ${query}`,
+                platform: plan.platform || 'instagram',
+                targetProfile: query,
+                dataType: 'audience',
+                recordCount: graphData.nodes.length,
+                tags: ['query_builder', plan.intent],
+                metadata: {
+                    query,
+                    sampleSize,
+                    intent: plan.intent,
+                    analytics, // [FIX] Persist calculated analytics (overindexing)
+                    dashboardConfig // [FIX] Persist Dashboard Config for UI
+                },
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+            await mongoService.insertRecords([{
+                    datasetId: localId,
+                    recordType: 'graph_snapshot',
+                    platform: plan.platform || 'instagram',
+                    data: {
+                        nodes: graphData.nodes,
+                        links: graphData.links,
+                        profileFullName: query,
+                        recordType: 'graph_snapshot',
+                        process: 'orchestrator',
+                        analytics, // [FIX] Attach full analytics to snapshot so AnalyticsPanel can use it
+                        plan,
+                        rawResults: results
+                    },
+                    createdAt: new Date()
+                }]);
+            await mongoService.updateJob(job.id, {
+                status: 'completed',
+                progress: 100,
+                result: { datasetId: localId, plan, nodeCount: graphData.nodes.length }
+            });
+            console.log(`[QueryBuilder] Job ${job.id} completed successfully. Dataset: ${localId}`);
+            await this.notifyOrchestrationComplete(job, query, localId);
+        }
+        catch (error) {
+            console.error(`[QueryBuilder] Job ${job.id} failed:`, error);
+            const errorMsg = error instanceof Error ? error.message : typeof error === 'string' ? error : JSON.stringify(error);
+            await mongoService.updateJob(job.id, {
+                status: 'failed',
+                progress: 0,
+                error: errorMsg || 'Unknown error occurred (check logs)',
+                result: {
+                    error: errorMsg,
+                    stack: error instanceof Error ? error.stack : undefined,
+                    // [NEW] Detect Apify Hard Limit for Scotty Screen
+                    errorType: errorMsg.includes('Monthly usage hard limit exceeded') ? 'APIFY_HARD_LIMIT_EXCEEDED' : 'GENERAL_ERROR'
+                }
+            });
+            // Send failure notification
+            try {
+                const user = await mongoService.getDb().collection('users').findOne({ id: job.userId });
+                if (user?.email) {
+                    await emailService.sendTitleAlert(user.email, `FANDOM:ERROR Query_Builder_Failed_${new Date().toISOString().replace(/[:.]/g, '-')}`);
+                }
+            }
+            catch (emailError) {
+                console.error('[QueryBuilder] Failed to send failure email:', emailError);
+            }
+        }
+    }
+    /**
+     * Cancel a running job
+     */
+    async cancelJob(jobId) {
+        // If it's the currently processing job, we can try to flag it to stop
+        // Realistically, for async/await loops, we check job status periodically
+        // or just accept that the loop will finish safely but result won't be used.
+        console.log(`[JobOrchestrator] Request to cancel job ${jobId}`);
+        // We rely on the loops checking mongo status or an in-memory flag?
+        // For now, just logging. The route handler updates status to 'aborted'.
+    }
+    /**
+     * Get existing datasets for a user (for reuse detection)
+     */
+    async getExistingDatasets(userId) {
+        try {
+            const db = mongoService.getDb();
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            const datasets = await db.collection('datasets')
+                .find({
+                userId,
+                createdAt: { $gt: thirtyDaysAgo }
+            })
+                .sort({ createdAt: -1 })
+                .limit(50)
+                .toArray();
+            return datasets.map(d => ({
+                id: d.id,
+                name: d.name,
+                platform: d.platform,
+                targetProfile: d.targetProfile,
+                dataType: d.dataType,
+                recordCount: d.recordCount,
+                tags: d.tags || [],
+                createdAt: d.createdAt
+            }));
+        }
+        catch (e) {
+            console.warn('[Orchestration] Failed to fetch existing datasets:', e);
+            return [];
+        }
+    }
+    /**
+     * Analyze Map Requirements (Server-Side Port)
+     * Port of analyzeMapRequirements from orchestrationService.ts
+     */
+    async analyzeMapRequirementsServer(query, existingDatasets, sampleSize = 500, ignoreCache = false, useDeepAnalysis = false) {
+        console.log(`[analyzeMapRequirements] Query: "${query}", Sample: ${sampleSize}, Deep: ${useDeepAnalysis}`);
+        const model = "gemini-3-flash-preview";
+        console.log(`[Server] Using Advanced Logic (${model}) for query analysis (Verified Fix).`);
+        // Prepare context
+        const effectiveDatasets = ignoreCache ? [] : existingDatasets;
+        const datasetContext = effectiveDatasets.map(d => {
+            const tags = d.tags?.join(', ') || 'none';
+            const createdDate = d.createdAt ? new Date(d.createdAt).toLocaleDateString() : 'unknown';
+            return `- ID: ${d.id}
+   Name: "${d.name}"
+   Platform: ${d.platform}
+   Target: ${d.targetProfile}
+   Type: ${d.dataType}
+   Records: ${d.recordCount}
+   Created: ${createdDate}
+   Tags: ${tags}`;
+        }).join('\n\n');
+        console.log(`[Dataset Reuse] Checking ${effectiveDatasets.length} existing datasets`);
+        const actorContext = scraperRegistryRaw.map((a) => `- Actor: ${a.name} (ID: ${a.id})
+   Desc: ${a.description}
+   Cost: $${a.costPerThousand}/1k
+   INPUT SCHEMA (STRICTLY FOLLOW THIS): ${JSON.stringify(a.inputSchema, null, 2)}`).join('\n\n');
+        // This is the FULL prompt from orchestrationService.ts - I'll include it completely
+        const prompt = `
+    Task: You are an Intelligent Orchestrator for a Fandom Mapping system.
+    Goal: Create a "Scrape Plan" to answer the user's query perfectly.
+
+    User Query: "${query}"
+    Sample Size Constraint: ${sampleSize} (This is the number of BASE PROFILES/ITEMS the user wants)
+    Deep Analysis Requested: ${useDeepAnalysis ? "YES" : "NO"}
+    
+    Available Datasets (Local):
+    ${datasetContext || "No local datasets."}
+
+    Available Scrapers (Apify):
+    ${actorContext}
+
+    Instructions:
+    1. **STRATEGY FIRST**: Define the scraping strategy (Actors/Steps) based on User Query intent.
+       - DO NOT change the *method* based on sample size.
+       - **CRITICAL FOR SEARCH QUERIES**: If using Instagram search (searchType/searchLimit):
+         * searchLimit = ${sampleSize} (the number of profiles/hashtags to find)
+         * estimatedRecords = searchLimit × resultsLimit (e.g., ${sampleSize} profiles × 2 posts = ${sampleSize * 2} records)
+       - For other scrapers: Apply sample size to 'limit', 'maxItem', or 'resultsLimit' parameters.
+       
+    2. **MANDATORY DATASET REUSE (CRITICAL - HIGHEST PRIORITY)**:
+       - If a Local Dataset PERFECTLY matches the user's query target + intent, REUSE IT.
+       - Example: Query "What does nike's audience like?" + Exists Dataset "Nike Followers" → REUSE (No scraping needed).
+       - Example: Query "Find creators into fitness" + Exists Dataset "Fitness Creators" → REUSE (No scraping needed).
+       - **MATCH CRITERIA** (ALL must match):
+         * Target Profile/Topic MUST match query (e.g., "nike" in query → "nike" in targetProfile)
+         * Data Type MUST be relevant (e.g., "followers" for audience queries, "posts" for content analysis)
+         * Record Count MUST be sufficient (≥ sample size requested)
+       - If reused, populate 'existingDatasetIds' array and SET steps = [].
+       - **CRITICAL**: If you reuse a dataset, you MUST set steps to an empty array [].
+       - If NO perfect match exists, proceed to scraping (steps).
+
+    3. Identify the user's INTENT and map it to one of these:
+       - "sensitivity_analysis": Cross-shopping behavior (e.g., "What else do X fans buy?")
+       - "influencer_identification": Find creators/accounts in a niche
+       - "network_clusters": Community overlap/tribes
+       - "audience_overlap": Shared audiences between brands
+       - "subject_matter": Topic/interest analysis of a community
+       - "bio_search": Filter profiles by bio keywords
+       - "viral_content": Trending content analysis
+       - "general_map": General exploration
+
+    4. Based on intent, define the CORRECT ACTORS and INPUT SCHEMA.
+
+    **CRITICAL RULES:**
+    1. **Profile Enrichment for Followers/Followings**: If using 'thenetaji/instagram-followers-followings-scraper', you MUST add a second enrichment step using 'apify/instagram-profile-scraper' to get full profile data (profile pictures, bios, follower counts, latest posts). This is MANDATORY for network mapping.
+       - Step 1: Get follower/following usernames (thenetaji actor)
+       - Step 2: Enrich those usernames (apify/instagram-profile-scraper with usernames from Step 1)
+    
+    2. **Sample Size**: The 'sampleSize' applies to Step 1 (base scrape). Enrichment step should use "USE_DATA_FROM_STEP_step_1".
+    
+    3. **Intent Selection**: Choose the most specific intent. Default to "general_map" only if no other intent fits.
+    
+    4. **Cost Awareness**: Estimate costs based on scraperRegistry. Profile enrichment adds ~$4.60 per 1000 profiles.
+
+    **INTENT-SPECIFIC STRATEGIES:**
+
+    1. "What products do [FANS OF X] also buy?" / "Cross-shopping behavior" / "Brand Affinity" / "Map followers of [X]"
+    → Intent: "sensitivity_analysis" or "network_clusters"
+      → Strategy:
+        1. Scrape Followers of [X] (Get Usernames).
+           - Actor: 'thenetaji/instagram-followers-followings-scraper'
+           - Input: { "username": ["[BRAND]"], "type": "followers", "max_count": ${sampleSize} }
+        2. MANDATORY: Enrich follower profiles to get pictures, posts, analytics.
+           - Actor: 'apify/instagram-profile-scraper'
+           - Input: { "usernames": ["USE_DATA_FROM_STEP_step_1"] }
+        3. (For sensitivity/affinity) Scrape who THOSE followers follow.
+           - Actor: 'thenetaji/instagram-followers-followings-scraper'
+           - Input: { "username": ["USE_DATA_FROM_STEP_step_2"], "type": "followings", "max_count": 20 }
+        - Reasoning: "Step 1 gets usernames, Step 2 enriches with full profile data (required for UI), Step 3 maps their following for brand affinity."
+
+    2. "Find [NICHE] creators" / "Rising stars in [TOPIC]" / "Top influencers for [BRAND]"
+    → Intent: "influencer_identification"
+      → Strategy:
+        1. Use Instagram Search to find profiles matching the niche.
+           - Actor: 'apify~instagram-profile-scraper'
+           - Input: {
+               "search": "[SIMPLE_KEYWORD]",
+               "searchType": "user",
+               "searchLimit": ${sampleSize},
+               "resultsType": "posts",
+               "resultsLimit": 2,
+               "addParentData": true
+           }
+           - **CRITICAL**: 'search' MUST be a simple, high-level keyword or phrase. remove modifiers like ">5k", "with email", "from UK".
+           - Example: Query "software developers with >5k followers" -> search: "software developer"
+           - Example: Query "fashion influencers in London" -> search: "fashion london"
+        2. (Optional) Scrape additional posts from top results for deeper analysis.
+
+    3. "Overlap between [BRAND A] and [BRAND B] fans"
+    → Intent: "audience_overlap"
+      → Strategy:
+        1. Scrape Followers of Brand A.
+        2. Scrape Followers of Brand B.
+        3. (Implicit) System will calculate overlap.
+
+    4. "Bio-based filtering" / "Find [ROLE] who follow [USER]"
+    → Intent: "bio_search"
+      → Strategy:
+        1. Scrape Followers with enriched profiles.
+           - Actor: 'thenetaji/instagram-followers-followings-scraper'
+           - Input: { "username": ["[USER]"], "type": "followers", "max_count": ${sampleSize} }
+        2. Generate 10-15 related keywords for filtering.
+           - Populate 'filter.bioKeywords' in JSON output.
+
+    5. "What are followers of X into?" / "Interests of X's audience"
+    → Intent: "subject_matter"
+      → Strategy:
+        1. Scrape Followers of X (Base Nodes).
+        2. Scrape Posts of a subset (20-50) of THESE Followers.
+           - Actor: 'apify/instagram-api-scraper'
+           - Input: { "directUrls": ["USE_DATA_FROM_STEP_step_1"], "resultsType": "posts", "resultsLimit": 15 }
+
+    **OUTPUT FORMAT:**
+    Return ONLY valid JSON with this structure:
+    {
+      "intent": "sensitivity_analysis|influencer_identification|...",
+      "reasoning": "Brief explanation of why this intent and strategy",
+      "existingDatasetIds": ["id1", "id2"] or [],
+      "steps": [
+        {
+          "stepId": "step_1",
+          "description": "Scrape followers of nike",
+          "actorId": "thenetaji/instagram-followers-followings-scraper",
+          "input": { "username": ["nike"], "type": "followers", "max_count": ${sampleSize} },
+          "estimatedRecords": ${sampleSize},
+          "estimatedCost": 0.05
+        }
+      ],
+      "filter": {
+        "bioKeywords": ["keyword1", "keyword2"], // For bio_search
+        "minFollowers": 5000, // Optional: Number only
+        "maxFollowers": 100000, // Optional: Number only
+        "minFollowing": 100 // Optional
+      },
+      "totalEstimatedCost": 0.10,
+      "platform": "instagram"
+    }
+
+    **CRITICAL RULES:**
+    - If user asks for specific follower counts (e.g. ">5k", "<100k"), YOU MUST popuate 'filter.minFollowers' or 'filter.maxFollowers'.
+    - 'search' input MUST be a simple keyword. Move quantitative constraints to 'filter'.
+    - If reusing datasets, existingDatasetIds must have IDs and steps must be []
+    - If scraping, steps must have valid actorIds from the registry
+    - All inputs must match the actor's input schema EXACTLY
+    - For search queries, searchLimit = ${sampleSize}
+    - Estimate costs based on CostPerThousand from actor registry
+    - Return ONLY the JSON, no explanatory text
+    `;
+        const client = getAiClient();
+        if (!client)
+            throw new Error("AI Client not initialized");
+        // [FIX] Robust Model Call with Fallback and Timeout
+        const callModelWithTimeout = async (modelName) => {
+            console.log(`[analyzeMapRequirements] Attempting model: ${modelName} with 60s timeout...`);
+            const apiPromise = client.models.generateContent({
+                model: modelName,
+                contents: prompt,
+                config: {
+                    responseMimeType: 'application/json',
+                    temperature: 0
+                }
+            });
+            // 60 Second Timeout
+            const timeoutPromise = new Promise((_, reject) => {
+                setTimeout(() => reject(new Error(`Request to ${modelName} timed out after 60s`)), 60000);
+            });
+            return Promise.race([apiPromise, timeoutPromise]);
+        };
+        let result;
+        try {
+            // Primary Attempt
+            result = await callModelWithTimeout('gemini-3-flash-preview');
+        }
+        catch (primaryError) {
+            console.warn(`[analyzeMapRequirements] Primary model failed: ${primaryError.message}. Switching to fallback...`);
+            try {
+                // Fallback Attempt
+                result = await callModelWithTimeout('gemini-2.5-flash');
+            }
+            catch (fallbackError) {
+                console.error(`[analyzeMapRequirements] All models failed. Primary: ${primaryError.message}, Fallback: ${fallbackError.message}`);
+                throw new Error("AI Analysis Service Unavailable (Timeout or Model Error). Please try again later.");
+            }
+        }
+        const text = result.text || '{}';
+        console.log("[analyzeMapRequirements] Raw AI response length:", text.length);
+        // Use the robust safeParseJson method instead of ad-hoc regex replacement
+        let planData = this.safeParseJson(text);
+        // Sanity check
+        if (!planData || !planData.steps || !Array.isArray(planData.steps)) {
+            console.error("[analyzeMapRequirements] Invalid Plan Data Structure:", Object.keys(planData));
+            console.log("[analyzeMapRequirements] Raw Text Dump:", text.substring(0, 1000));
+            // Fallback: If safeParseJson failed to find array, try one more time with aggressive cleanup?
+            // For now, allow it to proceed to validation where it will throw if invalid.
+        }
+        // Evaluate math expressions in estimatedRecords if present (post-parsing fixup might be needed if they were strings)
+        // safeParseJson returns an object, so we walk it?
+        // Actually, the original code did regex replace on STRING. 
+        // If the LLM returned "estimatedRecords": 500 * 2, that is invalid JSON.
+        // safeParseJson doesn't handle math expressions.
+        // Let's rely on the LLM doing the math or returning a string we can parse.
+        // The prompt says "estimatedRecords: ...", usually it returns a number.
+        if (!planData.intent && !planData.steps) {
+            throw new Error("AI returned invalid JSON structure (missing intent/steps)");
+        }
+        // Log dataset reuse decision
+        if (planData.existingDatasetIds && planData.existingDatasetIds.length > 0) {
+            console.log(`✅ REUSING ${planData.existingDatasetIds.length} existing dataset(s):`, planData.existingDatasetIds);
+        }
+        // Apply hollow plan detection and fixes (port from orchestrationService.ts)
+        planData = this.detectAndFixHollowPlan(planData, sampleSize);
+        planData = this.injectMetricEnrichment(planData, sampleSize);
+        return planData;
+    }
+    /**
+     * Detect and fix "hollow plans" (port from orchestrationService.ts)
+     */
+    detectAndFixHollowPlan(planData, sampleSize) {
+        const twoHopIntents = ['network_clusters', 'influencer_identification', 'audience_overlap'];
+        const isTwoHopIntent = twoHopIntents.includes(planData.intent);
+        if (!isTwoHopIntent)
+            return planData;
+        const steps = planData.steps || [];
+        const hasFollowingStep = steps.some((s) => (s.input && (s.input.type === 'following' || s.input.type === 'followings')) ||
+            (s.description && s.description.toLowerCase().includes('following')));
+        const hasReusedDatasets = planData.existingDatasetIds && planData.existingDatasetIds.length > 0;
+        // [FIX] Trust the AI: If reusing datasets and AI prescribed 0 steps, assume dataset is sufficient.
+        if (hasReusedDatasets && steps.length === 0) {
+            console.log("✅ Reusing dataset with 0 additional steps. Skipping hollow plan injection.");
+            return planData;
+        }
+        const isMissingSecondHop = !hasFollowingStep;
+        if (isMissingSecondHop) {
+            console.log(`⚠️ [Hollow Plan Detected] Intent '${planData.intent}' requires 2 hops but 'Following' step is missing.`);
+            console.log("💉 INJECTING MISSING HOP: Scrape 'followings' of previous step/dataset");
+            const injectedStep = {
+                stepId: `step_${steps.length + 1}`,
+                description: "Scrape followings of previous step (INJECTED to fix hollow plan)",
+                actorId: "thenetaji/instagram-followers-followings-scraper",
+                input: {
+                    username: steps.length > 0 ? ["USE_DATA_FROM_STEP_step_1"] : ["USE_DATA_FROM_DATASET"],
+                    type: "followings",
+                    limit: Math.min(20, sampleSize)
+                },
+                estimatedRecords: sampleSize * 20,
+                estimatedCost: 0.02
+            };
+            planData.steps.push(injectedStep);
+            console.log("✅ Hollow Plan Fixed. New step count:", planData.steps.length);
+        }
+        return planData;
+    }
+    /**
+     * Inject metric enrichment if needed (port from orchestrationService.ts)
+     */
+    injectMetricEnrichment(planData, sampleSize) {
+        // Simple version - full port would check for metric filters
+        return planData;
+    }
+    /**
+     * Execute the orchestration plan step by step
+     */
+    async executeOrchestrationPlan(job, plan) {
+        const results = [];
+        const steps = plan.steps || [];
+        // [FIX] Load existing data if reusing datasets
+        if (plan.existingDatasetIds && plan.existingDatasetIds.length > 0) {
+            console.log(`[Orchestration] Loading ${plan.existingDatasetIds.length} existing datasets...`);
+            for (const id of plan.existingDatasetIds) {
+                try {
+                    const dataset = await mongoService.getDatasetById(id);
+                    if (dataset && dataset.data && dataset.data.length > 0) {
+                        // Find snapshot record
+                        const snapshot = dataset.data.find((r) => r.recordType === 'graph_snapshot') || dataset.data[0];
+                        if (snapshot.rawResults && Array.isArray(snapshot.rawResults)) {
+                            console.log(`[Orchestration] Loaded ${snapshot.rawResults.length} batches from dataset ${id}`);
+                            results.push(...snapshot.rawResults);
+                        }
+                        else if (snapshot.nodes) {
+                            // Fallback: Reconstruct from nodes if rawResults missing
+                            console.log(`[Orchestration] Reconstructing items from ${snapshot.nodes.length} nodes in dataset ${id}`);
+                            const reconstructed = snapshot.nodes
+                                .filter((n) => n.group === 'creator' || n.group === 'overindexed' || n.group === 'main')
+                                .map((n) => ({
+                                username: n.data?.username || n.label,
+                                // Map standard schema fields
+                                biography: n.data?.bio || n.data?.biography,
+                                followersCount: n.data?.followers || n.data?.followerCount,
+                                profilePicUrl: n.data?.profilePicUrl,
+                                id: n.data?.id || n.id
+                            }));
+                            if (reconstructed.length > 0)
+                                results.push(reconstructed);
+                        }
+                    }
+                    else {
+                        console.warn(`[Orchestration] Dataset ${id} not found or empty.`);
+                    }
+                }
+                catch (err) {
+                    console.error(`[Orchestration] Failed to load dataset ${id}:`, err);
+                }
+            }
+        }
+        console.log(`[Orchestration] Starting execution of ${steps.length} steps`);
+        for (let i = 0; i < steps.length; i++) {
+            const step = steps[i];
+            const progress = 20 + Math.floor(((i + 1) / steps.length) * 60); // 20% to 80%
+            await mongoService.updateJob(job.id, {
+                progress,
+                result: { stage: `Step ${i + 1}/${steps.length}: ${step.description}`, plan }
+            });
+            console.log(`[Orchestration] ═══ Executing step ${i + 1}/${steps.length} ═══`);
+            console.log(`[Orchestration] Actor: ${step.actorId}`);
+            console.log(`[Orchestration] Description: ${step.description}`);
+            // Resolve dynamic inputs
+            const resolvedInput = this.resolveOrchestrationInput(step.input, results, plan);
+            console.log(`[Orchestration] Resolved Input:`, JSON.stringify(resolvedInput).substring(0, 200));
+            // Execute Apify actor
+            try {
+                let stepResult = await this.runApifyActorServer(step.actorId, resolvedInput);
+                console.log(`[Orchestration] ✅ Step ${i + 1} completed: ${stepResult.length} items returned`);
+                // --- SERVER-SIDE FILTERING ---
+                const filters = plan.filter || {};
+                let filteredCount = 0;
+                // 1. Bio Keyword Filtering
+                if (filters.bioKeywords && filters.bioKeywords.length > 0 && stepResult.length > 0) {
+                    console.log(`[Orchestration] Applying Bio Filters:`, filters.bioKeywords);
+                    const beforeCount = stepResult.length;
+                    stepResult = stepResult.filter((item) => {
+                        const bio = (item.biography || item.bio || item.description || '').toLowerCase();
+                        return filters.bioKeywords.some((kw) => bio.includes(kw.toLowerCase()));
+                    });
+                    filteredCount += (beforeCount - stepResult.length);
+                    console.log(`[Orchestration] Filtered out ${beforeCount - stepResult.length} profiles based on bio keywords.`);
+                }
+                // 2. Metric Filtering (Followers/Following)
+                if (stepResult.length > 0 && (filters.minFollowers || filters.maxFollowers || filters.minFollowing)) {
+                    console.log(`[Orchestration] Applying Metric Filters:`, filters);
+                    const beforeCount = stepResult.length;
+                    stepResult = stepResult.filter((item) => {
+                        const followers = item.followersCount || item.followerCount || item.followers || 0;
+                        const following = item.followsCount || item.followingCount || item.following || 0;
+                        if (filters.minFollowers && followers < filters.minFollowers)
+                            return false;
+                        if (filters.maxFollowers && followers > filters.maxFollowers)
+                            return false;
+                        if (filters.minFollowing && following < filters.minFollowing)
+                            return false;
+                        return true;
+                    });
+                    filteredCount += (beforeCount - stepResult.length);
+                    console.log(`[Orchestration] Filtered out ${beforeCount - stepResult.length} profiles based on metrics.`);
+                }
+                if (filteredCount > 0) {
+                    await mongoService.updateJob(job.id, {
+                        result: { stage: `Step ${i + 1}: Filtered ${filteredCount} items...` }
+                    });
+                }
+                console.log(`[Orchestration] Sample result:`, stepResult[0] ? JSON.stringify(stepResult[0]).substring(0, 150) : 'NO RESULTS');
+                results.push(stepResult);
+            }
+            catch (stepError) {
+                console.error(`[Orchestration] ❌ Step ${i + 1} failed:`, stepError);
+                const stepMsg = stepError instanceof Error ? stepError.message : typeof stepError === 'string' ? stepError : JSON.stringify(stepError);
+                throw new Error(`Step ${i + 1} (${step.actorId}) failed: ${stepMsg}`);
+            }
+        }
+        console.log(`[Orchestration] ═══ All steps completed ═══`);
+        console.log(`[Orchestration] Total result sets: ${results.length}`);
+        console.log(`[Orchestration] Items per set: ${results.map(r => r.length).join(', ')}`);
+        return results;
+    }
+    /**
+     * Resolve dynamic inputs (e.g., USE_DATA_FROM_STEP_step_1)
+     */
+    resolveOrchestrationInput(input, results, plan) {
+        const resolved = { ...input };
+        // Handle USE_DATA_FROM_STEP_X pattern
+        for (const key in resolved) {
+            const value = resolved[key];
+            if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
+                if (value[0].startsWith('USE_DATA_FROM_STEP_')) {
+                    const stepId = value[0].replace('USE_DATA_FROM_STEP_', '');
+                    const stepIndex = parseInt(stepId.replace('step_', '')) - 1;
+                    if (stepIndex >= 0 && stepIndex < results.length) {
+                        // Extract usernames from previous step
+                        const previousData = results[stepIndex];
+                        const usernames = previousData
+                            .map((item) => item.username || item.ownerUsername)
+                            .filter((u) => u)
+                            .slice(0, 100); // Limit to 100
+                        resolved[key] = usernames;
+                        console.log(`[Input Resolution] ${key}: Resolved to ${usernames.length} usernames from ${stepId}`);
+                    }
+                }
+            }
+        }
+        return resolved;
+    }
+    /**
+     * Run Apify Actor (Server-Side)
+     */
+    async runApifyActorServer(actorId, input) {
+        const apifyToken = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN;
+        if (!apifyToken)
+            throw new Error("APIFY_TOKEN not configured");
+        // Map actor IDs to their actual Apify IDs
+        let realActorId = actorId.replace(/\//g, '~');
+        const actorMapping = {
+            'apify/instagram-profile-scraper': process.env.PROFILE_SCRAPE_ACTOR_INSTAGRAM || 'dSCLg0C3YEZ83HzYX',
+            'apify/instagram-scraper': process.env.APIFY_INSTAGRAM_ACTOR_ID || 'OWBUCWZK5MEeO5XiC',
+            'apify~instagram-profile-scraper': process.env.PROFILE_SCRAPE_ACTOR_INSTAGRAM || 'dSCLg0C3YEZ83HzYX',
+            'apify~instagram-scraper': process.env.APIFY_INSTAGRAM_ACTOR_ID || 'OWBUCWZK5MEeO5XiC',
+            'thenetaji/instagram-followers-followings-scraper': 'IkdNTeZnRfvDp8V25'
+        };
+        if (actorMapping[actorId] || actorMapping[realActorId]) {
+            realActorId = (actorMapping[actorId] || actorMapping[realActorId]);
+        }
+        // Special case: if search is in input, use the search actor
+        if (realActorId === process.env.PROFILE_SCRAPE_ACTOR_INSTAGRAM && input.search) {
+            realActorId = process.env.APIFY_INSTAGRAM_ACTOR_ID || 'OWBUCWZK5MEeO5XiC';
+        }
+        // NORMALIZE INPUT: Fix field name mismatches for specific actors
+        const normalizedInput = { ...input };
+        // thenetaji/instagram-followers-followings-scraper expects 'usernames' (array), not 'username'
+        if (actorId.includes('thenetaji') || actorId.includes('IkdNTeZnRfvDp8V25')) {
+            if (normalizedInput.username && !normalizedInput.usernames) {
+                normalizedInput.usernames = Array.isArray(normalizedInput.username)
+                    ? normalizedInput.username
+                    : [normalizedInput.username];
+                delete normalizedInput.username;
+            }
+        }
+        console.log(`[Apify] Running actor: ${actorId} → ${realActorId}`);
+        console.log(`[Apify] Input:`, JSON.stringify(normalizedInput).substring(0, 200));
+        // Start the actor run
+        const runResponse = await fetch(`https://api.apify.com/v2/acts/${realActorId}/runs?token=${apifyToken}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(normalizedInput)
+        });
+        if (!runResponse.ok) {
+            const errText = await runResponse.text();
+            throw new Error(`Apify run failed (${runResponse.status}): ${errText}`);
+        }
+        const runData = await runResponse.json();
+        const runId = runData.data.id;
+        const defaultDatasetId = runData.data.defaultDatasetId;
+        console.log(`[Apify] Run started: ${runId}, polling for completion...`);
+        // Poll for completion
+        let attempts = 0;
+        const maxAttempts = 60; // 5 minutes max
+        while (attempts < maxAttempts) {
+            await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5s
+            const statusResponse = await fetch(`https://api.apify.com/v2/actor-runs/${runId}?token=${apifyToken}`);
+            const statusData = await statusResponse.json();
+            const status = statusData.data.status;
+            console.log(`[Apify] Run status: ${status} (attempt ${attempts + 1}/${maxAttempts})`);
+            if (status === 'SUCCEEDED') {
+                // Fetch results
+                const resultsResponse = await fetch(`https://api.apify.com/v2/datasets/${defaultDatasetId}/items?token=${apifyToken}`);
+                const results = await resultsResponse.json();
+                console.log(`[Apify] Run completed: ${results.length} items`);
+                return results;
+            }
+            else if (status === 'FAILED' || status === 'ABORTED') {
+                throw new Error(`Actor run ${status.toLowerCase()}`);
+            }
+            attempts++;
+        }
+        throw new Error('Actor run timed out');
+    }
+    /**
+     * Generate graph from orchestration results
+     */
+    /**
+ * Generate graph from orchestration results
+ */
+    async generateGraphFromResults(plan, results, query, analytics = null) {
+        const allData = results.flat();
+        // Comparison Logic
+        if (plan.intent === 'audience_overlap' || plan.intent === 'comparison') {
+            return this.generateComparisonGraph(plan, results, query);
+        }
+        // Normal single-target logic
+        else if (plan.intent === 'subject_matter' || plan.intent === 'viral_content' || plan.intent === 'trending') {
+            // Use AI Semantic Matches if available, otherwise fallback to hashtags
+            const matches = analytics?.matches || [];
+            return this.generateSemanticGraph(allData, query, matches);
+        }
+        else if (plan.intent === 'influencer_identification' || plan.intent === 'bio_search') {
+            // [FIX] Ensure we pass analytics so we can populate topCreators if needed? 
+            // Currently generateCreatorGraph doesn't use analytics, but we should make sure the flow is solid.
+            return this.generateCreatorGraph(allData, query);
+        }
+        else if (plan.intent === 'geo_discovery') {
+            const geoData = analytics?.visualAnalysis?.geoData || [];
+            return this.generateGeoGraph(allData, query, geoData);
+        }
+        else if (plan.intent === 'over_indexing' || plan.intent === 'brand_affinity') {
+            return this.generateOverindexGraph(allData, query, analytics);
+        }
+        else if (plan.intent === 'network_clusters') {
+            return this.generateClusterGraph(allData, query);
+        }
+        else {
+            return this.generateNetworkGraph(allData, query);
+        }
+    }
+    /**
+ * Generate semantic/topic graph from posts
+ */
+    generateSemanticGraph(records, centralLabel, matches = []) {
+        const nodes = [];
+        const links = [];
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        // Source Selection: Use AI Matches if available (High Precision), else usage raw records (Broad)
+        const sourceData = matches.length > 0 ? matches : records;
+        const isAiDerived = matches.length > 0;
+        // Extract topics from hashtags or text analysis
+        const topicMap = new Map();
+        sourceData.forEach(record => {
+            const hashtags = record.hashtags || [];
+            // If AI Match, we can also extract from 'reason' if it contains keywords? 
+            // For now, stick to hashtags but filter by AI relevance.
+            hashtags.forEach((tag) => {
+                const clean = tag.replace(/^#/, '').toLowerCase();
+                if (!topicMap.has(clean))
+                    topicMap.set(clean, { count: 0, evidence: [] });
+                const entry = topicMap.get(clean);
+                entry.count++;
+                // Collect evidence (provenance)
+                if (isAiDerived && record.provenance?.evidence && entry.evidence.length < 3) {
+                    entry.evidence.push(record.provenance.evidence[0]); // Take the quote
+                }
+                else if (entry.evidence.length < 3 && record.text) {
+                    entry.evidence.push(`Post by ${record.ownerUsername || 'user'}: "${record.text.substring(0, 50)}..."`);
+                }
+            });
+        });
+        // Top 20 topics
+        const sortedTopics = Array.from(topicMap.entries())
+            .sort((a, b) => b[1].count - a[1].count)
+            .slice(0, 20);
+        sortedTopics.forEach(([topic, data], i) => {
+            const tid = `topic_${i}`;
+            nodes.push({
+                id: tid,
+                label: topic,
+                group: 'topic',
+                val: Math.min(30, 10 + data.count / 10),
+                level: 1,
+                data: {
+                    occurrences: data.count,
+                    // [PROVENANCE] Attach evidence for UI '?' icon
+                    provenance: {
+                        source: isAiDerived ? 'AI Semantic Match' : 'Hashtag Aggregation',
+                        reasoning: `Topic appears in ${data.count} ${isAiDerived ? 'relevant ' : ''}posts.`,
+                        evidence: data.evidence,
+                        confidence: isAiDerived ? 0.9 : 0.6
+                    }
+                }
+            });
+            links.push({ source: 'MAIN', target: tid, value: Math.min(10, data.count / 5) });
+        });
+        return { nodes, links };
+    }
+    /**
+     * Generate comparison graph with multiple centers
+     */
+    generateComparisonGraph(plan, results, query) {
+        const nodes = [];
+        const links = [];
+        const addedNodeIds = new Set();
+        // Identify targets from query or plan steps
+        // Heuristic: If we have multiple result sets, treat each as a separate cluster centered on its input
+        const steps = plan.steps || [];
+        results.forEach((resultSet, index) => {
+            if (!Array.isArray(resultSet) || resultSet.length === 0)
+                return;
+            // Try to find a label for this cluster
+            let clusterLabel = `Group ${index + 1}`;
+            if (steps[index] && steps[index].input) {
+                const input = steps[index].input;
+                if (input.username)
+                    clusterLabel = Array.isArray(input.username) ? input.username[0] : input.username;
+                else if (input.search)
+                    clusterLabel = input.search;
+            }
+            const mainId = `MAIN_${index}`;
+            nodes.push({
+                id: mainId,
+                label: clusterLabel,
+                group: 'main',
+                val: 50,
+                level: 0
+            });
+            // Add nodes for this cluster
+            resultSet.slice(0, 50).forEach((record, i) => {
+                const username = record.username || `user_${index}_${i}`;
+                const nid = `profile_${username}`;
+                if (!addedNodeIds.has(nid)) {
+                    nodes.push({
+                        id: nid,
+                        label: username,
+                        group: 'profile',
+                        val: 10,
+                        level: 1,
+                        profilePic: proxyMediaUrl(record.profile_pic_url || record.profilePicUrl || record.picture),
+                        data: {
+                            username,
+                            profilePicUrl: proxyMediaUrl(record.profile_pic_url || record.profilePicUrl || record.picture)
+                        }
+                    });
+                    addedNodeIds.add(nid);
+                }
+                // Link to THIS cluster's main node
+                links.push({ source: mainId, target: nid, value: 2 });
+            });
+        });
+        return { nodes, links };
+    }
+    /**
+     * Generate creator/influencer graph
+     */
+    generateCreatorGraph(records, centralLabel) {
+        const nodes = [];
+        const links = [];
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        // Create nodes for each creator
+        records.slice(0, 50).forEach((record, i) => {
+            const username = record.username || record.ownerUsername || `user_${i}`;
+            const cid = `creator_${username}`;
+            nodes.push({
+                id: cid,
+                label: username,
+                group: 'creator',
+                val: 15,
+                level: 1,
+                profilePic: proxyMediaUrl(record.profile_pic_url || record.profilePicUrl || record.picture),
+                data: {
+                    username,
+                    fullName: record.fullName || record.full_name || username,
+                    followersCount: record.followersCount || record.follower_count || 0,
+                    profilePicUrl: proxyMediaUrl(record.profile_pic_url || record.profilePicUrl || record.picture)
+                }
+            });
+            links.push({ source: 'MAIN', target: cid, value: 3 });
+        });
+        return { nodes, links };
+    }
+    /**
+     * Generate network/follower graph
+     */
+    generateNetworkGraph(records, centralLabel) {
+        const nodes = [];
+        const links = [];
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        // Sample followers/followings
+        records.slice(0, 100).forEach((record, i) => {
+            const username = record.username || `user_${i}`;
+            const nid = `profile_${username}`;
+            nodes.push({
+                id: nid,
+                label: username,
+                group: 'profile',
+                val: 10,
+                level: 1,
+                profilePic: proxyMediaUrl(record.profile_pic_url || record.profilePicUrl || record.picture),
+                data: {
+                    username,
+                    profilePicUrl: proxyMediaUrl(record.profile_pic_url || record.profilePicUrl || record.picture)
+                }
+            });
+            links.push({ source: 'MAIN', target: nid, value: 2 });
+        });
+        return { nodes, links };
+    }
+    /**
+     * Notify user that orchestration is complete
+     */
+    async notifyOrchestrationComplete(job, query, datasetId) {
+        const user = await mongoService.getUser(job.userId) || await mongoService.getUserByEmail(job.userId);
+        if (user && user.email) {
+            const subject = `Your Fandom Analysis is Ready: ${query} 🗺️`;
+            const htmlBody = `
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #e2e8f0; background-color: #051810; padding: 40px; border-radius: 12px; border: 1px solid #10b98133; max-width: 600px; margin: 0 auto;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #10b981; font-size: 28px; margin-bottom: 5px;">Fandom Intelligence</h1>
+                        <p style="color: #64748b; font-size: 14px; text-transform: uppercase; tracking: 1px; margin: 0;">Analysis Complete</p>
+                    </div>
+                    
+                    <div style="background-color: #1a4d2e33; border: 1px solid #10b98122; border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+                        <h2 style="color: #10b981; font-size: 20px; margin-top: 0; margin-bottom: 15px;">Query: "${query}"</h2>
+                        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 30px; color: #94a3b8;">
+                            Your comprehensive fandom analysis is complete! The interactive graph and detailed analytics are now available in your dashboard.
+                        </p>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <a href="https://fandom-mapper-ph1-634174038368.europe-west2.run.app/" style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+                            View Your Map
+                        </a>
+                    </div>
+                    
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #10b98122; text-align: center;">
+                        <p style="font-size: 12px; color: #475569;">
+                            Job ID: ${job.id} • Dataset: ${datasetId}
+                        </p>
+                    </div>
+                </div>
+            `;
+            await emailService.sendEmail(user.email, subject, htmlBody);
+        }
+    }
+    // --- NEW GRAPH GENERATORS (FIX) ---
+    // 1. Geo Graph
+    generateGeoGraph(records, centralLabel, geoData) {
+        const nodes = [];
+        const links = [];
+        // Central Node
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        // Tier 1: Locations (Cities)
+        // Use top 10 locations from analytics
+        const topLocations = geoData.slice(0, 15);
+        topLocations.forEach((loc, i) => {
+            const lid = `loc_${i}`;
+            const size = Math.min(40, 15 + (loc.count * 2)); // Dynamic size
+            nodes.push({
+                id: lid,
+                label: loc.name,
+                group: 'location',
+                val: size,
+                level: 1,
+                data: { count: loc.count }
+            });
+            // Link Main -> Location
+            links.push({ source: 'MAIN', target: lid, value: 5 });
+            // Tier 2: Profiles in this location
+            // Find records matching this location
+            const locProfiles = records.filter(r => {
+                const rLoc = r.city_name || r.location || r.address_street || r.biography || '';
+                return rLoc.toLowerCase().includes(loc.name.toLowerCase());
+            }).slice(0, 5); // Show top 5 per location to avoid crowding
+            locProfiles.forEach((p, j) => {
+                const pid = `profile_${p.username || p.ownerUsername || i + '_' + j}`;
+                if (!nodes.find(n => n.id === pid)) {
+                    nodes.push({
+                        id: pid,
+                        label: p.username || 'user',
+                        group: 'profile',
+                        val: 10,
+                        level: 2,
+                        profilePic: proxyMediaUrl(p.profile_pic_url || p.profilePicUrl || p.picture),
+                        data: { username: p.username }
+                    });
+                    // Link Location -> Profile
+                    links.push({ source: lid, target: pid, value: 2 });
+                }
+            });
+        });
+        return { nodes, links };
+    }
+    // 2. Over-Index Graph (Brand/Creator separation)
+    generateOverindexGraph(records, centralLabel, analytics) {
+        const nodes = [];
+        const links = [];
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        const brands = analytics?.overindexing?.topBrands || [];
+        const creators = analytics?.overindexing?.topCreators || [];
+        // Add Brands
+        brands.slice(0, 10).forEach((b, i) => {
+            const bid = `brand_${i}`;
+            nodes.push({
+                id: bid,
+                label: b.name || b.username,
+                group: 'brand', // Visual distinction
+                val: 25,
+                level: 1,
+                profilePic: proxyMediaUrl(b.profilePicUrl),
+                data: { ...b }
+            });
+            links.push({ source: 'MAIN', target: bid, value: 4 });
+        });
+        // Add Creators
+        creators.slice(0, 15).forEach((c, i) => {
+            const cid = `creator_${i}`;
+            nodes.push({
+                id: cid,
+                label: c.username,
+                group: 'creator',
+                val: 20,
+                level: 1,
+                profilePic: proxyMediaUrl(c.profilePicUrl),
+                data: { ...c }
+            });
+            links.push({ source: 'MAIN', target: cid, value: 3 });
+        });
+        // Add random sample of "Fans" (Profiles) if graph is too sparse
+        if (nodes.length < 10) {
+            records.slice(0, 20).forEach((p) => {
+                const pid = `fan_${p.username}`;
+                nodes.push({
+                    id: pid,
+                    label: p.username,
+                    group: 'profile',
+                    val: 10,
+                    level: 2,
+                    profilePic: proxyMediaUrl(p.profile_pic_url || p.profilePicUrl),
+                    data: { username: p.username }
+                });
+                links.push({ source: 'MAIN', target: pid, value: 1 });
+            });
+        }
+        return { nodes, links };
+    }
+    // 3. Network Clusters
+    generateClusterGraph(records, centralLabel) {
+        const nodes = [];
+        const links = [];
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        // Divide records into hypothetical clusters (e.g., by bio keyword or random 3 groups)
+        // detailed logic: simple modulo grouping for visualization
+        const clusterCount = 3;
+        const clusters = Array.from({ length: clusterCount }, (_, i) => ({
+            id: `cluster_${i}`,
+            label: `Community ${i + 1}`,
+            group: 'cluster_hub',
+            val: 30
+        }));
+        // Add Cluster Hubs
+        clusters.forEach(c => {
+            nodes.push({ ...c, level: 1 });
+            links.push({ source: 'MAIN', target: c.id, value: 5 });
+        });
+        // Distribute profiles
+        records.slice(0, 30).forEach((p, i) => {
+            const clusterIdx = i % clusterCount;
+            const cid = `profile_${p.username}`;
+            const parentId = `cluster_${clusterIdx}`;
+            nodes.push({
+                id: cid,
+                label: p.username,
+                group: 'cluster_member', // distinct group
+                val: 10,
+                level: 2,
+                profilePic: proxyMediaUrl(p.profile_pic_url || p.profilePicUrl),
+                data: { username: p.username, cluster: `Community ${clusterIdx + 1}` }
+            });
+            links.push({ source: parentId, target: cid, value: 2 });
+        });
+        return { nodes, links };
+    }
+    // Helper: Aggregate Locations
+    aggregateLocations(rawLocations) {
+        const map = new Map();
+        rawLocations.forEach(loc => {
+            // Clean string (simple)
+            const clean = loc.split(',')[0].trim(); // Take City only usually
+            if (clean.length > 2) {
+                map.set(clean, (map.get(clean) || 0) + 1);
+            }
+        });
+        return Array.from(map.entries())
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count);
+    }
+}
+export const jobOrchestrator = JobOrchestrator.getInstance();

@@ -1,0 +1,17 @@
+[dotenv@17.2.3] injecting env (76) from .env.local -- tip: ­ƒöÉ prevent building .env in docker: https://dotenvx.com/prebuild
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ÔÜÖ´©Å  override existing env vars with { override: true }
+
+­ƒöì VERIFICATION START for Dataset: 2d48293a-cb59-4fd8-ab42-462c21b7dccc
+==================================================
+
+­ƒº¬ TEST 1: Attempting fetch via OLD Aggregation (should fail)...
+Ô£à EXPECTED FAILURE: Aggregation failed as expected.
+   Error: PlanExecutor error during aggregation :: caused by :: BSONObj size: 19646399 (0x12BC7BF) is invalid. Size must be between 0 and 16793600(16MB) First element: _id: ObjectId('696acaa50c530e85c06a2742')
+   --> CONFIRMED: Error is due to BSON 16MB limit.
+
+­ƒº¬ TEST 2: Attempting fetch via NEW Split Queries (should succeed)...
+Ô£à SUCCESS: Fetched dataset + 1 records in 22710ms.
+   Content Size (JSON): 12.35 MB
+   (This is >16MB BSON size which is why aggregation failed)
+
+==================================================

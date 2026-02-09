@@ -1,0 +1,282 @@
+Parsed Keys: [
+  'APIFY_PROXY_COUNTRY',
+  'APIFY_TOKEN',
+  'APIFY_API_TOKEN',
+  'GEMINI_API_NAME',
+  'GEMINI_API_KEY',
+  'GEMINI_MODEL',
+  'GEMINI_FALLBACK_MODEL',
+  'APIFY_PROXY_GROUPS',
+  'APIFY_PROXY_ROTATION',
+  'APIFY_PROXY_USERNAME',
+  'APIFY_PROXY_PASSWORD',
+  'RATE_LIMIT_INSTAGRAM',
+  'RATE_LIMIT_TIKTOK',
+  'RATE_LIMIT_YOUTUBE',
+  'RATE_LIMIT_LINKEDIN',
+  'RATE_LIMIT_TWITTER',
+  'RATE_LIMIT_FACEBOOK',
+  'MAX_FILE_SIZE_MB',
+  'COMPRESSION_THRESHOLD_MB',
+  'IMAGE_COMPRESSION_QUALITY',
+  'VIDEO_TARGET_RESOLUTION',
+  'AUDIO_TARGET_BITRATE',
+  'AI_TEMPERATURE',
+  'AI_MAX_TOKENS',
+  'AI_CONFIDENCE_THRESHOLD',
+  'AI_RETRY_ATTEMPTS',
+  'AI_RETRY_DELAY',
+  'DEFAULT_GROWTH_RATE',
+  'DEFAULT_MIN_RESULTS',
+  'MAX_DISCOVERY_RESULTS',
+  'PROFILE_VALIDATION_TIMEOUT',
+  'MAX_CONCURRENT_REQUESTS',
+  'LOG_LEVEL',
+  'LOG_FORMAT',
+  'LOG_FILE',
+  'SCRAPFLY_TEST_API_KEY',
+  'SCRAPFLY_LIVE_API_KEY',
+  'SCRAPFLY_KEY',
+  'APIFY_ACTOR_ID',
+  'APIFY_TIKTOK_ACTOR_ID',
+  'APIFY_YOUTUBE_ACTOR_ID',
+  'APIFY_LINKEDIN_ACTOR_ID',
+  'APIFY_FACEBOOK_ACTOR_ID',
+  'LOCAL_MEDIA_CAP',
+  'DISCOVERY_ACTOR_INSTAGRAM',
+  'DISCOVERY_ACTOR_TIKTOK',
+  'DISCOVERY_ACTOR_YOUTUBE',
+  'DISCOVERY_ACTOR_LINKEDIN',
+  'DISCOVERY_ACTOR_FACEBOOK',
+  'EXTRACT_USER_YOUTUBE_ACTOR',
+  'EXTRACT_USER_TIKTOK_ACTOR',
+  'INSTAGRAM_FOLLOWERS_APIFY_ACTOR',
+  'INSTAGRAM_FOLLOWERS_DEFAULT_SAMPLE',
+  'INSTAGRAM_FOLLOWING_APIFY_ACTOR',
+  'INSTAGRAM_FOLLOWING_DEFAULT_SAMPLE',
+  'INSTAGRAM_HASHTAG_SEARCH_APIFY_ACTOR',
+  'PROFILE_SCRAPE_ACTOR_INSTAGRAM',
+  'PROFILE_SCRAPE_ACTOR_YOUTUBE',
+  'MAX_TIME_ACTOR',
+  'GOOGLE_SERP_CUSTOM_SEARCH_API_KEY',
+  'GOOGLE_SERP_CUSTOM_SEARCH_ENGINE_ID',
+  'VITE_APIFY_API_TOKEN',
+  'VITE_PROFILE_SCRAPE_ACTOR_INSTAGRAM'
+]
+>>> [LIVE TEST] Starting REAL Execution against External APIs...
+> Apify Token: apify...
+> Gemini Key: AIzaS...
+
+> Query: "What snacks and movies does @therock like?"
+> Semantic Trigger: true (Expected: true)
+
+>>> [STEP B] LIVE APIFY SCRAPE (instagram-api-scraper)...
+
+====== [1] REAL APIFY INPUT PAYLOAD ======
+{
+  "directUrls": [
+    "https://www.instagram.com/therock/"
+  ],
+  "resultsType": "posts",
+  "resultsLimit": 3
+}
+==========================================
+> Actor Started. Run ID: V9ogQjhKycVGATxZ7
+> Waiting for results (max 60s)...
+.....
+> Actor Status: SUCCEEDED
+
+====== [2] REAL APIFY OUTPUT (Raw Sample Item) ======
+{
+  "id": "3792672946956407234",
+  "type": "Video",
+  "shortCode": "DSiR_NokhHC",
+  "caption": "WhereÔÇÖs your mama and whose  kid is this? ­ƒÿé­ƒÄà­ƒÅ¥ \n\nI asked this a dozen times as parents leave their...",
+  "hashtags": [],
+  "mentions": [
+    "walmart,",
+    "papatui",
+    "walmart"
+  ],
+  "url": "https://www.instagram.com/p/DSiR_NokhHC/",
+  "commentsCount": 623,
+  "firstComment": "­ƒÿì­ƒÿì­ƒÿì­ƒÿìÔØñ´©ÅÔØñ´©ÅÔØñ´©ÅÔØñ´©Å",
+  "latestComments": [
+    {
+      "id": "18324370906174055",
+      "text": "­ƒÿì­ƒÿì­ƒÿì­ƒÿìÔØñ´©ÅÔØñ´©ÅÔØñ´©ÅÔØñ´©Å",
+      "ownerUsername": "yvonneyviemenzel1985",
+      "ownerProfilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/271465286_794140681986334_7267415412642746575_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=8e3u1J5hMkAQ7kNvwFTZuEL&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afll71DensqN2eMq038bqrm4ud3KzuftHpn2VopiySTSMg&oe=694E301E&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:12:23.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "7739312342",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/271465286_794140681986334_7267415412642746575_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjAuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=8e3u1J5hMkAQ7kNvwFTZuEL&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afll71DensqN2eMq038bqrm4ud3KzuftHpn2VopiySTSMg&oe=694E301E&_nc_sid=10d13b",
+        "username": "yvonneyviemenzel1985"
+      }
+    },
+    {
+      "id": "18113826082523458",
+      "text": "­ƒÿì­ƒÿì­ƒÿì­ƒÿì­ƒÿì­ƒÿì­ƒÿì",
+      "ownerUsername": "nathaly_teixeira",
+      "ownerProfilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/463811788_889201193178914_4301886675937745627_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=4qALyDsZkIYQ7kNvwG6nBOx&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AflBJZvivNelTPe_i0OmKzxno77gAdfxs-UB56vIJ4cX7w&oe=694E245B&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:12:15.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "820144523",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/463811788_889201193178914_4301886675937745627_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=4qALyDsZkIYQ7kNvwG6nBOx&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AflBJZvivNelTPe_i0OmKzxno77gAdfxs-UB56vIJ4cX7w&oe=694E245B&_nc_sid=10d13b",
+        "username": "nathaly_teixeira"
+      }
+    },
+    {
+      "id": "17896125426361719",
+      "text": "Red one",
+      "ownerUsername": "mic_._heal_11",
+      "ownerProfilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/486470709_1862933457775384_2231041502290773849_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MTQuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=CZZJB1EMaH8Q7kNvwE8Lv8m&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfmvNYLKSxKyTmp_cu329w4vYvYHlSoq11aNO026_Bx7mQ&oe=694E1F1B&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:11:58.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "65608163161",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/486470709_1862933457775384_2231041502290773849_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MTQuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=CZZJB1EMaH8Q7kNvwE8Lv8m&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfmvNYLKSxKyTmp_cu329w4vYvYHlSoq11aNO026_Bx7mQ&oe=694E1F1B&_nc_sid=10d13b",
+        "username": "mic_._heal_11"
+      }
+    },
+    {
+      "id": "17908850028276343",
+      "text": "Awesome­ƒöÑÔØñ´©Å",
+      "ownerUsername": "pericoclaudia",
+      "ownerProfilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/604359995_18526298362064033_5316011903379798806_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=GPzCGrLgofgQ7kNvwFVFOqE&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AflPKx_62WXT8ht-5dkkc2UglQj1vT0yRx7njqPrRmW5qA&oe=694E2323&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:11:54.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "1930256032",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/604359995_18526298362064033_5316011903379798806_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=GPzCGrLgofgQ7kNvwFVFOqE&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AflPKx_62WXT8ht-5dkkc2UglQj1vT0yRx7njqPrRmW5qA&oe=694E2323&_nc_sid=10d13b",
+        "username": "pericoclaudia"
+      }
+    },
+    {
+      "id": "18075079325362969",
+      "text": "­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒæì­ƒæì­ƒæì­ƒæì­ƒæì­ƒæì­ƒæì­ƒæî­ƒæî­ƒæî­ƒæî­ƒæî",
+      "ownerUsername": "ralswit",
+      "ownerProfilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/132990527_184638073370293_211366580872058840_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43ODcuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=Oyck6vAzGS0Q7kNvwHsu2An&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfnaVyQjJJksXhUcI1HSa5feqxDVEGDuqenuShSS0zojzQ&oe=694E2805&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:11:42.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "45009253312",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/132990527_184638073370293_211366580872058840_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43ODcuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=Oyck6vAzGS0Q7kNvwHsu2An&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfnaVyQjJJksXhUcI1HSa5feqxDVEGDuqenuShSS0zojzQ&oe=694E2805&_nc_sid=10d13b",
+        "username": "ralswit"
+      }
+    },
+    {
+      "id": "17943814599086849",
+      "text": "Ï¼Ï┤┘å █î┘äÏ»Ïº ┘àÏ¿ÏºÏ▒┌® Ï▒Ïº┌®█î Ï¼┘ê┘å­ƒÿì­ƒÿü",
+      "ownerUsername": "atefe7872",
+      "ownerProfilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/117973939_121891472700748_2876919260386726330_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NDAuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=wqA9DY9lhXIQ7kNvwGrAk8-&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfnxvG1UuPEza5dqYxDqE4vaUf-vyrgQugVxh26wzHLEVQ&oe=694E125E&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:11:35.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "5374520316",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/117973939_121891472700748_2876919260386726330_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NDAuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=wqA9DY9lhXIQ7kNvwGrAk8-&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfnxvG1UuPEza5dqYxDqE4vaUf-vyrgQugVxh26wzHLEVQ&oe=694E125E&_nc_sid=10d13b",
+        "username": "atefe7872"
+      }
+    },
+    {
+      "id": "17857448046525383",
+      "text": "­ƒÿì",
+      "ownerUsername": "salwasoliman3691012",
+      "ownerProfilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/417431830_898111141718897_1916027216536587425_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NTYuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=9KefPQoRhKsQ7kNvwGzntQ4&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afk5h0_9jeiMaJMyI5SKQl0EWCtIxtrt6EHHG1vp-udP-Q&oe=694E0459&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:11:12.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "1923010032",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/417431830_898111141718897_1916027216536587425_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NTYuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=9KefPQoRhKsQ7kNvwGzntQ4&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afk5h0_9jeiMaJMyI5SKQl0EWCtIxtrt6EHHG1vp-udP-Q&oe=694E0459&_nc_sid=10d13b",
+        "username": "salwasoliman3691012"
+      }
+    },
+    {
+      "id": "18357148717160028",
+      "text": "­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà­ƒÄà",
+      "ownerUsername": "yehorovye",
+      "ownerProfilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/472520499_615880177663454_2991513656965747001_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NjAuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=LFT0cuSoMoQQ7kNvwGm6FbF&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afnb6-6zvQEgdhQ5LHgOFFqGIBbEC7MA9TyKWPZ_dqLluQ&oe=694DFF0F&_nc_sid=10d13b",
+      "timestamp": "2025-12-21T19:11:11.000Z",
+      "repliesCount": 0,
+      "replies": [],
+      "likesCount": 0,
+      "owner": {
+        "id": "53305649123",
+        "is_verified": false,
+        "profile_pic_url": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/472520499_615880177663454_2991513656965747001_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NjAuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=LFT0cuSoMoQQ7kNvwGm6FbF&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afnb6-6zvQEgdhQ5LHgOFFqGIBbEC7MA9TyKWPZ_dqLluQ&oe=694DFF0F&_nc_sid=10d13b",
+        "username": "yehorovye"
+      }
+    }
+  ],
+  "dimensionsHeight": 1136,
+  "dimensionsWidth": 640,
+  "displayUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-15/604437008_842714335062703_8066344979313411279_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFf3eTA4PO8dC8BTkXDzD2twfAsbpylnTn6C3gb35fjtX7WcdnHPane32JcfhmxKmM&_nc_ohc=eUdGZ5NJEckQ7kNvwGddrjS&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfkenUi06RL6X1ZxSRhNRfBj0gyLogcgpn3vUBGItFaU5w&oe=694E2244&_nc_sid=10d13b",
+  "images": [],
+  "videoUrl": "https://scontent-dfw5-1.cdninstagram.com/o1/v/t16/f2/m69/AQNtpglwF9Xhm9uCt9SEiQFkc4Ng8JukduWxVF67KUl4yvLLJZ23_2oNwGzo5iukQlsY-43DDHIOUp7yo-Vf412V.mp4?stp=dst-mp4&efg=eyJxZV9ncm91cHMiOiJbXCJpZ193ZWJfZGVsaXZlcnlfdnRzX290ZlwiXSIsInZlbmNvZGVfdGFnIjoidnRzX3ZvZF91cmxnZW4uY2xpcHMuYzIuNzIwLmJhc2VsaW5lIn0&_nc_cat=101&vs=859928057003950_4187088613&_nc_vs=HBksFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HSWVfMVNQZTFFcE4zNEFGQU83Vzc5cVhUU3hJYnNwVEFRQUYVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HQk1DLXlPTlVVRXR3SklIQUo5Uy1ENk5zSzluYnN0VEFRQUYVAgLIARIAKAAYABsAFQAAJuz25oiE%2F7g%2FFQIoAkMzLBdAVOIcrAgxJxgSZGFzaF9iYXNlbGluZV8xX3YxEQB1%2Fgdl5p0BAA%3D%3D&_nc_rid=88d8a370a1&ccb=9-4&oh=00_AfkN4PmN2zG7gFJqtBLuLCzwe2AiRonzWAIcNcWpm8Um9A&oe=694A409B&_nc_sid=10d13b",
+  "likesCount": 26921,
+  "videoViewCount": 197947,
+  "timestamp": "2025-12-21T18:43:33.000Z",
+  "childPosts": [],
+  "ownerFullName": "Dwayne Johnson",
+  "ownerUsername": "therock",
+  "ownerId": "232192182",
+  "productType": "clips",
+  "isCommentsDisabled": false,
+  "inputUrl": "https://www.instagram.com/therock/",
+  "audioUrl": "https://scontent-dfw5-2.cdninstagram.com/o1/v/t16/f2/m69/AQPejeV3Z6tXMJCs7knMVbStF4l6PPXard4IaE_Kjj8QPZZxhjBQCV5dEZFkB1z76cvohNQhFqTgIH-0bQ82gGsj.mp4?strext=1&_nc_cat=1&_nc_sid=9ca052&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_ohc=WGLG6GQg0HQQ7kNvwGQbEV4&efg=eyJ2ZW5jb2RlX3RhZyI6ImlnLXhwdmRzLmNsaXBzLmMyLUMzLmRhc2hfbG5faGVhYWNfdmJyM19hdWRpbyIsInZpZGVvX2lkIjpudWxsLCJvaWxfdXJsZ2VuX2FwcF9pZCI6OTM2NjE5NzQzMzkyNDU5LCJjbGllbnRfbmFtZSI6ImlnIiwieHB2X2Fzc2V0X2lkIjoyOTUwMDc0MjA4NTI3MDI2LCJhc3NldF9hZ2VfZGF5cyI6MCwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjgzLCJiaXRyYXRlIjo2NDYzNSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&_nc_gid=XniqL3TxNfPRw9B_xSgUxw&_nc_zt=28&oh=00_AflbVE9SjkAanwtttUpKKkyWIrukzkJkaqIT2swerVbuwQ&oe=694E11C0",
+  "alt": null,
+  "videoPlayCount": 761739,
+  "videoDuration": 83.546,
+  "musicInfo": {
+    "artist_name": "therock",
+    "song_name": "Original audio",
+    "uses_original_audio": true,
+    "should_mute_audio": false,
+    "should_mute_audio_reason": "",
+    "audio_id": "25657716723864484"
+  }
+}
+=====================================================
+
+>>> [STEP C] LIVE GEMINI 3 ANALYSIS (gemini-2.0-flash-exp)...
+
+====== [3] REAL GEMINI PROMPT ======
+DATASET: [{"u":"therock","t":"WhereÔÇÖs your mama and whose  kid is this? ­ƒÿé­ƒÄà­ƒÅ¥ \n\nI asked this a dozen times as parents leave their kids with me in the madness of the moment ­ƒñ¬\n\nA wild crazy day at @walmart, as Dwanta­ƒÄà­ƒÅ¥+ @papatui gave away free shopping ­ƒøÆ ­ƒøì´©Å ­ƒº© sprees for kids and their families. As insane as these moments are, theyÔÇÖre also so joyful and for many families who are going through tough times and struggling - this means everything to them. \n\nIve been there, so creating experiences like this for families will always be the best part of fame. \nFull stop. \n\nNow kids take this cart and hit the electronics section ­ƒÿ£­ƒøÆ­ƒô╗ \n\n@walmart \n@papatui","l":"https://www.instagram.com/p/DSiR_NokhHC/"},{"u":"a24","t":"Excited to share the official trailer for Benny SafdieÔÇÖs THE SMASHING MACHINE, starring Dwayne Johnson and Academy Award nominee Emily Blunt. In theaters October 3rd.","l":"https://www.instagram.com/p/DJCAM2oxl1l/"},{"u":"therock","t":"HereÔÇÖs our newest trailer for THE SMASHING MACHINE, written and directed by Silver Lion Best Director winner, Benny Safdie @bowedtie \n\nEmily is phenomenal and extraordinarily heartbreaking in the film, and BennyÔÇÖs infinite humanity created our safe place to touch very raw nerves. \n\nExcited for you all to see our film.\n\nIn theaters October 3rd. \n\n@a24","l":"https://www.instagram.com/p/DOjZnkGkbi5/"}]
+            TASK: Extract specific Food and Movie entities mentioned in these posts.
+            QUERY: "What snacks and movies does @therock like?"
+            OUTPUT: JSON Array [{ "matchedContent": "...", "category": "..." }]
+====================================
+
+====== [4] REAL GEMINI OUTPUT ======
+[
+  {
+    "matchedContent": "THE SMASHING MACHINE",
+    "category": "Movie"
+  }
+]
+====================================
+
+>>> [SUCCESS] REAL END-TO-END EXECUTION VERIFIED.

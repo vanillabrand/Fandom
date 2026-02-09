@@ -1,0 +1,21 @@
+[dotenv@17.2.3] injecting env (76) from .env.local -- tip: ÔÜÖ´©Å  enable debug logging with { debug: true }
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ­ƒöÉ encrypt with Dotenvx: https://dotenvx.com
+
+­ƒöì INSPECTING RECORDS for Dataset: bc6389d3-49cf-425d-b22c-d3d83b1b00e1
+--------------------------------------------------
+Record Keys: [
+  '_id',
+  'datasetId',
+  'recordType',
+  'platform',
+  'data',
+  'createdAt',
+  'compression'
+]
+Compression Flag: gzip
+Data Type (typeof): object
+Data Constructor: Binary
+Data IS MongoDB Binary
+Subtype: 0
+Buffer Length: 2429482
+--------------------------------------------------

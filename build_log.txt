@@ -1,0 +1,9 @@
+
+> huntsocial-fandom-analytics@0.0.0 build
+> npm run build:server && vite build
+
+
+> huntsocial-fandom-analytics@0.0.0 build:server
+> tsc -p tsconfig.server.json
+
+server/services/queryOptimizer.ts(88,21): error TS1117: An object literal cannot have multiple properties with the same name.

@@ -1,0 +1,25 @@
+[dotenv@17.2.3] injecting env (76) from .env.local -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+🧪 Running Isolated Gemini 3D Model Test...
+
+📝 PROMPT SENT TO GEMINI:
+---------------------------------------------------
+
+        QUERY: "@nike sneaker culture"
+        CONTEXT: [Mock Data: 50 tweets about sneakers, air jordans, and running]
+        
+    ** ROLE: THE ARCHITECT **
+    Your job is to define the "Shape" of the analysis.
+    1. Identify 6 - 8 distinct ** Clusters ** (Tribes) based on the data.
+    2. Identify 5 - 10 major ** Topics **.
+    3. Analyze the ** Visual Theme ** and ** Vibe **.
+
+    ** JSON SCHEMA:**
+    {
+      "root": { "children": [{ "label": "Mock Cluster", "type": "cluster", "data": { 
+... [TRUNCATED] ...
+---------------------------------------------------
+⏳ Sending request to gemini-2.0-flash-exp (or gemini-1.5-flash)...
+Trying model: gemini-2.0-flash-exp...
+
+✅ RESPONSE RECEIVED:
+---------------------------------------------------

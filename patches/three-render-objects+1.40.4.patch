@@ -1,0 +1,108 @@
+diff --git a/node_modules/three-render-objects/dist/three-render-objects.mjs b/node_modules/three-render-objects/dist/three-render-objects.mjs
+index 6b87318..d2862dc 100644
+--- a/node_modules/three-render-objects/dist/three-render-objects.mjs
++++ b/node_modules/three-render-objects/dist/three-render-objects.mjs
+@@ -1,5 +1,5 @@
+ import { SphereGeometry, Color, TextureLoader, SRGBColorSpace, MeshBasicMaterial, BackSide, Vector2, WebGLRenderer, Mesh, Clock, PerspectiveCamera, Scene, Raycaster, Vector3, Box3 } from 'three';
+-import { WebGPURenderer } from 'three/webgpu';
++// import { WebGPURenderer } from 'three/webgpu';
+ import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
+ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+ import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
+@@ -72,7 +72,7 @@ function _iterableToArrayLimit(r, l) {
+       f = true,
+       o = false;
+     try {
+-      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
++      if (i = (t = t.call(r)).next, 0 === l); else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+     } catch (r) {
+       o = true, n = r;
+     } finally {
+@@ -120,23 +120,23 @@ function _unsupportedIterableToArray(r, a) {
+ }
+ 
+ var three = window.THREE ? window.THREE // Prefer consumption from global THREE, if exists
+-: {
+-  WebGLRenderer: WebGLRenderer,
+-  Scene: Scene,
+-  PerspectiveCamera: PerspectiveCamera,
+-  Raycaster: Raycaster,
+-  SRGBColorSpace: SRGBColorSpace,
+-  TextureLoader: TextureLoader,
+-  Vector2: Vector2,
+-  Vector3: Vector3,
+-  Box3: Box3,
+-  Color: Color,
+-  Mesh: Mesh,
+-  SphereGeometry: SphereGeometry,
+-  MeshBasicMaterial: MeshBasicMaterial,
+-  BackSide: BackSide,
+-  Clock: Clock
+-};
++  : {
++    WebGLRenderer: WebGLRenderer,
++    Scene: Scene,
++    PerspectiveCamera: PerspectiveCamera,
++    Raycaster: Raycaster,
++    SRGBColorSpace: SRGBColorSpace,
++    TextureLoader: TextureLoader,
++    Vector2: Vector2,
++    Vector3: Vector3,
++    Box3: Box3,
++    Color: Color,
++    Mesh: Mesh,
++    SphereGeometry: SphereGeometry,
++    MeshBasicMaterial: MeshBasicMaterial,
++    BackSide: BackSide,
++    Clock: Clock
++  };
+ var threeRenderObjects = Kapsule({
+   props: {
+     width: {
+@@ -215,11 +215,11 @@ var threeRenderObjects = Kapsule({
+       triggerUpdate: false
+     },
+     onHover: {
+-      "default": function _default() {},
++      "default": function _default() { },
+       triggerUpdate: false
+     },
+     onClick: {
+-      "default": function _default() {},
++      "default": function _default() { },
+       triggerUpdate: false
+     },
+     onRightClick: {
+@@ -232,7 +232,7 @@ var threeRenderObjects = Kapsule({
+         state.controls.enabled && state.controls.update && state.controls.update(Math.min(1, state.clock.getDelta())); // timedelta is required for fly controls
+ 
+         state.postProcessingComposer ? state.postProcessingComposer.render() // if using postprocessing, switch the output to it
+-        : state.renderer.render(state.scene, state.camera);
++          : state.renderer.render(state.scene, state.camera);
+         state.extraRenderers.forEach(function (r) {
+           return r.render(state.scene, state.camera);
+         });
+@@ -473,10 +473,10 @@ var threeRenderObjects = Kapsule({
+ 
+         // detect point drag
+         !state.isPointerDragging && ev.type === 'pointermove' && (ev.pressure > 0 || state.isPointerPressed) // ev.pressure always 0 on Safari, so we used the isPointerPressed tracker
+-        && (ev.pointerType === 'mouse' || ev.movementX === undefined || [ev.movementX, ev.movementY].some(function (m) {
+-          return Math.abs(m) > 1;
+-        })) // relax drag trigger sensitivity on non-mouse (touch/pen) events
+-        && (state.isPointerDragging = true);
++          && (ev.pointerType === 'mouse' || ev.movementX === undefined || [ev.movementX, ev.movementY].some(function (m) {
++            return Math.abs(m) > 1;
++          })) // relax drag trigger sensitivity on non-mouse (touch/pen) events
++          && (state.isPointerDragging = true);
+         if (state.enablePointerInteraction) {
+           // update the pointer pos
+           var offset = getOffset(state.container);
+@@ -527,7 +527,7 @@ var threeRenderObjects = Kapsule({
+     });
+ 
+     // Setup renderer, camera and controls
+-    state.renderer = new (useWebGPU ? WebGPURenderer : three.WebGLRenderer)(Object.assign({
++    state.renderer = new three.WebGLRenderer(Object.assign({
+       antialias: true,
+       alpha: true
+     }, rendererConfig));

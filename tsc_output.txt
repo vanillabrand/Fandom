@@ -1,0 +1,7 @@
+services/geminiService.ts(1183,68): error TS1005: ',' expected.
+services/geminiService.ts(1183,72): error TS1005: ',' expected.
+services/geminiService.ts(1183,87): error TS1005: ';' expected.
+services/geminiService.ts(1183,95): error TS1443: Module declaration names may only use ' or " quoted strings.
+services/geminiService.ts(1183,109): error TS1443: Module declaration names may only use ' or " quoted strings.
+services/geminiService.ts(1184,67): error TS1443: Module declaration names may only use ' or " quoted strings.
+services/geminiService.ts(1184,80): error TS1443: Module declaration names may only use ' or " quoted strings.

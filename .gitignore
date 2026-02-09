@@ -1,0 +1,30 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+fandom.db
+node_modules
+dist
+dist-ssr
+*.local
+env.yaml
+env_vars.yaml
+*.yaml
+dist-server/*.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+HACKATHON_SUBMISSION.md
+fandom_map_1770615846024_full.json

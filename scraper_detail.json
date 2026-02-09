@@ -1,0 +1,525 @@
+[
+    {
+        "id": "apify/instagram-scraper",
+        "name": "Instagram Scraper",
+        "url": "https://apify.com/apify/instagram-scraper",
+        "description": "Scrape and download Instagram posts, profiles, places, hashtags, photos, and comments. Get data from Instagram using one or more Instagram URLs or search queries.",
+        "costPerThousand": 4.70,
+        "inputSchema": {
+            "directUrls": [
+                "string (profile URLs, post URLs, hashtag URLs)"
+            ],
+            "resultsType": "posts",
+            "resultsLimit": 5,
+            "search": "string (optional)"
+        },
+        "outputSchema": {
+            "username": "string",
+            "fullName": "string",
+            "followersCount": "number",
+            "posts": [
+                {
+                    "url": "string",
+                    "likesCount": "number",
+                    "caption": "string"
+                }
+            ],
+            "url": "string",
+            "caption": "string",
+            "likesCount": "number",
+            "timestamp": "string",
+            "ownerUsername": "string"
+        },
+        "alternatives": [
+            "apify/instagram-api-scraper",
+            "apify/instagram-profile-scraper"
+        ]
+    },
+    {
+        "id": "apify/instagram-profile-scraper",
+        "name": "Instagram Profile Scraper",
+        "url": "https://apify.com/apify/instagram-profile-scraper",
+        "description": "Scrape all Instagram profile info. Fastest and cheapest for pure profile metadata analysis.",
+        "costPerThousand": 4.60,
+        "inputSchema": {
+            "usernames": [
+                "string"
+            ]
+        },
+        "outputSchema": {
+            "inputUrl": "string",
+            "id": "string",
+            "username": "string",
+            "url": "string",
+            "fullName": "string",
+            "biography": "string",
+            "about": {
+                "accounts_with_shared_followers": "null",
+                "country": "string",
+                "date_joined": "string",
+                "date_joined_as_timestamp": "number",
+                "date_verified": "null",
+                "date_verified_as_timestamp": "null",
+                "former_usernames": "number",
+                "id": "number",
+                "is_verified": "boolean",
+                "username": "string"
+            },
+            "followersCount": "number",
+            "followsCount": "number",
+            "postsCount": "number",
+            "highlightReelCount": "number",
+            "igtvVideoCount": "number",
+            "isBusinessAccount": "boolean",
+            "joinedRecently": "boolean",
+            "hasChannel": "boolean",
+            "businessCategoryName": "string",
+            "private": "boolean",
+            "verified": "boolean",
+            "externalUrl": "string",
+            "externalUrlShimmed": "string",
+            "externalUrls": [
+                {
+                    "title": "string",
+                    "lynx_url": "string",
+                    "url": "string",
+                    "link_type": "string"
+                }
+            ],
+            "profilePicUrl": "string",
+            "profilePicUrlHD": "string",
+            "relatedProfiles": [
+                {
+                    "id": "string",
+                    "full_name": "string",
+                    "is_private": "boolean",
+                    "is_verified": "boolean",
+                    "profile_pic_url": "string",
+                    "username": "string"
+                }
+            ],
+            "latestPosts": [
+                {
+                    "id": "string",
+                    "type": "string",
+                    "shortCode": "string",
+                    "caption": "string",
+                    "hashtags": [
+                        "string"
+                    ],
+                    "mentions": [
+                        "string"
+                    ],
+                    "url": "string",
+                    "commentsCount": "number",
+                    "dimensionsHeight": "number",
+                    "dimensionsWidth": "number",
+                    "displayUrl": "string",
+                    "images": [
+                        "string"
+                    ],
+                    "alt": "string",
+                    "likesCount": "number",
+                    "timestamp": "string",
+                    "childPosts": [
+                        {
+                            "id": "string",
+                            "type": "string",
+                            "shortCode": "string",
+                            "caption": "string",
+                            "hashtags": [],
+                            "mentions": [],
+                            "url": "string",
+                            "commentsCount": "number",
+                            "firstComment": "string",
+                            "latestComments": [],
+                            "dimensionsHeight": "number",
+                            "dimensionsWidth": "number",
+                            "displayUrl": "string",
+                            "images": [],
+                            "alt": "string",
+                            "likesCount": "number",
+                            "timestamp": "number",
+                            "childPosts": [],
+                            "ownerUsername": "string",
+                            "ownerId": "string"
+                        }
+                    ],
+                    "ownerUsername": "string",
+                    "ownerId": "string",
+                    "isPinned": "boolean",
+                    "isCommentsDisabled": "boolean"
+                }
+            ],
+            "latestIgtvVideos": [
+                {
+                    "type": "string",
+                    "shortCode": "string",
+                    "title": "string",
+                    "caption": "string",
+                    "commentsCount": "number",
+                    "commentsDisabled": "boolean",
+                    "dimensionsHeight": "number",
+                    "dimensionsWidth": "number",
+                    "displayUrl": "string",
+                    "likesCount": "number",
+                    "videoDuration": "number",
+                    "videoViewCount": "number",
+                    "id": "string",
+                    "hashtags": [
+                        "string"
+                    ],
+                    "mentions": [
+                        "string"
+                    ],
+                    "url": "string",
+                    "firstComment": "string",
+                    "latestComments": [],
+                    "images": [],
+                    "videoUrl": "string",
+                    "alt": "string",
+                    "timestamp": "string",
+                    "childPosts": [],
+                    "ownerUsername": "string",
+                    "ownerId": "string",
+                    "productType": "string",
+                    "taggedUsers": [
+                        {
+                            "full_name": "string",
+                            "id": "string",
+                            "is_verified": "boolean",
+                            "profile_pic_url": "string",
+                            "username": "string"
+                        }
+                    ],
+                    "isCommentsDisabled": "boolean"
+                }
+            ]
+        }
+    },
+    {
+        "id": "apify/instagram-comment-scraper",
+        "name": "Instagram Comments Scraper",
+        "url": "https://apify.com/apify/instagram-comment-scraper",
+        "description": "Scrape Instagram comments from posts or reels. Essential for sentiment analysis and audience engagement depth.",
+        "costPerThousand": 4.30,
+        "inputSchema": {
+            "directUrls": [
+                "string (post or reel URLs)"
+            ],
+            "resultsLimit": 5
+        },
+        "outputSchema": {
+            "text": "string",
+            "ownerUsername": "string",
+            "timestamp": "string",
+            "likesCount": "number"
+        }
+    },
+    {
+        "id": "apify/instagram-reel-scraper",
+        "name": "Instagram Reel Scraper",
+        "url": "https://apify.com/apify/instagram-reel-scraper",
+        "description": "Scrape Instagram reels. Just add Instagram profile or reel URL to get video data.",
+        "costPerThousand": 5.50,
+        "inputSchema": {
+            "username": [
+                "string (username or URL)"
+            ],
+            "resultsLimit": 5
+        },
+        "outputSchema": {
+            "videoUrl": "string",
+            "caption": "string",
+            "viewCount": "number",
+            "likesCount": "number"
+        }
+    },
+    {
+        "id": "clockworks/tiktok-scraper",
+        "name": "TikTok Scraper",
+        "url": "https://apify.com/clockworks/tiktok-scraper",
+        "description": "Extract data from TikTok videos, hashtags, and users. versatile scraper for general TikTok data.",
+        "costPerThousand": 4.00,
+        "inputSchema": {
+            "profiles": [
+                "string (usernames)"
+            ],
+            "hashtags": [
+                "string"
+            ],
+            "search": [
+                "string"
+            ],
+            "resultsPerPage": 100,
+            "resultsLimit": 100
+        },
+        "outputSchema": {
+            "authorMeta": {
+                "name": "string",
+                "fans": "number",
+                "signature": "string"
+            },
+            "text": "string",
+            "diggCount": "number",
+            "playCount": "number"
+        }
+    },
+    {
+        "id": "clockworks/tiktok-profile-scraper",
+        "name": "TikTok Profile Scraper",
+        "url": "https://apify.com/clockworks/tiktok-profile-scraper",
+        "description": "Extract data from TikTok profiles and videos they post. Good for analyzing specific creators.",
+        "costPerThousand": 4.50,
+        "inputSchema": {
+            "profiles": [
+                "string (usernames)"
+            ],
+            "profileScrapeSections": [
+                "videos",
+                "liked"
+            ],
+            "limit": 100
+        },
+        "outputSchema": {
+            "user": {
+                "nickname": "string",
+                "signature": "string",
+                "followerCount": "number"
+            },
+            "videos": [
+                {
+                    "id": "string",
+                    "desc": "string"
+                }
+            ]
+        }
+    },
+    {
+        "id": "apify/instagram-api-scraper",
+        "name": "Instagram API Scraper",
+        "url": "https://apify.com/apify/instagram-api-scraper",
+        "description": "Versatile all-rounder for scraping Profiles, Posts, Comments, Locations, and Hashtags. efficiently retrieves posts from a list of Profile URLs. Best choice for content scraping.",
+        "costPerThousand": 4.30,
+        "maxItem": 10,
+        "inputSchema": {
+            "directUrls": [
+                "string (list of https://www.instagram.com/username)"
+            ],
+            "resultsType": "posts",
+            "resultsLimit": 2,
+            "searchType": "user",
+            "searchLimit": 1,
+            "addParentData": false,
+            "search": "string (optional)"
+        },
+        "outputSchema": {
+            "id": "string",
+            "username": "string",
+            "url": "string",
+            "fullName": "string",
+            "biography": "string",
+            "profilePicUrl": "string",
+            "profilePicUrlHD": "string",
+            "followersCount": "number",
+            "followsCount": "number",
+            "postsCount": "number",
+            "isBusinessAccount": "boolean",
+            "verified": "boolean",
+            "private": "boolean",
+            "latestPosts": [
+                {
+                    "id": "string",
+                    "type": "string",
+                    "shortCode": "string",
+                    "caption": "string",
+                    "url": "string",
+                    "displayUrl": "string",
+                    "likesCount": "number",
+                    "commentsCount": "number",
+                    "timestamp": "string",
+                    "videoUrl": "string",
+                    "videoViewCount": "number"
+                }
+            ]
+        }
+    },
+    {
+        "id": "apify/instagram-tagged-scraper",
+        "name": "Instagram Mentions Scraper",
+        "url": "https://apify.com/apify/instagram-tagged-scraper",
+        "description": "Extract data from tagged posts and mentions on Instagram. Just add one or more Instagram usernames.",
+        "costPerThousand": 3.50,
+        "inputSchema": {
+            "username": [
+                "string"
+            ],
+            "resultsLimit": 100
+        }
+    },
+    {
+        "id": "thenetaji/instagram-followers-followings-scraper",
+        "name": "Instagram Followers & Following Scraper",
+        "url": "https://apify.com/thenetaji/instagram-followers-followings-scraper",
+        "description": "Scrape Instagram followers and following lists. Ideal for network mapping and audience analysis.",
+        "costPerThousand": 5.0,
+        "inputSchema": {
+            "username": [
+                "string"
+            ],
+            "type": "followers",
+            "max_count": 50
+        },
+        "outputSchema": {
+            "username": "string",
+            "full_name": "string",
+            "fullName": "string",
+            "id": "string",
+            "pk": "string",
+            "is_private": "boolean",
+            "isPrivate": "boolean",
+            "profile_pic_url": "string",
+            "profilePicUrl": "string",
+            "follower_count": "number",
+            "followerCount": "number",
+            "followersCount": "number"
+        }
+    },
+    {
+        "id": "louisdeconinck/instagram-comments-scraper",
+        "name": "Instagram Comments Scraper (LB)",
+        "url": "https://apify.com/louisdeconinck/instagram-comments-scraper",
+        "description": "Scrape all comments from any Instagram post in seconds. No login required.",
+        "costPerThousand": 3.00,
+        "inputSchema": {
+            "urls": [
+                "string"
+            ],
+            "maxComments": 100
+        }
+    },
+    {
+        "id": "apidojo/instagram-location-scraper",
+        "name": "Instagram Location Scraper",
+        "url": "https://apify.com/apidojo/instagram-location-scraper",
+        "description": "Harvest data from locations on Instagram.",
+        "costPerThousand": 4.00,
+        "inputSchema": {
+            "startUrls": [
+                "string"
+            ],
+            "locationIds": [
+                "string"
+            ],
+            "maxItems": 100
+        }
+    },
+    {
+        "id": "clockworks/free-tiktok-scraper",
+        "name": "TikTok Data Extractor",
+        "url": "https://apify.com/clockworks/free-tiktok-scraper",
+        "description": "Extract data about videos, users, and channels based on hashtags or scrape full user profiles.",
+        "costPerThousand": 5.00,
+        "inputSchema": {
+            "hashtags": [
+                "string"
+            ],
+            "profiles": [
+                "string"
+            ],
+            "search": [
+                "string"
+            ],
+            "resultsPerPage": 100
+        }
+    },
+    {
+        "id": "scraptik/tiktok-api",
+        "name": "Full TikTok API Scraper",
+        "url": "https://apify.com/scraptik/tiktok-api",
+        "description": "Access the TikTok mobile API for user, posts, sounds, search, comments, followers, and more.",
+        "costPerThousand": 5.00,
+        "inputSchema": {
+            "profile_username": "string",
+            "profile_userId": "string"
+        }
+    },
+    {
+        "id": "clockworks/tiktok-hashtag-scraper",
+        "name": "TikTok Hashtag Scraper",
+        "url": "https://apify.com/clockworks/tiktok-hashtag-scraper",
+        "description": "Scrape TikTok hashtag data. Just add one or more hashtags.",
+        "costPerThousand": 5.00,
+        "inputSchema": {
+            "hashtags": [
+                "string"
+            ],
+            "resultsPerPage": 100
+        }
+    },
+    {
+        "id": "clockworks/tiktok-comments-scraper",
+        "name": "TikTok Comments Scraper",
+        "url": "https://apify.com/clockworks/tiktok-comments-scraper",
+        "description": "Extract TikTok comments from video URLs.",
+        "costPerThousand": 2.50,
+        "inputSchema": {
+            "postURLs": [
+                "string"
+            ],
+            "commentsPerPost": 100
+        }
+    },
+    {
+        "id": "novi/fast-tiktok-api",
+        "name": "Fast TikTok API",
+        "url": "https://apify.com/novi/fast-tiktok-api",
+        "description": "Fastest TikTok API for Trend, Hashtag, Search, Music, User. Real-time, authentic data.",
+        "costPerThousand": 3.00,
+        "inputSchema": {
+            "type": "string",
+            "keyword": "string"
+        }
+    },
+    {
+        "id": "clockworks/tiktok-sound-scraper",
+        "name": "TikTok Sound Scraper",
+        "url": "https://apify.com/clockworks/tiktok-sound-scraper",
+        "description": "Scrape TikTok videos with a chosen sound.",
+        "costPerThousand": 4.00,
+        "inputSchema": {
+            "musics": [
+                "string"
+            ],
+            "resultsPerPage": 100
+        }
+    },
+    {
+        "id": "apify/google-search-scraper",
+        "name": "Google Search Scraper",
+        "url": "https://apify.com/apify/google-search-scraper",
+        "description": "Search Google for Instagram profiles, posts, and content. Best for location-based and keyword-based discovery of influencers. Returns organic search results with URLs and descriptions.",
+        "costPerThousand": 7.50,
+        "inputSchema": {
+            "queries": "string (search term like 'rustlersuk london instagram')",
+            "maxPagesPerQuery": 1,
+            "resultsPerPage": 100,
+            "countryCode": "us",
+            "languageCode": "en"
+        },
+        "outputSchema": {
+            "title": "string",
+            "url": "string",
+            "description": "string",
+            "organicResults": [
+                {
+                    "title": "string",
+                    "url": "string (Instagram profile or post URL)",
+                    "description": "string"
+                }
+            ]
+        },
+        "useCase": "location_discovery",
+        "notes": "Use &view=organic_results parameter when fetching dataset. Map sampleSize to resultsPerPage (max 100)."
+    }
+]
