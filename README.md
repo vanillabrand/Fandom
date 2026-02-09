@@ -4,7 +4,7 @@ AI-powered social intelligence engine. Maps fandoms in 3D to uncover rising star
 
 ## Features
 - **3D Force Graph**: Interactive visualization of thousands of nodes with physics-based layout.
-- **AI Analysis**: Google Gemini 2.0 Flash integration for deep inspections of content, sentiment, and provenance.
+- **AI Analysis**: Google Gemini 3.0 Flash integration for deep inspections of content, sentiment, and provenance.
 - **Smart Scraper**: Apify integration to fetch real-time Instagram/TikTok data, now with **Split-Storage** to handle massive datasets (>16MB).
 - **Orchestration**: Autonomous "Wizard" that plans multi-hop scraping strategies to discover hidden connections.
 
@@ -12,7 +12,7 @@ AI-powered social intelligence engine. Maps fandoms in 3D to uncover rising star
 - **Frontend**: React 19, Vite, Three.js (react-force-graph-3d), TailwindCSS.
 - **Backend**: Node.js, Express.
 - **Database**: MongoDB (Metadata + Chunked Records for scalability).
-- **AI**: Google Gemini 1.5 Pro / 2.0 Flash.
+- **AI**: Google Gemini 3 Pro / 3.0 Flash.
 
 ## Setup & Run Locally
 
