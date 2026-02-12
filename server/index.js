@@ -101,16 +101,22 @@ app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 const PRIMARY_URI = process.env.MONGO_DB_CONNECT;
 const SECONDARY_URI = process.env.MONGODB_URI; // Legacy fallback or Atlas
 
+let isDbConnected = false;
+let dbConnectionError = null;
+
 const connectWithFallback = async () => {
     if (!PRIMARY_URI && !SECONDARY_URI) {
         console.error('❌ No MongoDB connection string found in .env.local');
-        process.exit(1);
+        dbConnectionError = "Missing Connection String";
+        // process.exit(1); // [FIX] Don't crash, allow debug route
+        return;
     }
 
     try {
         console.log(`🔌 Attempting primary MongoDB connection...`);
         await mongoService.connect(PRIMARY_URI || SECONDARY_URI);
         console.log('✅ MongoDB connected successfully');
+        isDbConnected = true;
         marketingService.startCron();
     } catch (error) {
         console.warn('⚠️ Primary MongoDB connection failed:', error.message);
@@ -120,14 +126,17 @@ const connectWithFallback = async () => {
                 console.log('🔌 Attempting fallback MongoDB connection...');
                 await mongoService.connect(SECONDARY_URI);
                 console.log('✅ Fallback MongoDB connected successfully');
+                isDbConnected = true;
                 marketingService.startCron();
             } catch (fallbackError) {
                 console.error('❌ All MongoDB connection attempts failed:', fallbackError.message);
-                process.exit(1);
+                dbConnectionError = fallbackError.message;
+                // process.exit(1); // [FIX] Don't crash
             }
         } else {
             console.error('❌ MongoDB connection failed and no fallback available.');
-            process.exit(1);
+            dbConnectionError = error.message;
+            // process.exit(1); // [FIX] Don't crash
         }
     }
 };
@@ -155,15 +164,54 @@ app.get('/health', (req, res) => {
     });
 });
 
+// [DEBUG] Diagnostic Route for Cloud Run
+app.get('/debug-env', (req, res) => {
+    try {
+        const indexPath = path.join(distPath, 'index.html');
+        const debugInfo = {
+            timestamp: new Date().toISOString(),
+            __filename,
+            __dirname,
+            rootDir,
+            distPath,
+            distExists: fs.existsSync(distPath),
+            indexExists: fs.existsSync(indexPath),
+            distContents: fs.existsSync(distPath) ? fs.readdirSync(distPath) : 'PATH_NOT_FOUND',
+            env: {
+                PORT: process.env.PORT,
+                NODE_ENV: process.env.NODE_ENV,
+                MONGO_SET: !!process.env.MONGO_DB_CONNECT,
+                DB_CONNECTED: isDbConnected,
+                DB_ERROR: dbConnectionError
+            }
+        };
+        res.json(debugInfo);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Handle SPA routing for any request that didn't match an API route
 app.get(/.*/, (req, res) => {
     // Read the index.html file
     const indexPath = path.join(distPath, 'index.html');
 
+    if (!fs.existsSync(indexPath)) {
+        console.error(`CRITICAL: index.html NOT FOUND at: ${indexPath}`);
+        // Try to list the directory to see what IS there
+        const dirContents = fs.existsSync(distPath) ? fs.readdirSync(distPath) : 'DIST_DIR_MISSING';
+        return res.status(500).send(`
+            <h1>500 - Application Build Missing</h1>
+            <p>Could not find <code>index.html</code> at <code>${indexPath}</code></p>
+            <p><strong>distPath:</strong> ${distPath}</p>
+            <p><strong>Directory Contents:</strong> ${JSON.stringify(dirContents)}</p>
+        `);
+    }
+
     fs.readFile(indexPath, 'utf8', (err, htmlData) => {
         if (err) {
             console.error('Error reading index.html:', err);
-            return res.status(500).send('Error loading application');
+            return res.status(500).send('Error loading application: ' + err.message);
         }
 
         // Inject environment variables at runtime
@@ -173,7 +221,7 @@ app.get(/.*/, (req, res) => {
         const apifyToken = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN || '';
         const googleClientId = process.env.VITE_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || '';
 
-        console.log('[Server] Injecting Config into HTML. Valid GEMINI_API_KEY present:', !!geminiKey);
+        // console.log('[Server] Injecting Config into HTML. Valid GEMINI_API_KEY present:', !!geminiKey);
         if (!geminiKey) console.warn('[Server] WARNING: GEMINI_API_KEY is missing in process.env!');
         if (!apifyToken) console.warn('[Server] WARNING: APIFY_API_TOKEN is missing in process.env!');
         if (!googleClientId) console.warn('[Server] WARNING: GOOGLE_CLIENT_ID is missing in process.env!');
@@ -184,7 +232,8 @@ app.get(/.*/, (req, res) => {
                     GEMINI_API_KEY: "${geminiKey}",
                     APIFY_API_TOKEN: "${apifyToken}",
                     VITE_GOOGLE_CLIENT_ID: "${googleClientId}",
-                    VITE_CLOUDRUN_SCRAPER_URL: "${process.env.VITE_CLOUDRUN_SCRAPER_URL || ''}"
+                    VITE_CLOUDRUN_SCRAPER_URL: "${process.env.VITE_CLOUDRUN_SCRAPER_URL || ''}",
+                    VITE_STRIPE_PUBLISHABLE_KEY: "${process.env.VITE_STRIPE_PUBLISHABLE_KEY || process.env.STRIPE_PUBLISHABLE_KEY || ''}"
                 };
             </script>
         `;

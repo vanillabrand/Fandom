@@ -9,7 +9,7 @@
     },
     "include": [
         "server/**/*",
-        "src/types.ts",
+        "types.ts",
         "services/**/*"
     ],
     "exclude": [

@@ -13,6 +13,7 @@ dist-ssr
 *.local
 env.yaml
 env_vars.yaml
+env_cloudrun.yaml
 *.yaml
 dist-server/*.json
 
@@ -28,3 +29,4 @@ dist-server/*.json
 *.sw?
 HACKATHON_SUBMISSION.md
 fandom_map_1770615846024_full.json
+.env

@@ -142,12 +142,12 @@ export const LandingPage = () => {
 
             if (!res.ok) throw new Error(data.error || 'Auth failed');
 
-            // Success: Store token and login
-            await login(data.token);
+            // [FIX] Email auth returns a complete JWT token, not a Google OAuth token
+            // Store it directly and let the AuthContext handle the rest
+            localStorage.setItem('AUTH_TOKEN', data.token);
 
-            // [FIX] Removed manual localStorage and reload. 
-            // AuthContext handles token storage and state update.
-            // useEffect hook will redirect to dashboard when user state changes.
+            // Trigger a page reload to let AuthContext pick up the token
+            window.location.href = '/';
 
         } catch (error: any) {
             toast.error(error.message);

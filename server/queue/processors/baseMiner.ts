@@ -626,25 +626,26 @@ export class BaseMiner {
         if (visualData && visualData.brands && Array.isArray(visualData.brands)) {
             visualData.brands.forEach((brand: any) => {
                 const brandId = `brand_${brand.name.toLowerCase().replace(/\s+/g, '_')}`;
-                // Avoid key collisions?
-                // Minimal check - we assume brandId is unique enough or we overwrite safely
+                const matchCount = brand.imageUrls?.length || brand.count || 1;
+
                 nodes[nodeIdx++] = {
                     id: brandId,
                     label: brand.name,
-                    val: 10 + Math.min(20, (brand.count || 1) * 2),
+                    val: 10 + Math.min(20, matchCount * 2),
                     group: 'brand',
                     color: '#fbbf24', // Amber
                     data: {
                         name: brand.name,
-                        count: brand.count,
+                        count: matchCount,
                         type: 'brand',
-                        evidence: `Detected visually in ${brand.count} posts`
+                        evidence: `Detected visually in ${matchCount} posts`,
+                        imageUrls: brand.imageUrls || []
                     }
                 };
                 links[linkIdx++] = {
                     source: rootId,
                     target: brandId,
-                    value: Math.max(1, brand.count || 1)
+                    value: Math.max(1, matchCount)
                 };
             });
         }

@@ -602,10 +602,10 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         if (analytics.creators && analytics.creators.length > 0) {
             // [SORTING] Sort by overindexScore or affinity if available
             creators = [...analytics.creators].sort((a, b) => {
-                const scoreA = a.overindexScore || a.affinity || 0;
-                const scoreB = b.overindexScore || b.affinity || 0;
+                const scoreA = (a.overindexScore || a.affinity || a.affinityPercent || 0);
+                const scoreB = (b.overindexScore || b.affinity || b.affinityPercent || 0);
                 if (scoreA !== scoreB) return scoreB - scoreA;
-                return (b.val || 0) - (a.val || 0);
+                return (b.frequency || b.val || 0) - (a.frequency || a.val || 0);
             });
         } else if (analytics.overindexing && analytics.overindexing.topCreators && analytics.overindexing.topCreators.length > 0) {
             // Sort by overindexScore if available
@@ -641,6 +641,59 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                     provenance: n.data.provenance,
                     ...n.data
                 }));
+        }
+
+        // [NEW] Supplement with Related Profiles from Raw Data (Explicit Fallback)
+        // If we have access to the raw scraped records, extracting 'relatedProfiles' is a high-quality signal
+        if ((data as any).data && Array.isArray((data as any).data)) {
+            const rawData = (data as any).data;
+            const seenInRaw = new Set<string>();
+
+            rawData.forEach((record: any) => {
+                if (record.relatedProfiles && Array.isArray(record.relatedProfiles)) {
+                    record.relatedProfiles.forEach((rp: any) => {
+                        const rawId = rp.id || rp.username;
+                        if (!rawId) return;
+
+                        const id = String(rawId).toLowerCase().trim();
+                        // Prevent duplicates within this loop and check if already in main list (optimization)
+                        if (!seenInRaw.has(id)) {
+                            // Check if this profile is already in our 'creators' list to avoid redundant processing
+                            const exists = creators.some(c =>
+                                (c.id && c.id.toLowerCase() === id) ||
+                                (c.username && c.username.toLowerCase().replace('@', '') === rp.username.toLowerCase().replace('@', ''))
+                            );
+
+                            if (!exists) {
+                                creators.push({
+                                    id: rp.id,
+                                    username: rp.username || rp.full_name,
+                                    full_name: rp.full_name,
+                                    firstName: rp.full_name ? rp.full_name.split(' ')[0] : '',
+                                    frequency: 1, // Default weight
+                                    category: 'related_profile',
+                                    percentage: 0,
+                                    overindexScore: 0,
+                                    platform: 'instagram',
+                                    profilePicUrl: rp.profile_pic_url,
+                                    isVerified: rp.is_verified,
+                                    provenance: {
+                                        source: 'Raw Dataset',
+                                        method: 'Related Profile',
+                                        evidence: [{
+                                            type: 'dataset',
+                                            text: `Appears in related profiles of ${record.username || record.ownerUsername}`,
+                                            url: `https://www.instagram.com/${(rp.username || '').replace('@', '')}/`
+                                        }],
+                                        confidence: 0.8
+                                    }
+                                });
+                                seenInRaw.add(id);
+                            }
+                        }
+                    });
+                }
+            });
         }
 
         // [DEDUPLICATION] Ensure unique creators by username/id (Final Safety Check)
@@ -761,8 +814,8 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             });
 
         return brands.sort((a, b) => {
-            const scoreA = a.overindexScore || a.affinity || 0;
-            const scoreB = b.overindexScore || b.affinity || 0;
+            const scoreA = (a.overindexScore || a.affinity || a.affinityPercent || 0);
+            const scoreB = (b.overindexScore || b.affinity || b.affinityPercent || 0);
             if (scoreA !== scoreB) return scoreB - scoreA;
             return (b.frequency || b.val || 0) - (a.frequency || a.val || 0);
         });
@@ -1106,21 +1159,24 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
 
     // [FIX] Memoize displayProfile to prevent object churn and infinite render loops
     const displayProfile = React.useMemo(() => {
-        return (!isTopic && selectedItem)
-            ? {
-                ...(selectedItem as any).data,
-                ...(selectedItem as any), // Spread top level too
-                username: (selectedItem as any).username || (selectedItem as any).handle || (selectedItem as any).data?.username || (selectedItem as any).label?.replace('@', ''),
-                profilePicUrlHD: (selectedItem as any).profilePicUrlHD || (selectedItem as any).profilePicUrl || (selectedItem as any).profile_pic_url || (selectedItem as any).data?.profilePicUrl || (selectedItem as any).profilePic,
-                fullName: (selectedItem as any).fullName || (selectedItem as any).name || (selectedItem as any).label,
-                biography: (selectedItem as any).biography || (selectedItem as any).bio || (selectedItem as any).data?.biography || (selectedItem as any).data?.bio,
-                followerCount: (selectedItem as any).followerCount || (selectedItem as any).followers || (selectedItem as any).followersCount || (selectedItem as any).follower_count || (selectedItem as any).edge_followed_by?.count || (selectedItem as any).data?.followerCount || (selectedItem as any).data?.followers || (selectedItem as any).data?.follower_count || (selectedItem as any).data?.followersCount,
-                followingCount: (selectedItem as any).followingCount || (selectedItem as any).follows || (selectedItem as any).following || (selectedItem as any).followsCount || (selectedItem as any).following_count || (selectedItem as any).edge_follow?.count || (selectedItem as any).data?.followingCount || (selectedItem as any).data?.follows || (selectedItem as any).data?.following || (selectedItem as any).data?.following_count || (selectedItem as any).data?.follows_count,
-                postCount: (selectedItem as any).postCount || (selectedItem as any).posts || (selectedItem as any).postsCount || (selectedItem as any).mediaCount || (selectedItem as any).media_count || (selectedItem as any).edge_owner_to_timeline_media?.count || (selectedItem as any).data?.postCount || (selectedItem as any).data?.posts || (selectedItem as any).data?.media_count,
-                isVerified: (selectedItem as any).isVerified || (selectedItem as any).verified || (selectedItem as any).data?.isVerified,
-                externalUrl: (selectedItem as any).externalUrl || (selectedItem as any).external_url || (selectedItem as any).data?.externalUrl
-            }
-            : data.profileDetails;
+        if (isTopic || !selectedItem) return data.profileDetails;
+
+        const baseData = (selectedItem as any).data || {};
+        const topLevel = selectedItem as any;
+
+        return {
+            ...baseData,
+            ...topLevel,
+            username: topLevel.username || topLevel.handle || baseData.username || topLevel.label?.replace('@', '') || '',
+            profilePicUrlHD: topLevel.profilePicUrlHD || topLevel.profilePicUrl || topLevel.profile_pic_url || baseData.profilePicUrl || topLevel.profilePic || '',
+            fullName: topLevel.fullName || topLevel.name || topLevel.label || '',
+            biography: topLevel.biography || topLevel.bio || baseData.biography || baseData.bio || '',
+            followerCount: topLevel.followerCount || topLevel.followersCount || topLevel.followers || baseData.followerCount || baseData.followersCount || baseData.followers || 0,
+            followingCount: topLevel.followingCount || topLevel.followsCount || topLevel.following || baseData.followingCount || baseData.following || baseData.followsCount || 0,
+            postCount: topLevel.postCount || topLevel.mediaCount || topLevel.postsCount || topLevel.posts || baseData.postCount || baseData.mediaCount || baseData.postsCount || 0,
+            isVerified: topLevel.isVerified || topLevel.verified || baseData.isVerified || false,
+            externalUrl: topLevel.externalUrl || topLevel.external_url || baseData.externalUrl || ''
+        };
     }, [selectedItem, isTopic, data.profileDetails]);
 
     const displayFullName = (!isTopic && selectedItem) ? (selectedItem as any).label : (data.profileFullName || "User");
@@ -1254,7 +1310,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                 <div className="bg-[#051810]/50 rounded p-3 text-center border border-emerald-500/10">
                                     <div className="text-[10px] text-emerald-500/70 uppercase tracking-widest mb-1">Occurrences</div>
                                     <div className="text-xl font-bold text-white">
-                                        {mentions.length > 0 ? mentions.length : ((selectedItem as any).count || (selectedItem as any).val || 0)}
+                                        {mentions.length > 0 ? mentions.length : ((selectedItem as any).frequency || (selectedItem as any).count || (selectedItem as any).val || 0)}
                                     </div>
                                     <div className="text-[8px] text-emerald-500/40 uppercase tracking-widest mt-1">Number of sub-nodes</div>
                                 </div>
@@ -1686,7 +1742,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                     const proxyUrl = (url: string) => {
                                         if (!url) return '';
                                         if (url.includes('cdninstagram.com') || url.includes('fbcdn.net')) {
-                                            return `http://localhost:3000/api/proxy-image?url=${encodeURIComponent(url)}`;
+                                            return `/api/proxy-image?url=${encodeURIComponent(url)}`;
                                         }
                                         return url;
                                     };
@@ -1743,7 +1799,13 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                     </span>
                                                 </div>
                                                 <div className="text-[9px] text-gray-300 truncate">
-                                                    @{post.author || 'unknown'}
+                                                    @{(() => {
+                                                        let author = post.ownerUsername || post.author || 'unknown';
+                                                        if (author === 'AI Selection' || author === 'AI_Selection') {
+                                                            author = post.ownerUsername || post.username || 'Unknown';
+                                                        }
+                                                        return author.replace('@', '');
+                                                    })()}
                                                 </div>
                                             </div>
                                         </a>
@@ -1817,20 +1879,23 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                         onClick={(e) => e.stopPropagation()}
                                                         className="text-sm font-medium text-gray-200 group-hover:text-blue-300 transition-colors truncate hover:underline"
                                                     >
-                                                        {creator.username || creator.name || creator.fullName || creator.label || creator.id || 'Unknown Creator'}
+                                                        {(() => {
+                                                            const name = creator.username || creator.name || creator.fullName || creator.label || creator.id || 'Unknown';
+                                                            return name.startsWith('@') ? name : `@${name}`;
+                                                        })()}
                                                     </a>
                                                     <span
                                                         className="text-[9px] text-blue-400/70 font-mono cursor-help border-b border-dotted border-blue-400/30"
-                                                        title="Over-Index Score: Indicates how much more likely this audience is to follow this account compared to the general population. (e.g. 5x = 5 times more likely)"
+                                                        title="Relevance Score: Indicates how much more likely this audience is to interact with this account compared to others. Higher multiplier = higher relevance."
                                                     >
-                                                        {creator.affinityPercent ? (
-                                                            <span title={`Found in ${creator.rawCount || 0} of source profiles`}>
-                                                                {creator.affinityPercent}% of audience <span className="opacity-50">({creator.rawCount})</span>
+                                                        {creator.affinityPercent > 0 ? (
+                                                            <span title={`Found in ${creator.rawCount || creator.frequency || 0} of source profiles`}>
+                                                                {creator.affinityPercent}% of audience <span className="opacity-50">({creator.rawCount || creator.frequency})</span>
                                                             </span>
-                                                        ) : creator.overindexScore ? (
-                                                            `${Math.round(creator.overindexScore)}x relevant`
+                                                        ) : (creator.overindexScore > 0 || creator.frequencyScore > 0) ? (
+                                                            `${Math.round((creator.overindexScore || creator.frequencyScore) * 10) / 10}x relevant`
                                                         ) : (
-                                                            creator.frequency ? `Relevance: ${Math.round(creator.frequency)}` : 'High Relevance'
+                                                            creator.frequency > 1 ? `${Math.round(creator.frequency)} relevant` : 'High Relevance'
                                                         )}
                                                     </span>
                                                 </div>
@@ -1894,13 +1959,24 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                         onClick={(e) => e.stopPropagation()}
                                                         className="text-sm font-medium text-gray-200 group-hover:text-orange-300 transition-colors truncate hover:underline"
                                                     >
-                                                        {brand.username || brand.name || brand.fullName || brand.label || brand.id || 'Unknown Brand'}
+                                                        {(() => {
+                                                            const name = brand.username || brand.name || brand.fullName || brand.label || brand.id || 'Unknown';
+                                                            return name.startsWith('@') ? name : `@${name}`;
+                                                        })()}
                                                     </a>
                                                     <span
                                                         className="text-[9px] text-orange-400/70 font-mono cursor-help border-b border-dotted border-orange-400/30"
-                                                        title="Over-Index Score: Indicates how much more likely this audience is to follow this brand compared to the general population. (e.g. 5x = 5 times more likely)"
+                                                        title="Relevance Score: Indicates brand affinity within this audience dataset. Higher multiplier = higher relevance."
                                                     >
-                                                        {brand.overindexScore ? `${Math.round(brand.overindexScore)}x relevant` : (Math.round(brand.frequency) || 'High Relevance')}
+                                                        {brand.affinityPercent > 0 ? (
+                                                            <span title={`Found in ${brand.rawCount || brand.frequency || 0} of source profiles`}>
+                                                                {brand.affinityPercent}% of audience <span className="opacity-50">({brand.rawCount || brand.frequency})</span>
+                                                            </span>
+                                                        ) : (brand.overindexScore > 0 || brand.frequencyScore > 0) ? (
+                                                            `${Math.round((brand.overindexScore || brand.frequencyScore) * 10) / 10}x relevant`
+                                                        ) : (
+                                                            brand.frequency > 1 ? `${Math.round(brand.frequency)} relevant` : 'High Relevance'
+                                                        )}
                                                     </span>
                                                 </div>
                                             </div>

@@ -100,8 +100,8 @@ router.post('/auth/email/signup', async (req: any, res) => {
         const token = jwt.sign({
             sub: user.googleId,
             email: user.email,
-            name: user.name,
-            picture: user.picture // Empty initially but consistent structure
+            name: user.name || user.email.split('@')[0],
+            picture: user.picture || ''
         }, JWT_SECRET, { expiresIn: '7d' });
 
         res.json({ token, user });
@@ -126,8 +126,8 @@ router.post('/auth/email/login', async (req: any, res) => {
         const token = jwt.sign({
             sub: user.googleId,
             email: user.email,
-            name: user.name,
-            picture: user.picture
+            name: user.name || user.email.split('@')[0],
+            picture: user.picture || ''
         }, JWT_SECRET, { expiresIn: '7d' });
 
         res.json({ token, user });
@@ -304,7 +304,53 @@ router.get('/datasets/:id', authMiddleware, async (req: any, res) => {
     try {
         const dataset = await mongoService.getDatasetById(req.params.id);
         if (!dataset) return res.status(404).json({ error: 'Dataset not found' });
-        // Optional: Check ownership if not public/shared
+
+        // [NEW] RUNTIME GAP FILLING: Trigger background enrichment if gaps detected
+        if (dataset && dataset.data) {
+            const graphSnapshot = dataset.data.find((r: any) => r.recordType === 'graph_snapshot');
+            if (graphSnapshot && graphSnapshot.data) {
+                const gapHandles = (jobOrchestrator as any).identifyEnrichmentGaps(graphSnapshot.data);
+                if (gapHandles.length > 0) {
+                    // Try to find an associated job
+                    const associatedJobs = await mongoService.getJobsByDatasetId(dataset.id);
+                    let isEnriching = associatedJobs.some((j: any) => j.metadata?.isEnriching === true) || dataset.isEnriching;
+
+                    if (!isEnriching) {
+                        let mainJob = associatedJobs.find((j: any) => j.type === 'map_generation' || j.type === 'enrichment' || j.type === 'orchestration');
+
+                        // If no job found (e.g. for older datasets), create a placeholder enrichment job
+                        if (!mainJob) {
+                            console.log(`[DatasetLoadFill] No job found for dataset ${dataset.id}. Creating placeholder...`);
+                            const jobId = new ObjectId().toHexString();
+                            await mongoService.createJob({
+                                id: jobId,
+                                userId: dataset.userId || 'system',
+                                type: 'enrichment',
+                                status: 'running',
+                                progress: 0,
+                                createdAt: new Date(),
+                                updatedAt: new Date(),
+                                result: { datasetId: dataset.id, stage: 'Background Hydration' },
+                                metadata: { isEnriching: true, datasetId: dataset.id }
+                            });
+                            mainJob = { id: jobId } as any;
+                        }
+
+                        if (mainJob) {
+                            console.log(`[DatasetLoadFill] ⚠️ Dataset ${dataset.id} has gaps. Triggering background enrichment...`);
+                            const profileMap = new Map();
+                            jobOrchestrator.performDeepEnrichment(graphSnapshot.data, dataset.id, mainJob.id, profileMap).catch((err: any) => {
+                                console.error(`[DatasetLoadFill] ❌ Failed to enrich dataset ${dataset.id}:`, err);
+                            });
+                            dataset.isEnriching = true; // Set optimistically
+                        }
+                    } else {
+                        dataset.isEnriching = true;
+                    }
+                }
+            }
+        }
+
         res.json(dataset);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -507,9 +553,25 @@ router.get('/jobs/:id', authMiddleware, async (req: any, res) => {
         const job = await mongoService.getJob(req.params.id);
         if (!job) return res.status(404).json({ error: 'Job not found' });
 
-        // Check ownership
         if (job.userId !== req.user.sub) {
             return res.status(403).json({ error: 'Access denied' });
+        }
+
+        // [NEW] RUNTIME GAP FILLING: Check for missing profile data in completed jobs
+        const anyJob = job as any;
+        if (anyJob.status === 'completed' && anyJob.result?.analysisResult) {
+            const gapHandles = (jobOrchestrator as any).identifyEnrichmentGaps(anyJob.result.analysisResult);
+            if (gapHandles.length > 0) {
+                console.log(`[RuntimeFill] ⚠️ Job ${anyJob.id} has ${gapHandles.length} profiles needing enrichment. Triggering background task...`);
+                const profileMap = new Map();
+                const datasetId = anyJob.result?.datasetId || anyJob.metadata?.datasetId;
+                (jobOrchestrator as any).performDeepEnrichment(anyJob.result.analysisResult, datasetId, anyJob.id, profileMap).catch((err: any) => {
+                    console.error(`[RuntimeFill] ❌ Background enrichment failed for job ${anyJob.id}:`, err);
+                });
+
+                if (!anyJob.metadata) anyJob.metadata = {};
+                anyJob.metadata.isEnriching = true;
+            }
         }
 
         res.json(job);
@@ -2119,7 +2181,39 @@ router.get('/public-maps/:publicId', async (req: any, res) => {
         // Use the robust getDatasetById to hydrate the data (records, decompression, etc.)
         const fullDataset = await mongoService.getDatasetById(dataset.id);
 
-        res.json({ success: true, data: fullDataset });
+        // [NEW] RUNTIME GAP FILLING (Public Maps): Trigger background enrichment if gaps detected
+        const associatedJobs = await mongoService.getJobsByDatasetId(dataset.id);
+
+        if (fullDataset && fullDataset.data) {
+            // Find records that represent the analysis graph
+            const graphSnapshot = fullDataset.data.find((r: any) => r.recordType === 'graph_snapshot');
+            if (graphSnapshot && graphSnapshot.data) {
+                const gapHandles = (jobOrchestrator as any).identifyEnrichmentGaps(graphSnapshot.data);
+                if (gapHandles.length > 0) {
+                    const isEnriching = associatedJobs.some((j: any) => j.metadata?.isEnriching === true);
+
+                    if (!isEnriching) {
+                        console.log(`[PublicRuntimeFill] ⚠️ Public Map ${publicId} has gaps. Triggering background task...`);
+                        const mainJob = associatedJobs.find((j: any) => j.type === 'map_generation' || j.type === 'enrichment');
+
+                        if (mainJob) {
+                            const profileMap = new Map();
+                            (jobOrchestrator as any).performDeepEnrichment(graphSnapshot.data, dataset.id, mainJob.id, profileMap).catch((err: any) => {
+                                console.error(`[PublicRuntimeFill] ❌ Failed to enrich public map ${publicId}:`, err);
+                            });
+                            // Mark optimistically for the response below
+                            (mainJob as any).metadata = { ...(mainJob as any).metadata, isEnriching: true };
+                        }
+                    }
+                }
+            }
+        }
+
+        // Efficiently determine if enriching: Use previously fetched associatedJobs
+        const hasEnrichingJob = associatedJobs.some((j: any) => j.metadata?.isEnriching === true);
+
+        (fullDataset as any).isEnriching = hasEnrichingJob;
+        res.json({ success: true, data: fullDataset, isEnriching: (fullDataset as any).isEnriching });
 
     } catch (error: any) {
         console.error('[API] Get public map error:', error);

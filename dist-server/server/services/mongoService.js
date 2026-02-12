@@ -397,6 +397,36 @@ class MongoService {
         const result = await this.db.collection('records').insertMany(recordsToInsert);
         return result.insertedCount;
     }
+    /**
+     * [NEW] Update Graph Snapshot with Enrichment Data
+     * Supports transparent compression
+     */
+    async updateGraphSnapshot(datasetId, analyticsData) {
+        if (!this.db)
+            throw new Error('Database not connected');
+        let data = analyticsData;
+        let compression;
+        // Apply compression logic if needed
+        try {
+            const jsonStr = JSON.stringify(data);
+            if (jsonStr.length > 1024) {
+                data = zlib.gzipSync(jsonStr);
+                compression = 'gzip';
+            }
+        }
+        catch (e) {
+            console.warn('[MongoService] Compression failed for graph snapshot update:', e);
+        }
+        const result = await this.db.collection('records').updateOne({ datasetId, recordType: 'graph_snapshot' }, {
+            $set: {
+                data,
+                compression,
+                // We'll set an updatedAt for DB tracking even if not in interface
+                updatedAt: new Date()
+            }
+        });
+        return result.modifiedCount > 0;
+    }
     async getRecordCount(datasetId, recordType) {
         if (!this.db)
             throw new Error('Database not connected');
@@ -638,17 +668,44 @@ class MongoService {
     async createUser(user, promoCode) {
         if (!this.db)
             throw new Error('Database not connected');
-        const initialBalance = promoCode ? 50 : 1000; // Unified field 'balance'
+        let initialBalance = 0; // Default 0 for new users
+        let promoValid = false;
+        // Validate Promo Code if provided
+        if (promoCode) {
+            const codeDoc = await this.db.collection('promo_codes').findOne({ code: promoCode, isActive: true });
+            if (codeDoc) {
+                // Check expiry
+                if (codeDoc.expiresAt && new Date() > codeDoc.expiresAt) {
+                    console.warn(`[Signup] Expired promo code: ${promoCode}`);
+                }
+                else if (codeDoc.maxUses > 0 && codeDoc.currentUses >= codeDoc.maxUses) {
+                    console.warn(`[Signup] Max uses reached for code: ${promoCode}`);
+                }
+                else {
+                    // Valid!
+                    initialBalance = codeDoc.value;
+                    promoValid = true;
+                    // Increment use count
+                    await this.db.collection('promo_codes').updateOne({ _id: codeDoc._id }, { $inc: { currentUses: 1 } });
+                    console.log(`[Signup] Promo code applied: ${promoCode} (+${codeDoc.value})`);
+                }
+            }
+        }
+        // Default 'Free Tier' balance if no promo? 
+        // If not promo, maybe give small starter amount?
+        if (!promoValid) {
+            initialBalance = 5; // £5.00 starter credit
+        }
         const isAdmin = this.isAdmin(user.email);
         const newUser = {
             ...user,
-            balance: initialBalance, // Consolidated field
+            balance: initialBalance,
             credits: initialBalance, // Legacy support
             createdAt: new Date(),
             lastActive: new Date(),
-            promoCodeUsed: promoCode || null,
+            promoCodeUsed: promoValid ? promoCode : null,
             role: isAdmin ? 'admin' : 'user',
-            status: isAdmin ? 'active' : 'pending'
+            status: isAdmin ? 'active' : 'pending' // Still pending approval
         };
         await this.db.collection('users').updateOne({ googleId: user.googleId }, { $setOnInsert: newUser }, { upsert: true });
         return newUser;
@@ -751,6 +808,13 @@ class MongoService {
         const updateData = { ...updates, updatedAt: new Date() };
         const result = await this.db.collection('jobs').updateOne({ id }, { $set: updateData });
         return result.modifiedCount > 0;
+    }
+    async getJobsByDatasetId(datasetId) {
+        if (!this.db)
+            throw new Error('Database not connected');
+        return this.db.collection('jobs')
+            .find({ "result.datasetId": datasetId })
+            .toArray();
     }
     async deleteJobsByDatasetId(datasetId) {
         if (!this.db)

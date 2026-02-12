@@ -14,21 +14,40 @@
             "search": "string (optional)"
         },
         "outputSchema": {
-            "username": "string",
-            "fullName": "string",
-            "followersCount": "number",
-            "posts": [
-                {
-                    "url": "string",
-                    "likesCount": "number",
-                    "caption": "string"
-                }
+            "inputUrl": "string",
+            "id": "string",
+            "type": "string",
+            "shortCode": "string",
+            "caption": "string",
+            "hashtags": [
+                "string"
+            ],
+            "mentions": [
+                "string"
             ],
             "url": "string",
-            "caption": "string",
+            "commentsCount": "number",
+            "firstComment": "string",
+            "latestComments": [],
+            "dimensionsHeight": "number",
+            "dimensionsWidth": "number",
+            "displayUrl": "string",
+            "images": [
+                "string"
+            ],
+            "alt": "string",
             "likesCount": "number",
             "timestamp": "string",
-            "ownerUsername": "string"
+            "childPosts": [],
+            "ownerUsername": "string",
+            "ownerId": "string",
+            "isPinned": "boolean",
+            "productType": "string",
+            "videoUrl": "string",
+            "videoViewCount": "number",
+            "videoPlayCount": "number",
+            "videoDuration": "number",
+            "isSponsored": "boolean"
         },
         "alternatives": [
             "apify/instagram-api-scraper",
@@ -44,7 +63,9 @@
         "inputSchema": {
             "usernames": [
                 "string"
-            ]
+            ],
+            "resultsLimit": 5,
+            "limit": 5
         },
         "outputSchema": {
             "inputUrl": "string",
@@ -239,7 +260,7 @@
         "id": "clockworks/tiktok-scraper",
         "name": "TikTok Scraper",
         "url": "https://apify.com/clockworks/tiktok-scraper",
-        "description": "Extract data from TikTok videos, hashtags, and users. versatile scraper for general TikTok data.",
+        "description": "Extract data from TikTok videos, hashtags, and users. Versatile scraper for general TikTok data.",
         "costPerThousand": 4.00,
         "inputSchema": {
             "profiles": [
@@ -299,9 +320,9 @@
         "id": "apify/instagram-api-scraper",
         "name": "Instagram API Scraper",
         "url": "https://apify.com/apify/instagram-api-scraper",
-        "description": "Versatile all-rounder for scraping Profiles, Posts, Comments, Locations, and Hashtags. efficiently retrieves posts from a list of Profile URLs. Best choice for content scraping.",
+        "description": "Versatile all-rounder for scraping Profiles, Posts, Comments, Locations, and Hashtags. Efficiently retrieves posts from a list of Profile URLs. Best choice for content scraping.",
         "costPerThousand": 4.30,
-        "maxItem": 10,
+        "maxItems": 10,
         "inputSchema": {
             "directUrls": [
                 "string (list of https://www.instagram.com/username)"
@@ -521,5 +542,36 @@
         },
         "useCase": "location_discovery",
         "notes": "Use &view=organic_results parameter when fetching dataset. Map sampleSize to resultsPerPage (max 100)."
+    },
+    {
+        "id": "apify/instagram-hashtag-scraper",
+        "name": "Instagram Hashtag Scraper",
+        "url": "https://apify.com/apify/instagram-hashtag-scraper",
+        "description": "Scrape Instagram posts and reels by hashtags. Get engagement metrics, image/video URLs, and creator info.",
+        "costPerThousand": 3.60,
+        "inputSchema": {
+            "hashtags": [
+                "string"
+            ],
+            "resultsLimit": 10,
+            "resultsType": "posts",
+            "scrapeMode": "recent"
+        },
+        "outputSchema": {
+            "id": "string",
+            "type": "string",
+            "shortCode": "string",
+            "caption": "string",
+            "url": "string",
+            "displayUrl": "string",
+            "likesCount": "number",
+            "commentsCount": "number",
+            "timestamp": "string",
+            "ownerUsername": "string",
+            "ownerId": "string",
+            "hashtags": [
+                "string"
+            ]
+        }
     }
 ]

@@ -17,8 +17,8 @@ const LoadingFallback = () => (
 );
 
 // Lazy load heavy components
-export const FandomGraph3D = lazy(() => import('./FandomGraph3D'));
-export const AnalyticsPanel = lazy(() => import('./AnalyticsPanel'));
+export const FandomGraph3D = lazy(() => import('./FandomGraph3D.js'));
+export const AnalyticsPanel = lazy(() => import('./AnalyticsPanel.js'));
 
 // Wrapper component with Suspense
 export const LazyFandomGraph3D = (props: any) => (

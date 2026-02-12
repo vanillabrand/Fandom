@@ -26,6 +26,7 @@
     "@types/three": "^0.182.0",
     "@types/uuid": "^10.0.0",
     "agenda": "^5.0.0",
+    "apify-client": "^2.22.0",
     "bcryptjs": "^3.0.3",
     "concurrently": "^9.2.1",
     "cors": "^2.8.5",

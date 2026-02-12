@@ -6,7 +6,9 @@ import { X, CreditCard, Check } from 'lucide-react';
 import { toast } from 'sonner';
 
 // Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Initialize Stripe
+const stripeKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || (window as any).__ENV__?.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = loadStripe(stripeKey);
 
 interface CheckoutFormProps {
     amount: number;

@@ -115,6 +115,7 @@ export interface FandomData {
     provenance: number;
   };
   lowConfidenceAreas?: string[];
+  isEnriching?: boolean; // [NEW] Flag for background hydration indicator
 }
 
 export interface ProfileDetails {

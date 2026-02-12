@@ -71,19 +71,26 @@ const JobItem: React.FC<{ job: Job; onViewResult: (id: string) => void; onDelete
 
     // Deletion State
     const [confirmDelete, setConfirmDelete] = React.useState(false);
+    const [isQueryExpanded, setIsQueryExpanded] = React.useState(false);
+
+    const query = job.metadata?.query || job.id;
 
     return (
         <div className="bg-[#0a2f1f]/40 rounded-lg p-4 border border-emerald-900/30 hover:border-emerald-500/30 transition-all hover:bg-[#0a2f1f]/60 group relative relative-group">
             <div className="flex justify-between items-start mb-2">
-                <div>
+                <div className="flex-1">
                     <h3 className="font-medium text-emerald-100 text-sm">
                         {job.type === 'map_generation' ? 'Map Generation' :
                             job.type === 'orchestration' ? 'Query Builder' :
                                 job.type === 'ai_analysis' ? 'Quick Map' : 'Job'}
                     </h3>
-                    <p className="text-xs text-emerald-400/60 truncate max-w-[200px]">
-                        {job.metadata?.query || job.id}
-                    </p>
+                    <div
+                        onClick={() => setIsQueryExpanded(!isQueryExpanded)}
+                        className={`text-xs text-emerald-400/60 cursor-pointer hover:text-emerald-400 transition-colors ${!isQueryExpanded ? 'truncate max-w-[200px]' : 'whitespace-pre-wrap break-words leading-relaxed'}`}
+                        title={!isQueryExpanded ? "Click to expand query details" : "Click to collapse"}
+                    >
+                        {query}
+                    </div>
                     {job.metadata?.sampleSize && (
                         <p className="text-[10px] text-emerald-500/40 font-mono mt-0.5">
                             Sample: {job.metadata.sampleSize}

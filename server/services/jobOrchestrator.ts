@@ -1,6 +1,8 @@
 ﻿
 
 import { mongoService, Job } from './mongoService.js';
+import { CommunityDetectionService } from './communityDetectionService.js';
+import { GraphAnalysisService } from './GraphAnalysisService.js';
 import { emailService } from './emailService.js';
 import { v4 as uuidv4 } from 'uuid';
 import zlib from 'zlib';
@@ -11,12 +13,37 @@ import scraperRegistryRaw from '../../scraper_detail.json' with { type: "json" }
 import { proxyMediaUrl, proxyMediaFields } from '../utils/mediaProxyUtil.js';
 import { generateDashboardConfig } from './dashboardConfigService.js';
 import { analyzeBatch, analyzeFandomDeepDive, aggregateLocations } from '../../services/geminiService.js';
+import { VisualDNAService } from './VisualDNAService.js';
 import { costCalculator } from './costCalculator.js';
 import { generateScrapeFingerprint, extractMetadataFromPayload, calculateTTL, isFingerprintFresh } from '../utils/scrapeFingerprintUtil.js';
 import * as queryAccuracyService from '../../services/queryAccuracyService.js';
 import { safeParseJson } from '../../utils/jsonUtils.js';
 import { AICacheService } from './aiCacheService.js'; // [PERFORMANCE] AI response caching
 
+
+
+
+// --- CONFIGURATION CONSTANTS ---
+// Batch Processing
+const ENRICHMENT_BATCH_SIZE_SMALL = 50;      // For datasets < 200 nodes
+const ENRICHMENT_BATCH_SIZE_MEDIUM = 75;     // For datasets 200-500 nodes
+const ENRICHMENT_BATCH_SIZE_LARGE = 100;     // For datasets > 500 nodes
+const ENRICHMENT_LOG_INTERVAL_DEFAULT = 10;  // Log every N nodes
+
+// Gap Remediation
+const GAP_REMEDIATION_BATCH_SIZE = 50;       // Profiles per batch
+const GAP_REMEDIATION_MAX_RETRIES = 3;       // Max retry attempts per batch
+
+// Username Validation
+const USERNAME_MIN_LENGTH = 2;
+const USERNAME_MAX_LENGTH = 30;              // Instagram max username length
+const USERNAME_VALIDATION_REGEX = /^[a-z0-9._]/; // Must start with letter, number, dot or underscore
+
+// Dataset Size Thresholds
+const DATASET_SIZE_SMALL = 50;
+const DATASET_SIZE_MEDIUM = 200;
+const DATASET_SIZE_LARGE = 500;
+const DATASET_SIZE_VERY_LARGE = 1000;
 
 // --- CONFIG ---
 // Initialize Gemini
@@ -89,12 +116,20 @@ export interface StandardizedProfile {
     // Discovery
     query?: string;
     source?: string;
-    evidence?: string; // [FIX] Add evidence
+    evidence?: string;
+    relatedProfiles?: Array<{
+        id: string;
+        username: string;
+        full_name?: string;
+        is_verified?: boolean;
+        profile_pic_url?: string;
+    }>; // [NEW] Related profiles for graph connectivity
 }
 
 
 
 export interface AnalysisResult {
+
     summary: string;
     analytics: {
         creators: any[];
@@ -154,7 +189,8 @@ export class JobOrchestrator {
             isBusinessAccount: null,
             postsCount: null,
             engagementRate: null,
-            latestPosts: []
+            latestPosts: [],
+            relatedProfiles: [] // [NEW] Initialize
         };
 
         try {
@@ -197,6 +233,10 @@ export class JobOrchestrator {
                             videoUrl: c.videoUrl || c.video_url
                         }))
                     }));
+                }
+                // [NEW] Extract Related Profiles from metadata if available
+                if (meta.relatedProfiles && Array.isArray(meta.relatedProfiles)) {
+                    standard.relatedProfiles = meta.relatedProfiles;
                 }
             }
             // 2. Instagram Profile Scraper (Deep Dive - 'owner' object or flat)
@@ -278,17 +318,44 @@ export class JobOrchestrator {
                 standard.isPrivate = record.is_private;
                 standard.isVerified = record.is_verified;
             }
+            // 5. Instagram Hashtag Scraper / Post Scraper (Post-centric - 'ownerUsername' or 'ownerId')
+            else if (record.ownerUsername || record.ownerId) {
+                standard.id = record.ownerId || '';
+                standard.username = record.ownerUsername || '';
+                standard.fullName = record.ownerFullName || null;
+                standard.profilePicUrl = record.ownerProfilePicUrl || null;
+
+                // For hashtag posts, we map the post itself into latestPosts
+                standard.latestPosts = [{
+                    id: record.id,
+                    caption: record.caption || '',
+                    url: record.url || (record.shortCode ? `https://www.instagram.com/p/${record.shortCode}/` : ''),
+                    displayUrl: record.displayUrl || record.videoUrl || record.url,
+                    timestamp: record.timestamp,
+                    likesCount: record.likesCount || 0,
+                    commentsCount: record.commentsCount || 0,
+                    type: record.type === 'Video' ? 'Video' : (record.type === 'Sidecar' ? 'Sidecar' : 'Image'),
+                    videoUrl: record.videoUrl,
+                    videoViewCount: record.videoViewCount
+                }];
+            }
             // Fallback (Generic mapping for miscellaneous scraper formats)
             else {
                 standard.id = record.id || record.pk || record.userId || record.ownerId || '';
                 standard.username = (record.username || record.ownerUsername || record.handle || '').toLowerCase().replace('@', '');
                 standard.fullName = record.fullName || record.full_name || record.name || standard.fullName;
-                standard.biography = record.biography || record.bio || record.description || standard.biography;
+                const rawBio = record.biography || record.bio || record.description;
+                standard.biography = (rawBio && !/Bio unavailable|No bio/i.test(rawBio)) ? rawBio : standard.biography;
                 standard.profilePicUrl = record.profilePicUrl || record.profile_pic_url || record.profilePic || standard.profilePicUrl;
                 standard.followersCount = record.followersCount || record.followers || record.follower_count || standard.followersCount;
                 standard.followsCount = record.followsCount || record.following || record.follows_count || standard.followsCount;
                 standard.postsCount = record.postsCount || record.mediaCount || record.post_count || standard.postsCount;
                 standard.isBusinessAccount = record.isBusinessAccount || record.is_business_account || null;
+
+                // [NEW] Capture related profiles from raw record if present
+                if (record.relatedProfiles && Array.isArray(record.relatedProfiles)) {
+                    standard.relatedProfiles = record.relatedProfiles;
+                }
             }
         } catch (e) {
             console.warn(`[JobOrchestrator] Normalization failed for record: ${e}`);
@@ -316,7 +383,7 @@ export class JobOrchestrator {
      */
     /**
      * [PERFORMANCE] Enrich Fandom Analysis with Parallel Batch Processing
-     * 
+     *
      * Processes profiles in parallel batches of 50 for 60-80% faster enrichment
      */
     private async enrichFandomAnalysisParallel(
@@ -329,23 +396,32 @@ export class JobOrchestrator {
         let hydrationCount = 0;
 
         // [PERFORMANCE] Collect all nodes first for batch processing
+        // [FIX] Add cycle detection to prevent infinite recursion
         const allNodes: any[] = [];
+        const visited = new Set<any>();
         const collectNodes = (node: any) => {
-            if (!node) return;
+            if (!node || visited.has(node)) return;
+            visited.add(node);
             allNodes.push(node);
             if (node.children && Array.isArray(node.children)) {
                 node.children.forEach(collectNodes);
             }
         };
-        collectNodes(analytics.root);
+
+        // 1. Collect from Tree (Hierarchical)
+        if (analytics.root) collectNodes(analytics.root);
+
+        // 2. Collect from Graph (Flat) - CRITICAL for 3D visualization and selected metrics
+        if (analytics.graph && analytics.graph.nodes) {
+            analytics.graph.nodes.forEach(node => {
+                if (!visited.has(node)) {
+                    visited.add(node);
+                    allNodes.push(node);
+                }
+            });
+        }
 
         console.log(`[Enrichment] Found ${allNodes.length} nodes to process`);
-
-        // [FIX] Sanitization Helper
-        const sanitizeUrl = (url: string) => {
-            if (!url || url.includes('fxxx.fbcdn') || url.includes('instagram.fxxx')) return '';
-            return url;
-        };
 
         // [ADAPTIVE] Calculate optimal batch size based on dataset size
         const config = this.getEnrichmentConfig(allNodes.length);
@@ -367,32 +443,31 @@ export class JobOrchestrator {
             const results = await Promise.allSettled(batch.map(async (node) => {
                 try {
                     // Attempt to find matching profile
-                    const rawCandidates = [
-                        node.id,
-                        node.data?.handle,
-                        node.data?.username,
-                        node.label,
-                        node.name,
-                        node.handle
-                    ].filter(k => k && typeof k === 'string');
-
-                    // Match Logic - [FIX] Improved normalization and fuzzy matching
-                    const candidates = rawCandidates.map(k => k.toLowerCase().replace('@', '').trim());
-
                     let profile: StandardizedProfile | undefined;
 
-                    // Try Local Map (Current Scrape)
-                    for (const key of candidates) {
-                        profile = profileMap.get(key);
-                        if (profile) break;
+                    // [PRIORITY 1] Try ID-based matching first (most reliable)
+                    // profileMap is now indexed by BOTH ID and Username
+                    const nodeId = node.data?.id || node.id;
+                    if (nodeId) {
+                        // Try both as-is and as string (IDs can be numbers or strings)
+                        profile = profileMap.get(nodeId) || profileMap.get(String(nodeId));
                     }
 
-                    // [FIX] Fuzzy fallback if exact match fails
+                    // [PRIORITY 2] Match by Username (Strict, Normalized)
                     if (!profile) {
-                        for (const [pKey, pVal] of profileMap.entries()) {
-                            // Check if any candidate is contained within the profile key or vice versa
-                            if (candidates.some(c => c === pKey || pKey.includes(c) || c.includes(pKey))) {
-                                profile = pVal;
+                        const rawCandidates = [
+                            node.data?.handle,
+                            node.data?.username,
+                            node.label,
+                            node.name,
+                            node.handle
+                        ].filter(k => k && typeof k === 'string');
+
+                        for (const raw of rawCandidates) {
+                            // Strip @, trim, lowercase
+                            const key = raw.toLowerCase().replace('@', '').trim();
+                            if (profileMap.has(key)) {
+                                profile = profileMap.get(key);
                                 break;
                             }
                         }
@@ -401,46 +476,32 @@ export class JobOrchestrator {
                     // Hydrate if found
                     if (profile) {
                         hydrationCount++;
-                        if (!node.data) node.data = {};
 
                         // [CRITICAL FIX] Preserve existing AI Evidence/Provenance
-                        const existingEvidence = node.data.evidence || node.evidence;
-                        const existingProvenance = node.data.provenance || node.provenance;
-                        const existingCitation = node.data.citation || node.citation;
+                        const existingEvidence = node.data?.evidence || node.evidence;
+                        const existingProvenance = node.data?.provenance || node.provenance;
+                        const existingCitation = node.data?.citation || node.citation;
 
-                        node.data.fullName = profile.fullName || node.data.fullName || node.label;
-                        node.data.profilePicUrl = profile.profilePicUrl || node.data.profilePicUrl || '';
-                        node.data.bio = profile.biography || node.data.bio || '';
-                        node.data.followers = profile.followersCount ? profile.followersCount.toLocaleString() : (node.data.followers || '0');
-                        node.data.followerCount = profile.followersCount || 0;
-                        node.data.followingCount = profile.followsCount || 0;
-                        node.data.postCount = profile.latestPosts ? profile.latestPosts.length : (node.data.posts || 0);
-                        node.data.sourceUrl = profile.externalUrl || `https://instagram.com/${profile.username}`;
-                        node.data.username = profile.username; // Ensure handle is set
+                        // [UNIFIED] Use central hydration helper
+                        const hydrated = this.hydrateNodeData(profile, node.group || 'creator', existingEvidence);
 
-                        // [FIX] Restore Evidence if overwritten, or generate if missing
-                        node.data.evidence = existingEvidence || `Identified via community analysis. ${profile.followersCount ? profile.followersCount.toLocaleString() + ' followers.' : ''}`;
-                        node.data.provenance = existingProvenance || { source: 'AI Analysis', confidence: 'High' };
-                        node.data.citation = existingCitation || `Profile found in dataset`;
+                        // Merge data while preserving mission-critical AI-generated fields if they aren't in 'hydrated'
+                        node.data = {
+                            ...node.data,
+                            ...hydrated.data,
+                            evidence: existingEvidence || hydrated.data.evidence,
+                            provenance: existingProvenance || hydrated.data.provenance,
+                            citation: existingCitation || hydrated.data.citation
+                        };
 
-                        // Ensure we trigger the "Verified" badge in UI
-                        node.data.isVerified = true;
-
-                        // Attach Latest Posts (Images/Videos)
-                        if (profile.latestPosts && profile.latestPosts.length > 0) {
-                            node.data.latestPosts = profile.latestPosts.map(post => ({
-                                url: post.url,
-                                type: post.type,
-                                caption: post.caption,
-                                imageUrl: post.displayUrl || post.url,
-                                videoUrl: post.videoUrl,
-                                date: post.timestamp
-                            }));
-                        }
+                        // Update top-level visual properties
+                        node.label = hydrated.label;
+                        node.profilePic = hydrated.profilePic;
+                        node.color = hydrated.color;
                     } else {
                         // Sanitize Hallucinated URLs for un-hydrated nodes
                         if (node.data && node.data.profilePicUrl) {
-                            node.data.profilePicUrl = sanitizeUrl(node.data.profilePicUrl);
+                            node.data.profilePicUrl = this.sanitizeUrl(node.data.profilePicUrl);
                         }
                     }
                 } catch (error) {
@@ -455,8 +516,217 @@ export class JobOrchestrator {
             }
         }
 
-        console.log(`[Enrichment] âœ… Hydrated ${hydrationCount}/${allNodes.length} nodes (${(hydrationCount / allNodes.length * 100).toFixed(1)}%)`);
+        console.log(`[Enrichment] ✅ Hydration complete. Processed ${hydrationCount} nodes.`);
+
+        // Final deduplication and sorting of lists
+        return this.finalizeAnalytics(analytics);
+    }
+
+    /**
+     * [NEW] Finalizes analytics by deduplicating and sorting lists
+     * Ensures UI consistency and prevents duplicate entries.
+     */
+    private finalizeAnalytics(analytics: any): any {
+        if (!analytics) return analytics;
+
+        const deduplicate = (list: any[], idKey: string = 'username') => {
+            if (!list || !Array.isArray(list)) return [];
+            const seen = new Set();
+            return list.filter(item => {
+                const val = String(item[idKey] || item.username || item.id || item.handle || '').toLowerCase().replace('@', '').trim();
+                if (!val || val === 'unknown' || seen.has(val)) return false;
+                seen.add(val);
+                return true;
+            });
+        };
+
+        if (analytics.creators) analytics.creators = deduplicate(analytics.creators);
+        if (analytics.brands) analytics.brands = deduplicate(analytics.brands);
+        if (analytics.topics) analytics.topics = deduplicate(analytics.topics, 'name');
+        if (analytics.subtopics) analytics.subtopics = deduplicate(analytics.subtopics, 'name');
+        if (analytics.clusters) analytics.clusters = deduplicate(analytics.clusters, 'name');
+
+        // Ensure Consistent Sorting for Creators & Brands
+        const sortingFn = (a: any, b: any) => {
+            const getScore = (item: any) => {
+                const s = item.overindexScore || item.affinityPercent || item.affinityScore || item.frequencyScore || 0;
+                return typeof s === 'number' ? s : parseFloat(String(s)) || 0;
+            };
+            const scoreA = getScore(a);
+            const scoreB = getScore(b);
+            if (scoreB !== scoreA) return scoreB - scoreA;
+
+            const getFollowers = (item: any) => {
+                const v = item.followersCount || item.followerCount || item.followers || 0;
+                if (typeof v === 'number') return v;
+                if (typeof v === 'string') {
+                    const clean = v.replace(/,/g, '').trim();
+                    if (clean.endsWith('M')) return parseFloat(clean) * 1000000;
+                    if (clean.endsWith('k')) return parseFloat(clean) * 1000;
+                    return parseFloat(clean) || 0;
+                }
+                return 0;
+            };
+            return getFollowers(b) - getFollowers(a);
+        };
+
+        if (analytics.creators) analytics.creators.sort(sortingFn);
+        if (analytics.brands) analytics.brands.sort(sortingFn);
+
         return analytics;
+    }
+
+    /**
+     * Identifies nodes in the graph that lack enriched data (metrics, bio, etc.)
+     */
+    public identifyEnrichmentGaps(analytics: any): string[] {
+        if (!analytics) return [];
+        const gaps = new Set<string>();
+        const visited = new Set<any>();
+
+        const checkNode = (node: any) => {
+            if (!node) return;
+
+            const isRelevant = node.group === 'creator' || node.group === 'brand' || node.type === 'creator' || node.type === 'brand' || node.group === 'profile';
+
+            if (isRelevant) {
+                const data = node.data || {};
+                // [STRICT] Check for missing metrics OR bio
+                // If a node was hydrated, we expect these to be present. 
+                // If we only have AI-generated data, these might be missing or placeholders.
+                const hasFollowers = (data.followerCount !== undefined && data.followerCount > 0) || (data.followersCount !== undefined && data.followersCount > 0);
+                const hasBio = !!(data.biography || data.bio || data.description);
+                const hasPosts = (data.postsCount !== undefined && data.postsCount > 0) || (data.mediaCount !== undefined && data.mediaCount > 0) || (data.posts !== undefined && data.posts > 0);
+
+                // We also check for "fake" or "placeholder" data often generated by AI
+                const isPlaceholderBio = hasBio && (data.biography || '').toLowerCase().includes('placeholder');
+
+                if (!node.data || !hasFollowers || !hasBio || !hasPosts || isPlaceholderBio) {
+                    const handle = data.username || data.handle || (node.label?.startsWith('@') ? node.label.substring(1) : node.label) || node.id;
+                    // Filter out truly invalid formats
+                    if (handle && handle !== 'unknown' && !handle.includes(' ') && handle.length > 2) {
+                        gaps.add(handle.replace('@', '').toLowerCase().trim());
+                    }
+                }
+            }
+        };
+
+        const traverse = (node: any) => {
+            if (!node || visited.has(node)) return;
+            visited.add(node);
+            checkNode(node);
+            if (node.children && Array.isArray(node.children)) {
+                node.children.forEach(traverse);
+            }
+        };
+
+        // 1. Process Tree Structure
+        if (analytics.root) {
+            traverse(analytics.root);
+        }
+
+        // 2. Process Flat Graph Structure
+        if (analytics.graph && analytics.graph.nodes && Array.isArray(analytics.graph.nodes)) {
+            analytics.graph.nodes.forEach(node => checkNode(node));
+        }
+
+        return Array.from(gaps);
+    }
+
+    /**
+     * Performs targeted scraping for missing profiles to ensure 100% enrichment
+     */
+    public async performDeepEnrichment(analytics: any, datasetId: string, jobId: string, profileMap: Map<string, StandardizedProfile>): Promise<void> {
+        const gapHandles = this.identifyEnrichmentGaps(analytics);
+
+        if (gapHandles.length === 0) {
+            console.log("[Enrichment] ✅ 100% data coverage achieved. No gaps found.");
+            return;
+        }
+
+        console.log(`[Enrichment] ⚠️ Found ${gapHandles.length} profiles with missing data. Triggering Deep Enrichment...`);
+
+        try {
+            // 0. SET STATUS TO ENRICHING (For UI Indicator)
+            if (jobId) {
+                console.log(`[Enrichment] ⏳ Setting isEnriching flag for Job ${jobId}...`);
+                await mongoService.updateJob(jobId, {
+                    'metadata.isEnriching': true
+                } as any);
+            }
+
+            if (datasetId) {
+                console.log(`[Enrichment] ⏳ Setting isEnriching flag for Dataset ${datasetId}...`);
+                await mongoService.updateDataset(datasetId, { isEnriching: true });
+            }
+
+            // Limits to avoid runaway scraping (batch max 20)
+            const targetHandles = gapHandles.slice(0, 20);
+            console.log(`[Enrichment] Targeted Deep Scrape: ${targetHandles.join(', ')}`);
+
+            // Use the dedicated profile scraper (dSCLg0C3YEZ83HzYX)
+            const stepResult = await this.runApifyActor('dSCLg0C3YEZ83HzYX', {
+                usernames: targetHandles
+            }, jobId, {
+                taskName: "Deep Enrichment Scrape",
+                planId: jobId
+            });
+
+            if (stepResult && stepResult.items) {
+                console.log(`[Enrichment] Deep Scrape completed. Found ${stepResult.items.length} profiles.`);
+
+                // Add new profiles to map
+                for (const item of stepResult.items) {
+                    const profile = this.normalizeToStandardProfile(item);
+                    if (profile) {
+                        if (profile.id) profileMap.set(profile.id, profile);
+                        if (profile.username) profileMap.set(profile.username.toLowerCase().replace('@', '').trim(), profile);
+                    }
+                }
+
+                // Re-run enrichment logic to apply the newly scraped data to the nodes
+                await this.enrichFandomAnalysisParallel(analytics, profileMap);
+                console.log("[Enrichment] ✅ Deep Hydration complete.");
+
+                // 4. PERSIST BACK TO DATABASE (Crucial for background gap-filling)
+                if (datasetId) {
+                    console.log(`[Enrichment] 💾 Persisting updated graph to database for Dataset ${datasetId}...`);
+                    await mongoService.updateGraphSnapshot(datasetId, analytics);
+                }
+
+                if (jobId) {
+                    console.log(`[Enrichment] 💾 Updating Job ${jobId} with enriched results...`);
+                    await mongoService.updateJob(jobId, {
+                        'result.analysisResult': analytics,
+                        'result.enrichedAt': new Date(),
+                        'metadata.deepEnrichmentPerformed': true,
+                        'metadata.isEnriching': false // Done!
+                    } as any);
+                }
+
+                if (datasetId) {
+                    await mongoService.updateDataset(datasetId, { 'isEnriching': false } as any);
+                }
+                console.log("[Enrichment] ✅ Persistence complete.");
+            } else {
+                // If no results but we finished, clear the flag anyway
+                if (jobId) {
+                    await mongoService.updateJob(jobId, { 'metadata.isEnriching': false } as any);
+                }
+                if (datasetId) {
+                    await mongoService.updateDataset(datasetId, { 'isEnriching': false } as any);
+                }
+            }
+        } catch (error: any) {
+            console.warn(`[Enrichment] ❌ Deep Enrichment failed: ${error.message}`);
+            // Ensure flag is cleared on error
+            if (jobId) {
+                await mongoService.updateJob(jobId, { 'metadata.isEnriching': false } as any).catch(() => { });
+            }
+            if (datasetId) {
+                await mongoService.updateDataset(datasetId, { isEnriching: false }).catch(() => { });
+            }
+        }
     }
 
     /**
@@ -473,16 +743,16 @@ export class JobOrchestrator {
         batchSize: number;
         logInterval: number;
     } {
-        if (totalNodes < 50) {
+        if (totalNodes < DATASET_SIZE_SMALL) {
             return { batchSize: totalNodes, logInterval: 1 };
-        } else if (totalNodes < 200) {
-            return { batchSize: 50, logInterval: 2 };
-        } else if (totalNodes < 500) {
-            return { batchSize: 75, logInterval: 3 };
-        } else if (totalNodes < 1000) {
-            return { batchSize: 100, logInterval: 5 };
+        } else if (totalNodes < DATASET_SIZE_MEDIUM) {
+            return { batchSize: ENRICHMENT_BATCH_SIZE_SMALL, logInterval: 2 };
+        } else if (totalNodes < DATASET_SIZE_LARGE) {
+            return { batchSize: ENRICHMENT_BATCH_SIZE_MEDIUM, logInterval: 3 };
+        } else if (totalNodes < DATASET_SIZE_VERY_LARGE) {
+            return { batchSize: ENRICHMENT_BATCH_SIZE_LARGE, logInterval: 5 };
         } else {
-            return { batchSize: 100, logInterval: 10 };
+            return { batchSize: ENRICHMENT_BATCH_SIZE_LARGE, logInterval: ENRICHMENT_LOG_INTERVAL_DEFAULT };
         }
     }
 
@@ -824,7 +1094,8 @@ export class JobOrchestrator {
             });
 
             // Resolve inputs (handle "USE_DATA_FROM_PREVIOUS")
-            const resolvedInput = this.resolveInput(step.input, results, plan);
+            // Resolve inputs (handle "USE_DATA_FROM_PREVIOUS")
+            const resolvedInput = this.resolveInput(step.input, results, plan, step.actorId);
 
             // Execute Scrape
             console.log(`[JobOrchestrator] Executing Actor: ${step.actorId}`);
@@ -854,6 +1125,20 @@ export class JobOrchestrator {
 
                 results.push(items);
                 datasetId = stepResult.datasetId; // Keep the last one as "primary"
+
+                // [DEBUG] Log scraper results to identify data quality issues
+                console.log(`[JobOrchestrator] ✅ Step ${i + 1} completed: ${items.length} items scraped`);
+                if (items.length > 0) {
+                    const sample = items[0];
+                    console.log(`[JobOrchestrator] 📊 Sample data:`, {
+                        username: sample.username || sample.ownerUsername || sample.uniqueId,
+                        followers: sample.followersCount || sample.followerCount || 0,
+                        following: sample.followsCount || sample.followingCount || 0,
+                        posts: sample.postsCount || sample.mediaCount || sample.posts || 0,
+                        hasBio: !!sample.biography || !!sample.bio,
+                        hasProfilePic: !!sample.profilePicUrl || !!sample.profile_pic_url
+                    });
+                }
 
                 // [NEW] Process Google Search Results
                 if (step.actorId === 'apify/google-search-scraper' || step.actorId.includes('google-search')) {
@@ -912,7 +1197,7 @@ export class JobOrchestrator {
                 const intent = (plan as any).intent || 'general_map';
 
                 // [NEW] Smart Data Filtering (Refining the Context)
-                const aggregatedContext = this.aggregateOverindexingLocal(results, intent);
+                const aggregatedContext = this.aggregateContextLocal(results, intent); // [FIX] Renamed to avoid duplicate
                 const allItems = results.flat(); // [FIX] Flatten results
 
                 if (intent === 'competitor_content_analysis') {
@@ -925,8 +1210,8 @@ export class JobOrchestrator {
                     analysisResult = this.handleUGCGraph(plan, results, query);
                 } else if (intent === 'sentiment_analysis') {
                     analysisResult = this.handleSentimentGraph(plan, results, query);
-                } else if (intent === 'influencer_identification') {
-                    analysisResult = this.handleInfluencerGraph(plan, results, query);
+                    // } else if (intent === 'influencer_identification') {
+                    //     analysisResult = this.handleInfluencerGraph(plan, results, query);
                 } else if (intent === 'viral_content') {
                     analysisResult = this.handleViralGraph(plan, results, query);
                 } else if (intent === 'audience_overlap' || intent === 'comparison') {
@@ -934,7 +1219,7 @@ export class JobOrchestrator {
                 } else {
                     analysisResult = await analyzeFandomDeepDive(
                         query,
-                        aggregatedContext, // Use refined context for Prompt
+                        allItems, // [FIX] Pass Data Array (Type: any[])
                         intent,
                         'instagram',
                         datasetUrl,
@@ -942,7 +1227,7 @@ export class JobOrchestrator {
                         useThemedNodes, // Pass visual theme logic
                         allItems, // [FIX] Pass Master List as Rich Context
                         'full', // Explicit Mode
-                        seedContext // [NEW] Pass Seed Context
+                        aggregatedContext + (seedContext ? `\n${seedContext}` : "") // [FIX] Pass Text Context here
                     );
                 }
 
@@ -1000,6 +1285,12 @@ export class JobOrchestrator {
                     } catch (enrichError) {
                         console.warn('[JobOrchestrator] ⚠️ Enrichment failed (non-fatal):', enrichError);
                     }
+
+                    // [NEW] 100% ENRICHMENT GUARANTEE: Perform Deep Enrichment for missing nodes
+                    console.log('[JobOrchestrator] 🔍 Checking for enrichment gaps...');
+                    // Use datasetId from result if available, or try metadata
+                    const datasetId = job.result?.datasetId || job.metadata?.datasetId;
+                    await this.performDeepEnrichment(analysisResult, datasetId, job.id, profileMap);
                 }
 
                 // [NEW] BUILD HIERARCHICAL STRUCTURE FROM FLAT NODES
@@ -1030,7 +1321,7 @@ export class JobOrchestrator {
                         clusters: [] as any[],
                         topics: [] as any[],
                         subtopics: [] as any[], // [FIX] Add subtopics
-                        overindexing: [] as any[], // [FIX] Add overindexing
+                        overindexing: { topCreators: [] } as any, // [FIX] Add overindexing
                         nonRelatedInterests: [] as any[],
                         topContent: [] as any[],
                         aestheticTags: analysisResult.analytics?.aestheticTags || [],
@@ -1213,24 +1504,11 @@ export class JobOrchestrator {
 
                     console.log(`[JobOrchestrator] Final Top Content count: ${flatAnalytics.topContent.length}`);
 
-                    // [FIX] Deduplicate Overindexing if present
-                    if (flatAnalytics.overindexing && Array.isArray(flatAnalytics.overindexing)) {
-                        const uniqueOverindex = new Map();
-                        flatAnalytics.overindexing.forEach((item: any) => {
-                            const key = (item.label || item.name || "").toLowerCase().trim();
-                            if (key && !uniqueOverindex.has(key)) {
-                                uniqueOverindex.set(key, item);
-                            } else if (uniqueOverindex.has(key)) {
-                                // Merge stats if duplicate found
-                                const existing = uniqueOverindex.get(key);
-                                existing.value = (existing.value || 0) + (item.value || 0);
-                                if (item.evidence && (!existing.evidence || existing.evidence.length < item.evidence.length)) {
-                                    existing.evidence = item.evidence;
-                                }
-                            }
-                        });
-                        flatAnalytics.overindexing = Array.from(uniqueOverindex.values());
-                        console.log(`[JobOrchestrator] Deduplicated Overindexing list to ${flatAnalytics.overindexing.length} items.`);
+                    // [Refactored] Populate Deterministic Overindexing
+                    if (results && results.length > 0) {
+                        const frequencySignals = this.analyzeNetworkFrequency(results);
+                        flatAnalytics.overindexing = { topCreators: frequencySignals };
+                        console.log(`[JobOrchestrator] Populated ${frequencySignals.length} overindexed profiles.`);
                     }
 
                     analysisResult.analytics = flatAnalytics;
@@ -1411,7 +1689,7 @@ export class JobOrchestrator {
 
     // --- HELPER METHODS ---
 
-    private resolveInput(input: any, previousResults: any[], plan?: any): any {
+    private resolveInput(input: any, previousResults: any[], plan?: any, actorId?: string): any {
         const inputStr = JSON.stringify(input);
         if (!inputStr.includes('USE_DATA_FROM')) return input;
 
@@ -1419,6 +1697,51 @@ export class JobOrchestrator {
 
         // Helper to get usernames from a result set
         const extractUsernames = (items: any[]) => {
+            // [FIX] Context-aware extraction based on target actor
+            if (actorId && (actorId.includes('comment-scraper') || actorId.includes('media-scraper'))) {
+                console.log(`[JobOrchestrator] 📸 Extracting URLs for ${actorId}`);
+                const urls: string[] = [];
+                // Helper to validate URL structure (Must contain /p/ or /reel/)
+                const isValidPostUrl = (u: string) => u && (u.includes('/p/') || u.includes('/reel/'));
+
+                (items || []).forEach((item: any) => {
+                    // 1. Direct Post URL
+                    if (isValidPostUrl(item.url)) urls.push(item.url);
+                    else if (isValidPostUrl(item.postUrl)) urls.push(item.postUrl);
+
+                    // 2. Shortcode variations (instagram-api-scraper uses different field names)
+                    else if (item.shortCode || item.shortcode || item.code || item.id) {
+                        const code = item.shortCode || item.shortcode || item.code || item.id;
+                        // Determine if it's a reel or regular post
+                        const isReel = item.productType === 'clips' || item.type === 'clips' || item.type === 'reel';
+                        const path = isReel ? 'reel' : 'p';
+                        urls.push(`https://www.instagram.com/${path}/${code}/`);
+                    }
+
+                    // 3. Extract from 'latestPosts' (Profile Scraper Output)
+                    else if (item.latestPosts && Array.isArray(item.latestPosts)) {
+                        item.latestPosts.forEach((p: any) => {
+                            const pUrl = p.url || p.postUrl;
+                            if (isValidPostUrl(pUrl)) {
+                                urls.push(pUrl);
+                            } else if (p.shortCode || p.shortcode || p.code || p.id) {
+                                const code = p.shortCode || p.shortcode || p.code || p.id;
+                                const isReel = p.productType === 'clips' || p.type === 'clips' || p.type === 'reel';
+                                const path = isReel ? 'reel' : 'p';
+                                urls.push(`https://www.instagram.com/${path}/${code}/`);
+                            }
+                        });
+                    }
+                });
+                const uniqueUrls = [...new Set(urls)].filter(Boolean);
+                console.log(`[JobOrchestrator] ✅ Extracted ${uniqueUrls.length} unique post URLs from ${items.length} items`);
+                if (uniqueUrls.length === 0) {
+                    console.warn(`[JobOrchestrator] ⚠️ No valid post URLs extracted! Sample item:`, JSON.stringify(items[0] || {}).substring(0, 500));
+                }
+                return uniqueUrls;
+            }
+
+            // Default: Extract Usernames/Handles
             return (items || []).map((item: any) =>
                 item.username || item.ownerUsername || item.uniqueId
             ).filter(Boolean);
@@ -1638,10 +1961,116 @@ export class JobOrchestrator {
         return { passed, issues, suggestions };
     }
 
-    /**
-     * Smart Aggregation for Over-indexing & Network Queries
-     * Reduces 10k+ rows of "followings" into a weighted list of top signals.
-     */
+
+    private analyzeNetworkFrequency(results: any[]): any[] {
+        const flatResults = results.flat();
+        const frequencyMap = new Map<string, number>();
+        const profileMap = new Map<string, any>();
+
+        flatResults.forEach((item: any) => {
+            // Count occurrences of usernames (e.g., appearing in multiple "following" lists)
+            const username = item.username || item.ownerUsername;
+            if (username) {
+                const key = username.toLowerCase();
+                frequencyMap.set(key, (frequencyMap.get(key) || 0) + 1);
+
+                // Keep the best profile data we find
+                if (!profileMap.has(key) || (item.followersCount > (profileMap.get(key).followersCount || 0))) {
+                    profileMap.set(key, item);
+                }
+            }
+        });
+
+        // Filter for significant overlap (>1 occurrence) and sort by frequency
+        return Array.from(frequencyMap.entries())
+            .filter(([_, count]) => count > 1)
+            .sort((a, b) => b[1] - a[1]) // Sort by frequency desc
+            .slice(0, 100) // Top 100 strongest signals
+            .map(([username, count]) => {
+                const item = profileMap.get(username);
+                return {
+                    username: item.username || item.ownerUsername,
+                    handle: item.username || item.ownerUsername, // standard field
+                    frequency: count,
+                    followersCount: item.followersCount || item.followers || 0,
+                    bio: item.biography || item.description || "",
+                    profilePicUrl: item.profilePicUrl || item.profile_pic_url,
+                    id: item.id || item.pk,
+                    isVerified: item.isVerified || item.is_verified,
+                    // Mock analytics fields for UI compatibility
+                    overindexScore: count, // Map frequency directly to score
+                    affinityPercent: (flatResults.length > 0 ? (count / flatResults.length * 100).toFixed(1) : "0")
+                };
+            });
+    }
+
+    private aggregateContextLocal(results: any[], intent: string): string {
+        console.log(`[JobOrchestrator] Aggregating context for intent: ${intent}`);
+
+        let context = `ANALYSIS CONTEXT (Intent: ${intent})\n\n`;
+        const flatResults = results.flat();
+
+        // [NEW] NETWORK FREQUENCY ANALYSIS (Critical for Over-indexing)
+        if (intent === 'over_indexing' || intent === 'network_clusters' || intent === 'influencer_identification') {
+            const overindexed = this.analyzeNetworkFrequency(results);
+            // const frequencyMap = new Map<string, number>();
+            // const frequencyMap = new Map<string, number>();
+            // const provenanceMap = new Map<string, string[]>();
+
+            // Removed legacy logic
+            // const overindexed = ...
+
+            if (overindexed.length > 0) {
+                context += `--- 📊 OVER-INDEXED PROFILES (High Priority Analysis) ---\n`;
+                context += `These profiles appear most frequently across the network. They are the strongest candidates for "Top Creators" or "Common Interests".\n\n`;
+
+                overindexed.forEach((p: any, idx: number) => {
+                    // Explicitly inject frequency signal for AI
+                    context += `${idx + 1}. [User: ${p.username}] (Frequency: ${p.frequency}x) - Followers: ${p.followersCount}. Bio: "${(p.bio || '').replace(/\n/g, ' ')}"\n`;
+
+                    // Mark item in raw data for hydration later (optional hack)
+                    const item = flatResults.find((i: any) => (i.username || i.ownerUsername)?.toLowerCase() === p.username.toLowerCase());
+                    if (item) item._frequency = p.frequency;
+                });
+                context += `\n--- END OVER-INDEXED ---\n\n`;
+            }
+        }
+
+        // 1. Comments (High Value for Sentiment)
+        const comments = flatResults.filter((i: any) => i.text && i.ownerUsername);
+        if (comments.length > 0) {
+            context += `--- USER COMMENTS (${comments.length}) ---\n`;
+            comments.slice(0, 50).forEach((c: any) => {
+                context += `[User: ${c.ownerUsername}] "${c.text}" (Likes: ${c.likesCount || 0})\n`;
+            });
+            context += `\n`;
+        }
+
+        // 2. Posts (Captions)
+        const posts = flatResults.filter((i: any) => i.caption && !i.text); // Exclude comments which might have caption field
+        if (posts.length > 0) {
+            context += `--- RECENT POST CAPTIONS (${posts.length}) ---\\n`;
+            posts.slice(0, 30).forEach((p: any) => {
+                const caption = p.caption.substring(0, 150).replace(/\n/g, ' ');
+                context += `[Post] "${caption}..." (Likes: ${p.likesCount}, Comments: ${p.commentsCount})\n`;
+            });
+            context += `\n`;
+        }
+
+        // 3. Profiles (Bios) - Only if NOT over_indexing (to avoid duplication)
+        if (intent !== 'over_indexing') {
+            const profiles = flatResults.filter((i: any) => (i.biography || i.description) && !i._frequency);
+            if (profiles.length > 0) {
+                context += `--- PROFILE BIOS (${profiles.length}) ---\n`;
+                profiles.slice(0, 50).forEach((p: any) => {
+                    const bio = (p.biography || p.description || "").replace(/\n/g, ' ');
+                    if (bio) context += `[User: ${p.username}] ${bio}\n`;
+                });
+            }
+        }
+
+        return context;
+    }
 
 
     async abortJob(jobId: string): Promise<boolean> {
@@ -1734,19 +2163,41 @@ export class JobOrchestrator {
             realActorId = process.env.APIFY_INSTAGRAM_ACTOR_ID || 'OWBUCWZK5MEeO5XiC';
         }
 
-        // [USER-REQUEST] Divert Standard Scraper SEARCH intent to 'apify/instagram-api-scraper'
-        // The standard scraper is failing on search input ("startUrls required"), so we force API scraper.
-        // [FIX] Harden check to catch ALL search intents for the standard scraper
-        if ((realActorId === 'OWBUCWZK5MEeO5XiC' || realActorId === 'apify/instagram-scraper' || realActorId.includes('instagram-scraper')) && (input.search || input.searchQuery || input.searchType || input.searchLimit)) {
-            console.log("[JobOrchestrator] âš ï¸ Diverting 'Search' intent from Standard Scraper to API Scraper (apify/instagram-api-scraper) as requested.");
-            realActorId = 'apify/instagram-api-scraper';
-            // Ensure search is mapped correctly for API scraper
-
-        }
-
         // --- INPUT NORMALIZATION (Merge from Server Logic) ---
         const normalizedInput = { ...input };
 
+        // [USER-REQUEST] Divert Standard Scraper SEARCH intent to 'apify/instagram-api-scraper'
+        // The standard scraper is failing on search input ("startUrls required"), so we force API scraper.
+        if ((realActorId === 'OWBUCWZK5MEeO5XiC' || realActorId === 'apify/instagram-scraper' || realActorId.includes('instagram-scraper')) && (input.search || input.searchQuery || input.searchType || input.searchLimit)) {
+            console.log("[JobOrchestrator] Redirecting 'Search' intent from Standard Scraper.");
+            realActorId = 'apify/instagram-api-scraper';
+        }
+
+        // [NEW] Hashtag Redirection
+        // If query/search is a hashtag (#...) or actor is API scraper with 'hashtags' resultsType,
+        // redirect to dedicated 'apify/instagram-hashtag-scraper'.
+        if (input.search && typeof input.search === 'string' && input.search.startsWith('#')) {
+            console.log(`[JobOrchestrator] 🔄 Redirecting hashtag search "${input.search}" to dedicated Hashtag Scraper.`);
+            realActorId = 'apify/instagram-hashtag-scraper';
+            normalizedInput.hashtags = [input.search.replace('#', '')];
+            normalizedInput.resultsLimit = input.searchLimit || input.resultsLimit || 50;
+            // Clean up old search inputs
+            delete normalizedInput.search;
+            delete normalizedInput.searchQuery;
+            delete normalizedInput.searchType;
+        }
+
+        if (realActorId === 'apify/instagram-api-scraper' && input.resultsType === 'hashtags') {
+            console.log("[JobOrchestrator] 🔄 Correcting invalid 'hashtags' resultsType by switching to dedicated Hashtag Scraper.");
+            realActorId = 'apify/instagram-hashtag-scraper';
+            if (input.search) {
+                normalizedInput.hashtags = [input.search.replace('#', '')];
+                normalizedInput.resultsLimit = input.searchLimit || 50;
+                delete normalizedInput.search;
+            }
+        }
+
+        // [NEW] Smart Keyword Override
         // [NEW] Smart Keyword Override (Cost Control)
         // If Gemini identified a better/simpler keyword, use it instead of the raw query
         if (metadata?.search_keywords && metadata.search_keywords.length > 0 && (normalizedInput.search || normalizedInput.searchQuery)) {
@@ -1838,10 +2289,26 @@ export class JobOrchestrator {
 
             normalizedInput.directUrls = uniqueTargets.map((u: string) => {
                 const clean = u.replace('@', '').trim();
+
+                // [NEW] Hashtag URL Detection & Redirection
+                // If the URL is a hashtag exploration URL, we redirect to a 'hashtag' search intent
+                // because the API scraper's 'details' mode often fails or returns empty for these URLs
+                // when treated as direct URLs.
+                if (clean.includes('instagram.com/explore/tags/')) {
+                    const hashtagMatch = clean.match(/\/tags\/([^/?#]+)/);
+                    if (hashtagMatch && hashtagMatch[1]) {
+                        console.log(`[JobOrchestrator] 🔄 Detected Hashtag URL: ${hashtagMatch[1]}. Redirecting to dedicated hashtag scraper.`);
+                        realActorId = 'apify/instagram-hashtag-scraper';
+                        normalizedInput.hashtags = [hashtagMatch[1]];
+                        normalizedInput.resultsLimit = metadata?.sampleSize || 50;
+                        return null; // Remove from directUrls
+                    }
+                }
+
                 // Ensure no trailing slashes for consistency
                 const final = clean.startsWith('http') ? clean : `https://www.instagram.com/${clean}`;
                 return final;
-            });
+            }).filter(Boolean) as string[];
 
             // [FIX] Deduplicate again after normalization (e.g. 'foo' and '@foo' -> same URL)
             normalizedInput.directUrls = [...new Set(normalizedInput.directUrls)];
@@ -1922,27 +2389,10 @@ export class JobOrchestrator {
             if (!normalizedInput.searchType) {
                 normalizedInput.searchType = 'user'; // Default to user search if not specified
             }
-            // Fix "Field input.proxy is required" error -> Handled by Global Config below
+            // Fix "Field input.proxy is required" error -> Removed proxy config as not required
         }
 
-        // [NEW] Global Proxy Configuration: Enforce ProxyJet for ALL actors
-        // Replaces previous actor-specific proxy logic
-        const leadProxy = process.env.PROXYJET_PROXY_LEAD;
-        const fallbackProxy = process.env.PROXYJET_PROXY_FALL;
-
-        if (leadProxy) {
-            const proxyUrls = [leadProxy, fallbackProxy]
-                .filter(p => p && p.trim().length > 0)
-                .map(p => p?.startsWith('http') ? p : `http://${p}`);
-
-            normalizedInput.proxy = {
-                useApifyProxy: false,
-                proxyUrls: proxyUrls
-            };
-        } else if (!normalizedInput.proxy) {
-            // Fallback default
-            normalizedInput.proxy = { useApifyProxy: true };
-        }
+        // [REMOVED] Proxy configuration - not required for Apify actors
 
         // 1. Calculate Fingerprint (using robust system)
         const fingerprint = generateScrapeFingerprint(realActorId, normalizedInput);
@@ -2620,13 +3070,13 @@ export class JobOrchestrator {
 
         // 2. Mandatory Enrichment Injection
         const lastStep = plan.steps[plan.steps.length - 1];
-        const isEnrichment = lastStep && lastStep.actorId === 'apify/instagram-api-scraper';
+        // [FIX] Check for profile scraper as valid enrichment too
+        const isEnrichment = lastStep && (lastStep.actorId === 'apify/instagram-api-scraper' || lastStep.actorId === 'apify/instagram-profile-scraper');
 
         if (!isEnrichment) {
             console.log(`[Auditor] Plan missing terminal enrichment step. Injecting...`);
             const prevStepId = lastStep ? lastStep.id || lastStep.stepId : null;
 
-            // [FIX] Extract handle for fallback injection
             // [FIX] Extract all handles for robust fallback injection
             const handleMatches = [...query.matchAll(/@([\w._]+)/g)];
             const extractedUrls = handleMatches.length > 0
@@ -2643,15 +3093,14 @@ export class JobOrchestrator {
             }
 
             if (validSource && validSource.length > 0) {
+                // [FIX] Use apify/instagram-profile-scraper for rich profile data including posts
                 plan.steps.push({
                     id: `step_${plan.steps.length + 1}`,
                     description: 'Mandatory Data Enrichment (Auditor Injection)',
-                    actorId: 'apify/instagram-api-scraper',
+                    actorId: 'apify/instagram-profile-scraper', // [CHANGED] Force Profile Scraper
                     input: {
-                        directUrls: validSource, // Array of strings
-                        resultsType: 'details',
-                        addParentData: true,
-                        resultsLimit: 1
+                        usernames: validSource, // Profile scraper uses 'usernames'
+                        resultsLimit: postLimit || 3 // [FIX] Pass slider value as resultsLimit
                     },
                     estimatedRecords: 50,
                     estimatedCost: 0.25,
@@ -2687,8 +3136,9 @@ export class JobOrchestrator {
                     }
                 }
 
-                const isPostScrape = safeActorId === 'apify/instagram-api-scraper' && step.input.resultsType !== 'details';
+                const isPostScrape = (safeActorId === 'apify/instagram-api-scraper' && step.input.resultsType !== 'details') || safeActorId.includes('instagram-scraper');
                 const isApiScraper = safeActorId === 'apify/instagram-api-scraper';
+                const isProfileScraper = safeActorId === 'apify/instagram-profile-scraper';
 
                 // [CRITICAL USER REQ] 
                 // Index 0 (Main Scrape) -> Use Sample Size (e.g. 5000)
@@ -2733,6 +3183,11 @@ export class JobOrchestrator {
                         // Estimate: (Previous Step Records) * (Posts per User)
                         // This is a rough heuristic, usually 10-20% yield on full scrape
                         step.estimatedRecords = Math.min(effectiveLimit * depthLimit, 10000);
+                    } else if (isProfileScraper) {
+                        // [FIX] Ensure profile scraper gets the depth limit
+                        step.input.resultsLimit = depthLimit;
+                        // Also set 'limit' as alias if needed, but resultsLimit is key for profile-scraper posts
+                        step.input.limit = depthLimit;
                     } else {
                         // Secondary profiles/followers
                         step.input.maxCount = subLimit;
@@ -2890,11 +3345,10 @@ export class JobOrchestrator {
                     console.log(`[GapRemediation] Processing Batch ${batchNum}/${totalBatches} (${batch.length} profiles)...`);
 
                     try {
-                        // We use the basic instagram-scraper to batch fetch details
-                        const scrapeResult = await this.runApifyActor('apify/instagram-scraper', {
+                        // [FIX] Use dedicated profile scraper for better enrichment (bio, counts)
+                        // This actor ('apify/instagram-profile-scraper') returns full profile objects directly
+                        const scrapeResult = await this.runApifyActor('apify/instagram-profile-scraper', {
                             usernames: batch,
-                            resultsType: 'posts', // 'posts' usually gives better owner details than 'details' sometimes
-                            searchLimit: 1
                         }, job.id, {
                             taskName: `Gap Remediation (Batch ${batchNum}/${totalBatches})`,
                             query: query,
@@ -2902,9 +3356,9 @@ export class JobOrchestrator {
                             ignoreCache: false
                         });
 
-                        // Extract owners
+                        // Extract profiles (Dedicated scraper returns items as profiles directly)
                         if (scrapeResult && scrapeResult.items) {
-                            const batchProfiles = scrapeResult.items.map((i: any) => i.owner || i.author || i).filter((p: any) => p && (p.username || p.ownerUsername));
+                            const batchProfiles = scrapeResult.items.filter((p: any) => p && p.username);
                             scrapedProfiles.push(...batchProfiles);
                             console.log(`[GapRemediation] Batch ${batchNum} success: Retrieved ${batchProfiles.length} profiles.`);
                         }
@@ -3293,45 +3747,46 @@ export class JobOrchestrator {
                         }
                     });
                     console.log(`[Orchestration] Successfully revitalized ${ghostProfiles.length} ghost nodes.`);
+                }
 
-                    // [NEW] ON-DEMAND ENRICHMENT: If profiles are still missing, trigger a live scrape
-                    const stillMissingHandles = missingHandles.filter(h => {
-                        const key = (h || '').toLowerCase().replace('@', '').trim();
-                        return key && !profileMap.has(key);
-                    });
+                // [PERFORMANCE] ENRICHMENT PASS 1: Hydrate the AI Tree with current profileMap (Scraped + DB)
+                analytics = await this.enrichFandomAnalysisParallel(analysis, profileMap);
 
-                    if (stillMissingHandles.length > 0) {
-                        console.log(`[Orchestration] ⚠️ ${stillMissingHandles.length} profiles still missing after Global DB lookup. Triggering on-demand scrape...`);
+                // [NEW] GAP DETECTION & FINAL ENRICHMENT (On-Demand Scrape)
+                // Identify handles that are still missing or incomplete (missing bio/followers)
+                const enrichmentGaps = this.identifyEnrichmentGaps(analytics);
 
-                        try {
-                            const onDemandResults = await this.runApifyActor('apify/instagram-profile-scraper', {
-                                usernames: stillMissingHandles
-                            }, job.id, {
-                                taskName: `On-demand Enrichment: ${stillMissingHandles.slice(0, 3).join(', ')}...`,
-                                query: job.metadata?.query || (plan as any).query || 'enrichment',
-                                planId: job.id
+                if (enrichmentGaps.length > 0) {
+                    console.log(`[Orchestration] 🔍 Detected ${enrichmentGaps.length} nodes with incomplete data. Triggering final enrichment scrape...`);
+
+                    try {
+                        const finalEnrichmentResults = await this.runApifyActor('apify/instagram-profile-scraper', {
+                            usernames: enrichmentGaps.slice(0, 50) // Cap to 50 for performance
+                        }, job.id, {
+                            taskName: `Final Enrichment: ${enrichmentGaps.slice(0, 3).join(', ')}...`,
+                            query: job.metadata?.query || (plan as any).query || 'enrichment',
+                            planId: job.id
+                        });
+
+                        if (finalEnrichmentResults.items && finalEnrichmentResults.items.length > 0) {
+                            console.log(`[Orchestration] ✅ Final enrichment returned ${finalEnrichmentResults.items.length} profiles.`);
+                            finalEnrichmentResults.items.forEach(item => {
+                                const normalized = this.normalizeToStandardProfile(item);
+                                if (normalized && normalized.username) {
+                                    profileMap.set(normalized.username.toLowerCase(), normalized as any);
+                                }
                             });
 
-                            if (onDemandResults.items && onDemandResults.items.length > 0) {
-                                console.log(`[Orchestration] ✅ On-demand scrape returned ${onDemandResults.items.length} profiles.`);
-                                onDemandResults.items.forEach(item => {
-                                    const normalized = this.normalizeToStandardProfile(item);
-                                    if (normalized && normalized.username) {
-                                        profileMap.set(normalized.username.toLowerCase(), normalized as any);
-                                    }
-                                });
-                            }
-                        } catch (onDemandError) {
-                            console.error(`[Orchestration] ❌ On-demand enrichment failed:`, onDemandError);
+                            // FINAL PASS: Re-apply enrichment with the newly scraped data
+                            analytics = await this.enrichFandomAnalysisParallel(analytics, profileMap);
                         }
+                    } catch (enrichmentError) {
+                        console.error(`[Orchestration] ❌ Final enrichment failed:`, enrichmentError);
                     }
                 }
 
-                // [PERFORMANCE] ENRICHMENT STEP: Hydrate the AI Tree with Real Data (Parallel Mode)
-                analytics = await this.enrichFandomAnalysisParallel(analysis, profileMap);
-
                 // [FIX] Ensure Visual DNA is preserved if present in raw analysis
-                if (analysis.visual || analysis.visualAnalysis) {
+                if (analytics && (analysis.visual || analysis.visualAnalysis)) {
                     analytics.visual = analysis.visual || analysis.visualAnalysis;
                     console.log("[Orchestration] ✅ Merged Visual DNA into Analytics");
                 } else {
@@ -3573,53 +4028,44 @@ export class JobOrchestrator {
                     };
                     analysis.root.children.forEach(traverse);
 
-                    // 1. Creators List (Ordered by Follower Count or Value)
+                    // 1. Creators List (Ordered by Overindex Score or Followers)
                     analytics.creators = allNodes
                         .filter(n => n.type === 'creator' || n.category === 'creator' || n.group === 'creator')
                         .map(n => ({
-                            username: n.data?.username || n.name || n.label,
-                            frequency: n.val || 10,
-                            overindexScore: n.overindexScore || n.data?.overindexScore || 0, // Fix: removed n.val fallback (164M bug)
+                            username: (n.data?.username || n.name || n.label || '').replace(/^@/, ''),
+                            frequency: (n.overindexScore || n.affinityPercent) ? (n.rawCount || n.frequency || n.val) : (n.rawCount || n.frequency || 1), // Don't use val if big
+                            overindexScore: n.overindexScore || n.data?.overindexScore || 0,
+                            affinityPercent: n.affinityPercent || n.data?.affinityPercent || 0,
                             profilePicUrl: n.profilePicUrl || n.data?.profilePicUrl || n.img || '',
                             profileUrl: n.data?.profileUrl || n.data?.externalUrl || n.data?.sourceUrl || n.url,
                             url: n.data?.profileUrl || n.data?.externalUrl || n.data?.sourceUrl || n.url,
-                            // Try to parse follower count if string "1.2M", otherwise use val
-                            followerCount: typeof n.followers === 'string' ? n.followers : (n.data?.followerCount || n.val),
+                            followerCount: typeof n.followers === 'string' ? n.followers : (n.data?.followersCount || n.data?.followerCount || n.val),
+                            followersCount: typeof n.followers === 'number' ? n.followers : (n.data?.followersCount || n.data?.followerCount || (typeof n.followers === 'string' ? 0 : n.val)),
+                            biography: n.data?.biography || n.data?.bio || n.bio || '',
                             provenance: n.provenance || n.data?.provenance || { source: 'AI Analysis', method: 'Deep Dive', confidence: 0.9 },
                             ...n.data,
                             ...n
                         }))
-                        .sort((a, b) => {
-                            // Sort by Followers (if numeric) or Value
-                            const getVal = (v: any) => {
-                                if (typeof v === 'number') return v;
-                                if (typeof v === 'string') {
-                                    if (v.includes('M')) return parseFloat(v) * 1000000;
-                                    if (v.includes('k')) return parseFloat(v) * 1000;
-                                    return parseFloat(v) || 0;
-                                }
-                                return 0;
-                            }
-                            return getVal(b.followerCount) - getVal(a.followerCount);
-                        })
                         .slice(0, 50);
 
-                    // [NEW] 1.1 Brands List (Missing from AI tree processing)
+                    // [NEW] 1.1 Brands List
                     analytics.brands = allNodes
                         .filter(n => n.type === 'brand' || n.category === 'brand' || n.group === 'brand')
                         .map(n => ({
-                            username: n.data?.username || n.name || n.label,
-                            frequency: n.val || 10,
+                            username: (n.data?.username || n.name || n.label || '').replace(/^@/, ''),
+                            frequency: (n.overindexScore || n.affinityPercent) ? (n.rawCount || n.frequency || n.val) : (n.rawCount || n.frequency || 1),
                             overindexScore: n.overindexScore || n.data?.overindexScore || 0,
+                            affinityPercent: n.affinityPercent || n.data?.affinityPercent || 0,
                             profilePicUrl: n.profilePicUrl || n.data?.profilePicUrl || n.img || '',
                             profileUrl: n.data?.profileUrl || n.data?.externalUrl || n.data?.sourceUrl || n.url,
                             url: n.data?.profileUrl || n.data?.externalUrl || n.data?.sourceUrl || n.url,
-                            followerCount: n.data?.followerCount || n.val || 0,
+                            followerCount: n.data?.followersCount || n.data?.followerCount || n.val || 0,
+                            followersCount: n.data?.followersCount || n.data?.followerCount || n.val || 0,
+                            biography: n.data?.biography || n.data?.bio || n.bio || '',
                             provenance: n.provenance || n.data?.provenance || { source: 'AI Analysis', method: 'Brand Mining', confidence: 0.9 },
                             ...n.data,
                             ...n
                         }))
-                        .sort((a, b) => (b.overindexScore || 0) - (a.overindexScore || 0))
                         .slice(0, 50);
 
                     // 2. Topics List (Ordered by frequency/occurrences)
@@ -3660,13 +4106,14 @@ export class JobOrchestrator {
                             ...item.data
                         }));
 
-                        analytics.topContent = [...contentFromNodes, ...contentFromAI]
-                            .filter((c, index, self) => index === self.findIndex(t => t.url === c.url)) // Dedupe
-                            .sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0))
-                            .slice(0, 20);
+                        analytics.topContent = Array.from(new Map([...contentFromNodes, ...contentFromAI].map(p => [p.id || p.url || p.author + p.caption, p])).values())
+                            .slice(0, 50);
                     }
 
                     console.log(`[Orchestration] Generated lists from tree: ${analytics.creators.length} creators, ${analytics.topics.length} topics, ${analytics.topContent?.length || 0} content items`);
+
+                    // FINAL CLEANUP: Deduplicate and standardize all lists after re-extraction
+                    analytics = this.finalizeAnalytics(analytics);
                 }
 
                 // Helper: Map Sentiment Analysis for UI
@@ -4243,13 +4690,15 @@ export class JobOrchestrator {
 
         // Prepare context
         // [MODIFIED] User requested deduplication via DB scan, not prompt context.
-        const effectiveDatasets = ignoreCache ? [] : existingDatasets;
-        // datasetContext removed to reduce prompt size and rely on DB scanning.
+        // [FIX] Disable Caching as per User Request: "can you remoe the caching of queries"
+        const effectiveDatasets: any[] = [];
+        // const effectiveDatasets = ignoreCache ? [] : existingDatasets;
 
-        console.log(`[Dataset Reuse] Checking ${effectiveDatasets.length} existing datasets (Internal Logic)`);
+        console.log(`[Dataset Reuse] Checking ${effectiveDatasets.length} existing datasets (Internal Logic) - CACHING DISABLED`);
 
         // [NEW] Try programmatic matching first (Hybrid Approach - Option C)
-        const programmaticMatch = this.programmaticDatasetMatch(query, effectiveDatasets);
+        const programmaticMatch = null; // Disable programmatic match too
+        // const programmaticMatch = this.programmaticDatasetMatch(query, effectiveDatasets);
         let programmaticInstruction = "";
         let cachedStats = "";
         if (programmaticMatch) {
@@ -4410,10 +4859,10 @@ export class JobOrchestrator {
     **CRITICAL RULES:**
     1. **Universal Content Enrichment (MANDATORY)**: check if the user wants to populate the "Entity Inspector" or "Post Gallery". If so, you MUST add a final enrichment step using 'apify/instagram-api-scraper'.
        - **Purpose**: To get full biographies, accurate follower counts, and latest posts/media for every node.
-       - **Input**: Use "directUrls" (constructed from usernames/dataset).
-       - **Config**: Set resultsType: "posts", resultsLimit: ${postLimit}, and addParentData: true.
-       - **Pattern**: Scrape Usernames (Step 1) -> Enrich with API Scraper (Step 2).
-       - **CRITICAL**: Do NOT use 'apify/instagram-profile-scraper' anymore for enrichment. It provides limited data.
+       - **Input**: Use "usernames" (extracted from step 1).
+       - **Config**: Use 'apify/instagram-profile-scraper'.
+       - **Pattern**: Scrape Usernames (Step 1) -> Enrich with Profile Scraper (Step 2).
+       - **CRITICAL**: Use 'apify/instagram-profile-scraper' for deep enrichment. It provides the most accurate bio and follower counts.
        - **CRITICAL**: DO NOT use 'datadoping/instagram-following-scraper' (ID: IkdNTeZnRfvDp8V25) or ANY 'datadoping' scrapers. They are deprecated. Use 'thenetaji/instagram-followers-followings-scraper' (ID: asIjo32NQuUHP4Fnc) for relationships.
 
     2. **Sample Size**: The 'sampleSize' applies to Step 1 (base scrape).
@@ -4581,12 +5030,11 @@ export class JobOrchestrator {
     â†’ Intent: "hashtag_tracking"
       â†’ Strategy:
         1. Scrape posts from Hashtag page.
-           - Actor: 'apify/instagram-api-scraper'
+           - Actor: 'apify/instagram-hashtag-scraper'
            - Input: {
-               "directUrls": ["https://instagram.com/explore/tags/[HASHTAG]"],
-               "resultsType": "posts",
+               "hashtags": ["[HASHTAG]"],
                "resultsLimit": 100,
-               "addParentData": true
+               "resultsType": "posts"
              }
            - **CRITICAL**: Extract hashtag without # for URL (e.g. #summer -> summer) but keep # for metadata.
            - **CRITICAL**: Use directUrls format: "https://instagram.com/explore/tags/hashtag"
@@ -4613,12 +5061,11 @@ export class JobOrchestrator {
     â†’ Intent: "ugc_discovery"
       â†’ Strategy:
         1. Scrape posts from Brand Hashtag page.
-           - Actor: 'apify/instagram-api-scraper'
+           - Actor: 'apify/instagram-hashtag-scraper'
            - Input: {
-               "directUrls": ["https://instagram.com/explore/tags/[BRAND_NAME]"],
-               "resultsType": "posts",
+               "hashtags": ["[BRAND_NAME]"],
                "resultsLimit": 100,
-               "addParentData": true
+               "resultsType": "posts"
              }
            - **CRITICAL**: Use brand name as hashtag (e.g. @nike -> niike -> https://instagram.com/explore/tags/nike)
         - Reasoning: "Finding posts using the brand's hashtag is the standard way to surface UGC."
@@ -5552,30 +5999,42 @@ export class JobOrchestrator {
             const username = r.username || r.ownerUsername || r.owner?.username;
             if (!username) return;
 
-            // [FIX] Normalize
-            if (typeof username === 'string') {
-                // ok
-            } else if (Array.isArray(username)) {
-                // handle arrays? usually not here.
-                return;
+            // [FIX] Normalize Key: Lowercase AND strip '@' AND trim
+            const cleanUser = typeof username === 'string' ? username.toLowerCase().replace('@', '').trim() : '';
+            if (!cleanUser) return;
+
+            // [HARDENING] Index by ID (PK) as primary key if available
+            const pk = r.id || r.pk || r.user?.pk || r.owner?.id;
+
+            // Helper to get or create profile
+            const getOrCreate = () => {
+                let p = profileMap.get(cleanUser);
+                if (!p && pk) p = profileMap.get(pk); // Try ID lookup
+
+                if (!p) {
+                    p = {
+                        username: username, // Keep original case for display
+                        id: pk, // Store ID
+                        ...r, // Inherit other fields
+                        latestPosts: [],
+                        // Ensure counters are numbers
+                        followersCount: r.followersCount || r.followerCount || r.followers || 0,
+                        followsCount: r.followsCount || r.followingCount || r.following || 0
+                    };
+                    profileMap.set(cleanUser, p);
+                    if (pk) profileMap.set(pk, p); // [CRITICAL] Index by ID
+                }
+                return p;
+            };
+
+            const profile = getOrCreate();
+
+            // Ensure ID is set if discovered later
+            if (pk && !profile.id) {
+                profile.id = pk;
+                // Index by string version for consistent lookups
+                profileMap.set(String(pk), profile);
             }
-
-
-            const cleanUser = username.toLowerCase();
-
-            if (!profileMap.has(cleanUser)) {
-                // Initialize with available profile data
-                profileMap.set(cleanUser, {
-                    username: username, // Keep original case for display
-                    ...r, // Inherit other fields
-                    latestPosts: [],
-                    // Ensure counters are numbers
-                    followersCount: r.followersCount || r.followerCount || r.followers || 0,
-                    followsCount: r.followsCount || r.followingCount || r.following || 0
-                });
-            }
-
-            const profile = profileMap.get(cleanUser);
 
             // [LINK] Link relationships (for over-indexing analysis)
             const owner = r.ownerUsername || r.owner?.username;
@@ -5621,19 +6080,19 @@ export class JobOrchestrator {
             const sourceExternalUrl = r.externalUrl || meta.externalUrls?.[0] || meta.url;
 
             // 1. Bio: Keep the longest non-empty bio
-            if (sourceBio && (!profile.biography || sourceBio.length > profile.biography.length)) {
+            if (sourceBio && typeof sourceBio === 'string' && (!profile.biography || sourceBio.length > (profile.biography?.length || 0))) {
                 profile.biography = sourceBio;
             }
 
             // 2. Profile Pic: Prefer HD or non-placeholder
             const currentPic = profile.profilePicUrl || profile.profile_pic_url;
-            if (sourcePic && (!currentPic || (sourcePic.includes('scontent') && !currentPic.includes('scontent')))) {
+            if (sourcePic && typeof sourcePic === 'string' && (!currentPic || (sourcePic.includes('scontent') && !currentPic.includes('scontent')))) {
                 profile.profilePicUrl = sourcePic;
             }
 
             // 3. Contact Info
-            if (sourceEmail && !profile.email) profile.email = sourceEmail;
-            if (sourceExternalUrl && !profile.externalUrl) profile.externalUrl = sourceExternalUrl;
+            if (sourceEmail && typeof sourceEmail === 'string' && !profile.email) profile.email = sourceEmail;
+            if (sourceExternalUrl && typeof sourceExternalUrl === 'string' && !profile.externalUrl) profile.externalUrl = sourceExternalUrl;
 
             // [FIX] Verification Status
             if (r.isBusinessAccount !== undefined) profile.isBusinessAccount = r.isBusinessAccount;
@@ -5920,23 +6379,28 @@ export class JobOrchestrator {
             val: val,
             profilePic: ((p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) && (p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD).startsWith('http') ? proxyMediaUrl(p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) : null), // [FIX] Valid URL check
             data: {
+                id: p.id || simpleId, // [FIX] Add ID for enrichment matching
+                username: username, // [FIX] Add username without @ prefix
                 handle: `@${username}`,
                 fullName: p.fullName,
                 followers: p.followersCount ? p.followersCount.toLocaleString() : '?',
+                followerCount: p.followersCount || 0, // [FIX] Add numeric value for sorting
                 following: p.followsCount ? p.followsCount.toLocaleString() : '?',
-                posts: p.mediaCount || p.postsCount || (p.latestPosts ? p.latestPosts.length : 0),
-                postsCount: p.postsCount || p.mediaCount || (p.latestPosts ? p.latestPosts.length : 0), // [NEW] Explicit
+                followingCount: p.followsCount || 0, // [FIX] Add numeric value for sorting
+                posts: p.mediaCount || p.postsCount || p.posts || (p.latestPosts ? p.latestPosts.length : 0),
+                postsCount: p.postsCount || p.mediaCount || p.posts || (p.latestPosts ? p.latestPosts.length : 0), // [FIX] Add p.posts fallback
                 isBusinessAccount: p.isBusinessAccount, // [NEW]
-                bio: p.biography || p.bio,
+                bio: (p.biography || p.bio || '').replace(/Bio unavailable/i, '').replace(/No bio/i, '').trim(),
                 profilePicUrl: ((p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) && (p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD).startsWith('http') ? proxyMediaUrl(p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) : null),
                 externalUrl: p.externalUrl || p.url,
+                url: p.url || p.externalUrl || `https://instagram.com/${username}`, // [FIX] Add url field
+                sourceUrl: p.url || `https://instagram.com/${username}`,
                 engagementRate: engagementRate || '0%',
                 avgLikes: (avgLikes || 0).toLocaleString(),
                 avgComments: (avgComments || 0).toLocaleString(),
                 latestPosts: posts,
                 evidence: evidenceSummary, // Summary string
                 evidenceItems: evidenceItems, // [NEW] Structured items for subnodes
-                sourceUrl: p.url || `https://instagram.com/${username}`
             }
         };
     }
@@ -6005,8 +6469,21 @@ export class JobOrchestrator {
                     return res;
                 });
             } else if (plan.intent === 'network_clusters') {
-                graphResult = this.generateNetworkGraph(richProfiles, query);
+                // [FIX] Use AI-generated tree if available, otherwise generate clusters dynamically
+                if (analytics && analytics.root) {
+                    console.log("[GraphGen] network_clusters: Using AI-generated tree structure");
+                    graphResult = this.generateTreeFromServerData(richProfiles, query, analytics, plan);
+                } else {
+                    console.log("[GraphGen] network_clusters: Using dynamic clustering (no AI tree found)");
+                    return this.generateOverindexGraph(richProfiles, query, plan, analytics).then(res => {
+                        if (res && plan && plan.intent) {
+                            this.optimizeGraphTopology(res.nodes, res.links, plan.intent, res.nodes.find((n: any) => n.id === 'root' || n.id === 'MAIN') || { id: 'MAIN' }, query);
+                        }
+                        return res;
+                    });
+                }
             } else {
+                // Default fallback for unknown intents
                 graphResult = this.generateNetworkGraph(richProfiles, query);
             }
         }
@@ -6694,16 +7171,20 @@ export class JobOrchestrator {
 
         // [FIX] Pre-process ALL data to build a Master Rich Map using robust aggregateProfiles
         // This ensures that if Step 3 (Enrichment) has better data than Step 1 (Audience),
-        // we use the rich data regardless of step order.
-        const allDataFlat = results.flat();
-        const richProfiles = this.aggregateProfiles(allDataFlat);
+        // we use the best available data for each profile.
+        const allItems = results.flat();
+        const richProfiles = this.aggregateProfiles(allItems);
+
+        // Build a map for quick lookups
         const richMap = new Map<string, any>();
         richProfiles.forEach(p => {
             const uid = (p.username || '').toLowerCase().trim();
             if (uid) richMap.set(uid, p);
+            // Also index by ID if available
+            if (p.id) richMap.set(String(p.id), p);
         });
 
-        console.log(`[GraphGen] Built Rich Map with ${richMap.size} profiles from ${allDataFlat.length} raw records.`);
+        console.log(`[GraphGen] Built Rich Map with ${richMap.size} profiles from ${allItems.length} raw records.`);
 
         // [FIX] Use Map for Node Lookup to enable Enrichment Merging
         const nodeMap = new Map<string, any>();
@@ -8511,7 +8992,7 @@ export class JobOrchestrator {
         // [NEW] 1. Create Lookup Map for Scraped Data (Fast Access)
         const profileMap = new Map<string, any>();
         profiles.forEach(p => {
-            const username = (p.username || p.ownerUsername || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const username = (p.username || p.ownerUsername || '').toLowerCase().replace('@', '').trim(); // [FIX] Preserve underscores
             if (username && !profileMap.has(username)) {
                 profileMap.set(username, p);
             } else if (username && profileMap.has(username)) {
@@ -8536,18 +9017,34 @@ export class JobOrchestrator {
         // [FIX] Derive coreId from the cleaner displayLabel (e.g. @imjustbait -> imjustbait)
         // This prevents the 'central' node from being added again as a separate node
         const coreId = displayLabel.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const coreProfileData = profileMap.get(coreId) || {};
+
+        // [FIX] Robust Core Profile Lookup
+        let coreProfileData = profileMap.get(coreId) || profileMap.get(displayLabel.replace('@', '').toLowerCase());
+
+        // Final fallback: try to find by username in values
+        if (!coreProfileData) {
+            const found = [...profileMap.values()].find(p => p.username?.toLowerCase() === displayLabel.replace('@', '').toLowerCase());
+            if (found) coreProfileData = found;
+        }
 
         // Update the MAIN node we pushed earlier with real profile data if we have it
         const mainNode = nodes.find(n => n.id === 'MAIN');
-        if (mainNode) {
+        if (mainNode && coreProfileData) {
+            console.log(`[GraphGen] Hydrating MAIN node with scraped data for: ${displayLabel}`);
             mainNode.profilePic = proxyMediaUrl(coreProfileData.profilePicUrl || coreProfileData.profile_pic_url);
             mainNode.data = {
                 isCore: true,
                 ...coreProfileData,
-                bio: coreProfileData.biography || '',
+                bio: coreProfileData.biography || coreProfileData.bio || '',
+                followers: (coreProfileData.followersCount || 0).toLocaleString(),
+                following: (coreProfileData.followsCount || 0).toLocaleString(),
+                // Standardized fields
+                followerCount: coreProfileData.followersCount || 0,
+                followingCount: coreProfileData.followsCount || 0,
+                postCount: coreProfileData.postsCount || 0,
+
                 externalUrl: coreProfileData.externalUrl || `https://instagram.com/${displayLabel.replace('@', '')}`,
-                latestPosts: coreProfileData.latestPosts || []
+                latestPosts: (coreProfileData.latestPosts || []).map((p: any) => proxyMediaFields(p))
             };
         }
         addedNodeIds.add('MAIN');
@@ -8671,6 +9168,15 @@ export class JobOrchestrator {
 
                 // [STRICT] Removed fuzzy lookup as per user request. 
                 // We only use the strict alphanumeric ID match from profileMap.get(nodeId)
+
+                // [CRITICAL] ZERO TOLERANCE FOR AI HALLUCINATIONS
+                // If it's a profile/brand/creator node and we don't have scraped data, DROP IT.
+                const isLeafNode = ['creator', 'brand', 'influencer', 'profile'].includes(group);
+                if (isLeafNode && !scrapedProfile) {
+                    console.log(`[GraphGen] ✂️ Pruning unverified AI node: ${nodeId} (${group}) - No scraped data found in profileMap.`);
+                    return;
+                }
+
                 const realPosts = scrapedProfile?.latestPosts || [];
 
                 // [NEW] Get Tree Frequency Score (Real vs AI)
@@ -8765,7 +9271,7 @@ export class JobOrchestrator {
                     followers: (scrapedProfile?.followersCount || scrapedProfile?.followers || 0).toLocaleString(),
                     following: (scrapedProfile?.followsCount || scrapedProfile?.followingCount || 0).toLocaleString(),
                     bio: scrapedProfile?.biography || scrapedProfile?.bio || treeNode.data?.bio || '',
-                    profilePicUrl: proxyMediaUrl(scrapedProfile?.profilePicUrl || scrapedProfile?.profile_pic_url || treeNode.data?.profilePicUrl),
+                    profilePicUrl: proxyMediaUrl(scrapedProfile?.profilePicUrl || scrapedProfile?.profile_pic_url || treeNode.data?.profilePicUrl) || `https://ui-avatars.com/api/?name=${encodeURIComponent(scrapedProfile?.fullName || nodeId)}&background=random`,
                     latestPosts: realPosts.length > 0 ? realPosts.map(p => proxyMediaFields(p)) : (treeNode.data?.latestPosts ? treeNode.data.latestPosts.map((p: any) => proxyMediaFields(p)) : []),
 
                     // [NEW] Standardized Stat Fields
@@ -9021,6 +9527,7 @@ export class JobOrchestrator {
                 // 1. Enrich Main Node with Aesthetic Data
                 const mainNode = nodes.find(n => n.id === 'MAIN');
                 if (mainNode) {
+                    if (!mainNode.data) mainNode.data = {};
                     mainNode.data.visual = analytics.visual;
                     // Optional: Set Main Node Color to dominant palette color if appropriate?
                     // For now, we prefer standard 'white' or 'green' for MAIN, and use visual data for UI panels.
@@ -9030,33 +9537,116 @@ export class JobOrchestrator {
                 // 2. Create Brand Nodes
                 if (analytics.visual.brands && Array.isArray(analytics.visual.brands)) {
                     analytics.visual.brands.forEach((brand: any) => {
-                        // Create ID
+                        // [FIX] Normalize ID to match tree processing format (no prefix, alphanumeric only)
+                        const cleanId = brand.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                        // [FIX] Check if this brand already exists in the tree (without brand_ prefix)
+                        if (addedNodeIds.has(cleanId)) {
+                            console.log(`[GraphGen] Skipping Visual DNA brand "${brand.name}" - already exists in tree as "${cleanId}"`);
+                            return;
+                        }
+
+                        // Create ID with brand_ prefix for Visual DNA-specific brands
                         const brandId = `brand_${brand.name.toLowerCase().replace(/\s+/g, '_')}`;
 
-                        // Avoid duplicates
+                        // Also check the prefixed version
                         if (addedNodeIds.has(brandId)) return;
+
+                        // [FIX] Check for Scraped Data match
+                        const scrapedProfile = profileMap.get(cleanId);
+                        const matchCount = brand.imageUrls?.length || brand.count || 1;
+
+                        let richData: any = {
+                            name: brand.name,
+                            count: matchCount,
+                            type: 'brand',
+                            evidence: `Detected visually in ${matchCount} posts`,
+                            // [FIX] Construct Structured Provenance for ReasoningPanel
+                            provenance: {
+                                source: 'Visual Intelligence (Gemini Vision)',
+                                method: 'Multimodal Brand Detection',
+                                description: `Identified by analyzing dataset images for brand logos and semantic markers.`,
+                                confidence: (brand.confidence || 90) / 100,
+                                evidence: brand.imageUrls?.map((url: string) => ({
+                                    text: `Visual match for ${brand.name}`,
+                                    url: url,
+                                    author: 'Visual Miner',
+                                    date: new Date().toISOString().split('T')[0],
+                                    type: 'visual_proof'
+                                })) || []
+                            },
+                            // [NEW] Structured items for subnodes
+                            evidenceItems: brand.imageUrls?.map((url: string) => ({
+                                type: 'visual',
+                                label: 'Visual Match',
+                                snippet: `Detected logo or product for ${brand.name}`,
+                                url: url,
+                                score: brand.confidence || 90
+                            })) || []
+                        };
+
+                        if (scrapedProfile) {
+                            richData = {
+                                ...richData,
+                                username: scrapedProfile.username || brand.name,
+                                bio: scrapedProfile.biography || scrapedProfile.bio || '',
+                                followers: (scrapedProfile.followersCount || 0).toLocaleString(),
+                                followerCount: scrapedProfile.followersCount || 0,
+                                followingCount: scrapedProfile.followsCount || 0,
+                                postCount: scrapedProfile.postsCount || 0,
+                                profilePicUrl: proxyMediaUrl(scrapedProfile.profilePicUrl) || `https://ui-avatars.com/api/?name=${encodeURIComponent(scrapedProfile?.username || brand.name)}&background=random`,
+                                externalUrl: scrapedProfile.externalUrl || `https://instagram.com/${scrapedProfile.username}`,
+                                latestPosts: (scrapedProfile.latestPosts || []).map((p: any) => proxyMediaFields(p)),
+                                isVerified: scrapedProfile.isVerified || false
+                            };
+                        }
 
                         nodes.push({
                             id: brandId,
                             label: brand.name,
                             group: 'brand', // Visual Theme will color this Indigo/Blue
-                            val: 10 + Math.min(20, (brand.count || 1) * 2), // Size by frequency
+                            val: 10 + Math.min(20, matchCount * 2), // Size by frequency
                             level: 1,
-                            data: {
-                                name: brand.name,
-                                count: brand.count,
-                                type: 'brand',
-                                evidence: `Detected visually in ${brand.count} posts`
-                            }
+                            data: richData
                         });
+
+                        // [FIX] Add BOTH IDs to prevent duplicates in either direction
                         addedNodeIds.add(brandId);
+                        addedNodeIds.add(cleanId);
 
                         // Link Main -> Brand
                         links.push({
                             source: 'MAIN',
                             target: brandId,
-                            value: Math.max(1, brand.count || 1)
+                            value: Math.max(1, matchCount)
                         });
+
+                        // Add to brands list
+                        extractedAnalytics.brands.push(richData);
+                    });
+                }
+
+                // [NEW] 2.5 Create Product Nodes
+                if (analytics.visual.products && Array.isArray(analytics.visual.products)) {
+                    analytics.visual.products.forEach((product: any, idx: number) => {
+                        const productId = `product_${idx}_${product.category.toLowerCase().replace(/\s+/g, '_')}`;
+                        const matchCount = product.imageUrls?.length || 1;
+
+                        nodes.push({
+                            id: productId,
+                            label: product.category,
+                            group: 'topic',
+                            val: 10 + Math.min(10, matchCount),
+                            data: {
+                                name: product.category,
+                                description: product.description,
+                                type: 'product',
+                                imageUrls: product.imageUrls || [],
+                                evidence: `Product detected in ${matchCount} images`
+                            }
+                        });
+
+                        links.push({ source: 'MAIN', target: productId, value: 1 });
                     });
                 }
 
@@ -9078,7 +9668,7 @@ export class JobOrchestrator {
             console.log(`[OverIndex] Hybrid: Checking ${sortedOverindexed.length} server-identified nodes against graph...`);
 
             sortedOverindexed.forEach(([username, frequency]) => {
-                const nodeId = username.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const nodeId = username.toLowerCase().replace('@', '').trim(); // [FIX] Preserve underscores
                 if (addedNodeIds.has(nodeId)) return; // Already added via AI tree
 
                 const profile = profileMap.get(nodeId) || {};
@@ -9098,38 +9688,28 @@ export class JobOrchestrator {
 
                 const bio = (profile.biography || '').toLowerCase();
 
-                // Create Node
-                const node = {
-                    id: nodeId,
-                    label: profile.fullName || username,
-                    val: Math.min(30, 5 + (frequency * 2)),
-                    group: profile.isBusinessAccount ? 'brand' : 'creator',
-                    data: {
-                        handle: `@${username}`,
-                        username: username,
-                        fullName: profile.fullName,
-                        followersCount: profile.followersCount || profile.followers || 0,
-                        followers: (profile.followersCount || profile.followers || 0).toLocaleString(),
+                // [UNIFIED] Use central hydration helper
+                const hydrated = this.hydrateNodeData(
+                    profile,
+                    profile.isBusinessAccount ? 'brand' : 'creator',
+                    `High Affinity: Followed by ${frequency} source accounts`,
+                    centralLabel
+                );
 
-                        // [FIX] Map enriched fields
-                        bio: profile.biography || '',
-                        externalUrl: profile.externalUrl || `https://instagram.com/${username}`,
-                        latestPosts: (profile.latestPosts || []).map((p: any) => proxyMediaFields(p)),
+                // Additional Overindex Metadata
+                hydrated.val = Math.min(30, 5 + (frequency * 2));
+                hydrated.data.overindexScore = frequency;
+                hydrated.data.evidence = `High Affinity: Followed by ${frequency} source accounts`;
 
-                        profilePicUrl: proxyMediaUrl(profile.profilePicUrl || profile.profilePicUrlHD || profile.profile_pic_url),
-                        evidence: `High Affinity: Followed by ${frequency} source accounts`,
-                        overindexScore: frequency, // Normalized case
-                        url: profile.externalUrl || `https://instagram.com/${username}`,
-                        sourceUrl: profile.externalUrl || `https://instagram.com/${username}`
-                    }
-                };
-
-                nodes.push(node);
+                nodes.push(hydrated);
                 addedNodeIds.add(nodeId);
 
                 // Add to relevant analytic list (will be sorted later)
-                if (node.group === 'brand') extractedAnalytics.brands.push(node.data);
-                else extractedAnalytics.creators.push(node.data);
+                if (hydrated.group === 'brand') {
+                    // List is now managed by orchestration pass
+                } else {
+                    // List is now managed by orchestration pass
+                }
 
                 // [FIX] Assign to Dedicated 'High Affinity' Cluster
                 // Instead of trying to match semantic keywords (which leads to dispersal or 'MAIN' fallback),
@@ -9142,9 +9722,17 @@ export class JobOrchestrator {
             });
 
 
-            // [NEW] Sort Lists by Frequency Score (Descending)
-            extractedAnalytics.creators.sort((a, b) => (b.frequencyScore || 0) - (a.frequencyScore || 0));
-            extractedAnalytics.brands.sort((a, b) => (b.frequencyScore || 0) - (a.frequencyScore || 0));
+            // [NEW] Sort Lists by Relevance/Overindex Score (Descending)
+            // Priority: overindexScore > frequencyScore
+            const sortingFn = (a: any, b: any) => {
+                const scoreA = (a.overindexScore || a.affinityPercent || 0);
+                const scoreB = (b.overindexScore || b.affinityPercent || 0);
+                if (scoreB !== scoreA) return scoreB - scoreA;
+                return (b.frequencyScore || 0) - (a.frequencyScore || 0);
+            };
+
+            extractedAnalytics.creators.sort(sortingFn);
+            extractedAnalytics.brands.sort(sortingFn);
             extractedAnalytics.topics.sort((a, b) => (b.frequencyScore || 0) - (a.frequencyScore || 0));
 
             console.log(`[GraphGen] Sorted analytics lists. Top Creator Score: ${extractedAnalytics.creators[0]?.frequencyScore}`);
@@ -9162,7 +9750,6 @@ export class JobOrchestrator {
                         nodes.push({ id, label: c.name || c.handle || "Unknown Creator", val: 20, group: 'creator', data: richData });
                         links.push({ source: 'MAIN', target: id, value: 1 });
                         addedNodeIds.add(id);
-                        extractedAnalytics.creators.push(richData);
                     }
                 });
             }
@@ -9175,7 +9762,6 @@ export class JobOrchestrator {
                         nodes.push({ id, label: c.name || "Unknown Brand", val: 20, group: 'brand', data: richData });
                         links.push({ source: 'MAIN', target: id, value: 1 });
                         addedNodeIds.add(id);
-                        extractedAnalytics.brands.push(richData);
                     }
                 });
             }
@@ -9239,6 +9825,166 @@ export class JobOrchestrator {
                 }
             }
         });
+
+        // [NEW] Run Community Detection Algorithm
+        CommunityDetectionService.detectCommunities(nodes, links);
+
+        // [NEW] Run Influence Analysis (PageRank)
+        const pagerankScores = GraphAnalysisService.calculatePageRank(nodes, links);
+        GraphAnalysisService.applyInfluenceSizing(nodes, pagerankScores);
+
+        // [VISUAL DNA] Enrich Clusters with Visual Identity
+        // Aggregates images from cluster members and assigns a vibe/color
+        await VisualDNAService.enrichClustersWithVisuals(nodes, links);
+
+        // [FIX] Populate Global Analytics with MAIN node's Visual DNA
+        const mainNodeForVisuals = nodes.find(n => n.id === 'MAIN');
+        if (extractedAnalytics && mainNodeForVisuals && mainNodeForVisuals.data && mainNodeForVisuals.data.visualIdentity) {
+            (extractedAnalytics as any).visual = mainNodeForVisuals.data.visualIdentity;
+        }
+
+        // [GAP REMEDIATION] Identify nodes missing enriched data and scrape them
+        console.log('[GapRemediation] Checking for nodes missing enriched profile data...');
+        const nodesToEnrich: any[] = [];
+
+        for (const node of nodes) {
+            // Skip MAIN node and cluster nodes
+            if (node.id === 'MAIN' || node.group === 'cluster' || node.group === 'topic' || node.group === 'subtopic') {
+                continue;
+            }
+
+            // Check if node is missing critical enriched data
+            // [FIX] Treat 0 counts as missing data - profiles should have real stats
+            // [FIX] Ignore placeholder strings like "Bio unavailable" when checking if enriched
+            const bioText = (node.data.bio || '').toLowerCase();
+            const isPlaceholderBio = bioText.includes('bio unavailable') ||
+                bioText.includes('no bio') ||
+                bioText.includes('placeholder') ||
+                bioText.length < 5;
+
+            const hasEnrichedData = node.data && (
+                (node.data.followerCount && node.data.followerCount > 0) ||
+                (node.data.followingCount && node.data.followingCount > 0) ||
+                (node.data.postCount && node.data.postCount > 0) ||
+                (node.data.bio && node.data.bio.length > 10 && !isPlaceholderBio) // [FIX] Bio must be substantial AND real
+            );
+
+            if (!hasEnrichedData) {
+                // [DEBUG] Log profiles that need enrichment
+                if (node.data?.username) {
+                    console.log(`[GapRemediation] 🔍 Profile needs enrichment: ${node.data.username} (followers: ${node.data?.followerCount || 0}, bio: ${node.data?.bio ? 'yes' : 'no'})`);
+                }
+
+                // Try to extract username from node data
+                // [FIX] Only use username/handle fields, NOT label/id which can be cluster names
+                const username = node.data?.username || node.data?.handle;
+
+                // [FIX] Validate that it's a real username: no spaces, not too long, starts with alphanumeric
+                const isValidUsername = username &&
+                    typeof username === 'string' &&
+                    !username.includes(' ') &&
+                    username.length > USERNAME_MIN_LENGTH &&
+                    username.length < USERNAME_MAX_LENGTH &&
+                    USERNAME_VALIDATION_REGEX.test(username.toLowerCase());
+
+                if (isValidUsername && username !== 'MAIN') {
+                    nodesToEnrich.push({
+                        node,
+                        username: username.replace('@', '').toLowerCase()
+                    });
+                }
+            }
+        }
+
+        if (nodesToEnrich.length > 0) {
+            console.log(`[GapRemediation] Found ${nodesToEnrich.length} nodes missing enriched data. Scraping profiles...`);
+
+            // [FIX] Track failures for reporting
+            let totalEnriched = 0;
+            let totalFailed = 0;
+            const failedUsernames: string[] = [];
+
+            // Scrape missing profiles in batches
+            const batchSize = GAP_REMEDIATION_BATCH_SIZE;
+            const batches = [];
+            for (let i = 0; i < nodesToEnrich.length; i += batchSize) {
+                batches.push(nodesToEnrich.slice(i, i + batchSize));
+            }
+
+            for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+                const batch = batches[batchIndex];
+                const usernames = batch.map(item => item.username);
+
+                try {
+                    // Use instagram-profile-scraper for rich profile data
+                    const scrapedProfiles = await this.runApifyActor(
+                        'apify/instagram-profile-scraper',
+                        {
+                            usernames,
+                            resultsLimit: usernames.length
+                        },
+                        `gap_remediation_batch_${batchIndex}`
+                    );
+
+                    if (scrapedProfiles && scrapedProfiles.items && scrapedProfiles.items.length > 0) {
+                        // Create a map for quick lookup
+                        const scrapedMap = new Map<string, any>();
+                        for (const profile of scrapedProfiles.items) {
+                            const cleanUsername = (profile.username || '').toLowerCase().replace('@', '');
+                            scrapedMap.set(cleanUsername, profile);
+                        }
+
+                        // Enrich nodes with scraped data
+                        for (const item of batch) {
+                            const scrapedProfile = scrapedMap.get(item.username);
+                            if (scrapedProfile) {
+                                if (!item.node.data) item.node.data = {};
+
+                                item.node.data.username = scrapedProfile.username || item.username;
+                                item.node.data.bio = scrapedProfile.biography || scrapedProfile.bio || '';
+                                item.node.data.followers = (scrapedProfile.followersCount || 0).toLocaleString();
+                                item.node.data.followerCount = scrapedProfile.followersCount || 0;
+                                item.node.data.followingCount = scrapedProfile.followsCount || 0;
+                                item.node.data.postCount = scrapedProfile.postsCount || 0;
+                                item.node.data.profilePicUrl = proxyMediaUrl(scrapedProfile.profilePicUrl) || `https://ui-avatars.com/api/?name=${encodeURIComponent(scrapedProfile.username || item.username)}&background=random`;
+                                item.node.data.externalUrl = scrapedProfile.externalUrl || `https://instagram.com/${scrapedProfile.username}`;
+                                item.node.data.isVerified = scrapedProfile.isVerified || false;
+
+                                if (scrapedProfile.latestPosts && scrapedProfile.latestPosts.length > 0) {
+                                    item.node.data.latestPosts = scrapedProfile.latestPosts.map((post: any) => proxyMediaFields(post));
+                                }
+
+                                console.log(`[GapRemediation] ✅ Enriched ${item.username} with ${scrapedProfile.followersCount || 0} followers`);
+                                totalEnriched++;
+                            } else {
+                                // Profile was requested but not returned
+                                totalFailed++;
+                                failedUsernames.push(item.username);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.warn(`[GapRemediation] ⚠️ Failed to scrape batch ${batchIndex}:`, error);
+                    // Track all usernames in this batch as failed
+                    totalFailed += batch.length;
+                    failedUsernames.push(...batch.map(item => item.username));
+                    // Continue with other batches
+                }
+
+                console.log(`[GapRemediation] Processed batch ${batchIndex + 1}/${batches.length}`);
+            }
+
+            // [FIX] Report final statistics
+            console.log(`[GapRemediation] ✅ Gap remediation complete:`);
+            console.log(`  - Total nodes to enrich: ${nodesToEnrich.length}`);
+            console.log(`  - Successfully enriched: ${totalEnriched}`);
+            console.log(`  - Failed to enrich: ${totalFailed}`);
+            if (totalFailed > 0) {
+                console.log(`  - Failed usernames: ${failedUsernames.slice(0, 10).join(', ')}${failedUsernames.length > 10 ? ` ... and ${failedUsernames.length - 10} more` : ''}`);
+            }
+        } else {
+            console.log('[GapRemediation] All nodes have enriched data - skipping gap remediation');
+        }
 
         // Return both graph and the extracted analytics lists
 

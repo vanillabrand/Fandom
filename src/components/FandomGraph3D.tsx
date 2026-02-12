@@ -7,6 +7,7 @@ import SpriteText from 'three-spritetext';
 import { useGraphScene } from '../hooks/useGraphScene.js';
 // [FIX] Removed broken import, added local types
 // import { Node, Link } from '../../types.js';
+import { RefreshCw } from 'lucide-react';
 
 interface Node {
     id: string;
@@ -54,6 +55,7 @@ interface FandomGraph3DProps {
     onNodeClick?: (id: string | null) => void;
     isOpen?: boolean;
     enableTour?: boolean; // [NEW] Tour support
+    isEnriching?: boolean; // [NEW] For background process indicator
     visualTheme?: { // [NEW] Themed Props
         archetype?: string; // [MODIFIED] Relaxed to string to matching types.ts
         nodeTypeMapping?: Record<string, string>; // [MODIFIED] Allow dynamic string IDs
@@ -118,6 +120,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
     onNodeClick,
     isOpen = false,
     enableTour = false, // [NEW] Default to false
+    isEnriching = false, // [NEW]
     query
 }) => {
     const { token } = useAuth();
@@ -1579,6 +1582,14 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     >
                         DEBUG JSON
                     </button>
+
+                    {/* [NEW] ENRICHMENT LOZENGE */}
+                    {isEnriching && (
+                        <div className="flex items-center gap-2 px-2 py-1 bg-amber-500/20 border border-amber-500/40 rounded animate-pulse shadow-[0_0_10px_rgba(245,158,11,0.2)]">
+                            <RefreshCw className="w-3 h-3 text-amber-400 animate-spin" />
+                            <span className="text-[10px] font-mono font-bold text-amber-400 tracking-wider">ENRICHING...</span>
+                        </div>
+                    )}
                 </div>
             </div>
 

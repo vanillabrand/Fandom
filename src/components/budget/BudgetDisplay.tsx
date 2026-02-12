@@ -23,9 +23,9 @@ export const BudgetDisplay: React.FC = () => {
                     <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
                 </div>
                 <div className="flex flex-col justify-center leading-none">
-                    <span className="text-[8px] text-emerald-500/70 font-bold uppercase tracking-wider mb-0.5">Credits</span>
-                    <span className={`text-sm font-mono font-bold leading-none ${user.credits && user.credits < 20 ? 'text-red-400' : 'text-emerald-100'}`}>
-                        {user.credits ?? 0}
+                    <span className="text-[8px] text-emerald-500/70 font-bold uppercase tracking-wider mb-0.5">Balance</span>
+                    <span className={`text-sm font-mono font-bold leading-none ${user.balance && user.balance < 2 ? 'text-red-400' : 'text-emerald-100'}`}>
+                        ${(user.balance ?? 0).toFixed(2)}
                     </span>
                 </div>
             </div>

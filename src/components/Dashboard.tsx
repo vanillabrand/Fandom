@@ -191,6 +191,17 @@ export const Dashboard = () => {
             pulseTimer = setTimeout(() => setIsPulsing(false), 2000);
         }
 
+        // [NEW] AUTO-RELOAD ON ENRICHMENT COMPLETION
+        if (currentMapId && prevJobs.length > 0) {
+            const prevJob = prevJobs.find(j => j.result?.datasetId === currentMapId);
+            const currentJob = jobs.find(j => j.result?.datasetId === currentMapId);
+
+            if (prevJob?.metadata?.isEnriching && currentJob && !currentJob.metadata?.isEnriching) {
+                console.log("[Dashboard] Enrichment complete for current map. Auto-reloading data...");
+                handleViewResult(currentMapId);
+            }
+        }
+
         return () => {
             if (pulseTimer) clearTimeout(pulseTimer);
         };
@@ -272,12 +283,16 @@ export const Dashboard = () => {
             if (mapData && mapData.nodes && mapData.links) {
                 console.log("[Dashboard] Setting graph data with", mapData.nodes.length, "nodes and", mapData.links.length, "links");
 
-                // [NEW] Merge accuracy metadata from dataset for UI
                 if (dataset.metadata) {
                     mapData.qualityScore = dataset.metadata.qualityScore;
                     mapData.confidenceScore = dataset.metadata.confidenceScore;
                     mapData.accuracyMetrics = dataset.metadata.accuracyMetrics;
                     mapData.lowConfidenceAreas = dataset.metadata.lowConfidenceAreas;
+                }
+
+                // [NEW] Track enrichment state for immediate UI feedback
+                if (dataset.isEnriching) {
+                    mapData.isEnriching = true;
                 }
 
                 setData(mapData);
@@ -946,6 +961,7 @@ export const Dashboard = () => {
                                             showLegend={false} // [FIX] Use external legend below
                                             query={data.profileFullName || profile} // [FIX] Use profileFullName as query fallback
                                             isOpen={isRightPanelOpen} // [NEW] Pass panel state for layout
+                                            isEnriching={jobs.find(j => j.result?.datasetId === currentMapId)?.metadata?.isEnriching || data?.isEnriching} // [NEW] Background state
                                         />
                                         <GraphLegend
                                             comparisonMetadata={data.comparisonMetadata}

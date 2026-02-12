@@ -13,26 +13,36 @@ interface VisualDNAProps {
 const VisualDNAWidget: React.FC<VisualDNAProps> = ({ data, className = '' }) => {
     if (!data) return null;
 
-    const { aestheticTags, vibeDescription, colorPalette } = data;
+    // [FIX] Add defensive null-safety checks for all properties
+    const { aestheticTags = [], vibeDescription = '', colorPalette = [] } = data || {};
+
+    // If all fields are empty, don't render anything
+    if (aestheticTags.length === 0 && !vibeDescription && colorPalette.length === 0) {
+        return null;
+    }
 
     return (
         <div className={`space-y-6 py-4 ${className}`}>
 
             {/* Aesthetic Tags */}
-            <div className="flex flex-wrap gap-2">
-                {aestheticTags && aestheticTags.map((tag, i) => (
-                    <span key={i} className="px-2 py-0.5 bg-pink-500/5 border border-pink-500/20 text-pink-300/80 text-[10px] uppercase tracking-wider font-medium rounded-sm shadow-sm hover:bg-pink-500/10 transition-colors cursor-default">
-                        {tag}
-                    </span>
-                ))}
-            </div>
+            {aestheticTags && aestheticTags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                    {aestheticTags.map((tag, i) => (
+                        <span key={i} className="px-2 py-0.5 bg-pink-500/5 border border-pink-500/20 text-pink-300/80 text-[10px] uppercase tracking-wider font-medium rounded-sm shadow-sm hover:bg-pink-500/10 transition-colors cursor-default">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
 
             {/* Vibe Description */}
-            <div className="px-1">
-                <p className="text-gray-300 text-xs leading-relaxed whitespace-pre-line font-light">
-                    {vibeDescription}
-                </p>
-            </div>
+            {vibeDescription && (
+                <div className="px-1">
+                    <p className="text-gray-300 text-xs leading-relaxed whitespace-pre-line font-light">
+                        {vibeDescription}
+                    </p>
+                </div>
+            )}
 
             {/* Color Palette */}
             {colorPalette && colorPalette.length > 0 && (

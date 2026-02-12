@@ -2,6 +2,7 @@ import { GoogleGenAI, HarmCategory, HarmBlockThreshold } from "@google/genai";
 import { UniversalShortcodeRegistry } from '../utils/ShortcodeRegistry.js';
 import { safeParseJson } from '../utils/jsonUtils.js';
 import { notify } from "../utils/notifications.js";
+import { proxyMediaFields } from '../server/utils/mediaProxyUtil.js';
 // Helper to get API key from runtime (window) or build time (process.env)
 const getApiKey = () => {
     if (typeof window !== 'undefined' && window.__ENV__?.GEMINI_API_KEY) {
@@ -991,7 +992,7 @@ Identify any visible brands, logos, or recognizable products in these images.
 For each brand/logo found:
 1. Brand name (official name)
 2. Confidence level (0-100) - how certain you are
-3. Image index where it appears (0-based)
+3. imageIndices (Array of 0-based integers) - ALL image indices where this brand appears
 
 **VISUAL AESTHETIC ANALYSIS:**
 Analyze the overall aesthetic style and visual vibe.
@@ -1007,6 +1008,7 @@ Identify visible products in the images.
 For each product:
 1. Category (Clothing, Electronics, Food, Beauty, Accessories, Furniture, etc.)
 2. Brief description (e.g., "White sneakers", "Smartphone with black case")
+3. imageIndices (Array of 0-based integers) - ALL image indices where this product appears
 
 **OUTPUT FORMAT:**
 Return ONLY valid JSON:
@@ -1014,15 +1016,15 @@ Return ONLY valid JSON:
 \`\`\`json
 {
   "brands": [
-    { "name": "Nike", "confidence": 95, "imageIndex": 0 },
-    { "name": "Apple", "confidence": 88, "imageIndex": 2 }
+    { "name": "Nike", "confidence": 95, "imageIndices": [0, 1, 5] },
+    { "name": "Apple", "confidence": 88, "imageIndices": [2, 3] }
   ],
   "aestheticTags": ["Vibrant", "Modern", "Playful"],
   "vibeDescription": "A bright, energetic collection with bold colors and contemporary styling.",
   "colorPalette": ["#FF6B6B", "#4ECDC4", "#45B7D1", "#F7DC6F", "#BB8FCE"],
   "products": [
-    { "category": "Clothing", "description": "White sneakers" },
-    { "category": "Electronics", "description": "Smartphone with black case" }
+    { "category": "Clothing", "description": "White sneakers", "imageIndices": [0, 5] },
+    { "category": "Electronics", "description": "Smartphone with black case", "imageIndices": [2] }
   ]
 }
 \`\`\`
@@ -1120,15 +1122,30 @@ export const analyzeVisualContent = async (imageUrls, analysisType = 'full') => 
                     // [FIX] Use safeParseJson utility for better error handling
                     const result = safeParseJson(jsonString);
                     if (result) {
-                        // [FIX] Map imageIndex to actual URLs, accounting for failed fetches
+                        // [FIX] Map imageIndices to actual URLs, accounting for failed fetches
                         if (result.brands && Array.isArray(result.brands)) {
                             result.brands = result.brands.map((brand) => {
-                                // Find the original URL from validImageParts
-                                const imagePart = validImageParts[brand.imageIndex];
-                                const imageUrl = imagePart?.originalUrl || batch[0];
+                                const indices = brand.imageIndices || [brand.imageIndex || 0];
+                                const urls = indices.map((idx) => {
+                                    const imagePart = validImageParts[idx];
+                                    return imagePart?.originalUrl;
+                                }).filter(Boolean);
                                 return {
                                     ...brand,
-                                    imageUrl
+                                    imageUrls: urls.length > 0 ? urls : [batch[0]]
+                                };
+                            });
+                        }
+                        if (result.products && Array.isArray(result.products)) {
+                            result.products = result.products.map((product) => {
+                                const indices = product.imageIndices || [product.imageIndex || 0];
+                                const urls = indices.map((idx) => {
+                                    const imagePart = validImageParts[idx];
+                                    return imagePart?.originalUrl;
+                                }).filter(Boolean);
+                                return {
+                                    ...product,
+                                    imageUrls: urls.length > 0 ? urls : [batch[0]]
                                 };
                             });
                         }
@@ -1136,12 +1153,17 @@ export const analyzeVisualContent = async (imageUrls, analysisType = 'full') => 
                     }
                     else {
                         console.error('[Visual Intelligence] Failed to parse JSON response');
-                        console.log('[Visual Intelligence] Raw response:', jsonString.substring(0, 200));
+                        console.error('[Visual Intelligence] Raw response:', jsonString.substring(0, 500));
                     }
+                }
+                else {
+                    console.error('[Visual Intelligence] No response or empty text from Gemini API');
+                    console.error('[Visual Intelligence] Response:', response);
                 }
             }
             catch (apiError) {
-                console.error(`[Visual Intelligence] API error for batch ${batchIndex + 1}:`, apiError);
+                console.error(`[Visual Intelligence] API error for batch ${batchIndex + 1}:`, apiError?.message || apiError);
+                console.error(`[Visual Intelligence] Error details:`, apiError);
             }
             // Rate limiting: 15 RPM = 1 request per 4 seconds
             if (batchIndex < batches.length - 1) {
@@ -1162,8 +1184,17 @@ export const analyzeVisualContent = async (imageUrls, analysisType = 'full') => 
             if (result.brands) {
                 result.brands.forEach((brand) => {
                     const existing = brandMap.get(brand.name);
-                    if (!existing || brand.confidence > existing.confidence) {
+                    if (!existing) {
                         brandMap.set(brand.name, brand);
+                    }
+                    else {
+                        // Merge URLs and keep highest confidence
+                        const mergedUrls = Array.from(new Set([...existing.imageUrls, ...brand.imageUrls]));
+                        brandMap.set(brand.name, {
+                            ...existing,
+                            confidence: Math.max(existing.confidence, brand.confidence),
+                            imageUrls: mergedUrls
+                        });
                     }
                 });
             }
@@ -1201,18 +1232,23 @@ export const analyzeVisualContent = async (imageUrls, analysisType = 'full') => 
             .filter(v => v && v.length > 0);
         aggregated.vibeDescription = vibes.length > 0 ? vibes[0] : '';
         // Merge products (deduplicate by description)
-        const productSet = new Set();
+        const productMap = new Map();
         allResults.forEach(result => {
             if (result.products) {
                 result.products.forEach((product) => {
                     const key = `${product.category}:${product.description}`;
-                    if (!productSet.has(key)) {
-                        productSet.add(key);
-                        aggregated.products.push(product);
+                    const existing = productMap.get(key);
+                    if (!existing) {
+                        productMap.set(key, product);
+                    }
+                    else {
+                        const mergedUrls = Array.from(new Set([...existing.imageUrls, ...product.imageUrls]));
+                        productMap.set(key, { ...existing, imageUrls: mergedUrls });
                     }
                 });
             }
         });
+        aggregated.products = Array.from(productMap.values());
         console.log(`[Visual Intelligence] Analysis complete:`, {
             brands: aggregated.brands.length,
             tags: aggregated.aestheticTags.length,
@@ -1243,9 +1279,27 @@ mode = 'full', seedContext = "" // [NEW] Accept Seed Context
     const profileMap = new Map();
     if (Array.isArray(richContext)) {
         richContext.forEach(p => {
+            // 1. Add Top-Level Profile
             const key = (p.username || p.handle || p.ownerUsername || '').toLowerCase();
             if (key)
-                profileMap.set(key, p);
+                profileMap.set(key, { ...p, _source: 'primary' }); // Mark as primary
+            // 2. Flatten Related Profiles
+            if (p.relatedProfiles && Array.isArray(p.relatedProfiles)) {
+                p.relatedProfiles.forEach((rp) => {
+                    const rpKey = (rp.username || '').toLowerCase();
+                    if (rpKey && !profileMap.has(rpKey)) {
+                        // Add as partial profile if not already present
+                        profileMap.set(rpKey, {
+                            username: rp.username,
+                            fullName: rp.full_name,
+                            profilePicUrl: rp.profile_pic_url,
+                            isVerified: rp.is_verified,
+                            _source: 'related', // Mark as related
+                            derivedFrom: key // track provenance
+                        });
+                    }
+                });
+            }
         });
     }
     try {
@@ -1299,7 +1353,10 @@ mode = 'full', seedContext = "" // [NEW] Accept Seed Context
             // Network Signals (Crucial for Structure/Clusters)
             let networkSignals = "";
             if (item.relatedProfiles && Array.isArray(item.relatedProfiles)) {
-                networkSignals += ` [Related: ${item.relatedProfiles.map((p) => p.username).slice(0, 5).join(',')}]`;
+                // [FIX] Include Full Name to help AI identify "Creators" vs "Brands"
+                networkSignals += ` [Related: ${item.relatedProfiles.map((p) => {
+                    return p.full_name ? `${p.username} (${p.full_name})` : p.username;
+                }).slice(0, 10).join(', ')}]`;
             }
             const pic = registry.register(item.profilePicUrl || item.metaData?.profilePicUrl || '');
             // [FIX] Include ID for strict provenance
@@ -1419,6 +1476,10 @@ mode = 'full', seedContext = "" // [NEW] Accept Seed Context
                         console.warn("[GeminiService] ⚠️ Visual Analysis failed silently:", err);
                     }
                 }
+                // [FIX] Proxy Top Content Media URLs
+                if (unpackedJson.analytics?.topContent && Array.isArray(unpackedJson.analytics.topContent)) {
+                    unpackedJson.analytics.topContent = unpackedJson.analytics.topContent.map((item) => proxyMediaFields(item));
+                }
                 // [NEW] Hydrate from Rich Context (The "Flesh on the Bones")
                 if (profileMap.size > 0) {
                     console.log(`[GeminiService] Hydrating graph with ${profileMap.size} scraped profiles...`);
@@ -1447,16 +1508,29 @@ mode = 'full', seedContext = "" // [NEW] Accept Seed Context
                             // Inject Rich Data
                             obj.data = obj.data || {};
                             // Prefer existing data if key is missing in match
-                            obj.data.bio = match.biography || match.bio || obj.data.bio || "Bio unavailable";
-                            obj.data.profilePicUrl = match.profilePicUrl || obj.data.profilePicUrl;
-                            obj.data.followers = match.followersCount || match.followers || obj.data.followers;
-                            obj.data.following = match.followsCount || match.following || obj.data.following;
-                            obj.data.posts = match.mediaCount || match.postsCount || obj.data.posts;
-                            obj.data.externalUrl = match.externalUrl || match.url || obj.data.externalUrl;
+                            obj.data.bio = match.biography || match.bio || obj.data.bio || (match._source === 'related' ? "Bio unavailable (Related Profile)" : "Bio unavailable");
+                            // [FIX] Use partial data if available
+                            if (!obj.data.profilePicUrl && match.profilePicUrl)
+                                obj.data.profilePicUrl = match.profilePicUrl;
+                            // [FIX] Only overwrite stats if primary source
+                            if (match._source === 'primary') {
+                                obj.data.followers = match.followersCount || match.followers || obj.data.followers;
+                                obj.data.following = match.followsCount || match.following || obj.data.following;
+                                obj.data.posts = match.mediaCount || match.postsCount || obj.data.posts;
+                                obj.data.externalUrl = match.externalUrl || match.url || obj.data.externalUrl;
+                            }
+                            else {
+                                // For related profiles, don't set stats to 0/unknown if we don't know them. 
+                                // Leave them undefined so frontend handles "N/A"
+                            }
                             obj.data.isVerified = match.isVerified || obj.data.isVerified;
+                            if (match.fullName && !obj.label)
+                                obj.label = match.fullName; // Use full name as label if missing
                             // Add provenance if available
                             if (match.source)
                                 obj.data.citation = `Derived from ${match.source}`;
+                            if (match.derivedFrom)
+                                obj.data.citation = `Related to @${match.derivedFrom}`;
                             // Ensure handle is set correctly
                             if (!obj.handle && match.username)
                                 obj.handle = '@' + match.username;
@@ -1647,8 +1721,9 @@ const getPromptForMode = (mode, intent, query, platform, targetCount, useVisualT
         3. Return ONLY the JSON object for your specific module.
         4. STRICTLY follow the Schema provided.
         5. "handle" is REQUIRED for all profiles. "label" is user display name.
+        6. **EXPAND SEARCH**: If the query asks for "followers", "following", or "network", you MUST analyze the "[Related: ...]" fields in the context item to find relevant people.
         
-        6. **🌲 UNIVERSAL TREE STRUCTURE REQUIREMENTS (CRITICAL):**
+        7. **🌲 UNIVERSAL TREE STRUCTURE REQUIREMENTS (CRITICAL):**
            - **ALWAYS return a HIERARCHICAL TREE** (root -> clusters -> items), NEVER flat arrays
            - **MINIMUM DEPTH**: 3 levels (root -> cluster -> items)
            - **RICH CLUSTERING**: Create AS MANY clusters as the data supports (minimum 3-5 clusters)
@@ -1661,8 +1736,9 @@ const getPromptForMode = (mode, intent, query, platform, targetCount, useVisualT
         
         7. **⚠️ STRICT DATA GROUNDING (MANDATORY):**
            - **WHITELIST ONLY**: You may ONLY return entities that explicitly appear in the provided Context Data.
-           - **NO EXTERNAL KNOWLEDGE**: Do not use "general knowledge" to fill in gaps. If it's not in the context, it doesn't exist for this analysis.
-           - **ID MAPPING**: Every output node must be traceable back to a specific [ID: ...] in the context.
+           - **EXCEPTION**: You MAY create nodes for users/brands listed in the "[Related: ...]" field of a context item.
+           - **NO EXTERNAL KNOWLEDGE**: Do not use "general knowledge" to fill in gaps.
+           - **ID MAPPING**: Every output node must be traceable back to a specific [ID: ...] OR be cited as "[Related to ID: ...]" from the context.
            - **ANTI-HALLUCINATION**: If you cannot find a match for a requested category, return an empty list. DO NOT invent examples.
            - **PROVENANCE**: Every item MUST have a 'provenance' field indicating exactly which context item it came from.
     `;
@@ -1751,11 +1827,11 @@ const getPromptForMode = (mode, intent, query, platform, targetCount, useVisualT
     ** ROLE: THE LEAD ANALYST **
       Your job is to perform a COMPREHENSIVE deep dive analysis.
             1. ** STRUCTURE **: Identify 6-8 Clusters and 5-10 Topics.
-            2. ** CREATORS **: Extract ALL significant Creators (Target: ${targetCount}+).
+            2. ** CREATORS **: Extract ALL significant Creators (Target: ${targetCount}+). Look specifically in "Related Profiles" sections if top-level data is sparse.
             3. ** BRANDS **: Extract ALL significant Brands (Target: ${targetCount}+).
             4. ** CONTENT **: Extract 10 Representative Posts.
             5. ** SUBCULTURES **: Explicitly identify "Rising Subcultures" as a subset of topics or clusters.
-            6. ** ENFORCEMENT **: For every "creator" and "brand" node, ensure the "handle" field is populated with the exact @username from the context. This is what connects the AI node to real data.
+            6. ** ENFORCEMENT **: For every "creator" and "brand" node, ensure the "handle" field is populated with the exact @username from the context (e.g., from [Related: @username]). This is CRITICAL for enrichment.
 
     ${baseConstraints}
 

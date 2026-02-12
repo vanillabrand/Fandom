@@ -15,6 +15,7 @@ export const PublicShareView = () => {
     const [error, setError] = useState<string | null>(null);
     const [focusedNodeId, setFocusedNodeId] = useState<string | null>(null);
     const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
+    const [isEnriching, setIsEnriching] = useState(false); // [NEW] Track background enrichment
 
     useEffect(() => {
         const fetchMap = async () => {
@@ -44,6 +45,8 @@ export const PublicShareView = () => {
                 }
 
                 setData(mapData);
+                // [NEW] Set enrichment status from response
+                setIsEnriching(result.isEnriching || false);
             } catch (err: any) {
                 setError(err.message);
             } finally {
@@ -52,7 +55,17 @@ export const PublicShareView = () => {
         };
 
         if (id) fetchMap();
-    }, [id]);
+
+        // [NEW] Polling for enrichment completion
+        let pollInterval: NodeJS.Timeout | null = null;
+        if (id && isEnriching) {
+            pollInterval = setInterval(fetchMap, 5000);
+        }
+
+        return () => {
+            if (pollInterval) clearInterval(pollInterval);
+        };
+    }, [id, isEnriching]);
 
     if (loading) {
         return (
@@ -79,7 +92,7 @@ export const PublicShareView = () => {
             {/* Minimal Header */}
             {/* Header Removed */}
 
-            <div className={`absolute inset - 0 z - 0 transition - all duration - 500 cubic - bezier(0.4, 0, 0.2, 1) ${isRightPanelOpen ? 'right-80' : 'right-0'} `}>
+            <div className={`absolute inset-0 z-0 transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1) ${isRightPanelOpen ? 'right-80' : 'right-0'}`}>
                 <FandomGraph3D
                     nodes={data.nodes}
                     links={data.links}
@@ -87,14 +100,15 @@ export const PublicShareView = () => {
                     profileImage={data.profileImage}
                     profileFullName={data.profileFullName}
                     onNodeClick={setFocusedNodeId}
-                    visualTheme={(data as any).analytics?.visualTheme} // [NEW] Pass Theme
+                    visualTheme={data.analytics?.visualTheme} // [NEW] Pass Theme
                     showLegend={false}
                     query={data.profileFullName || "Public Map"} // [NEW] Pass query for label parity
                     initialZoom={450} // [NEW] Closer default
+                    isEnriching={isEnriching} // [NEW] Enrichment lozenge
                 />
                 <GraphLegend
-                    comparisonMetadata={(data as any).comparisonMetadata}
-                    visualTheme={(data as any).analytics?.visualTheme}
+                    comparisonMetadata={data.comparisonMetadata}
+                    visualTheme={data.analytics?.visualTheme}
                 />
             </div>
 
