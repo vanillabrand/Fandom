@@ -1,0 +1,10 @@
+--- Testing Round 2 Fixes (Jack Grealish Case) ---
+Case 1 (Jack Grealish - Slugify vs Bio): [ 'jackgrealish' ]
+Case 2 (Kobi Brown - Bio match verified): [ 'astrokobi' ]
+Case 3 (Sub-lists): [ 'harrykane', 'spurs' ]
+[Enrichment] Hydrating Graph Nodes with Scraped Data (Parallel Mode)...
+[Enrichment] Found 1 nodes to process
+[Enrichment] Using adaptive batch size: 1 (1 batches)
+[Enrichment] Processed 1/1 nodes
+[Enrichment] Ô£à Hydration complete. Processed 1 nodes.
+Case 4 (topContent Hydration): { author: '@jackgrealish', followerCount: 70000000 }

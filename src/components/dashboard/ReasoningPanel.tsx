@@ -139,10 +139,8 @@ export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ item, dataset = 
         // Gemini AI Analysis
         if (s.includes('gemini') || m.includes('gemini') || s.includes('ai') || m.includes('ai') ||
             m.includes('inference') || m.includes('llm') || m.includes('semantic')) {
-            let aiLabel = 'Gemini AI';
-            if (m.includes('gemini 2.0') || s.includes('gemini-2.0')) {
-                aiLabel = 'Gemini 2.0 Flash';
-            } else if (m.includes('gemini 1.5') || s.includes('gemini-1.5')) {
+            let aiLabel = 'Gemini 3.0 Flash';
+            if (m.includes('gemini 1.5') || s.includes('gemini-1.5')) {
                 aiLabel = 'Gemini 1.5 Pro';
             } else if (m.includes('semantic')) {
                 aiLabel = 'Semantic Analysis';

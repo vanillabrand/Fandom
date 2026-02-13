@@ -1,0 +1,7 @@
+--- Testing Round 3 Fixes (Email Trap & Links) ---
+Case 1 (Email Trap - kobibrown slugified): [ 'kobibrown' ]
+[Enrichment] Resolved handle 'astrokobi' from link: https://linktr.ee/astrokobi
+Case 2 (Linktree Resolution): [ 'astrokobi' ]
+[Enrichment] Resolved handle 'testuser_99' from link: beacons.ai/testuser_99
+Case 3 (Beacons Resolution): [ 'testuser_99' ]
+Case 4 (Real bio mention): [ 'footballer' ]

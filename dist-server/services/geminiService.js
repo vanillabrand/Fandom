@@ -2043,12 +2043,12 @@ const getIntentSpecificInstructions = (intent, query, platform, targetCount = 20
       `;
     }
 };
-export const generateGeminiContent = async (prompt) => {
+export const generateGeminiContent = async (prompt, temperature = 0.0) => {
     const ai = getAiClient();
     const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: prompt,
-        config: { temperature: 0.0 }
+        config: { temperature }
     });
     return response.text || "";
 };

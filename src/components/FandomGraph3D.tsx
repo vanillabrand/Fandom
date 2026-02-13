@@ -141,6 +141,8 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
     const isUserInteracting = useRef(false);
     const isDragging = useRef(false); // [NEW] Track drag state to prevent focus slip
     const animationFrameIds = useRef<Set<number>>(new Set()); // [PERFORMANCE] Track all active animations for cleanup
+    const lastDataHash = useRef<string>(""); // [NEW] Track data changes for reset
+
 
 
 
@@ -906,10 +908,14 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
     const isFirstLoad = useRef(true);
     const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
-    // --- CAMERA INITIALIZATION (Run Once) ---
+    // --- CAMERA INITIALIZATION & DATA-DRIVEN RESET ---
     useEffect(() => {
-        if (fgRefState && isFirstLoad.current && graphData.nodes.length > 0) {
-            console.log("[FandomGraph3D] First load detected. Setting camera position. Nodes:", graphData.nodes.length);
+        const dataHash = `${graphData.nodes.length}-${graphData.links.length}-${query || ''}`;
+        const isNewData = dataHash !== lastDataHash.current;
+
+        if (fgRefState && (isFirstLoad.current || isNewData) && graphData.nodes.length > 0) {
+            console.log("[FandomGraph3D] Data change or first load detected. Resetting camera. Nodes:", graphData.nodes.length);
+
             const timer = setTimeout(() => {
                 if (!fgRefState) return;
                 const controls = fgRefState.controls();
@@ -918,21 +924,22 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     controls.enableDamping = true;
                     controls.dampingFactor = 0.1;
                     controls.rotateSpeed = 0.5;
-                    controls.target.set(0, 0, 0);
+                    controls.target.set(0, 0, 0); // [CRITICAL] Reset look-at target to origin
 
                     // Initial Camera Position
                     fgRefState.cameraPosition(
                         { x: 0, y: 0, z: initialZoom || 400 }, // Back off significantly
                         { x: 0, y: 0, z: 0 },
-                        2000
+                        isFirstLoad.current ? 2000 : 800 // Shorter transition for resets
                     );
                 }
-            }, 500); // Wait for simulation to warm up
+            }, 300); // Slightly shorter wait
 
             isFirstLoad.current = false;
+            lastDataHash.current = dataHash;
             return () => clearTimeout(timer);
         }
-    }, [fgRefState, graphData.nodes.length, initialZoom]);
+    }, [fgRefState, graphData.nodes.length, graphData.links.length, initialZoom, query]);
 
     // [REMOVED] Legacy Auto-Rotation Manager (Conflicted with new 10s timer)
     // The new logic uses onPointer events on the container to manage rotation state.
@@ -1310,7 +1317,6 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
     // [FIX] Click vs Drag Discrimination
     const handleNodeClick = useCallback((node: any) => {
         // [FIX] Strict Drag Detection
-        // ForceGraph3D handles internally, but we add a safety check
         if (isDragging.current) {
             console.log("Click ignored due to active drag");
             return;
@@ -1319,13 +1325,13 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         if (onNodeClick) onNodeClick(node.id);
 
         if (fgRefState) {
-            // [FIX] Allow interaction for everyone, including Hub/Main node
-            // if (node.id === 'MAIN' || node.group === 'main') {
-            //    return;
-            // }
-
             const distance = 80;
             const dist = Math.hypot(node.x, node.y, node.z);
+
+            // [FIX] GLITCH PREVENTION: Use static target coordinates
+            // Passing the raw 'node' object causes the camera to track it while it's still moving due to physics,
+            // which creates the "glitching into position" effect.
+            const staticTarget = { x: node.x, y: node.y, z: node.z };
 
             // Handle case where node is at (0,0,0) -> Fallback to predefined offset
             const newPos = dist < 1
@@ -1336,10 +1342,13 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     z: node.z * (1 + distance / dist)
                 };
 
+            // [NEW] Freeze simulation briefly to ensure smooth travel
+            if (fgRefState.d3AlphaTarget) fgRefState.d3AlphaTarget(0);
+
             fgRefState.cameraPosition(
-                newPos, // new position
-                node,   // lookAt ({ x, y, z })
-                2000    // transition duration (ms)
+                newPos,       // new position
+                staticTarget, // [FIX] Use static coordinates for lookAt
+                1200          // Slightly faster for better UX
             );
         }
     }, [onNodeClick, fgRefState]);

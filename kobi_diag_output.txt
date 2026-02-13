@@ -1,0 +1,28 @@
+[dotenv@17.2.3] injecting env (81) from .env -- tip: ÔÜÖ´©Å  suppress all logs with { quiet: true }
+--- Diagnosing Kobi Brown Scrape (Full DB Init) ---
+[MongoService] Connected to MongoDB
+[MongoService] All indexes created successfully
+[MongoService] Indexes created
+[Diagnostic] Triggering Deep Scrape for @astrokobi...
+[Apify] Fingerprint: 92985164b49a0e54a0f0ea4b01de635504c9d2d344e18361834463c29c9026ab (Actor: dSCLg0C3YEZ83HzYX)
+[Apify] Starting run for dSCLg0C3YEZ83HzYX...
+[Apify] ├░┼©┼íÔé¼ Starting actor dSCLg0C3YEZ83HzYX (run_mode: default)
+[Apify] PAYLOAD: {"usernames":["astrokobi"]}
+[Apify] Run zVIJe1NGpyzgswQx2 finished with status: SUCCEEDED. Fetching results...
+[Apify] Fetched 1 items. Checking for restricted content...
+[Apify] Restricted content check done. Proceeding to cache...
+[Apify] ├░┼©ÔÇÖ┬¥ Execution cached (ID: zVIJe1NGpyzgswQx2)
+Scrape Status: undefined
+Items found: 1
+RAW Scraper Item Keys: inputUrl, id, username, url, fullName, biography, externalUrls, externalUrl, externalUrlShimmed, followersCount, followsCount, hasChannel, highlightReelCount, isBusinessAccount, joinedRecently, businessCategoryName, private, verified, profilePicUrl, profilePicUrlHD, igtvVideoCount, relatedProfiles, latestIgtvVideos, postsCount, latestPosts, fbid
+Metrics Check:
+- followersCount: 1315445 (number)
+- followsCount: 828 (number)
+- postsCount: 726 (number)
+Normalized Profile Metrics: {
+  username: 'astrokobi',
+  followers: 1315445,
+  following: 828,
+  posts: 726
+}
+[MongoService] Disconnected from MongoDB

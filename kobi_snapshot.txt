@@ -1,0 +1,62 @@
+Dataset: 90145e58-14bc-4cfc-a8bd-7ae48e11861c (undefined)
+Kobi Brown Node Details (SNAPSHOT):
+{
+  "id": "astrokobi",
+  "label": "Kobi Brown",
+  "val": 77,
+  "group": "creator",
+  "data": {
+    "bio": "I love space!\nmanagement: astrokobi@night.co",
+    "profilePicUrl": "/api/proxy-image?url=https%3A%2F%2Fscontent-atl3-1.cdninstagram.com%2Fv%2Ft51.2885-19%2F343722879_3404160149827538_2386349255496269389_n.jpg%3Fstp%3Ddst-jpg_s150x150_tt6%26efg%3DeyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0%26_nc_ht%3Dscontent-atl3-1.cdninstagram.com%26_nc_cat%3D102%26_nc_oc%3DQ6cZ2QEdzjBxQjrMZhildVjFYRv7cZEqQu1MpF2CMuobBqTcfUMn38a9P9dP6GAHTLCELi0%26_nc_ohc%3DcmjlI05V05MQ7kNvwHRHQNX%26_nc_gid%3DldJMValH1xicqtO9qrZZAg%26edm%3DANg5bX4BAAAA%26ccb%3D7-5%26oh%3D00_AfuFCjyhBvgiKKvudgXyeBysgAC8_BxBWjFPp1xSfmE2nA%26oe%3D6993B063%26_nc_sid%3D0055be",
+    "followers": "0",
+    "following": "0",
+    "posts": 726,
+    "externalUrl": "https://linktr.ee/astrokobi",
+    "isVerified": false,
+    "id": "51458185418",
+    "username": "@astrokobi",
+    "handle": "@astrokobi",
+    "fullName": "Kobi Brown",
+    "followerCount": 0,
+    "followingCount": 0,
+    "postsCount": 726,
+    "isBusinessAccount": false,
+    "url": "https://linktr.ee/astrokobi",
+    "sourceUrl": "https://instagram.com/astrokobi",
+    "engagementRate": "0%",
+    "avgLikes": "0",
+    "avgComments": "0",
+    "latestPosts": [],
+    "evidence": "2 references found (Bio, Posts, Search matches)",
+    "evidenceItems": [],
+    "provenance": {
+      "source": "Gemini AI + Google Search",
+      "method": "Deep Dive Analysis",
+      "description": "[ID: 51458185418]",
+      "sourceUrl": "https://instagram.com/astrokobi",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "text": "2 references found (Bio, Posts, Search matches)",
+          "url": "https://instagram.com/astrokobi",
+          "author": "@astrokobi",
+          "date": "2026-02-12",
+          "type": "ai_finding"
+        }
+      ],
+      "datasetId": "Scraped Collection",
+      "citation": "Source: Scraped Dataset (Profile: astrokobi)"
+    },
+    "name": "Kobi Brown",
+    "evidenceSources": [],
+    "postCount": 0,
+    "isPrivate": false,
+    "frequencyScore": 1,
+    "overindexScore": 1,
+    "profileUrl": "https://linktr.ee/astrokobi",
+    "affinityPercent": 0,
+    "rawCount": 0,
+    "realOccurrences": 0,
+    "influenceScore": 0.033347965122916746
+  }
+}

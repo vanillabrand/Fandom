@@ -826,6 +826,39 @@ const adminMiddleware = async (req: any, res: any, next: any) => {
     }
 };
 
+// --- MARKETING QUESTIONS ADMIN ---
+
+// GET /api/admin/marketing/status - Check last generation
+router.get('/admin/marketing/status', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const result = await mongoService.getLatestMarketingQuestions();
+        res.json({
+            exists: !!result,
+            lastGeneratedAt: result ? result.generatedAt : null,
+            count: result ? result.questions.length : 0,
+            questions: result ? result.questions : []
+        });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// POST /api/admin/marketing/refresh - Force regeneration
+router.post('/admin/marketing/refresh', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const { marketingService } = await import('./services/marketingService.js');
+        await marketingService.forceGenerate();
+        const result = await mongoService.getLatestMarketingQuestions();
+        res.json({
+            status: 'refreshed',
+            generatedAt: result?.generatedAt,
+            questions: result?.questions
+        });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Middleware for User Approval Check (Query Builder Protection)
 const approvalMiddleware = async (req: any, res: any, next: any) => {
     try {

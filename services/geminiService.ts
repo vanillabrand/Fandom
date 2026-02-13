@@ -2230,12 +2230,12 @@ const getIntentSpecificInstructions = (intent: string, query: string, platform: 
   }
 };
 
-export const generateGeminiContent = async (prompt: string): Promise<string> => {
+export const generateGeminiContent = async (prompt: string, temperature: number = 0.0): Promise<string> => {
   const ai = getAiClient();
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: prompt,
-    config: { temperature: 0.0 }
+    config: { temperature }
   });
   return response.text || "";
 };

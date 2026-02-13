@@ -1,0 +1,13 @@
+[dotenv@17.2.3] injecting env (81) from .env -- tip: ­ƒöÉ encrypt with Dotenvx: https://dotenvx.com
+[MongoService] Connected to MongoDB
+[MongoService] All indexes created successfully
+[MongoService] Indexes created
+--- Inspecting 'astrokobi' in DB ---
+Profile Cache: Not found
+Found 0 records in 'records' collection.
+
+Checking last 3 graph snapshots for astrokobi...
+Snapshot Dataset: 90145e58-14bc-4cfc-a8bd-7ae48e11861c
+Snapshot Dataset: 4af2bdbb-f6e6-429d-b0f9-bdf5434275c2
+Snapshot Dataset: 11eceef7-38c9-4701-9a7b-f20cdf1657d0
+[MongoService] Disconnected from MongoDB

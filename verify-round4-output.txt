@@ -1,0 +1,5 @@
+--- Testing Round 4 Fixes (Robust Normalization) ---
+Case 1 (Singular): { followers: 1100000, following: 500, posts: 726 }
+Case 2 (Underscores): { followers: 50000, following: 100, posts: 10 }
+Case 3 (Edges): { followers: 999, following: 111, posts: 88 }
+Case 4 (Search/PK): { followers: 777, following: 888, posts: 999 }

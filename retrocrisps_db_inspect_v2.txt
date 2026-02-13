@@ -1,0 +1,8 @@
+[dotenv@17.2.3] injecting env (81) from .env -- tip: Ô£à audit secrets and track compliance: https://dotenvx.com/ops
+[MongoService] Connected to MongoDB
+[MongoService] All indexes created successfully
+[MongoService] Indexes created
+--- Inspecting '@retrocrisps' in DB ---
+Profile Cache: Not found
+Found 0 records in 'records' collection.
+[MongoService] Disconnected from MongoDB

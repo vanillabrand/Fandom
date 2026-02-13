@@ -758,13 +758,13 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         // 1. Analytics Brands (AI detected)
         if (analytics.brands && analytics.brands.length > 0) {
             analytics.brands.forEach((b: any) => {
-                const rawId = b.id || b.username || b.name;
-                if (!rawId) return; // Skip invalid entries
-                const id = String(rawId).toLowerCase().trim();
+                const rawName = b.id || b.username || b.name || '';
+                if (!rawName) return;
+                const cleanName = String(rawName).toLowerCase().replace('@', '').trim();
 
-                if (!seenIds.has(id)) {
+                if (!seenIds.has(cleanName)) {
                     brands.push(b);
-                    seenIds.add(id);
+                    seenIds.add(cleanName);
                 }
             });
         }
@@ -772,13 +772,13 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         // 2. Overindexed Brands (Graph detected)
         if (analytics.overindexing && analytics.overindexing.topBrands) {
             analytics.overindexing.topBrands.forEach((b: any) => {
-                const rawId = b.id || b.username || b.name;
-                if (!rawId) return; // Skip invalid entries
-                const id = String(rawId).toLowerCase().trim();
+                const rawName = b.id || b.username || b.name || '';
+                if (!rawName) return;
+                const cleanName = String(rawName).toLowerCase().replace('@', '').trim();
 
-                if (!seenIds.has(id)) {
+                if (!seenIds.has(cleanName)) {
                     brands.push(b);
-                    seenIds.add(id);
+                    seenIds.add(cleanName);
                 }
             });
         }
@@ -787,29 +787,29 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         stableNodes
             .filter(n => n.group === 'brand' || n.group === 'company')
             .forEach(n => {
-                const id = (n.id || n.label).toLowerCase().trim();
+                const id = (n.id || n.label || '').toLowerCase().trim();
+                const label = (n.label || '').toLowerCase().trim();
+                const cleanLabel = label.replace('@', '').trim();
+
                 // [FIX] Strict Deduplication against AI results
-                if (!seenIds.has(id) && !seenIds.has(n.label?.toLowerCase())) {
-                    // Check for fuzzy matches (e.g. "nike" vs "@nike")
-                    const cleanLabel = n.label.replace('@', '').toLowerCase();
-                    if (!seenIds.has(cleanLabel)) {
-                        brands.push({
-                            id: n.id,
-                            username: n.label,
-                            frequency: n.val || n.value || 0,
-                            category: 'brand',
-                            percentage: 0,
-                            overindexScore: n.data?.overindexScore || 0,
-                            // [NEW] Pass through rich AI data
-                            citation: n.data?.citation,
-                            searchQuery: n.data?.searchQuery,
-                            sourceUrl: n.data?.sourceUrl,
-                            evidence: n.data?.evidence,
-                            provenance: n.data?.provenance || { source: 'Graph', method: 'Raw Node' },
-                            ...n.data
-                        });
-                        seenIds.add(id);
-                    }
+                if (!seenIds.has(id) && !seenIds.has(label) && !seenIds.has(cleanLabel)) {
+                    brands.push({
+                        id: n.id,
+                        username: n.label,
+                        name: n.label, // Ensure name is set for consistency
+                        frequency: n.val || n.value || 0,
+                        category: 'brand',
+                        percentage: 0,
+                        overindexScore: n.data?.overindexScore || 0,
+                        // [NEW] Pass through rich AI data
+                        citation: n.data?.citation,
+                        searchQuery: n.data?.searchQuery,
+                        sourceUrl: n.data?.sourceUrl,
+                        evidence: n.data?.evidence,
+                        provenance: n.data?.provenance || { source: 'Graph', method: 'Raw Node' },
+                        ...n.data
+                    });
+                    seenIds.add(id);
                 }
             });
 
@@ -1892,10 +1892,8 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                             <span title={`Found in ${creator.rawCount || creator.frequency || 0} of source profiles`}>
                                                                 {creator.affinityPercent}% of audience <span className="opacity-50">({creator.rawCount || creator.frequency})</span>
                                                             </span>
-                                                        ) : (creator.overindexScore > 0 || creator.frequencyScore > 0) ? (
-                                                            `${Math.round((creator.overindexScore || creator.frequencyScore) * 10) / 10}x relevant`
                                                         ) : (
-                                                            creator.frequency > 1 ? `${Math.round(creator.frequency)} relevant` : 'High Relevance'
+                                                            `${Math.round((creator.overindexScore || creator.overindex_score || creator.frequencyScore || creator.frequency || 1) * 10) / 10}x relevant`
                                                         )}
                                                     </span>
                                                 </div>
@@ -1972,10 +1970,8 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                             <span title={`Found in ${brand.rawCount || brand.frequency || 0} of source profiles`}>
                                                                 {brand.affinityPercent}% of audience <span className="opacity-50">({brand.rawCount || brand.frequency})</span>
                                                             </span>
-                                                        ) : (brand.overindexScore > 0 || brand.frequencyScore > 0) ? (
-                                                            `${Math.round((brand.overindexScore || brand.frequencyScore) * 10) / 10}x relevant`
                                                         ) : (
-                                                            brand.frequency > 1 ? `${Math.round(brand.frequency)} relevant` : 'High Relevance'
+                                                            `${Math.round((brand.overindexScore || brand.overindex_score || brand.frequencyScore || brand.frequency || 1) * 10) / 10}x relevant`
                                                         )}
                                                     </span>
                                                 </div>

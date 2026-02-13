@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import { mongoService } from './services/mongoService.js';
 import { authMiddleware } from './middleware/authMiddleware.js';
 import { jobOrchestrator } from './services/jobOrchestrator.js';
@@ -292,9 +293,26 @@ router.get('/datasets/:id', authMiddleware, async (req, res) => {
                 if (gapHandles.length > 0) {
                     // Try to find an associated job
                     const associatedJobs = await mongoService.getJobsByDatasetId(dataset.id);
-                    const isEnriching = associatedJobs.some((j) => j.metadata?.isEnriching === true);
+                    let isEnriching = associatedJobs.some((j) => j.metadata?.isEnriching === true) || dataset.isEnriching;
                     if (!isEnriching) {
-                        const mainJob = associatedJobs.find((j) => j.type === 'map_generation' || j.type === 'enrichment' || j.type === 'orchestration');
+                        let mainJob = associatedJobs.find((j) => j.type === 'map_generation' || j.type === 'enrichment' || j.type === 'orchestration');
+                        // If no job found (e.g. for older datasets), create a placeholder enrichment job
+                        if (!mainJob) {
+                            console.log(`[DatasetLoadFill] No job found for dataset ${dataset.id}. Creating placeholder...`);
+                            const jobId = new ObjectId().toHexString();
+                            await mongoService.createJob({
+                                id: jobId,
+                                userId: dataset.userId || 'system',
+                                type: 'enrichment',
+                                status: 'running',
+                                progress: 0,
+                                createdAt: new Date(),
+                                updatedAt: new Date(),
+                                result: { datasetId: dataset.id, stage: 'Background Hydration' },
+                                metadata: { isEnriching: true, datasetId: dataset.id }
+                            });
+                            mainJob = { id: jobId };
+                        }
                         if (mainJob) {
                             console.log(`[DatasetLoadFill] ⚠️ Dataset ${dataset.id} has gaps. Triggering background enrichment...`);
                             const profileMap = new Map();
@@ -732,6 +750,38 @@ const adminMiddleware = async (req, res, next) => {
         res.status(500).json({ error: 'Auth check failed' });
     }
 };
+// --- MARKETING QUESTIONS ADMIN ---
+// GET /api/admin/marketing/status - Check last generation
+router.get('/admin/marketing/status', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const result = await mongoService.getLatestMarketingQuestions();
+        res.json({
+            exists: !!result,
+            lastGeneratedAt: result ? result.generatedAt : null,
+            count: result ? result.questions.length : 0,
+            questions: result ? result.questions : []
+        });
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+// POST /api/admin/marketing/refresh - Force regeneration
+router.post('/admin/marketing/refresh', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const { marketingService } = await import('./services/marketingService.js');
+        await marketingService.forceGenerate();
+        const result = await mongoService.getLatestMarketingQuestions();
+        res.json({
+            status: 'refreshed',
+            generatedAt: result?.generatedAt,
+            questions: result?.questions
+        });
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 // Middleware for User Approval Check (Query Builder Protection)
 const approvalMiddleware = async (req, res, next) => {
     try {

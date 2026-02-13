@@ -1,1120 +1,342 @@
 {
   "root": {
-    "label": "Google Followers Ecosystem",
+    "label": "Nike Ecosystem Analysis",
     "type": "main",
     "children": [
       {
-        "label": "AI & Future Tech Innovators",
+        "label": "Global Football (Soccer)",
         "type": "cluster",
         "data": {
-          "description": "A dominant cluster focused on artificial intelligence, generative models, software development, and semiconductor technology.",
+          "description": "European football clubs, players, and media outlets connected to Nike Football.",
           "keywords": [
-            "AI",
-            "Generative Tech",
-            "Coding",
-            "Semiconductors",
-            "Cloud Computing"
+            "football",
+            "soccer",
+            "clubs",
+            "premier league",
+            "uefa"
           ]
         },
         "children": [
           {
-            "label": "Generative AI Tools",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Sora (OpenAI)",
-                "handle": "@soraofficial",
-                "type": "brand",
-                "val": 95,
-                "provenance": "[ID: 71379204244]",
-                "name": "Sora (OpenAI)",
-                "data": {
-                  "bio": "The official account for @openai’s image & video generation tool Sora. 🎨",
-                  "profilePicUrl": "https://instagram.fbkk4-2.fna.fbcdn.net/v/t51.2885-19/557758038_17887316337380245_3713330554891428841_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fbkk4-2.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QG3MW27e7ubCUlWHTg_qVN-J7SSRH52Izfygfwa5j8KvCf0Ks1Ce2JTqLfcmxmxjIY&_nc_ohc=zMfauJV0AGEQ7kNvwFJ0q0M&_nc_gid=NW5HXuYq6Xic0SSgIEjUFw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsqHKxw-AXeCAZZ8M0p9ei1d47w5L6ojPsdkcM53CnKLw&oe=69901F8D&_nc_sid=8b3546",
-                  "followers": 274669,
-                  "following": 36,
-                  "posts": 366,
-                  "externalUrl": "https://linkin.bio/soraofficial"
-                }
+            "label": "Manchester City",
+            "type": "brand",
+            "val": 30,
+            "data": {
+              "handle": "@mancity",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/582259652_18555606019056762_8242529787388071816_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=vKySuvkxqXUQ7kNvwFm-OPq&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsh2uFwCiOiRr5_4bxHpwAHM-KIB-90XJyhYaFdSagkrw&oe=6994AAB2&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
               },
-              {
-                "label": "ChatGPT",
-                "handle": "@chatgpt",
-                "type": "brand",
-                "val": 90,
-                "provenance": "[ID: 60603547287]",
-                "name": "ChatGPT",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/476136712_3899506886931927_702715933365300294_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEM3HPILUftvZstgDTnoTirFt43M7rYarvm4qB3S5zEq6Xwojtg_89S9EDfwome0M8&_nc_ohc=Hw0O8f1HQFwQ7kNvwHSB9Sk&_nc_gid=ZvZTHNcCgs1JPrFizVXBBg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftoLvXUY_OtY146ccfsVf3UV5mRMbJXKlLI2wO5sZZDgw&oe=69903EED&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Google Gemini",
-                "handle": "@googlegemini",
-                "type": "brand",
-                "val": 88,
-                "provenance": "[ID: 69550579620]",
-                "name": "Google Gemini",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/514536579_17884932930315621_1696503957436807546_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEM3HPILUftvZstgDTnoTirFt43M7rYarvm4qB3S5zEq6Xwojtg_89S9EDfwome0M8&_nc_ohc=8EFSxTTXrKkQ7kNvwEnzQhQ&_nc_gid=ZvZTHNcCgs1JPrFizVXBBg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afthd0LVS8M2DLmuWgeOjLeLoSe2fL3vU-aWiCTniHCPYw&oe=69902D0B&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "OpenAI",
-                "handle": "@openai",
-                "type": "brand",
-                "val": 85,
-                "provenance": "[ID: 45374573700]",
-                "name": "OpenAI",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/475911357_477779352046257_7003041147368378488_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuZXhwZXJpbWVudGFsIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFWFak6vLX9jLi1FfCEmPwjwMpJPsBqcnp3fzMaJGmp4Z0NyVkSSS1Y8SwOj_E-R70&_nc_ohc=tdy3WkiXlREQ7kNvwHCf55a&_nc_gid=7aRT0xMMaMkaWiWaNlxpSw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuhCux3GHzJkmdo9egsL9nf9n8JPwVkZOeGPcUQkllzQw&oe=699048BA&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              }
-            ],
-            "name": "Generative AI Tools"
+              "label": "Manchester City"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Manchester City"
           },
           {
-            "label": "Hardware & Infrastructure",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "NVIDIA",
-                "handle": "@nvidia",
-                "type": "brand",
-                "val": 80,
-                "provenance": "[ID: 1441655932]",
-                "name": "NVIDIA",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/456895422_2743699679140980_5418620975244505678_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmV4cGVyaW1lbnRhbCJ9&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFWFak6vLX9jLi1FfCEmPwjwMpJPsBqcnp3fzMaJGmp4Z0NyVkSSS1Y8SwOj_E-R70&_nc_ohc=pu4EtuZ1f4MQ7kNvwFZbhdh&_nc_gid=7aRT0xMMaMkaWiWaNlxpSw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvAd-gRT-sY6znLBLTXG7f4kngICwu2h2Ufa6DYFYDFmQ&oe=69903373&_nc_sid=0055be",
-                  "isVerified": true
-                }
+            "label": "Manchester United",
+            "type": "brand",
+            "val": 30,
+            "data": {
+              "handle": "@manutd",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/631015021_18577480114007078_4852837564620816700_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=rUpb5uizPE4Q7kNvwGWae3m&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsbthSr_KVpbxEcRsviVFJnvsci7u5BkWQdwLkYSH2uiw&oe=6994AAF5&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
               },
-              {
-                "label": "TSMC Careers",
-                "handle": "@tsmc_career",
-                "type": "brand",
-                "val": 75,
-                "provenance": "[ID: 6922862610]",
-                "name": "TSMC Careers",
-                "data": {
-                  "bio": "我們是一群服務於TSMC 充滿熱情、活力與執行力的 Recruiters。希望藉由這個平台, 與各地優秀人才建立連結!歡迎與我們連絡,了解更多。",
-                  "profilePicUrl": "https://instagram.ffln2-3.fna.fbcdn.net/v/t51.2885-19/483970533_658316660001207_1279628777809069531_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.ffln2-3.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QFYk7QyGKpi7xawGK1W6NQmdY-zUYdxoP5_yXZtQczeDYEvq16tDpB8EOo_JezoPMk5rrG5yiPqvzrLQ8hqSe5N&_nc_ohc=kQ7x7xVaAewQ7kNvwHQb2PZ&_nc_gid=GeOVTqZsKwgwILpDEwGTWw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afs55cU47rYaljPtFDmVG2cRC-Imgzz8dB5Z4RYgvd5Www&oe=69903057&_nc_sid=8b3546",
-                  "followers": 4273,
-                  "posts": 4,
-                  "externalUrl": "https://bit.ly/F222026igad"
-                }
+              "label": "Manchester United"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Manchester United"
+          },
+          {
+            "label": "Liverpool FC",
+            "type": "brand",
+            "val": 30,
+            "data": {
+              "handle": "@liverpoolfc",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/581529099_18562152106030428_7739262736224592362_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=P-Z8EgYPstMQ7kNvwGhV5ty&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvKS92QvF8eMY8ncjbSg3sgMlyjKDpNmxg6fZ5AlGggDA&oe=6994B1C2&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
               },
-              {
-                "label": "Infineon Technologies",
-                "handle": "@infineon_technologies",
-                "type": "brand",
-                "val": 70,
-                "provenance": "[ID: 8230837646]",
-                "name": "Infineon Technologies",
-                "data": {
-                  "bio": "A global semiconductor leader in power systems and IoT.\n#WeAreIn for driving decarbonization and digitalization. Are you in?",
-                  "profilePicUrl": "https://scontent-man2-1.cdninstagram.com/v/t51.2885-19/301861318_779282906832797_8462552125287081417_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NzAuYzIifQ&_nc_ht=scontent-man2-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHnSI4StbZvQIbCy-6mZmQnWvGWBXQRw1eaqSj2K498UTJs8mRdwYuVqIvpBfToGNc&_nc_ohc=-QLG070f6QEQ7kNvwFiw-L2&_nc_gid=F8mkItyBWoczyno_KS4QFw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftS0f6qVswMaBzVTCIFIgjpJDRxvi08MTBQWnDTR03ztA&oe=69902FAF&_nc_sid=8b3546",
-                  "followers": 171090,
-                  "following": 266,
-                  "posts": 1508,
-                  "externalUrl": "https://www.infineon.com/"
-                }
+              "label": "Liverpool Football Club"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Liverpool FC"
+          },
+          {
+            "label": "Chelsea FC Academy",
+            "type": "brand",
+            "val": 20,
+            "data": {
+              "handle": "@chelseafcacademy",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/582083616_17861138586535859_3737345909596479497_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDA0LmMyIn0&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=N3hBTE8G6YkQ7kNvwEgS7g8&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Aftxbfb_XncuFpBG_8qkVyjRiwe3LWUX0Ofe9CK-BcvH_w&oe=69949F63&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
               },
-              {
-                "label": "Palo Alto Networks",
-                "handle": "@paloaltontwks",
-                "type": "brand",
-                "val": 65,
-                "provenance": "[ID: 5408965720]",
-                "name": "Palo Alto Networks",
-                "data": {
-                  "bio": "Our Mission: Cybersecurity partner of choice, protecting our digital way of life.\nLearn how we make the world more secure. #LifeatPaloAltoNetworks 🧡",
-                  "profilePicUrl": "https://instagram.fgru4-1.fna.fbcdn.net/v/t51.2885-19/83875171_211133419940575_6078600779474665472_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xODEuYzEifQ&_nc_ht=instagram.fgru4-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QE36ofSjTg_DBCGpgOp7ZLgNN4-cDFZ3a92q9NHar8UI5AbMpM5h50HzVNHNfO-i6M&_nc_ohc=n6aeS-_HNuIQ7kNvwEQtL4P&_nc_gid=qwvO_e3M4MLIDZtF22PlOQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftVcWgRanz6HhlnVsFXXTd161r6YPE30QM_IuFh4_t9zw&oe=6990453D&_nc_sid=8b3546",
-                  "followers": 40427,
-                  "following": 109,
-                  "posts": 797,
-                  "externalUrl": "https://sprout.link/paloaltontwks"
-                }
-              }
-            ],
-            "name": "Hardware & Infrastructure"
+              "label": "Chelsea FC Academy"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Chelsea FC Academy"
+          },
+          {
+            "label": "Ebere Eze",
+            "type": "creator",
+            "val": 25,
+            "data": {
+              "handle": "@eze",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/539987336_18522358477060588_8781045894256332611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=avm4p0fMKjsQ7kNvwFgv4ab&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Aftwd305oBHJmfc71ZEBH_kjVlssrmoDnXRfzj1nROZf_g&oe=69949E46&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
+              },
+              "label": "Ebere Eze"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Ebere Eze"
+          },
+          {
+            "label": "Fabrizio Romano",
+            "type": "creator",
+            "val": 25,
+            "data": {
+              "handle": "@liveherewego",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/605800494_18069136688387192_5300865370067471184_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=x2kE2GKqlIgQ7kNvwGlqL5B&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsio0qFYB4E1fOrtNQCKKG16pqWOV5-3WyQas29zGGszw&oe=6994B68D&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
+              },
+              "label": "𝐋𝐈𝐕𝐄 HERE WE GO 🚨"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Fabrizio Romano"
+          },
+          {
+            "label": "Rising Ballers",
+            "type": "brand",
+            "val": 20,
+            "data": {
+              "handle": "@risingballers",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/314603387_5527434470709587_8739342374967958924_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=LvYv7jWZoNcQ7kNvwFrfoNj&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvmZoPkTcObCRaNxpqLdjIYPgsagfAMgK5IUP2Rd-G9Xw&oe=6994A39D&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
+              },
+              "label": "Rising Ballers"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "Rising Ballers"
+          },
+          {
+            "label": "UEFA EURO",
+            "type": "brand",
+            "val": 25,
+            "data": {
+              "handle": "@uefaeuro",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://instagram.fcps4-1.fna.fbcdn.net/v/t51.2885-19/631897658_18563333434031542_2240975580651044485_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fcps4-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHel1pGEpO28W8k80HKxIt8V32082KtskhW5IzbPJQNQuDRRN6dbQnToTkKxqSV9aFv0bg2VhVgb5OetBhaxTlR&_nc_ohc=VeugIVa3Hg0Q7kNvwENLarL&_nc_gid=2qGlxUUYI7qTeouemtfKvQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftW3Q1blZSHDA5jH2JEzN2fz3bfbxEp_NZgRx9LyaTlhw&oe=6994BB17&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikefootball"
+              },
+              "label": "UEFA EURO"
+            },
+            "provenance": "[Related to ID: 23678829]",
+            "name": "UEFA EURO"
           }
         ],
-        "name": "AI & Future Tech Innovators"
+        "name": "Global Football (Soccer)"
       },
       {
-        "label": "Anime & Manga Fandom",
+        "label": "Basketball Culture",
         "type": "cluster",
         "data": {
-          "description": "A surprisingly dense and active subculture of anime enthusiasts, particularly focused on Dragon Ball and One Piece fan art and edits.",
+          "description": "NBA teams, star athletes, and basketball media.",
           "keywords": [
-            "Dragon Ball",
-            "One Piece",
-            "Fan Art",
-            "Anime Edits",
-            "Manga"
+            "nba",
+            "basketball",
+            "hoops",
+            "athletes"
           ]
         },
         "children": [
           {
-            "label": "Dragon Ball Community",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Beatlo001 (Fanart)",
-                "handle": "@beatlo001",
-                "type": "creator",
-                "val": 85,
-                "provenance": "[ID: 7097224236]",
-                "name": "Beatlo001 (Fanart)",
-                "data": {
-                  "bio": "Fanart\nDragon Ball Fan\nOpen Comission\n🇦🇷",
-                  "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/610890033_18340803598232237_4469655230065500176_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDc5LmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QHe4ZrOp491hjkbYe29btdvvP7Zum04LcroSUnbmTMZEPkxRSjoerLxCzFOUvYo0No&_nc_ohc=IzZBQfwuO-YQ7kNvwFJZ5Pc&_nc_gid=V-XSHBnWEd15IIHP_WIImw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afv0o09OUvsC7c_LcujakXpSGV6vWJNRByl7T5waieAyhg&oe=69902B61&_nc_sid=8b3546",
-                  "followers": 40219,
-                  "following": 3691,
-                  "posts": 623,
-                  "externalUrl": "http://ko-fi.com/beatlo"
-                }
+            "label": "LeBron James / Lakers",
+            "type": "brand",
+            "val": 30,
+            "data": {
+              "handle": "@lakers",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/625688531_18562471756021875_1568678186842365149_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=-HsXghJcHiYQ7kNvwF8jh-w&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftijUYqDXFyl5S8hZ7zLzb8Wx9qAH556GBzg9ntFhjhrg&oe=6994C004&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
               },
-              {
-                "label": "Merik Merimo (Animator)",
-                "handle": "@merik_merimo",
-                "type": "creator",
-                "val": 80,
-                "provenance": "[ID: 2145072712]",
-                "name": "Merik Merimo (Animator)",
-                "data": {
-                  "bio": "self-taught\n🇫🇷⚬fan-animator ⚬Illustrator\n👨‍🍳⚬DragonBall Deliverance art director\n🔒⚬ Commissions closed\n🐦⚬Follow me on Twitter\n link below",
-                  "profilePicUrl": "https://instagram.fplu40-1.fna.fbcdn.net/v/t51.2885-19/610595827_18525959290064713_6496147106786724746_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fplu40-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QFNryVAtFmFB45VQ2NFftHXZk3esuxiHfbhuyR6uMBzOBVI4bf4S5DIon1VQsppuWQ&_nc_ohc=eameJ3pEY_sQ7kNvwGmMDR1&_nc_gid=0SN5OIc0NjkygxAX7fCIVg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvCLWOMuaJjbVt_a4FE450GzZGI6Q-Y_9xycpqbFczEvQ&oe=6990429A&_nc_sid=8b3546",
-                  "followers": 34364,
-                  "following": 178,
-                  "posts": 928,
-                  "externalUrl": "https://linktr.ee/Merik_MERIMO"
-                }
-              },
-              {
-                "label": "Yeak Looi Art",
-                "handle": "@yeak_looi_art",
-                "type": "creator",
-                "val": 75,
-                "provenance": "[ID: 4065415519]",
-                "name": "Yeak Looi Art",
-                "data": {
-                  "bio": "I like painting (dragon ball), like my work can pay more attention to me.\nCommission:OPEN\nSubscribe to my\n YouTube Channel：Yeak & Soon TWINS ART⬇️",
-                  "profilePicUrl": "https://instagram.fncl1-2.fna.fbcdn.net/v/t51.2885-19/30078881_1634858209884620_5931052194542387200_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fncl1-2.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QFaTJZantfO7OGax_BESvIfdcOjuE7khGgpJIfBF_0Ys2-jcuEyQOhc-zzc_pQFiQs&_nc_ohc=1GSQFFjjDbUQ7kNvwE_yPDt&_nc_gid=WnlDf8TtY9m3Fu1MoNtYKg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvS2qUQ5hVjKwtu8r-dw4bKzx-jdBPChVmsESpWkrN5zw&oe=6990230B&_nc_sid=8b3546",
-                  "followers": 67071,
-                  "following": 7436,
-                  "posts": 2601,
-                  "externalUrl": "https://www.youtube.com/user/2846soon"
-                }
-              },
-              {
-                "label": "Saiyan Prince",
-                "handle": "@saiyanprince.ig",
-                "type": "creator",
-                "val": 70,
-                "provenance": "[ID: 35345921140]",
-                "name": "Saiyan Prince",
-                "data": {
-                  "bio": "ベジータ\n(was @vegeta.ig : 200k+)",
-                  "profilePicUrl": "https://instagram.fgye26-1.fna.fbcdn.net/v/t51.2885-19/453428779_830777352485344_7090970086563899449_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41MTkuYzIifQ&_nc_ht=instagram.fgye26-1.fna.fbcdn.net&_nc_cat=104&_nc_oc=Q6cZ2QHmZQtz01xNEs9h65mk_T1EDOOZkq1GD-rvvXj3G5lQoE6jUiWlM8BAwYl7rKICNp0&_nc_ohc=a7RW0N3Uc1cQ7kNvwFLf9BI&_nc_gid=_FShEPjHeVMl2gbEmmTXag&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsP5sEHg7pk879LsvSfdlvQLYkbdVJAXpPH57j6ij3O4g&oe=69904AC7&_nc_sid=8b3546",
-                  "followers": 7258,
-                  "posts": 36
-                }
-              }
-            ],
-            "name": "Dragon Ball Community"
+              "label": "Los Angeles Lakers"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "LeBron James / Lakers"
           },
           {
-            "label": "One Piece & General Anime",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Toei Animation Brasil",
-                "handle": "@toeianimationbrasil",
-                "type": "brand",
-                "val": 80,
-                "provenance": "[ID: 78641885829]",
-                "name": "Toei Animation Brasil",
-                "data": {
-                  "bio": "Esta é a página oficial da Toei Animation no Instagram para o Brasil!",
-                  "profilePicUrl": "https://scontent-man2-1.cdninstagram.com/v/t51.2885-19/601514037_17845967229621830_6252422928610775993_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zNjAuYzIifQ&_nc_ht=scontent-man2-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEpfQ4UNUl4vNfsU5tHCbyOerFN34h-CcicHZA4FCxzufdhqmapbqyy3PaHVbXle08&_nc_ohc=uQFyuU_xw3EQ7kNvwG2yQzV&_nc_gid=Q1fw8G3B0CbzZjSgz4fjRA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvwtzutZooOU9louPataVCl361bgNo6t14_hd01wZetIw&oe=6990295D&_nc_sid=8b3546",
-                  "followers": 21953,
-                  "following": 24,
-                  "posts": 55,
-                  "externalUrl": "https://simplybio.io/toeianimationbrasil/"
-                }
+            "label": "Dallas Mavericks",
+            "type": "brand",
+            "val": 25,
+            "data": {
+              "handle": "@dallasmavs",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/436578519_470018275364466_145029458417974712_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzUuYzIifQ&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=oAsA90gKUikQ7kNvwHyjDTk&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Aftd8YqQbx4hIp48_rPA0P15rDEckArm7GpVTgM_A5HZbQ&oe=6994B440&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
               },
-              {
-                "label": "Straw Hat Studio",
-                "handle": "@strawhatstudio",
-                "type": "creator",
-                "val": 60,
-                "provenance": "[ID: 60183382975]",
-                "name": "Straw Hat Studio",
-                "data": {
-                  "bio": "👒One Piece Content👒",
-                  "profilePicUrl": "https://instagram.fpoa2-1.fna.fbcdn.net/v/t51.2885-19/357376653_290595659998594_6334415590677074765_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40NjUuYzIifQ&_nc_ht=instagram.fpoa2-1.fna.fbcdn.net&_nc_cat=110&_nc_oc=Q6cZ2QEL_slgG4S6K57lU1SatBrnHav-8cztEsjKagmE2izV-0_YR1mkDsQ_Aaq_IHjdZp3PDubmYT1PVlUwRIhlaCcY&_nc_ohc=dCRPXl4xO1wQ7kNvwHslutk&_nc_gid=y01B0a0cAC0H0Z2oSUrQ3A&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu_lksRanei9ZidZxXGTMwUWwSQMGbw1zyIGsUp-4wdEQ&oe=69901D77&_nc_sid=8b3546",
-                  "followers": 220,
-                  "following": 43,
-                  "posts": 14,
-                  "externalUrl": "https://youtube.com/@StrawHatStudios"
-                }
+              "label": "Dallas Mavericks"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "Dallas Mavericks"
+          },
+          {
+            "label": "Stephen Curry",
+            "type": "creator",
+            "val": 35,
+            "data": {
+              "handle": "@stephencurry30",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/456618331_336606462878714_3369030573647129701_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=1Pt6mNb4QfwQ7kNvwH8eeNX&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvfpwfsB8_s2Yi6WzfIOgmhA1oVIRuB_3EqWI0vNu9Hzg&oe=699492ED&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
               },
-              {
-                "label": "Piccolo with Sauce",
-                "handle": "@piccolo_with_sauce",
-                "type": "creator",
-                "val": 55,
-                "provenance": "[ID: 65845642978]",
-                "name": "Piccolo with Sauce",
-                "data": {
-                  "bio": "Follow for more edits",
-                  "profilePicUrl": "https://instagram.fmao1-1.fna.fbcdn.net/v/t51.2885-19/623420553_17929764219194979_2603806836468886334_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDE4LmMyIn0&_nc_ht=instagram.fmao1-1.fna.fbcdn.net&_nc_cat=103&_nc_oc=Q6cZ2QH3vaDdHdlEqf1m6DjNVCi3b-2yd8-EuKSBQ4MuHodrB27AKRNN0_L1VePT-vivCz0&_nc_ohc=5tFma7Z7v3AQ7kNvwGdqqc5&_nc_gid=VIdSBGTHvZ_NEtjD02B8oA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftpYQgkvMfQdpaR7pkEnVYQ3UjGRvYCOGfb5iqj7yn-7A&oe=699048DC&_nc_sid=8b3546",
-                  "followers": 150,
-                  "following": 91,
-                  "posts": 81
-                }
-              }
-            ],
-            "name": "One Piece & General Anime"
+              "label": "Wardell Curry"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "Stephen Curry"
+          },
+          {
+            "label": "James Harden",
+            "type": "creator",
+            "val": 30,
+            "data": {
+              "handle": "@jharden13",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/361556560_3560164747563338_3273704176076433583_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=tmKLRW3L4KQQ7kNvwFJOa9E&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvtQdFeOqcE1u2GAH_b0ZCxIvnwBfxG_1f_j7QvEJpTFg&oe=6994C177&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
+              },
+              "label": "James Harden"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "James Harden"
+          },
+          {
+            "label": "Jayson Tatum",
+            "type": "creator",
+            "val": 30,
+            "data": {
+              "handle": "@jaytatum0",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/82055892_123564715562698_8324187012433182720_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=twRqnOjbCroQ7kNvwExKJsv&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsAhb2MEauNfjR6-8wT2tccvqSsdZvmd1mCFL9vkdal6A&oe=6994A035&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
+              },
+              "label": "Jayson Tatum🙏🏀"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "Jayson Tatum"
+          },
+          {
+            "label": "Joel Embiid",
+            "type": "creator",
+            "val": 30,
+            "data": {
+              "handle": "@joelembiid",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/608367175_18542106118060454_6752903237545856100_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=BE6c_yKTVdsQ7kNvwFj7f4W&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsWw6patYyLlj90Wqa21iL-4n7PxmwzoZ6tvydWhrkyQA&oe=6994B359&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
+              },
+              "label": "Joel \"The Process\" Embiid"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "Joel Embiid"
+          },
+          {
+            "label": "Carmelo Anthony",
+            "type": "creator",
+            "val": 25,
+            "data": {
+              "handle": "@carmeloanthony",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/106698725_1171904809834471_7367484525560161424_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=UKtIr0i8_PkQ7kNvwG6iC76&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftrUAcjoaxxRPcxoa8kiKtB8z6SvdXR_dXMGqxZ79fLhg&oe=6994AB5A&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
+              },
+              "label": "Carmelo Anthony"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "Carmelo Anthony"
+          },
+          {
+            "label": "SLAM Magazine",
+            "type": "brand",
+            "val": 20,
+            "data": {
+              "handle": "@slam",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/124023315_1723936484450079_9070706155103948038_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=OVq77gabnGgQ7kNvwHcBKta&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvAXJ3TzOpY14qJgIMhR62XA1mqtz0sNI8ZF0wrwKw5mw&oe=6994AFB3&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
+              },
+              "label": "SLAM"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "SLAM Magazine"
+          },
+          {
+            "label": "Ballislife",
+            "type": "brand",
+            "val": 20,
+            "data": {
+              "handle": "@ballislife",
+              "bio": "Bio unavailable (Related Profile)",
+              "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/101353414_2921698644615738_8526638211554869248_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=cLLB2m3lVEQQ7kNvwFF5Irf&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu-o8bDwVblEx03xFyLmWTC_4Bl9ZchjWwMlkNMKq5JJg&oe=6994A292&_nc_sid=8b3546",
+              "isVerified": true,
+              "citation": "Related to @nikebasketball",
+              "data": {
+                "bio": "Bio unavailable (Related Profile)",
+                "profilePicUrl": "https://scontent-ord5-3.cdninstagram.com/v/t51.2885-19/101353414_2921698644615738_8526638211554869248_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-ord5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGOUBetTyQjIVr8PT-nvLRGHgn_58lW41hqrBG1w6MCKbMzBL1S-E8dXs44NnDlANU&_nc_ohc=cLLB2m3lVEQQ7kNvwFF5Irf&_nc_gid=GyCj9bGXg3Ea6FUY0G_BUg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu-o8bDwVblEx03xFyLmWTC_4Bl9ZchjWwMlkNMKq5JJg&oe=6994A292&_nc_sid=8b3546",
+                "isVerified": true,
+                "citation": "Related to @nikebasketball"
+              },
+              "label": "Ballislife"
+            },
+            "provenance": "[Related to ID: 306787899]",
+            "name": "Ballislife",
+            "handle": "@ballislife"
           }
         ],
-        "name": "Anime & Manga Fandom"
+        "name": "Basketball Culture"
       },
       {
-        "label": "Global Gaming & Esports",
+        "label": "Running & Endurance",
         "type": "cluster",
-        "data": {
-          "description": "Gamers interested in both console/PC gaming ecosystems and mobile gaming, with a strong overlap in tech hardware.",
-          "keywords": [
-            "PlayStation",
-            "Esports",
-            "Game Dev",
-            "PC Master Race",
-            "Mobile Gaming"
-          ]
-        },
-        "children": [
-          {
-            "label": "Major Publishers & Platforms",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "PlayStation Zone",
-                "handle": "@playstation.zone",
-                "type": "brand",
-                "val": 90,
-                "provenance": "[ID: 2236166559]",
-                "name": "PlayStation Zone",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/293094058_3280205835557753_732526406272229434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QHmaa9X-ts6mkFXmqkShV9rzPIStLlAjOxegRRgCdNcaz3V1aA0Fa3ChwFNzB9J8oM&_nc_ohc=a5oiVGoAXOQQ7kNvwGxANzn&_nc_gid=bExYvqYiNWNqjpZ-n_ukRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvC5TRclyzfN7iSl3go8NbcJvKA9XfecF0PMSH6lLsYbw&oe=69902154&_nc_sid=0055be"
-                }
-              },
-              {
-                "label": "Riot Games Music",
-                "handle": "@riotgamesmusic",
-                "type": "brand",
-                "val": 85,
-                "provenance": "[ID: 8474271264]",
-                "name": "Riot Games Music",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/398762202_328754926522876_8437204416653102797_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MDAuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QGa2XBWMx4lDNmOubL_Z4Jp2uK7fAdrgoIr71ThjpgPEegMTEBDtr_7dunLL-GGx4A&_nc_ohc=UXBIUCfyu6AQ7kNvwHwfLzh&_nc_gid=4CFnVGB5qb30n4HMipywjw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsvEs4g8nvPz0Zq4ZKcpUDIlAtWCHbwVzukKKQKpu0mvw&oe=69902A88&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Konami",
-                "handle": "@konami",
-                "type": "brand",
-                "val": 80,
-                "provenance": "[ID: 146228037]",
-                "name": "Konami",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/10632011_1624729171134448_1163213507_a.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QGa2XBWMx4lDNmOubL_Z4Jp2uK7fAdrgoIr71ThjpgPEegMTEBDtr_7dunLL-GGx4A&_nc_ohc=j_WGdEuVXZUQ7kNvwEWV-Qh&_nc_gid=4CFnVGB5qb30n4HMipywjw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftTM9tXE73x9ur50bG4anAKK3JSmi2ctzP2U7_s8GpedQ&oe=699019D7&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Supercell",
-                "handle": "@supercell",
-                "type": "brand",
-                "val": 75,
-                "provenance": "[ID: 440483381]",
-                "name": "Supercell",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/456423889_994595762398545_4080608189824525311_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGa2XBWMx4lDNmOubL_Z4Jp2uK7fAdrgoIr71ThjpgPEegMTEBDtr_7dunLL-GGx4A&_nc_ohc=zI2F5iIW6SsQ7kNvwE5gZ4x&_nc_gid=4CFnVGB5qb30n4HMipywjw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfssfAzBoQwEnEQziZbEeVLCr-Lj1ITeyLpFJpUMoWcNJg&oe=69902DA8&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              }
-            ],
-            "name": "Major Publishers & Platforms"
-          },
-          {
-            "label": "Gaming Hardware",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Logitech G",
-                "handle": "@logitechg",
-                "type": "brand",
-                "val": 80,
-                "provenance": "[ID: 336452875]",
-                "name": "Logitech G",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/472419061_557354800464180_6847459912941518062_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHmaa9X-ts6mkFXmqkShV9rzPIStLlAjOxegRRgCdNcaz3V1aA0Fa3ChwFNzB9J8oM&_nc_ohc=TQ1yvCsqbjUQ7kNvwHTdvT-&_nc_gid=bExYvqYiNWNqjpZ-n_ukRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfujeyHBfS-111IaCgjk-df_1aBMC7T8kkZaXkdka1VASA&oe=69902F62&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Corsair",
-                "handle": "@corsair",
-                "type": "brand",
-                "val": 75,
-                "provenance": "[ID: 1018217824]",
-                "name": "Corsair",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/41672493_1642584539180728_8509949446111363072_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHmaa9X-ts6mkFXmqkShV9rzPIStLlAjOxegRRgCdNcaz3V1aA0Fa3ChwFNzB9J8oM&_nc_ohc=aGXrubEvgK0Q7kNvwFiXe7Q&_nc_gid=bExYvqYiNWNqjpZ-n_ukRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuYzdWpQqKjHC5qowMUmFzlS6opCqj5WTS2gnsKyOHaIA&oe=69904400&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Razer",
-                "handle": "@razer",
-                "type": "brand",
-                "val": 75,
-                "provenance": "[ID: 270603774]",
-                "name": "Razer",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/611185537_18548687434011775_8573084081374414736_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45OTMuYzIifQ&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHmaa9X-ts6mkFXmqkShV9rzPIStLlAjOxegRRgCdNcaz3V1aA0Fa3ChwFNzB9J8oM&_nc_ohc=n8ShZvG0OjwQ7kNvwFWPpTs&_nc_gid=bExYvqYiNWNqjpZ-n_ukRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsBXxIJXDtxv2RRcoa1yI_B20P7L40yLngmu2qPirmZ3w&oe=69904609&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              }
-            ],
-            "name": "Gaming Hardware"
-          }
-        ],
-        "name": "Global Gaming & Esports"
-      },
-      {
-        "label": "Cinematic Universe & Pop Culture",
-        "type": "cluster",
-        "data": {
-          "description": "Followers deeply engaged with major cinematic franchises, streaming services, and celebrity culture.",
-          "keywords": [
-            "Marvel",
-            "Movies",
-            "Streaming",
-            "Celebrities",
-            "Entertainment"
-          ]
-        },
-        "children": [
-          {
-            "label": "Franchises & Studios",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Marvel",
-                "handle": "@marvel",
-                "type": "brand",
-                "val": 95,
-                "provenance": "[ID: 204633036]",
-                "name": "Marvel",
-                "data": {
-                  "bio": "The official Instagram for Marvel comics, movies, games, and more.",
-                  "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/500542816_18518414371025037_7038193861748379853_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHUFIpNPuSrGoHdUUzJt7X9av34hx_zLwaStr21H0qdShxsDkqsKiSQO0sQ8j66N8E&_nc_ohc=SZf5UGD48fYQ7kNvwEj4Zst&_nc_gid=u60Z-YOHmOdyfpQIJ0uukQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuwYE6961K5Jn-gzLwCZnyyj-fksLjVHN8Mdr6PmuG_8w&oe=69904C53&_nc_sid=8b3546",
-                  "followers": 64241642,
-                  "following": 195,
-                  "posts": 10981,
-                  "externalUrl": "http://marvel.com/"
-                }
-              },
-              {
-                "label": "Universal Pictures",
-                "handle": "@universalpictures",
-                "type": "brand",
-                "val": 85,
-                "provenance": "[ID: 1444116373]",
-                "name": "Universal Pictures",
-                "data": {
-                  "bio": "the movies, not the park.",
-                  "profilePicUrl": "https://instagram.fbey2-2.fna.fbcdn.net/v/t51.2885-19/469160204_1995693130900023_8977636556173855339_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fbey2-2.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QFTqqqq3B20YR4hUdbR6cyD81i1sDvngbpkGLWsrDHAPqV_B2gzKLWwMDpYgW-MhlI&_nc_ohc=8S3ZUXVU2NcQ7kNvwHKIYvt&_nc_gid=OmuMKnFBjxq1zlk0SCVpdQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgDMKl_-eQkH8tfhL5uRw-5c-lMfS0UlURqiz77d4pOQ&oe=69901ACA&_nc_sid=8b3546",
-                  "followers": 5205678,
-                  "following": 474,
-                  "posts": 7659,
-                  "externalUrl": "http://remindersofhimmovie.com/"
-                }
-              },
-              {
-                "label": "The Academy",
-                "handle": "@theacademy",
-                "type": "brand",
-                "val": 80,
-                "provenance": "[ID: 3724687]",
-                "name": "The Academy",
-                "data": {
-                  "bio": "Recognizing and celebrating the global film industry and the artists who make movies. Follow us at @academymuseum for more movie magic.",
-                  "profilePicUrl": "https://scontent-lhr8-2.cdninstagram.com/v/t51.2885-19/449530824_991345355975874_3692711463083242629_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lhr8-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFWsFCnMlAePsSYj3FABqROesfLZdF3zJHM4B9v2ot-V4E733NxneIOcPDo42ju0V0&_nc_ohc=LNTMT55cg9AQ7kNvwHgF-MV&_nc_gid=Ab0K7JbLOzuucA7fCCMbJQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsFODW587VefpXlacaruZj30RYWp72MPFTIS_30DtTbEw&oe=69902BA4&_nc_sid=8b3546",
-                  "followers": 5452679,
-                  "following": 1763,
-                  "posts": 7961,
-                  "externalUrl": "https://sprout.link/theacademy"
-                }
-              }
-            ],
-            "name": "Franchises & Studios"
-          },
-          {
-            "label": "Icons & Celebs",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Millie Bobby Brown",
-                "handle": "@milliebobbybrown",
-                "type": "creator",
-                "val": 90,
-                "provenance": "[ID: 3439002676]",
-                "name": "Millie Bobby Brown",
-                "data": {
-                  "bio": "founder of florence by mills",
-                  "profilePicUrl": "https://instagram.fhuy1-1.fna.fbcdn.net/v/t51.2885-19/471847264_559589103642668_1525486379823683085_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fhuy1-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QEVjA4pg8prx9hjC655UbolzzPcz2YJejiVwcskb-8CQDN8RnxVyFCyeMxXMskig5s&_nc_ohc=JVhh90CdO30Q7kNvwEh4dV3&_nc_gid=ntPqba4xxGKFfoey8va5Rg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftLSo5CAjRGCcODgtb9GJda6QDMVUUPruottFpBXk2irg&oe=699026A3&_nc_sid=8b3546",
-                  "followers": 72417602,
-                  "following": 942,
-                  "posts": 715,
-                  "externalUrl": "https://florencebymillsbeauty.com/"
-                }
-              },
-              {
-                "label": "Mr Bean",
-                "handle": "@mrbean",
-                "type": "creator",
-                "val": 85,
-                "provenance": "[ID: 4126839805]",
-                "name": "Mr Bean",
-                "data": {
-                  "bio": "Welcome to the home of Mr Bean on Instagram 👋\nShop Bean👇🛍️",
-                  "profilePicUrl": "https://instagram.flba3-1.fna.fbcdn.net/v/t51.2885-19/15101715_961094567367433_343992409002082304_a.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MDAuYzIifQ&_nc_ht=instagram.flba3-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHfl02B6PQaJifzT5MEu1tRomwuWlj_hKV0okssbn9XYXMhn4i4FP7ocHYU6QR8VaM&_nc_ohc=FtkDs6I6LfQQ7kNvwH20kBJ&_nc_gid=qIT9mmuAy5LRpqBCJFtkug&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuWCiEDN1ZQOLdYC_yY70tLkWQDQuvqWLPBtjCta4T5cA&oe=69904E79&_nc_sid=8b3546",
-                  "followers": 10206806,
-                  "following": 41,
-                  "posts": 2114,
-                  "externalUrl": "https://mr-bean-shop.fourthwall.com/en-gbp/"
-                }
-              },
-              {
-                "label": "Chris Hemsworth",
-                "handle": "@chrishemsworth",
-                "type": "creator",
-                "val": 80,
-                "provenance": "[ID: 1822594644]",
-                "name": "Chris Hemsworth",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/91933099_242760747110457_2301125283991781376_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NTAuYzIifQ&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHJUYUm2lXjBekQUx279i04_e6oLcJT5TuQzGkL0ZXB5BbHjEecNE-h7gb09IM3fes&_nc_ohc=kADO4j2TT-YQ7kNvwGdB3Ou&_nc_gid=U8czsJnJdkwkVpbLntnhsQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsBcjcuvyn-cY5oxP9BZJa8lczLzdNj-Vz3fqdxpdu-2Q&oe=69903C34&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              }
-            ],
-            "name": "Icons & Celebs"
-          }
-        ],
-        "name": "Cinematic Universe & Pop Culture"
-      },
-      {
-        "label": "Science & Exploration",
-        "type": "cluster",
-        "data": {
-          "description": "A community focused on space exploration, environmental science, and nature documentaries.",
-          "keywords": [
-            "Space",
-            "NASA",
-            "Nature",
-            "Sustainability",
-            "Science"
-          ]
-        },
-        "children": [
-          {
-            "label": "Space Agencies",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "NASA",
-                "handle": "@nasa",
-                "type": "brand",
-                "val": 95,
-                "provenance": "[ID: 528817151]",
-                "name": "NASA",
-                "data": {
-                  "bio": "🚀 🌎  Exploring the universe and our home planet. Verification: nasa.gov/socialmedia",
-                  "profilePicUrl": "https://scontent-lhr8-1.cdninstagram.com/v/t51.2885-19/29090066_159271188110124_1152068159029641216_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lhr8-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGoEC8ix3NnVTM9Q2m8T74Zrzl12wENTrmuP-W7c_dxCm-S4lCm-oqXdfXJwYDrW34&_nc_ohc=Bj0nVE-YzGsQ7kNvwG7lVxq&_nc_gid=d4fqJYwQq4tpN4vgc3eNyA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuANogARMs-8a9BU1UspXEOszPym_IC0HxPgUf2CeyXUQ&oe=69902B69&_nc_sid=8b3546",
-                  "followers": 98674337,
-                  "following": 92,
-                  "posts": 4605,
-                  "externalUrl": "https://www.nasa.gov/"
-                }
-              },
-              {
-                "label": "SpaceX",
-                "handle": "@spacex",
-                "type": "brand",
-                "val": 90,
-                "provenance": "[ID: 20311520]",
-                "name": "SpaceX",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/47583400_308652296442406_1388205207560650752_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjIuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEM3HPILUftvZstgDTnoTirFt43M7rYarvm4qB3S5zEq6Xwojtg_89S9EDfwome0M8&_nc_ohc=urrOzQkNR90Q7kNvwEI-7dM&_nc_gid=ZvZTHNcCgs1JPrFizVXBBg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuuIXKrDPW6QR8nEgmyHPkKMprEW4frO75OUZ78Buv_rg&oe=699030D3&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              }
-            ],
-            "name": "Space Agencies"
-          },
-          {
-            "label": "Nature & Environment",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "National Geographic",
-                "handle": "@natgeo",
-                "type": "brand",
-                "val": 90,
-                "provenance": "[ID: 787132]",
-                "name": "National Geographic",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/495970936_18571729156019133_4702419124763180758_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGNzI0zp9KMjP359L2ZEhGF-KowgRHJBSNRntYKtqMDUtKmX3sIrvnWRLBIRa34JAg&_nc_ohc=uINwbC8nytIQ7kNvwFQzBq4&_nc_gid=0j8twe7nFMezeqeSiSkJTQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftuu5Xu5Dvy75voa6mVr5bpln0usmkCdwW15_5X3ARFgg&oe=6990469A&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Water.org",
-                "handle": "@water",
-                "type": "brand",
-                "val": 75,
-                "provenance": "[ID: 21743225]",
-                "name": "Water.org",
-                "data": {
-                  "bio": "Our vision: Safe water and sanitation for all. Give, learn, get involved 👇",
-                  "profilePicUrl": "https://instagram.frba3-1.fna.fbcdn.net/v/t51.2885-19/14624641_190348444748773_8861373677543882752_a.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=instagram.frba3-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QEFcblZx0kEo5jp4zNXlvNNn8BD-tHqlJBCQIfXO0OAKlvZ5X3ZhtsF1Zh02QPSP74&_nc_ohc=wH3OFHyKdVYQ7kNvwG-EIPQ&_nc_gid=4z4Laae0hxy9fNnyUNW5Hw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftbBq2o9RgNzWGZi_DTtI_7WyKTakgObZQMCesnEnHYEA&oe=69901DAD&_nc_sid=8b3546",
-                  "followers": 572325,
-                  "following": 348,
-                  "posts": 4414,
-                  "externalUrl": "https://sprout.link/water"
-                }
-              }
-            ],
-            "name": "Nature & Environment"
-          }
-        ],
-        "name": "Science & Exploration"
-      },
-      {
-        "label": "Regional Tech & Lifestyle Hubs",
-        "type": "cluster",
-        "data": {
-          "description": "Significant clusters of followers from specific regions, particularly India and the Middle East, blending tech interests with local lifestyle and religion.",
-          "keywords": [
-            "India",
-            "Middle East",
-            "Regional Tech",
-            "Lifestyle",
-            "Culture"
-          ]
-        },
-        "children": [
-          {
-            "label": "India Tech & Cricket",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Google India",
-                "handle": "@googleindia",
-                "type": "brand",
-                "val": 85,
-                "provenance": "[ID: 8536113897]",
-                "name": "Google India",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/461485551_1498363720844210_548086901115050105_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHFKaEpOsky-M1xyxCyB9T-iKgd3Qfy3V1ju2Pqf7hpI2i2zCqWlAmNd-RcQ49zMDY&_nc_ohc=_lGs4kLNpo8Q7kNvwGZfHm-&_nc_gid=XD-0azNaLVPMoWIyQGqwaQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftMlnx75SJNc52N9Gk7Jdn_v0PL6-iy0GlC0y3M00imPw&oe=699032B4&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "Sachin Tendulkar",
-                "handle": "@sachintendulkar",
-                "type": "creator",
-                "val": 80,
-                "provenance": "[ID: 1962023419]",
-                "name": "Sachin Tendulkar",
-                "data": {
-                  "bio": "Bio unavailable",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/358768461_3390909287831163_5567728346172820606_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44NTguYzIifQ&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QElV01HxP_talVehUrXt2Ps5jqUueMvIuhGL6rSsFFhGYZtsBNAHR7qkFBkOoy5kP8&_nc_ohc=I1irp03vbUgQ7kNvwFjqCHa&_nc_gid=PXKX_YNv0aT2Xqwty2n7QQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvR2mlaDxjd3j1OkIMJwLl3YpRX30bWbSbwKZhYWoMHcQ&oe=69904396&_nc_sid=0055be",
-                  "isVerified": true
-                }
-              },
-              {
-                "label": "YouTube India",
-                "handle": "@youtubeindia",
-                "type": "brand",
-                "val": 75,
-                "provenance": "[ID: 11160397731]",
-                "name": "YouTube India",
-                "data": {
-                  "bio": "YT spelled backwards is TY\nand TY for coming here 🥰",
-                  "profilePicUrl": "https://instagram.fsst2-1.fna.fbcdn.net/v/t51.2885-19/468695246_1618189712456945_6853012293071475955_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NjAuYzIifQ&_nc_ht=instagram.fsst2-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QGgTAfaq4bwgCYacrndSVv0cvZXKrmH0y4Q7qdI7H3tT1z9ObsKzCYp6ZG5r5VtVts&_nc_ohc=wyqIBXDn_w8Q7kNvwGfey-8&_nc_gid=c8sk5zNdedzqY-fM-lmGSQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvqouI5XVbFhFSwtbUcdYV-gAvkqwDa9hEfemrLVc3iaQ&oe=69904A0B&_nc_sid=8b3546",
-                  "followers": 4411713,
-                  "following": 445,
-                  "posts": 4446,
-                  "externalUrl": "https://www.youtube.com/watch?v=OBjjTbK7OjM"
-                }
-              }
-            ],
-            "name": "India Tech & Cricket"
-          },
-          {
-            "label": "MENA Lifestyle",
-            "type": "subcluster",
-            "children": [
-              {
-                "label": "Mustafa Hosny",
-                "handle": "@mustafahosnyofficial",
-                "type": "creator",
-                "val": 85,
-                "provenance": "[ID: 1027793010]",
-                "name": "Mustafa Hosny",
-                "data": {
-                  "bio": "الحساب الرسمي للداعية مصطفى حسني\n#مصطفى_حسني #MustafaHosny",
-                  "profilePicUrl": "https://instagram.fbhd1-2.fna.fbcdn.net/v/t51.2885-19/629356712_18559366192017011_1887874352916354689_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fbhd1-2.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QGqubfQKg9oloa4ISUe4u3qK53I5qLtUDetqM5knu6XAL4flXq4u2Qw1QDkFJWvWKd07lnaY3knZNR7OxZGpDvu&_nc_ohc=F47rKdejpDEQ7kNvwG5shpQ&_nc_gid=iD3pxox8L9FTL32jevaGgg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvS0stuq2khYvhz7PHFlZiJoqtFrtTpm1aOKz0oP2AU6A&oe=6990255C&_nc_sid=8b3546",
-                  "followers": 25188658,
-                  "following": 3,
-                  "posts": 15282,
-                  "externalUrl": "https://youtube.com/c/MustafaHosny"
-                }
-              },
-              {
-                "label": "Dr. Jasem Al Mutawa",
-                "handle": "@drjasem",
-                "type": "creator",
-                "val": 80,
-                "provenance": "[ID: 33473928]",
-                "name": "Dr. Jasem Al Mutawa",
-                "data": {
-                  "bio": "د.جاسم محمد المطوع\nاستشاري اجتماعي وتربوي\nللإستشارات 👇🏻",
-                  "profilePicUrl": "https://scontent-lhr6-1.cdninstagram.com/v/t51.2885-19/474126222_3445738562228566_5170091397365205735_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lhr6-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEKY5ttRL1l3h6n5ih_kxk6wDz1TsrxPlqoJ3Y7udMFklTDXVxXI-bG_O1LUjDNLqU&_nc_ohc=sjvykMnudHAQ7kNvwGwrjWt&_nc_gid=G4IhekLRdkAyT9RVIR-IVA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afv78qOdSsRlME06mrTpanQzD84U3wCl94ZPqqSHpufYnA&oe=69903AB7&_nc_sid=8b3546",
-                  "followers": 7063805,
-                  "following": 41,
-                  "posts": 13360,
-                  "externalUrl": "http://www.drkhutooba.org/"
-                }
-              },
-              {
-                "label": "Lana Mohd",
-                "handle": "@lana_mohd89",
-                "type": "creator",
-                "val": 75,
-                "provenance": "[ID: 4072745401]",
-                "name": "Lana Mohd",
-                "data": {
-                  "bio": "- Dubai 📍\n- Syria \n- YouTube channel ⬇️",
-                  "profilePicUrl": "https://instagram.famm10-1.fna.fbcdn.net/v/t51.2885-19/503504394_18404763157129402_1908216290961415313_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.famm10-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QFNVeYPbl1NgwxTevJgBPMyb5nVUoG1DYGncm887F69_Pj9EGqvu0BWxuwvsYOnJYg&_nc_ohc=4XZxwoaw6n0Q7kNvwEmB-xY&_nc_gid=33vtjdBXgJWZ8JTjWiWdwQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfseTJrN2EytpcNxztCmOw1_SobSLSbp60LvkHiyLKIEbA&oe=69901BA8&_nc_sid=8b3546",
-                  "followers": 6061204,
-                  "following": 1140,
-                  "posts": 374,
-                  "externalUrl": "https://www.youtube.com/channel/UCbfgRx9dq_Gecjy0szunLLQ"
-                }
-              }
-            ],
-            "name": "MENA Lifestyle"
-          }
-        ],
-        "name": "Regional Tech & Lifestyle Hubs"
+        "data": {},
+        "name": "Running & Endurance"
       }
     ],
-    "name": "Google Followers Ecosystem"
-  },
-  "analytics": {
-    "clusters": [
-      "AI & Future Tech Innovators",
-      "Anime & Manga Fandom",
-      "Global Gaming & Esports",
-      "Cinematic Universe & Pop Culture",
-      "Science & Exploration",
-      "Regional Tech & Lifestyle Hubs"
-    ],
-    "topics": [
-      {
-        "label": "Artificial Intelligence",
-        "val": 95,
-        "type": "topic",
-        "name": "Artificial Intelligence"
-      },
-      {
-        "label": "Anime Fan Art",
-        "val": 85,
-        "type": "topic",
-        "name": "Anime Fan Art"
-      },
-      {
-        "label": "Space Exploration",
-        "val": 80,
-        "type": "topic",
-        "name": "Space Exploration"
-      },
-      {
-        "label": "Cinematic Universes",
-        "val": 75,
-        "type": "topic",
-        "name": "Cinematic Universes"
-      },
-      {
-        "label": "Semiconductor Tech",
-        "val": 70,
-        "type": "topic",
-        "name": "Semiconductor Tech"
-      }
-    ],
-    "subtopics": [
-      {
-        "label": "Generative Video (Sora)",
-        "val": 90,
-        "type": "subtopic",
-        "name": "Generative Video (Sora)"
-      },
-      {
-        "label": "Dragon Ball Z Fandom",
-        "val": 85,
-        "type": "subtopic",
-        "name": "Dragon Ball Z Fandom"
-      },
-      {
-        "label": "PC Gaming Hardware",
-        "val": 80,
-        "type": "subtopic",
-        "name": "PC Gaming Hardware"
-      },
-      {
-        "label": "Indian Cricket",
-        "val": 75,
-        "type": "subtopic",
-        "name": "Indian Cricket"
-      },
-      {
-        "label": "Islamic Lifestyle Content",
-        "val": 70,
-        "type": "subtopic",
-        "name": "Islamic Lifestyle Content"
-      }
-    ],
-    "creators": [
-      {
-        "label": "Sora Official",
-        "handle": "@soraofficial",
-        "val": 95,
-        "data": {
-          "bio": "The official account for @openai’s image & video generation tool Sora. 🎨",
-          "profilePicUrl": "https://instagram.fbkk4-2.fna.fbcdn.net/v/t51.2885-19/557758038_17887316337380245_3713330554891428841_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fbkk4-2.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QG3MW27e7ubCUlWHTg_qVN-J7SSRH52Izfygfwa5j8KvCf0Ks1Ce2JTqLfcmxmxjIY&_nc_ohc=zMfauJV0AGEQ7kNvwFJ0q0M&_nc_gid=NW5HXuYq6Xic0SSgIEjUFw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsqHKxw-AXeCAZZ8M0p9ei1d47w5L6ojPsdkcM53CnKLw&oe=69901F8D&_nc_sid=8b3546",
-          "evidence": "Directly linked to AI innovation subculture.",
-          "followers": 274669,
-          "following": 36,
-          "posts": 366,
-          "externalUrl": "https://linkin.bio/soraofficial"
-        },
-        "provenance": "[ID: 71379204244]",
-        "name": "Sora Official"
-      },
-      {
-        "label": "Beatlo001",
-        "handle": "@beatlo001",
-        "val": 85,
-        "data": {
-          "bio": "Fanart\nDragon Ball Fan\nOpen Comission\n🇦🇷",
-          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/610890033_18340803598232237_4469655230065500176_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDc5LmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QHe4ZrOp491hjkbYe29btdvvP7Zum04LcroSUnbmTMZEPkxRSjoerLxCzFOUvYo0No&_nc_ohc=IzZBQfwuO-YQ7kNvwFJZ5Pc&_nc_gid=V-XSHBnWEd15IIHP_WIImw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afv0o09OUvsC7c_LcujakXpSGV6vWJNRByl7T5waieAyhg&oe=69902B61&_nc_sid=8b3546",
-          "evidence": "Prominent figure in the Dragon Ball fan art subculture.",
-          "followers": 40219,
-          "following": 3691,
-          "posts": 623,
-          "externalUrl": "http://ko-fi.com/beatlo"
-        },
-        "provenance": "[ID: 7097224236]",
-        "name": "Beatlo001"
-      },
-      {
-        "label": "Mustafa Hosny",
-        "handle": "@mustafahosnyofficial",
-        "val": 85,
-        "data": {
-          "bio": "الحساب الرسمي للداعية مصطفى حسني\n#مصطفى_حسني #MustafaHosny",
-          "profilePicUrl": "https://instagram.fbhd1-2.fna.fbcdn.net/v/t51.2885-19/629356712_18559366192017011_1887874352916354689_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fbhd1-2.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QGqubfQKg9oloa4ISUe4u3qK53I5qLtUDetqM5knu6XAL4flXq4u2Qw1QDkFJWvWKd07lnaY3knZNR7OxZGpDvu&_nc_ohc=F47rKdejpDEQ7kNvwG5shpQ&_nc_gid=iD3pxox8L9FTL32jevaGgg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvS0stuq2khYvhz7PHFlZiJoqtFrtTpm1aOKz0oP2AU6A&oe=6990255C&_nc_sid=8b3546",
-          "evidence": "Major regional influencer in the MENA cluster.",
-          "followers": 25188658,
-          "following": 3,
-          "posts": 15282,
-          "externalUrl": "https://youtube.com/c/MustafaHosny"
-        },
-        "provenance": "[ID: 1027793010]",
-        "name": "Mustafa Hosny"
-      },
-      {
-        "label": "Millie Bobby Brown",
-        "handle": "@milliebobbybrown",
-        "val": 80,
-        "data": {
-          "bio": "founder of florence by mills",
-          "profilePicUrl": "https://instagram.fhuy1-1.fna.fbcdn.net/v/t51.2885-19/471847264_559589103642668_1525486379823683085_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fhuy1-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QEVjA4pg8prx9hjC655UbolzzPcz2YJejiVwcskb-8CQDN8RnxVyFCyeMxXMskig5s&_nc_ohc=JVhh90CdO30Q7kNvwEh4dV3&_nc_gid=ntPqba4xxGKFfoey8va5Rg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftLSo5CAjRGCcODgtb9GJda6QDMVUUPruottFpBXk2irg&oe=699026A3&_nc_sid=8b3546",
-          "evidence": "Key figure in the Pop Culture cluster.",
-          "followers": 72417602,
-          "following": 942,
-          "posts": 715,
-          "externalUrl": "https://florencebymillsbeauty.com/"
-        },
-        "provenance": "[ID: 3439002676]",
-        "name": "Millie Bobby Brown"
-      },
-      {
-        "label": "Mr Bean",
-        "handle": "@mrbean",
-        "val": 75,
-        "data": {
-          "bio": "Welcome to the home of Mr Bean on Instagram 👋\nShop Bean👇🛍️",
-          "profilePicUrl": "https://instagram.flba3-1.fna.fbcdn.net/v/t51.2885-19/15101715_961094567367433_343992409002082304_a.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MDAuYzIifQ&_nc_ht=instagram.flba3-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QHfl02B6PQaJifzT5MEu1tRomwuWlj_hKV0okssbn9XYXMhn4i4FP7ocHYU6QR8VaM&_nc_ohc=FtkDs6I6LfQQ7kNvwH20kBJ&_nc_gid=qIT9mmuAy5LRpqBCJFtkug&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuWCiEDN1ZQOLdYC_yY70tLkWQDQuvqWLPBtjCta4T5cA&oe=69904E79&_nc_sid=8b3546",
-          "evidence": "Legacy entertainment figure with massive following.",
-          "followers": 10206806,
-          "following": 41,
-          "posts": 2114,
-          "externalUrl": "https://mr-bean-shop.fourthwall.com/en-gbp/"
-        },
-        "provenance": "[ID: 4126839805]",
-        "name": "Mr Bean"
-      },
-      {
-        "label": "Merik Merimo",
-        "handle": "@merik_merimo",
-        "val": 70,
-        "data": {
-          "bio": "self-taught\n🇫🇷⚬fan-animator ⚬Illustrator\n👨‍🍳⚬DragonBall Deliverance art director\n🔒⚬ Commissions closed\n🐦⚬Follow me on Twitter\n link below",
-          "profilePicUrl": "https://instagram.fplu40-1.fna.fbcdn.net/v/t51.2885-19/610595827_18525959290064713_6496147106786724746_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fplu40-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QFNryVAtFmFB45VQ2NFftHXZk3esuxiHfbhuyR6uMBzOBVI4bf4S5DIon1VQsppuWQ&_nc_ohc=eameJ3pEY_sQ7kNvwGmMDR1&_nc_gid=0SN5OIc0NjkygxAX7fCIVg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvCLWOMuaJjbVt_a4FE450GzZGI6Q-Y_9xycpqbFczEvQ&oe=6990429A&_nc_sid=8b3546",
-          "evidence": "Active creator in the anime animation subculture.",
-          "followers": 34364,
-          "following": 178,
-          "posts": 928,
-          "externalUrl": "https://linktr.ee/Merik_MERIMO"
-        },
-        "provenance": "[ID: 2995636305869687591]",
-        "name": "Merik Merimo"
-      },
-      {
-        "label": "Sachin Tendulkar",
-        "handle": "@sachintendulkar",
-        "val": 70,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/358768461_3390909287831163_5567728346172820606_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44NTguYzIifQ&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QElV01HxP_talVehUrXt2Ps5jqUueMvIuhGL6rSsFFhGYZtsBNAHR7qkFBkOoy5kP8&_nc_ohc=I1irp03vbUgQ7kNvwFjqCHa&_nc_gid=PXKX_YNv0aT2Xqwty2n7QQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvR2mlaDxjd3j1OkIMJwLl3YpRX30bWbSbwKZhYWoMHcQ&oe=69904396&_nc_sid=0055be",
-          "evidence": "Iconic figure in the Indian regional cluster.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 1962023419]",
-        "name": "Sachin Tendulkar"
-      }
-    ],
-    "brands": [
-      {
-        "label": "Google",
-        "handle": "@google",
-        "val": 100,
-        "data": {
-          "bio": "Here to help",
-          "profilePicUrl": "https://instagram.fssa14-1.fna.fbcdn.net/v/t51.2885-19/629149722_18571833727059271_6392300654261276760_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fssa14-1.fna.fbcdn.net&_nc_cat=1&_nc_oc=Q6cZ2QEW9nu5d4Lu2tZpUUuBtCx6lKF4Ik_VCMOJq1aO_yIs5ArKrqM5sYC7GUfoARScGCU&_nc_ohc=zjx11fNG9JcQ7kNvwGPJSvQ&_nc_gid=2Xd21mGuDgFcPeoCTrvcKw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsfR35d3GzCINfWpFMLOenHHow84HA1UzQf60FBt-Arlg&oe=699020F3&_nc_sid=8b3546",
-          "evidence": "Central node of the analysis.",
-          "followers": 15728535,
-          "following": 40,
-          "posts": 3099,
-          "externalUrl": "https://linkin.bio/google"
-        },
-        "provenance": "[ID: 1067259270]",
-        "name": "Google"
-      },
-      {
-        "label": "NASA",
-        "handle": "@nasa",
-        "val": 95,
-        "data": {
-          "bio": "🚀 🌎  Exploring the universe and our home planet. Verification: nasa.gov/socialmedia",
-          "profilePicUrl": "https://scontent-lhr8-1.cdninstagram.com/v/t51.2885-19/29090066_159271188110124_1152068159029641216_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lhr8-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGoEC8ix3NnVTM9Q2m8T74Zrzl12wENTrmuP-W7c_dxCm-S4lCm-oqXdfXJwYDrW34&_nc_ohc=Bj0nVE-YzGsQ7kNvwG7lVxq&_nc_gid=d4fqJYwQq4tpN4vgc3eNyA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuANogARMs-8a9BU1UspXEOszPym_IC0HxPgUf2CeyXUQ&oe=69902B69&_nc_sid=8b3546",
-          "evidence": "Leader in the Science & Exploration cluster.",
-          "followers": 98674337,
-          "following": 92,
-          "posts": 4605,
-          "externalUrl": "https://www.nasa.gov/"
-        },
-        "provenance": "[ID: 528817151]",
-        "name": "NASA"
-      },
-      {
-        "label": "Marvel",
-        "handle": "@marvel",
-        "val": 90,
-        "data": {
-          "bio": "The official Instagram for Marvel comics, movies, games, and more.",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/500542816_18518414371025037_7038193861748379853_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHUFIpNPuSrGoHdUUzJt7X9av34hx_zLwaStr21H0qdShxsDkqsKiSQO0sQ8j66N8E&_nc_ohc=SZf5UGD48fYQ7kNvwEj4Zst&_nc_gid=u60Z-YOHmOdyfpQIJ0uukQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuwYE6961K5Jn-gzLwCZnyyj-fksLjVHN8Mdr6PmuG_8w&oe=69904C53&_nc_sid=8b3546",
-          "evidence": "Dominant brand in the Cinematic Universe cluster.",
-          "followers": 64241642,
-          "following": 195,
-          "posts": 10981,
-          "externalUrl": "http://marvel.com/"
-        },
-        "provenance": "[ID: 204633036]",
-        "name": "Marvel"
-      },
-      {
-        "label": "PlayStation Zone",
-        "handle": "@playstation.zone",
-        "val": 85,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/293094058_3280205835557753_732526406272229434_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QHmaa9X-ts6mkFXmqkShV9rzPIStLlAjOxegRRgCdNcaz3V1aA0Fa3ChwFNzB9J8oM&_nc_ohc=a5oiVGoAXOQQ7kNvwGxANzn&_nc_gid=bExYvqYiNWNqjpZ-n_ukRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvC5TRclyzfN7iSl3go8NbcJvKA9XfecF0PMSH6lLsYbw&oe=69902154&_nc_sid=0055be",
-          "evidence": "Key brand in the Gaming cluster."
-        },
-        "provenance": "[ID: 2236166559]",
-        "name": "PlayStation Zone"
-      },
-      {
-        "label": "OpenAI",
-        "handle": "@openai",
-        "val": 85,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/475911357_477779352046257_7003041147368378488_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuZXhwZXJpbWVudGFsIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFWFak6vLX9jLi1FfCEmPwjwMpJPsBqcnp3fzMaJGmp4Z0NyVkSSS1Y8SwOj_E-R70&_nc_ohc=tdy3WkiXlREQ7kNvwHCf55a&_nc_gid=7aRT0xMMaMkaWiWaNlxpSw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuhCux3GHzJkmdo9egsL9nf9n8JPwVkZOeGPcUQkllzQw&oe=699048BA&_nc_sid=0055be",
-          "evidence": "Central to the AI subculture.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 45374573700]",
-        "name": "OpenAI"
-      },
-      {
-        "label": "Gucci",
-        "handle": "@gucci",
-        "val": 80,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/501207618_18524386351053051_6229064558596529388_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40NDguYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGYovwHBzEDCvndd1ZmnmlsLmg-JR5R2_XkTV_RYdu-7dXQTqb4575iaD_rCCx_KYo&_nc_ohc=-VRtWTkB04cQ7kNvwH2aXB6&_nc_gid=0mUFoYAffpL1PFKTZiST9w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvsJo8uTUJWpcBz-Ka32doRDuh_CGAJeD4e7MhOyN_6tA&oe=69902514&_nc_sid=0055be",
-          "evidence": "Representative of the Luxury Lifestyle cluster.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 2421050]",
-        "name": "Gucci"
-      },
-      {
-        "label": "Toei Animation Brasil",
-        "handle": "@toeianimationbrasil",
-        "val": 75,
-        "data": {
-          "bio": "Esta é a página oficial da Toei Animation no Instagram para o Brasil!",
-          "profilePicUrl": "https://scontent-man2-1.cdninstagram.com/v/t51.2885-19/601514037_17845967229621830_6252422928610775993_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zNjAuYzIifQ&_nc_ht=scontent-man2-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEpfQ4UNUl4vNfsU5tHCbyOerFN34h-CcicHZA4FCxzufdhqmapbqyy3PaHVbXle08&_nc_ohc=uQFyuU_xw3EQ7kNvwG2yQzV&_nc_gid=Q1fw8G3B0CbzZjSgz4fjRA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvwtzutZooOU9louPataVCl361bgNo6t14_hd01wZetIw&oe=6990295D&_nc_sid=8b3546",
-          "evidence": "Official brand bridging Anime and Regional clusters.",
-          "followers": 21953,
-          "following": 24,
-          "posts": 55,
-          "externalUrl": "https://simplybio.io/toeianimationbrasil/"
-        },
-        "provenance": "[ID: 78641885829]",
-        "name": "Toei Animation Brasil"
-      }
-    ],
-    "topContent": [
-      {
-        "label": "Google AI Search",
-        "val": 95,
-        "data": {
-          "mediaUrl": "https://scontent-man2-1.cdninstagram.com/v/t51.2885-15/628078108_18573210748059271_8371577795252791859_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-man2-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QEsw3T9wbVIdE6IR_RB8La9lcrpQXKk2R_-qqvURYbzV7o1sB-OGghKhkyGUq3v5yY&_nc_ohc=qGm5lG9JnDoQ7kNvwH2oefn&_nc_gid=Vg_HXShvIJtLX0Iwz5qiDQ&edm=APs17CUBAAAA&ccb=7-5&oh=00_Afv0-2iPHrqOp20SopkGhdeMoQgZHL5BpjF_Cu5tkR3SYw&oe=69902224&_nc_sid=10d13b",
-          "postUrl": "https://www.instagram.com/p/DUi_WoEkeA5/",
-          "caption": "Wondering how Team USA’s Ilia Malinin survives the spins? Search with AI Mode for the science behind it."
-        },
-        "provenance": "[ID: 3828901265003372601]",
-        "name": "Google AI Search"
-      },
-      {
-        "label": "Sora AI Trends",
-        "val": 90,
-        "data": {
-          "mediaUrl": "https://scontent-lhr8-2.cdninstagram.com/v/t51.2885-15/488218622_17862686910380245_3329995291656633224_n.jpg?stp=dst-jpg_e15_tt6&_nc_ht=scontent-lhr8-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QE84jQpHPnswLlSFzTw6PHJuXY8kBc2e4GqotL8eXSprS0ZbbW0EoSxdcoYH8T1RMs&_nc_ohc=cOmegPbf8uIQ7kNvwEUEl8A&_nc_gid=3NLwmJDQe3lVCB_4JrUo9A&edm=APs17CUBAAAA&ccb=7-5&oh=00_Aft1N4dHAbzejqUc-eCoiWHv8sBTyfuq4rUYZ9n1Zf5KqA&oe=69903E21&_nc_sid=10d13b",
-          "postUrl": "https://www.instagram.com/p/DH9s1-bS9zj/",
-          "caption": "We heard there were some trends around image generation 👀 From historical selfies to unexpected party guests, here are some of our favorites."
-        },
-        "provenance": "[ID: 3602232500174970083]",
-        "name": "Sora AI Trends"
-      },
-      {
-        "label": "NASA Star Cluster",
-        "val": 85,
-        "data": {
-          "mediaUrl": "https://scontent-eze1-2.cdninstagram.com/v/t51.2885-15/630170344_18578934400049152_8129397136587352428_n.jpg?stp=dst-jpg_e35_s1080x1080_sh0.08_tt6&_nc_ht=scontent-eze1-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlY-6tySQI8Z2-vLiH2g0j43w4an-d2A5I-EZBeB7u_Tv7lpyOTNhVy7O0uRsFtTguBeC7mqP856RPiia8YVQ6&_nc_ohc=LrZkH25XuqwQ7kNvwGh-MF8&_nc_gid=MLCwWnco-U2YK84Asn3mEw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfvoxIoM786croOGSrgZ1XL6lBFcwQUVpymRyuC69bAAUQ&oe=69902993&_nc_sid=10d13b",
-          "postUrl": "https://www.instagram.com/p/DUjFTMlkyQG/",
-          "caption": "What do stars do? Shine 🌟 You’re looking at a sparkling star cluster housed within the 30 Doradus nebula..."
-        },
-        "provenance": "[ID: 3828927417612968966]",
-        "name": "NASA Star Cluster"
-      },
-      {
-        "label": "Toei Animation One Piece",
-        "val": 80,
-        "data": {
-          "mediaUrl": "https://scontent-man2-1.cdninstagram.com/v/t51.2885-15/627142478_17853382329621830_8167297611982130377_n.jpg?stp=dst-jpg_e15_fr_p1080x1080_tt6&_nc_ht=scontent-man2-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFSFt10Sr4ySg9af0LUL17AV0NnThoRkKo6GCScMQdfEU0bFhcQR7eUF2va7LFk05M&_nc_ohc=GWkO6wEHVB4Q7kNvwHLArik&_nc_gid=qgzlysVGOnBr-ciyXYJSsw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfvfOX8Qj3UMISNrsiZOXjO1VBhiLGrqwm6nFQJTB77Gxg&oe=6990264F&_nc_sid=10d13b",
-          "postUrl": "https://www.instagram.com/p/DUiweW1jhyF/",
-          "caption": "Ele deu tudo para proteger aqueles que ama! ❤️ Sua história nos fez chorar. 🥺 Feliz aniversário para Bartholomew Kuma! 🥳"
-        },
-        "provenance": "[ID: 3828835825556003973]",
-        "name": "Toei Animation One Piece"
-      },
-      {
-        "label": "Marvel Daredevil",
-        "val": 75,
-        "data": {
-          "mediaUrl": "https://instagram.fbrs5-1.fna.fbcdn.net/v/t51.2885-15/622233675_18435494224114219_5765335360357887979_n.jpg?stp=dst-jpg_e15_fr_p1080x1080_tt6&_nc_ht=instagram.fbrs5-1.fna.fbcdn.net&_nc_cat=107&_nc_oc=Q6cZ2QFMIJb0Z4CkDDQgcEVQYzsZqGDNu94jWQyg9QxyFRQQT9wo-usrAaACuYhshzjw7MQ&_nc_ohc=ME6mXB4jWUcQ7kNvwEOQFtW&_nc_gid=oEAy-s4F3Uo2HyiUvSNSiw&edm=APs17CUBAAAA&ccb=7-5&oh=00_AfukP_RACFMc19c6Rn51vxWI7dGhR7uRnEt84X9rg5Yc4w&oe=6990481E&_nc_sid=10d13b",
-          "postUrl": "https://www.instagram.com/p/DUBKy-tDlgN/",
-          "caption": "Time to dance with the Devil. Marvel Television’s #DaredevilBornAgain Season 2 premieres March 24 only on @DisneyPlus."
-        },
-        "provenance": "[ID: 3819381442753746957]",
-        "name": "Marvel Daredevil"
-      }
-    ],
-    "vibeDescription": "The Google follower ecosystem is a convergence of high-tech innovation and passionate fandoms. Followers are deeply invested in the future of AI and space exploration, while simultaneously cultivating rich, nostalgic connections to anime (specifically Dragon Ball), gaming, and cinematic universes. It's a mix of intellectual curiosity, pop-culture obsession, and regional pride.",
-    "visualAnalysis": {
-      "brands": [],
-      "aestheticTags": [
-        "Modern",
-        "Bold",
-        "Vibrant",
-        "Playful"
-      ],
-      "vibeDescription": "An eclectic mix of urban lifestyle, pop culture, and professional branding that blends moody atmospheric lighting with crisp, high-contrast graphics.",
-      "colorPalette": [
-        "#D4AF37",
-        "#FF6B6B",
-        "#00509D",
-        "#1C1C1C",
-        "#87CEEB"
-      ],
-      "products": []
-    },
-    "visualTheme": {
-      "primaryColor": "#D4AF37",
-      "textureStyle": "Modern",
-      "nodeTypeMapping": {}
-    }
+    "name": "Nike Ecosystem Analysis"
   }
 }

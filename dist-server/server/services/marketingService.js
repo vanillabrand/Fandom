@@ -41,8 +41,8 @@ class MarketingService {
         try {
             console.log('[MarketingService] 🧠 Prompting Gemini for marketing questions...');
             const prompt = generateMarketingQuestionsPrompt();
-            // Call Gemini
-            const text = await generateGeminiContent(prompt);
+            // Call Gemini with higher temperature (0.8) for variety
+            const text = await generateGeminiContent(prompt, 0.8);
             // Parse JSON response
             let questions = [];
             try {

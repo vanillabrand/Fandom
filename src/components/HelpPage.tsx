@@ -226,7 +226,7 @@ const OverviewSection = () => (
                 </div>
                 <div>
                     <div className="text-gray-600 font-light mb-1.5 tracking-wide">AI Model</div>
-                    <div className="text-white/80 font-light">Gemini 2.0</div>
+                    <div className="text-white/80 font-light">Gemini 3.0</div>
                 </div>
                 <div>
                     <div className="text-gray-600 font-light mb-1.5 tracking-wide">Data Source</div>
