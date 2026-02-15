@@ -142,6 +142,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
     const isDragging = useRef(false); // [NEW] Track drag state to prevent focus slip
     const animationFrameIds = useRef<Set<number>>(new Set()); // [PERFORMANCE] Track all active animations for cleanup
     const lastDataHash = useRef<string>(""); // [NEW] Track data changes for reset
+    const isClickingNode = useRef(false); // [NEW] Coordinate camera between click and prop change
 
 
 
@@ -331,15 +332,19 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         activeNodes.forEach((n: any) => {
             // Must have a valid string or number ID
             if (n.id !== undefined && n.id !== null && n.id !== '') {
+                const sId = String(n.id).toLowerCase();
+                const isRoot = sId === 'main' || sId === 'root';
+
                 const newNode = {
                     ...n,
+                    id: isRoot ? 'MAIN' : n.id, // Standardize to MAIN internally
                     // [FIX] Ensure numeric coordinates exist to prevent D3 crash
                     x: typeof n.x === 'number' && !isNaN(n.x) ? n.x : Math.random(),
                     y: typeof n.y === 'number' && !isNaN(n.y) ? n.y : Math.random(),
                     z: typeof n.z === 'number' && !isNaN(n.z) ? n.z : Math.random()
                 };
                 validNodes.push(newNode);
-                validNodeIds.add(String(n.id));
+                validNodeIds.add(String(newNode.id));
             } else {
                 console.warn("[FandomGraph3D] Dropping invalid node (missing ID):", n);
             }
@@ -358,7 +363,13 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
                 if (!sourceId || !targetId) return null;
 
-                return { ...l, source: String(sourceId), target: String(targetId) };
+                // [FIX] Standardize to MAIN for link consistency
+                const sIdStr = String(sourceId).toLowerCase();
+                const tIdStr = String(targetId).toLowerCase();
+                const finalSource = (sIdStr === 'main' || sIdStr === 'root') ? 'MAIN' : String(sourceId);
+                const finalTarget = (tIdStr === 'main' || tIdStr === 'root') ? 'MAIN' : String(targetId);
+
+                return { ...l, source: finalSource, target: finalTarget };
             })
             .filter((l: any) => {
                 if (!l) return false;
@@ -375,8 +386,8 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         // 1. Identify valid clusters
         const clusterNodes = validNodes.filter(n => n.group === 'cluster');
         if (clusterNodes.length === 0) {
-            // [FIX] Detect actual root ID (root or MAIN)
-            const rootId = validNodeIds.has('MAIN') ? 'MAIN' : (validNodeIds.has('root') ? 'root' : null);
+            // [FIX] Detect actual root ID
+            const rootId = validNodeIds.has('MAIN') ? 'MAIN' : null;
 
             if (rootId) {
                 // Fallback: Create a "General" cluster if none exist to avoid breaking graph
@@ -538,6 +549,32 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         console.log(`[FandomGraph3D] Current Dimensions: ${dimensions.width}x${dimensions.height}`);
     }, [graphData, dimensions]);
 
+    // [NEW] Camera Coordination - Handle external selection via focusedNodeId
+    useEffect(() => {
+        if (!focusedNodeId || !fgRefState || isClickingNode.current) return;
+
+        // Give D3 a moment to update node positions if they just changed
+        const timer = setTimeout(() => {
+            const node = graphData.nodes.find((n: any) => String(n.id) === String(focusedNodeId));
+            if (node) {
+                console.log(`[FandomGraph3D] Animating camera to focused node: ${focusedNodeId}`);
+                const distance = 80;
+                const dist = Math.hypot(node.x, node.y, node.z);
+                const newPos = dist < 1
+                    ? { x: 0, y: 0, z: distance }
+                    : {
+                        x: node.x * (1 + distance / dist),
+                        y: node.y * (1 + distance / dist),
+                        z: node.z * (1 + distance / dist)
+                    };
+
+                fgRefState.cameraPosition(newPos, node, 1500);
+            }
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, [focusedNodeId, fgRefState, graphData.nodes]);
+
     // [NEW] Use the dedicated hook for scene initialization
     useGraphScene(fgRefState);
 
@@ -575,10 +612,16 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                             const tInfo = (graphData as any).nodeInfo?.get(tId);
 
                             const isMainConnection = sId === 'MAIN' || tId === 'MAIN' || sInfo?.group === 'main' || tInfo?.group === 'main';
-                            if (isMainConnection) return 120; // [USER-REQUEST] significantly increased from 50
+                            if (isMainConnection) return 80; // [FIX] Reduced from 120 for tighter graph centering
 
                             const isClusterLink = sInfo?.group === 'cluster' || tInfo?.group === 'cluster' || sId?.includes('c_') || tId?.includes('c_');
                             return isClusterLink ? 50 : 40;
+                        })
+                        .strength((link: any) => {
+                            const sId = typeof link.source === 'object' ? link.source.id : link.source;
+                            const tId = typeof link.target === 'object' ? link.target.id : link.target;
+                            const isMainConnection = sId === 'MAIN' || tId === 'MAIN';
+                            return isMainConnection ? 1.0 : 0.7; // Stronger core bonds
                         });
                 }
 
@@ -1324,7 +1367,17 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
         if (onNodeClick) onNodeClick(node.id);
 
+        // [NEW] Node Drift Prevention: Preserve positions in locked layouts
+        const isLockedLayout = layoutMode === 'grid' || layoutMode === 'radial' || layoutMode === 'hierarchical';
+        if (isLockedLayout) {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+        }
+
         if (fgRefState) {
+            // [NEW] Coordinate camera move
+            isClickingNode.current = true;
             const distance = 80;
             const dist = Math.hypot(node.x, node.y, node.z);
 
@@ -1350,8 +1403,13 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                 staticTarget, // [FIX] Use static coordinates for lookAt
                 1200          // Slightly faster for better UX
             );
+
+            // [NEW] Reset click flag after animation
+            setTimeout(() => {
+                isClickingNode.current = false;
+            }, 1200);
         }
-    }, [onNodeClick, fgRefState]);
+    }, [onNodeClick, fgRefState, layoutMode]);
 
     const handleBackgroundClick = useCallback(() => {
         // Optional: Reset view logic here
@@ -1524,9 +1582,13 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
                         // Release node position after drag
                         // [FIX] Release node position to allow physics to take over
-                        node.fx = null;
-                        node.fy = null;
-                        node.fz = null;
+                        // [NEW] UNLESS we are in a locked layout
+                        const isLockedLayout = layoutMode === 'grid' || layoutMode === 'radial' || layoutMode === 'hierarchical';
+                        if (!isLockedLayout) {
+                            node.fx = null;
+                            node.fy = null;
+                            node.fz = null;
+                        }
 
                         // Reheat
                         if (fgRefState && fgRefState.d3ReheatSimulation) {

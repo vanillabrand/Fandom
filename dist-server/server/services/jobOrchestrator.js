@@ -16,22 +16,22 @@ import * as queryAccuracyService from '../../services/queryAccuracyService.js';
 import { safeParseJson } from '../../utils/jsonUtils.js';
 // --- CONFIGURATION CONSTANTS ---
 // Batch Processing
-const ENRICHMENT_BATCH_SIZE_SMALL = 50; // For datasets < 200 nodes
-const ENRICHMENT_BATCH_SIZE_MEDIUM = 75; // For datasets 200-500 nodes
-const ENRICHMENT_BATCH_SIZE_LARGE = 100; // For datasets > 500 nodes
+const ENRICHMENT_BATCH_SIZE_SMALL = 100; // For datasets < 200 nodes
+const ENRICHMENT_BATCH_SIZE_MEDIUM = 300; // For datasets 200-500 nodes
+const ENRICHMENT_BATCH_SIZE_LARGE = 1000; // For datasets > 500 nodes
 const ENRICHMENT_LOG_INTERVAL_DEFAULT = 10; // Log every N nodes
 // Gap Remediation
-const GAP_REMEDIATION_BATCH_SIZE = 50; // Profiles per batch
+const GAP_REMEDIATION_BATCH_SIZE = 100; // Profiles per batch
 const GAP_REMEDIATION_MAX_RETRIES = 3; // Max retry attempts per batch
 // Username Validation
 const USERNAME_MIN_LENGTH = 2;
 const USERNAME_MAX_LENGTH = 30; // Instagram max username length
 const USERNAME_VALIDATION_REGEX = /^[a-z0-9._]/; // Must start with letter, number, dot or underscore
 // Dataset Size Thresholds
-const DATASET_SIZE_SMALL = 50;
-const DATASET_SIZE_MEDIUM = 200;
-const DATASET_SIZE_LARGE = 500;
-const DATASET_SIZE_VERY_LARGE = 1000;
+const DATASET_SIZE_SMALL = 100;
+const DATASET_SIZE_MEDIUM = 300;
+const DATASET_SIZE_LARGE = 1000;
+const DATASET_SIZE_VERY_LARGE = 5000;
 // --- CONFIG ---
 // Initialize Gemini
 let aiClient = null;
@@ -65,14 +65,14 @@ export class JobOrchestrator {
      */
     parseMetric(val) {
         if (val === null || val === undefined)
-            return 0;
+            return null;
         if (typeof val === 'number')
             return val;
         if (typeof val === 'string') {
             // [ROBUST] Handle common social media formats: "1.3M", "10k", "1,234"
             const sanitized = val.toLowerCase().replace(/,/g, '').replace(/\s/g, '').trim();
             if (!sanitized)
-                return 0;
+                return null;
             let multiplier = 1;
             if (sanitized.endsWith('m'))
                 multiplier = 1000000;
@@ -80,9 +80,9 @@ export class JobOrchestrator {
                 multiplier = 1000;
             const numericPart = sanitized.replace(/[mk]$/, '');
             const parsed = parseFloat(numericPart);
-            return isNaN(parsed) ? 0 : Math.round(parsed * multiplier);
+            return isNaN(parsed) ? null : Math.round(parsed * multiplier);
         }
-        return 0;
+        return null;
     }
     /**
      * UNIFIED METRIC EXTRACTOR
@@ -90,30 +90,39 @@ export class JobOrchestrator {
      */
     extractMetric(obj, type) {
         if (!obj)
-            return 0;
+            return null;
         const aliases = {
             followers: [
                 obj.followersCount, obj.followerCount, obj.followers_count, obj.follower_count, obj.followers,
-                obj.edge_followed_by?.count, obj.edgeFollowedBy?.count, obj.metaData?.followersCount, obj.metaData?.followerCount
+                obj.edge_followed_by?.count, obj.edgeFollowedBy?.count,
+                obj.metaData?.followersCount, obj.metaData?.followerCount,
+                obj.owner?.followerCount, obj.owner?.followersCount, obj.owner?.follower_count, obj.owner?.followers_count,
+                obj.owner?.edge_followed_by?.count
             ],
             following: [
                 obj.followsCount, obj.followingCount, obj.following_count, obj.follows_count, obj.follows, obj.following,
-                obj.edge_follow?.count, obj.edgeFollow?.count, obj.metaData?.followingCount, obj.metaData?.followsCount
+                obj.edge_follow?.count, obj.edgeFollow?.count,
+                obj.metaData?.followingCount, obj.metaData?.followsCount,
+                obj.owner?.followingCount, obj.owner?.followsCount, obj.owner?.following_count, obj.owner?.follows_count,
+                obj.owner?.edge_follow?.count
             ],
             posts: [
                 obj.postsCount, obj.mediaCount, obj.postCount, obj.posts_count, obj.media_count, obj.posts,
-                obj.edge_owner_to_timeline_media?.count, obj.edgeOwnerToTimelineMedia?.count, obj.metaData?.postsCount, obj.metaData?.mediaCount
+                obj.edge_owner_to_timeline_media?.count, obj.edgeOwnerToTimelineMedia?.count,
+                obj.metaData?.postsCount, obj.metaData?.mediaCount, obj.metaData?.postCount, obj.metaData?.posts_count,
+                obj.owner?.postsCount, obj.owner?.mediaCount, obj.owner?.postCount, obj.owner?.posts_count, obj.owner?.media_count,
+                obj.owner?.edge_owner_to_timeline_media?.count
             ]
         };
         const candidates = aliases[type] || [];
         for (const val of candidates) {
             if (val !== undefined && val !== null) {
                 const parsed = this.parseMetric(val);
-                if (parsed > 0)
-                    return parsed; // Prefer non-zero values if multiple exist
+                if (parsed !== null)
+                    return parsed; // Accept 0 if explicitly present
             }
         }
-        return 0;
+        return null; // Truly missing
     }
     /**
      * NORMALIZATION HELPER
@@ -148,14 +157,14 @@ export class JobOrchestrator {
                 standard.fullName = meta.fullName;
                 standard.biography = meta.biography;
                 standard.profilePicUrl = meta.profilePicUrl;
-                // [ROBUST] Extract Metrics
-                standard.followersCount = this.parseMetric(meta.followersCount ?? meta.followerCount ?? meta.followers_count ?? meta.follower_count ?? null);
-                standard.followsCount = this.parseMetric(meta.followsCount ?? meta.followingCount ?? meta.following_count ?? meta.follows_count ?? meta.follows ?? null);
-                standard.postsCount = this.parseMetric(meta.postsCount ?? meta.mediaCount ?? meta.postCount ?? meta.posts_count ?? meta.media_count ?? null);
+                // [ROBUST] Extract Metrics using Unified Helper
+                standard.followersCount = this.extractMetric(meta, 'followers') || this.extractMetric(record, 'followers');
+                standard.followsCount = this.extractMetric(meta, 'following') || this.extractMetric(record, 'following');
+                standard.postsCount = this.extractMetric(meta, 'posts') || this.extractMetric(record, 'posts');
                 standard.isPrivate = meta.isPrivate;
                 standard.isVerified = meta.isVerified;
                 standard.isBusinessAccount = meta.isBusinessAccount;
-                standard.externalUrl = meta.externalUrl;
+                standard.externalUrl = meta.externalUrl || meta.url;
                 // ...
             }
             // 2. Instagram Profile Scraper (Deep Dive - 'owner' object or flat)
@@ -182,10 +191,10 @@ export class JobOrchestrator {
                 standard.fullName = record.fullName || record.full_name || record.name;
                 standard.biography = record.biography || record.bio || record.description;
                 standard.profilePicUrl = record.profilePicUrl || record.profile_pic_url;
-                // [ROBUST] Extract Metrics
-                standard.followersCount = this.parseMetric(record.followersCount ?? record.followerCount ?? record.followers_count ?? record.follower_count ?? record.followers ?? null);
-                standard.followsCount = this.parseMetric(record.followsCount ?? record.followingCount ?? record.following_count ?? record.follower_count ?? record.follows ?? record.following ?? null);
-                standard.postsCount = this.parseMetric(record.postsCount ?? record.mediaCount ?? record.postCount ?? record.posts_count ?? record.media_count ?? record.posts ?? null);
+                // [ROBUST] Extract Metrics using Unified Helper
+                standard.followersCount = this.extractMetric(record, 'followers');
+                standard.followsCount = this.extractMetric(record, 'following');
+                standard.postsCount = this.extractMetric(record, 'posts');
                 standard.isPrivate = record.private || record.is_private || record.isPrivate;
                 standard.isVerified = record.verified || record.is_verified || record.isVerified;
                 standard.isBusinessAccount = record.isBusinessAccount;
@@ -405,6 +414,13 @@ export class JobOrchestrator {
                                 profile = profileMap.get(key);
                                 break;
                             }
+                            // [NEW] Try slugified version (e.g. "Jack Grealish" -> "jackgrealish")
+                            // This is crucial because identifyEnrichmentGaps slugifies handles for scraping
+                            const slugified = key.replace(/[^a-z0-9]/g, '');
+                            if (slugified.length > 2 && profileMap.has(slugified)) {
+                                profile = profileMap.get(slugified);
+                                break;
+                            }
                         }
                     }
                     // Hydrate if found
@@ -416,10 +432,18 @@ export class JobOrchestrator {
                         const existingCitation = node.data?.citation || node.citation;
                         // [UNIFIED] Use central hydration helper
                         const hydrated = this.hydrateNodeData(profile, node.group || 'creator', existingEvidence);
+                        // [NEW] Sync top-level properties from hydrated result to ensure UI consistency
+                        node.label = hydrated.label || node.label;
+                        node.val = Math.max(node.val || 10, hydrated.val || 10); // Don't shrink nodes, only grow
+                        node.profilePic = hydrated.profilePic || node.profilePic;
                         // Merge data while preserving mission-critical AI-generated fields if they aren't in 'hydrated'
                         node.data = {
                             ...node.data,
                             ...hydrated.data,
+                            // Ensure these are present
+                            id: profile.id || node.data?.id || node.id,
+                            username: profile.username || node.data?.username,
+                            handle: profile.username ? `@${profile.username.replace('@', '')}` : node.data?.handle,
                             evidence: existingEvidence || hydrated.data.evidence,
                             provenance: existingProvenance || hydrated.data.provenance,
                             citation: existingCitation || hydrated.data.citation
@@ -541,13 +565,18 @@ export class JobOrchestrator {
             if (isRelevant) {
                 const data = node.data || {};
                 // [STRICT] Check for missing metrics OR bio
-                const hasFollowers = (data.followerCount !== undefined && data.followerCount > 0) || (data.followersCount !== undefined && data.followersCount > 0);
-                const hasFollowing = (data.followingCount !== undefined && data.followingCount > 0) || (data.followsCount !== undefined && data.followsCount > 0) || (data.following !== undefined && data.following > 0);
-                const hasBio = !!(data.biography || data.bio || data.description || data.biography !== undefined);
-                const hasPosts = (data.postsCount !== undefined && data.postsCount > 0) || (data.mediaCount !== undefined && data.mediaCount > 0) || (data.posts !== undefined && data.posts > 0) || (data.postCount !== undefined && data.postCount > 0);
+                // Returns true if ANY metric is null or 0 (when we expect more)
+                const followers = data.followerCount ?? data.followersCount;
+                const following = data.followingCount ?? data.followsCount;
+                const posts = data.postsCount ?? data.mediaCount ?? data.postCount;
+                const hasFollowers = followers !== undefined && followers !== null && followers > 0;
+                const hasFollowing = following !== undefined && following !== null && following > 0;
+                const hasPosts = posts !== undefined && posts !== null && posts > 0;
+                const bioStr = (data.biography || data.bio || data.description || '').trim();
+                const hasBio = bioStr.length > 5; // Bio must be substantial
                 // We also check for "fake" or "placeholder" data often generated by AI
-                const bioText = (data.biography || data.bio || data.description || '').toLowerCase();
-                const isPlaceholderBio = hasBio && (bioText.includes('placeholder') || bioText.includes('bio unavailable') || bioText.includes('no bio'));
+                const bioText = bioStr.toLowerCase();
+                const isPlaceholderBio = (bioText.includes('placeholder') || bioText.includes('bio unavailable') || bioText.includes('no bio'));
                 if (!node.data || !hasFollowers || !hasFollowing || !hasBio || !hasPosts || isPlaceholderBio) {
                     // [IMPROVED] Resolve handle more robustly
                     // Don't just give up if label has spaces; many labels are full names (e.g. "Jack Grealish")
@@ -661,8 +690,8 @@ export class JobOrchestrator {
                 console.log(`[Enrichment] ⏳ Setting isEnriching flag for Dataset ${datasetId}...`);
                 await mongoService.updateDataset(datasetId, { isEnriching: true });
             }
-            // Limits to avoid runaway scraping (batch max 20)
-            const targetHandles = gapHandles.slice(0, 20);
+            // [FIX] Increased limit from 20 to 50 to better handle larger graphs (requested by user)
+            const targetHandles = gapHandles.slice(0, 1000);
             console.log(`[Enrichment] Targeted Deep Scrape: ${targetHandles.join(', ')}`);
             // Use the dedicated profile scraper (dSCLg0C3YEZ83HzYX)
             const stepResult = await this.runApifyActor('dSCLg0C3YEZ83HzYX', {
@@ -673,19 +702,72 @@ export class JobOrchestrator {
             });
             if (stepResult && stepResult.items) {
                 console.log(`[Enrichment] Deep Scrape completed. Found ${stepResult.items.length} profiles.`);
-                // Add new profiles to map and PERSIST to global cache
+                // [NEW] Robust Merge Strategy: Add new profiles to map and PERSIST to global cache
                 for (const item of stepResult.items) {
                     const profile = this.normalizeToStandardProfile(item);
                     if (profile) {
                         const cleanHandle = (profile.username || '').toLowerCase().replace('@', '').trim();
-                        if (profile.id)
-                            profileMap.set(profile.id, profile);
-                        if (cleanHandle) {
-                            profileMap.set(cleanHandle, profile);
-                            // [NEW] Persist to global profile cache so other jobs benefit
-                            if (profile.followersCount !== null) {
-                                await mongoService.setProfileCache(cleanHandle, 'instagram', profile.followersCount).catch(() => { });
+                        const pk = profile.id;
+                        // Identify existing entry (check ID and Username)
+                        let existing = profileMap.get(cleanHandle);
+                        if (!existing && pk)
+                            existing = profileMap.get(pk) || profileMap.get(String(pk));
+                        if (existing) {
+                            console.log(`[Enrichment] Merging enriched data for @${cleanHandle}...`);
+                            // 1. Bio Merging: Keep longest non-placeholder
+                            const bioText = (profile.biography || '').toLowerCase();
+                            const isPlaceholderBio = (bioText.includes('placeholder') || bioText.includes('bio unavailable') || bioText.includes('no bio'));
+                            if (profile.biography && !isPlaceholderBio && (profile.biography.length > (existing.biography?.length || 0) || existing.biography?.toLowerCase().includes('placeholder'))) {
+                                existing.biography = profile.biography;
+                                existing.bio = profile.biography;
                             }
+                            // 2. Metric Merging: Max wins (prevent null shadowing)
+                            if (profile.followersCount !== null && profile.followersCount >= (existing.followersCount ?? -1)) {
+                                existing.followersCount = profile.followersCount;
+                                existing.followerCount = profile.followersCount;
+                            }
+                            if (profile.followsCount !== null && profile.followsCount >= (existing.followsCount ?? -1)) {
+                                existing.followsCount = profile.followsCount;
+                                existing.followingCount = profile.followsCount;
+                            }
+                            if (profile.postsCount !== null && profile.postsCount >= (existing.postsCount ?? -1)) {
+                                existing.postsCount = profile.postsCount;
+                                existing.postCount = profile.postsCount;
+                                existing.mediaCount = profile.postsCount;
+                                existing.posts_count = profile.postsCount;
+                            }
+                            // 3. Profile Pic: Prefer non-placeholder
+                            if (profile.profilePicUrl && (!existing.profilePicUrl || (profile.profilePicUrl.includes('scontent') && !existing.profilePicUrl.includes('scontent')))) {
+                                existing.profilePicUrl = profile.profilePicUrl;
+                            }
+                            // 4. Identity Sync
+                            if (pk && !existing.id)
+                                existing.id = String(pk);
+                            if (profile.fullName && (!existing.fullName || profile.fullName.length > (existing.fullName?.length || 0))) {
+                                existing.fullName = profile.fullName;
+                            }
+                            // 5. Engagement Recalculation (if followers changed)
+                            if (existing.latestPosts?.length > 0 && (existing.followersCount || 0) > 0) {
+                                const totalInteractions = existing.latestPosts.reduce((acc, post) => acc + (post.likesCount || 0) + (post.commentsCount || 0), 0);
+                                const rate = (totalInteractions / existing.latestPosts.length) / (existing.followersCount || 1);
+                                existing.engagementRate = (rate * 100).toFixed(2) + '%';
+                            }
+                            // Ensure both ID and handle point to same object
+                            if (pk)
+                                profileMap.set(String(pk), existing);
+                            if (cleanHandle)
+                                profileMap.set(cleanHandle, existing);
+                        }
+                        else {
+                            // Fresh entry
+                            if (pk)
+                                profileMap.set(String(pk), profile);
+                            if (cleanHandle)
+                                profileMap.set(cleanHandle, profile);
+                        }
+                        // PERSIST to global cache
+                        if (cleanHandle && profile.followersCount !== null) {
+                            await mongoService.setProfileCache(cleanHandle, 'instagram', profile.followersCount).catch(() => { });
                         }
                     }
                 }
@@ -1053,8 +1135,12 @@ export class JobOrchestrator {
             // 1. Analyze Requirements (AI-Only Route)
             await mongoService.updateJob(job.id, { progress: 10, result: { stage: 'Analyzing query intent with AI...' } });
             try {
+                // [NEW] Fetch existing datasets for reuse detection
+                const userId = job.userId || 'system';
+                const existingDatasets = await this.getExistingDatasets(userId);
+                console.log(`[JobOrchestrator] Found ${existingDatasets.length} existing datasets for user ${userId}`);
                 // All queries now go through Gemini for maximum accuracy and nuance
-                plan = await this.analyzeMapRequirements(query, sampleSize, [], false, true, seedContext, postLimit || 3);
+                plan = await this.analyzeMapRequirements(query, sampleSize, existingDatasets, ignoreCache || false, true, seedContext, postLimit || 3);
                 console.log(`[JobOrchestrator] Final Plan generated (${plan.intent}): ${plan.steps.length} steps`);
             }
             catch (e) {
@@ -1088,7 +1174,8 @@ export class JobOrchestrator {
                     planId: job.id,
                     sampleSize: sampleSize,
                     ignoreCache: ignoreCache, // [NEW] Pass the flag
-                    search_keywords: plan.search_keywords // [NEW] Pass extracted keywords
+                    search_keywords: plan.search_keywords, // [NEW] Pass extracted keywords
+                    postLimit: postLimit || 3 // [NEW] Pass depth for fingerprinting
                 });
                 let items = stepResult.items;
                 // [NEW] Private Account Filtering
@@ -1312,9 +1399,13 @@ export class JobOrchestrator {
                                 const realProfile = profileMap.get(handleKey) || profileMap.get(rawKey);
                                 // Merge real data if found
                                 if (realProfile) {
-                                    item.followersCount = realProfile.followersCount || item.followersCount || 0;
-                                    item.followingCount = realProfile.followsCount || item.followingCount || 0;
-                                    item.postsCount = realProfile.mediaCount || realProfile.postsCount || item.postsCount || 0;
+                                    item.followersCount = realProfile.followersCount || realProfile.followerCount || realProfile.followers_count || item.followersCount || 0;
+                                    item.followerCount = item.followersCount;
+                                    item.followingCount = realProfile.followsCount || realProfile.followingCount || realProfile.following_count || item.followingCount || 0;
+                                    item.followsCount = item.followingCount;
+                                    item.postsCount = realProfile.mediaCount || realProfile.postsCount || realProfile.postCount || realProfile.posts_count || item.postsCount || 0;
+                                    item.mediaCount = item.postsCount;
+                                    item.posts_count = item.postsCount; // [NEW] Sync
                                     item.profilePicUrl = realProfile.profilePicUrl || item.profilePicUrl;
                                     item.url = realProfile.url || item.url;
                                     item.handle = realProfile.username ? `@${realProfile.username}` : item.handle;
@@ -2214,7 +2305,9 @@ export class JobOrchestrator {
         }
         // [REMOVED] Proxy configuration - not required for Apify actors
         // 1. Calculate Fingerprint (using robust system)
-        const fingerprint = generateScrapeFingerprint(realActorId, normalizedInput);
+        // [NEW] Include postLimit in fingerprint to distinguish between deep/shallow requests
+        const fingerprintInput = { ...normalizedInput, _postLimit: metadata?.postLimit || 3 };
+        const fingerprint = generateScrapeFingerprint(realActorId, fingerprintInput);
         console.log(`[Apify] Fingerprint: ${fingerprint} (Actor: ${realActorId})`);
         // 2. Check Cache (Scrape Fingerprints Collection)
         // [MODIFIED] Bypass Cache Check if ignoreCache is true
@@ -3085,7 +3178,21 @@ export class JobOrchestrator {
             const links = graphData.links;
             console.log("[JobOrchestrator] Generated nodes count:", nodes.length);
             console.log("[JobOrchestrator] Generated links count:", links.length);
+            // [NEW] 100% ENRICHMENT GUARANTEE: Perform Deep Enrichment for missing nodes in AI Analysis
+            console.log('[AI Analysis] 🔍 Checking for enrichment gaps...');
+            const profileMap = new Map();
+            for (const item of scrapedProfiles) {
+                const profile = this.normalizeToStandardProfile(item);
+                if (profile) {
+                    if (profile.id)
+                        profileMap.set(profile.id, profile);
+                    if (profile.username)
+                        profileMap.set(profile.username.toLowerCase().replace('@', '').trim(), profile);
+                }
+            }
             const localId = uuidv4();
+            // In processAiAnalysis, graphData is { nodes, links }. performDeepEnrichment handles this structure.
+            await this.performDeepEnrichment(graphData, localId, job.id, profileMap);
             await mongoService.createDataset({
                 id: localId,
                 userId: job.userId,
@@ -3833,6 +3940,24 @@ export class JobOrchestrator {
                     });
                 }
             });
+            // [NEW] 100% ENRICHMENT GUARANTEE: Perform Deep Enrichment for missing nodes in Query Builder
+            console.log('[Orchestration] 🔍 Checking for enrichment gaps...');
+            const profileMap = new Map();
+            const allScrapedItems = results.flat();
+            for (const item of allScrapedItems) {
+                const profile = this.normalizeToStandardProfile(item);
+                if (profile) {
+                    if (profile.id)
+                        profileMap.set(profile.id, profile);
+                    if (profile.username)
+                        profileMap.set(profile.username.toLowerCase().replace('@', '').trim(), profile);
+                }
+            }
+            // [NEW] Trigger Deep Enrichment for missing profile data
+            const extractionDatasetId = (executionOutput.datasetIds && executionOutput.datasetIds.length > 0)
+                ? executionOutput.datasetIds[executionOutput.datasetIds.length - 1]
+                : "";
+            await this.performDeepEnrichment(analytics, extractionDatasetId, job.id, profileMap);
             // Merge scalar props
             const { creators, brands, topics, clusters, subtopics, topContent, ...others } = graphData.analytics;
             Object.assign(analytics, others);
@@ -4147,7 +4272,7 @@ export class JobOrchestrator {
      * Programmatic dataset matcher for simple cases
      * Returns dataset IDs if a clear match is found, null otherwise
      */
-    programmaticDatasetMatch(query, existingDatasets) {
+    programmaticDatasetMatch(query, existingDatasets, requestedSample = 100, requestedDepth = 3) {
         if (existingDatasets.length === 0)
             return null;
         const queryLower = query.toLowerCase().trim();
@@ -4173,7 +4298,8 @@ export class JobOrchestrator {
         for (const dataset of existingDatasets) {
             const datasetQuery = (dataset.metadata?.query || dataset.name || '').toLowerCase();
             if (datasetQuery === queryLower) {
-                console.log(`[Programmatic Match] âœ… Exact query match: "${dataset.metadata?.query}"`);
+                console.log(`[Programmatic Match] Exact query match: "${dataset.metadata?.query}"`);
+                // If it's an exact match, we return it but AI will top-up if requested > cached
                 addDataset(dataset);
                 return { ids: matchedIds, totalRecords, maxDepth };
             }
@@ -4183,47 +4309,48 @@ export class JobOrchestrator {
         if (isComparison && handles.length >= 2) {
             const matchedHandles = new Set();
             for (const handle of handles) {
-                for (const dataset of existingDatasets) {
-                    const targetProfile = (dataset.targetProfile || '').toLowerCase().replace('@', '');
-                    const datasetQuery = (dataset.metadata?.query || '').toLowerCase();
-                    // Check if dataset is for this specific handle
-                    if (targetProfile === handle || datasetQuery.includes(`@${handle}`)) {
-                        // Check freshness (30 days)
-                        const ageMs = Date.now() - new Date(dataset.createdAt).getTime();
-                        const ageDays = ageMs / (1000 * 60 * 60 * 24);
-                        if (ageDays <= 30 && !matchedHandles.has(handle)) {
-                            addDataset(dataset);
-                            matchedHandles.add(handle);
-                            console.log(`[Programmatic Match] âœ… Found dataset for @${handle}: "${dataset.metadata?.query || dataset.name}"`);
-                            break; // Use most recent dataset for this handle
-                        }
+                // Find most recent/deepest dataset for this handle
+                const eligibleDatasets = existingDatasets.filter(d => {
+                    const targetProfile = (d.targetProfile || '').toLowerCase().replace('@', '');
+                    const dQuery = (d.metadata?.query || d.name || '').toLowerCase();
+                    return targetProfile === handle || dQuery.includes(`@${handle}`);
+                }).sort((a, b) => (b.recordCount || 0) - (a.recordCount || 0));
+                for (const dataset of eligibleDatasets) {
+                    const ageMs = Date.now() - new Date(dataset.createdAt).getTime();
+                    const ageDays = ageMs / (1000 * 60 * 60 * 24);
+                    if (ageDays <= 30 && !matchedHandles.has(handle)) {
+                        addDataset(dataset);
+                        matchedHandles.add(handle);
+                        console.log(`[Programmatic Match] Found dataset for @${handle}: "${dataset.metadata?.query || dataset.name}"`);
+                        break;
                     }
                 }
             }
             // Only return if we found datasets for ALL handles in the comparison
             if (matchedIds.length === handles.length) {
-                console.log(`[Programmatic Match] âœ… Complete match for comparison query (${matchedIds.length} datasets)`);
+                console.log(`[Programmatic Match] Complete match for comparison query (${matchedIds.length} datasets)`);
                 return { ids: matchedIds, totalRecords, maxDepth };
             }
         }
         // Case 3: Single handle query
         if (handles.length === 1) {
             const handle = handles[0];
-            for (const dataset of existingDatasets) {
-                const targetProfile = (dataset.targetProfile || '').toLowerCase().replace('@', '');
-                if (targetProfile === handle) {
-                    const ageMs = Date.now() - new Date(dataset.createdAt).getTime();
-                    const ageDays = ageMs / (1000 * 60 * 60 * 24);
-                    if (ageDays <= 30) {
-                        // [NEW] Refuse shallow matches for community queries
-                        if (isCommunityQuery && dataset.recordCount < 10 && dataset.dataType !== 'audience') {
-                            console.log(`[Programmatic Match] âŒ Refusing shallow dataset (${dataset.recordCount} recs) for community query.`);
-                            continue;
-                        }
-                        console.log(`[Programmatic Match] âœ… Single handle match: @${handle}`);
-                        addDataset(dataset);
-                        return { ids: matchedIds, totalRecords, maxDepth };
+            // Sort by record count (descending) to find the most "complete" cache
+            const sortedMatches = existingDatasets
+                .filter(d => (d.targetProfile || '').toLowerCase().replace('@', '') === handle)
+                .sort((a, b) => (b.recordCount || 0) - (a.recordCount || 0));
+            for (const dataset of sortedMatches) {
+                const ageMs = Date.now() - new Date(dataset.createdAt).getTime();
+                const ageDays = ageMs / (1000 * 60 * 60 * 24);
+                if (ageDays <= 30) {
+                    // Refuse shallow matches for community queries
+                    if (isCommunityQuery && dataset.recordCount < 10 && dataset.dataType !== 'audience') {
+                        console.log(`[Programmatic Match] Refusing shallow dataset (${dataset.recordCount} recs) for community query.`);
+                        continue;
                     }
+                    console.log(`[Programmatic Match] Single handle match: @${handle}`);
+                    addDataset(dataset);
+                    return { ids: matchedIds, totalRecords, maxDepth };
                 }
             }
         }
@@ -4242,14 +4369,11 @@ export class JobOrchestrator {
         const model = "gemini-3-flash-preview";
         console.log(`[Server] Using Advanced Logic (${model}) for query analysis (Verified Fix).`);
         // Prepare context
-        // [MODIFIED] User requested deduplication via DB scan, not prompt context.
-        // [FIX] Disable Caching as per User Request: "can you remoe the caching of queries"
-        const effectiveDatasets = [];
-        // const effectiveDatasets = ignoreCache ? [] : existingDatasets;
+        // [MODIFIED] Re-enabled caching for reuse detection
+        const effectiveDatasets = ignoreCache ? [] : existingDatasets;
         console.log(`[Dataset Reuse] Checking ${effectiveDatasets.length} existing datasets (Internal Logic) - CACHING DISABLED`);
         // [NEW] Try programmatic matching first (Hybrid Approach - Option C)
-        const programmaticMatch = null; // Disable programmatic match too
-        // const programmaticMatch = this.programmaticDatasetMatch(query, effectiveDatasets);
+        const programmaticMatch = ignoreCache ? null : this.programmaticDatasetMatch(query, effectiveDatasets, sampleSize, postLimit);
         let programmaticInstruction = "";
         let cachedStats = "";
         if (programmaticMatch) {
@@ -4298,7 +4422,7 @@ export class JobOrchestrator {
     2. If Sample Size (${sampleSize}) > Cached Capacity, prescribe a "Top-up" scrape for the difference.
     3. If Scrape Depth (${postLimit}) > Cached Depth, prescribe a "Deep Enrichment" step for missing posts.
     4. Provide reasoning for every step.
-    Deep Analysis Requested: ${useDeepAnalysis ? "YES" : "NO"}
+    Deep Analysis Requested: "YES"}
     
 
 
@@ -4421,8 +4545,8 @@ export class JobOrchestrator {
            - Input: { "username": ["[BRAND]"], "type": "followers", "max_count": ${sampleSize} }
         2. Scrape who THOSE followers follow (to find over-indexed brands).
            - Actor: 'thenetaji/instagram-followers-followings-scraper'
-           - Input: { "username": ["USE_DATA_FROM_STEP_step_1"], "type": "followings", "max_count": 20 }
-           - Note: System will scale this "20" based on how many profiles were found in Step 1.
+           - Input: { "username": ["USE_DATA_FROM_STEP_step_1"], "type": "followings", "max_count": 100 }
+           - Note: System will scale this "100" based on how many profiles were found in Step 1.
         3. MANDATORY: Enrich profiles of the brands found in Step 2.
            - Actor: 'apify/instagram-api-scraper'
            - Input: { "directUrls": ["USE_DATA_FROM_STEP_step_2"], "resultsType": "details", "addParentData": true }
@@ -4459,8 +4583,8 @@ export class JobOrchestrator {
            - Input: { "username": ["[BRAND]"], "type": "followers", "max_count": ${sampleSize} }
         2. (For sensitivity/affinity) Scrape who THOSE followers follow.
            - Actor: 'thenetaji/instagram-followers-followings-scraper'
-           - Input: { "username": ["USE_DATA_FROM_STEP_step_1"], "type": "followings", "max_count": 20 }
-           - Note: System will scale this "20" based on Step 1 list length.
+           - Input: { "username": ["USE_DATA_FROM_STEP_step_1"], "type": "followings", "max_count": 100 }
+           - Note: System will scale this "100" based on Step 1 list length.
         - Reasoning: "Step 1 gets usernames, Step 2 maps their following for brand affinity."
 
     2. "Find [NICHE] creators" / "Rising stars in [TOPIC]" / "Top influencers for [BRAND]"
@@ -4473,7 +4597,7 @@ export class JobOrchestrator {
                "searchType": "user",
                "searchLimit": ${Math.min(250, sampleSize)},
                "resultsType": "details",
-               "resultsLimit": 1
+               "resultsLimit": ${postLimit}
            }
            - **CRITICAL**: Use 'search' parameter, NOT 'searchQuery'.
            - **CRITICAL**: 'search' MUST be the EXTRACTED MAIN KEYWORD(S) ONLY.
@@ -4529,8 +4653,8 @@ export class JobOrchestrator {
            - Actor: 'apify/google-search-scraper'
            - Input: {
                "queries": ["instagram [BRAND_MENTIONS] [LOCATIONS]"],
-               "maxPagesPerQuery": 3,
-               "resultsPerPage": 10
+               "maxPagesPerQuery": 10,
+               "resultsPerPage": 100
              }
            - **CRITICAL KEYWORD EXTRACTION RULES**:
              * **INCLUDE ONLY**:
@@ -4562,7 +4686,7 @@ export class JobOrchestrator {
            - Input: {
                "directUrls": ["https://instagram.com/[COMPETITOR]"],
                "resultsType": "posts",
-               "resultsLimit": 50,
+               "resultsLimit": ${sampleSize},
                "addParentData": true
              }
            - **CRITICAL**: Extract competitor handle from query (e.g., "@nike" â†’ "nike", "for nike" â†’ "nike")
@@ -4578,7 +4702,7 @@ export class JobOrchestrator {
            - Actor: 'apify/instagram-hashtag-scraper'
            - Input: {
                "hashtags": ["[HASHTAG]"],
-               "resultsLimit": 100,
+               "resultsLimit": ${sampleSize},
                "resultsType": "posts"
              }
            - **CRITICAL**: Extract hashtag without # for URL (e.g. #summer -> summer) but keep # for metadata.
@@ -4609,7 +4733,7 @@ export class JobOrchestrator {
            - Actor: 'apify/instagram-hashtag-scraper'
            - Input: {
                "hashtags": ["[BRAND_NAME]"],
-               "resultsLimit": 100,
+               "resultsLimit": ${sampleSize},
                "resultsType": "posts"
              }
            - **CRITICAL**: Use brand name as hashtag (e.g. @nike -> niike -> https://instagram.com/explore/tags/nike)
@@ -4625,7 +4749,7 @@ export class JobOrchestrator {
                "search": "[TOPIC_OR_BRAND]",
                "searchType": "hashtag",
                "resultsType": "posts",
-               "resultsLimit": 20
+               "resultsLimit": ${sampleSize}
              }
         2. Scrape comments for top posts.
            - Actor: 'apify/instagram-comment-scraper'
@@ -4643,7 +4767,7 @@ export class JobOrchestrator {
            - Input: {
                "queries": "site:instagram.com [KEYWORDS] [LOCATION] \"followers\"",
                "resultsPerPage": 20,
-               "maxPagesPerQuery": 1
+               "maxPagesPerQuery": 10
              }
         2. Enrich identified profiles.
            - Actor: 'apify/instagram-api-scraper'
@@ -4662,7 +4786,7 @@ export class JobOrchestrator {
            - Input: {
                "directUrls": ["https://instagram.com/explore/tags/[HASHTAG]"],
                "resultsType": "posts",
-               "resultsLimit": 50,
+               "resultsLimit": ${sampleSize},
                "addParentData": true
              }
         - Reasoning: "Analyzing recent posts from the hashtag feed allows calculation of viral velocity (Engagement / Time)."
@@ -4935,7 +5059,7 @@ export class JobOrchestrator {
                 else if (step.input && step.input.sampleSize)
                     recordCount = step.input.sampleSize;
                 else
-                    recordCount = 50; // Safe default
+                    recordCount = 100; // Safe default
             }
             // [REMOVED] Arbitrary sampleSize override that broke proportional scaling
             // [CRITICAL] Delta Logic: If this is the FIRST step and we have cached records, subtract them.
@@ -5040,7 +5164,10 @@ export class JobOrchestrator {
                 if (inputStr.includes('USE_DATA_FROM_STEP') || inputStr.includes('USE_DATA_FROM_DATASET')) {
                     continue; // Cannot check cache for dynamic steps yet
                 }
-                const fingerprint = generateScrapeFingerprint(realActorId, normalizedInput);
+                // [NEW] Consistent depth-aware fingerprinting
+                const depth = step.metadata?.postLimit || 3;
+                const fingerprintInput = { ...normalizedInput, _postLimit: depth };
+                const fingerprint = generateScrapeFingerprint(realActorId, fingerprintInput);
                 // 4. Check Cache
                 const existingScrape = await mongoService.getScrapeFingerprint(fingerprint);
                 if (existingScrape && isFingerprintFresh(existingScrape.executedAt, existingScrape.metadata.dataType)) {
@@ -5472,9 +5599,16 @@ export class JobOrchestrator {
                         id: pk ? String(pk) : '', // Force ID to string
                         ...r, // Inherit other fields
                         latestPosts: [],
-                        // Ensure counters are numbers via parseMetric
-                        followersCount: this.parseMetric(r.followersCount || r.followerCount || r.followers || 0),
-                        followsCount: this.parseMetric(r.followsCount || r.followingCount || r.following || 0)
+                        // [ROBUST] Use unified extractor immediately
+                        followersCount: this.extractMetric(r, 'followers'),
+                        followsCount: this.extractMetric(r, 'following'),
+                        postsCount: this.extractMetric(r, 'posts'),
+                        // [NEW] Synchronize common aliases locally
+                        followerCount: this.extractMetric(r, 'followers'),
+                        followingCount: this.extractMetric(r, 'following'),
+                        mediaCount: this.extractMetric(r, 'posts'),
+                        postCount: this.extractMetric(r, 'posts'),
+                        posts_count: this.extractMetric(r, 'posts')
                     };
                     profileMap.set(cleanUser, p);
                     if (pk)
@@ -5508,20 +5642,25 @@ export class JobOrchestrator {
             // Instead of wiping the profile if followers are higher, we check each high-value field.
             const meta = r.metaData || {};
             const ownerObj = r.owner || {};
-            const sourceBio = r.biography || r.bio || meta.biography || meta.bio || ownerObj.biography || ownerObj.bio;
+            const sourceBio = (r.biography || r.bio || meta.biography || meta.bio || ownerObj.biography || ownerObj.bio || '').trim();
+            const bioText = sourceBio.toLowerCase();
+            const isPlaceholderBio = (bioText.includes('placeholder') || bioText.includes('bio unavailable') || bioText.includes('no bio'));
             // [FIX] robust extraction (Priority: HD -> Top Level -> Meta -> Owner)
             const sourcePic = r.profilePicUrlHD || r.hdProfilePicUrl || r.profilePicUrl || r.profile_pic_url ||
                 meta.profilePicUrlHD || meta.profilePicUrl ||
                 ownerObj.profile_pic_url || ownerObj.profilePicUrl;
-            // [ROBUST] Extract Metrics using unified helper that checks deep objects and aliases
+            // [ROBUST] Extract Metrics using unified helper (returns null if missing)
             const sourceFollowers = this.extractMetric(r, 'followers');
             const sourceFollows = this.extractMetric(r, 'following');
             const sourcePosts = this.extractMetric(r, 'posts');
             const sourceEmail = r.email || meta.email;
             const sourceExternalUrl = r.externalUrl || meta.externalUrls?.[0] || meta.url;
-            // 1. Bio: Keep the longest non-empty bio
-            if (sourceBio && typeof sourceBio === 'string' && (!profile.biography || sourceBio.length > (profile.biography?.length || 0))) {
-                profile.biography = sourceBio;
+            // 1. Bio: Keep the longest non-empty bio, and filter placeholders
+            if (sourceBio && !isPlaceholderBio) {
+                if (!profile.biography || sourceBio.length > (profile.biography?.length || 0) || profile.biography.toLowerCase().includes('placeholder')) {
+                    profile.biography = sourceBio;
+                    profile.bio = sourceBio;
+                }
             }
             // 2. Profile Pic: Prefer HD or non-placeholder
             const currentPic = profile.profilePicUrl || profile.profile_pic_url;
@@ -5544,15 +5683,21 @@ export class JobOrchestrator {
                 profile.isVerified = meta.verified;
             if (ownerObj.is_verified !== undefined)
                 profile.isVerified = ownerObj.is_verified;
-            // 4. Counts: Always take the Max to prevent shadowing by '0' values from minimal scrapes
-            // Using >= to ensure we update even if both are 0 but we have better data source now
-            if (sourceFollowers >= (profile.followersCount || 0))
+            // 4. Counts: Always take the Max to prevent shadowing by 'null' values
+            // We use (val ?? -1) to ensure that any real number (including 0) overrides null
+            if (sourceFollowers !== null && sourceFollowers >= (profile.followersCount ?? -1)) {
                 profile.followersCount = sourceFollowers;
-            if (sourceFollows >= (profile.followsCount || 0))
+                profile.followerCount = sourceFollowers; // [NEW] Synchronize
+            }
+            if (sourceFollows !== null && sourceFollows >= (profile.followsCount ?? -1)) {
                 profile.followsCount = sourceFollows;
-            if (sourcePosts >= (profile.mediaCount || 0)) {
+                profile.followingCount = sourceFollows; // [NEW] Synchronize
+            }
+            if (sourcePosts !== null && sourcePosts >= (profile.postsCount ?? -1)) {
                 profile.mediaCount = sourcePosts;
-                profile.postsCount = sourcePosts; // [NEW] Synchronize
+                profile.postsCount = sourcePosts;
+                profile.postCount = sourcePosts; // [NEW] Synchronize
+                profile.posts_count = sourcePosts; // [NEW] Synchronize
             }
             // 5. Full Name
             const sourceName = r.fullName || meta.fullName || ownerObj.full_name;
@@ -5801,22 +5946,29 @@ export class JobOrchestrator {
                 username: username, // [FIX] Add username without @ prefix
                 handle: `@${username}`,
                 fullName: p.fullName,
-                followers: (p.followersCount ?? 0).toLocaleString(),
-                followerCount: p.followersCount ?? 0, // [FIX] Add numeric value for sorting
-                following: (p.followsCount ?? 0).toLocaleString(),
-                followingCount: p.followsCount ?? 0, // [FIX] Add numeric value for sorting
-                posts: (p.postsCount ?? p.mediaCount ?? (p.latestPosts ? p.latestPosts.length : 0)).toLocaleString(),
-                postsCount: p.postsCount ?? p.mediaCount ?? (p.latestPosts ? p.latestPosts.length : 0), // [FIX] Add p.posts fallback
-                postCount: p.postsCount ?? p.mediaCount ?? (p.latestPosts ? p.latestPosts.length : 0), // [UNIFIED] Match UI expectation
+                // [ROBUST METRICS] Use plural + singular fallbacks and handle nulls with "..."
+                followers: (p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count) !== undefined && (p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count) !== null
+                    ? (p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count).toLocaleString()
+                    : "...",
+                followerCount: p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count ?? null,
+                following: (p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count) !== undefined && (p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count) !== null
+                    ? (p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count).toLocaleString()
+                    : "...",
+                followingCount: p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count ?? null,
+                posts: (p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : null)) !== null
+                    ? (p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts ? p.latestPosts.length : 0)).toLocaleString()
+                    : "...",
+                postsCount: p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : null),
+                postCount: p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : null),
                 isBusinessAccount: p.isBusinessAccount, // [NEW]
-                bio: (p.biography || p.bio || '').replace(/Bio unavailable/i, '').replace(/No bio/i, '').trim(),
+                bio: (p.biography || p.bio || '').replace(/Bio unavailable/i, '').replace(/No bio/i, '').replace(/Placeholder/i, '').trim(),
                 profilePicUrl: ((p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) && (p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD).startsWith('http') ? proxyMediaUrl(p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) : null),
                 externalUrl: p.externalUrl || p.url,
                 url: p.url || p.externalUrl || `https://instagram.com/${username}`, // [FIX] Add url field
                 sourceUrl: p.url || `https://instagram.com/${username}`,
-                engagementRate: engagementRate || '0%',
-                avgLikes: (avgLikes || 0).toLocaleString(),
-                avgComments: (avgComments || 0).toLocaleString(),
+                engagementRate: engagementRate || '...',
+                avgLikes: avgLikes !== undefined && avgLikes !== null ? (avgLikes).toLocaleString() : "...",
+                avgComments: avgComments !== undefined && avgComments !== null ? (avgComments).toLocaleString() : "...",
                 latestPosts: posts,
                 evidence: evidenceSummary, // Summary string
                 evidenceItems: evidenceItems, // [NEW] Structured items for subnodes
@@ -5925,12 +6077,12 @@ export class JobOrchestrator {
         const links = [];
         // 1. Root Node
         const root = {
-            id: 'root',
+            id: 'MAIN',
             label: `Analysis: ${query}`,
             type: 'root',
             group: 'main', // [FIX] Added group for frontend compatibility
             color: '#a855f7', // [FIX] Purple for main/root node
-            val: 100,
+            val: 100, // CHECK WHY VAL 100
             children: []
         };
         const mentionMap = new Map(); // Target -> Set of Source Usernames
@@ -6099,7 +6251,7 @@ export class JobOrchestrator {
             if (isBrand) {
                 group = 'brand';
             }
-            else if (p.isVerified || (p.followersCount && p.followersCount > 10000)) {
+            else if (p.isVerified || (p.followersCount && p.followersCount > 5000)) {
                 group = 'creator';
             }
             // [NEW] Rising Popularity Score (Local Relevance)
@@ -6287,7 +6439,7 @@ export class JobOrchestrator {
     generateSemanticGraph(records, centralLabel, matches = []) {
         const nodes = [];
         const links = [];
-        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 });
+        nodes.push({ id: 'MAIN', label: centralLabel, group: 'main', val: 50, level: 0 }); // CHECK VAL
         // Source Selection: Use AI Matches if available (High Precision), else usage raw records (Broad)
         const sourceData = matches.length > 0 ? matches : records;
         const isAiDerived = matches.length > 0;
@@ -6328,7 +6480,7 @@ export class JobOrchestrator {
                     occurrences: data.count,
                     // [PROVENANCE] Attach evidence for UI '?' icon
                     provenance: {
-                        source: isAiDerived ? 'AI Semantic Match' : 'Hashtag Aggregation',
+                        source: isAiDerived ? 'Semantic Match' : 'Hashtag Aggregation',
                         reasoning: `Topic appears in ${data.count} ${isAiDerived ? 'relevant ' : ''} posts.`,
                         evidence: data.evidence,
                         confidence: isAiDerived ? 0.9 : 0.6
@@ -6403,8 +6555,8 @@ export class JobOrchestrator {
         highValueClusters.forEach(cluster => {
             // Find links FROM this cluster
             const childLinks = links.filter(l => l.source === cluster.id);
-            // Keep top 5 children by value regardless of score, to ensure cluster isn't empty
-            childLinks.slice(0, 5).forEach(l => relevantNodeIds.add(l.target));
+            // Keep top 10 children by value regardless of score, to ensure cluster isn't empty
+            childLinks.slice(0, 10).forEach(l => relevantNodeIds.add(l.target));
         });
         // 5. Contextual Expansion for Overindexing
         // If dealing with Overindexing, we need to be more generous with "Profile" nodes if they bridge Topics and Brands
@@ -6545,17 +6697,22 @@ export class JobOrchestrator {
                 return;
             }
             // --- STANDARD CLUSTER GENERATION ---
-            // [FIX] Anchor Multi-Hub comparisons to a central invisible ROOT
+            // [FIX] Anchor Multi-Hub comparisons to a central ROOT
             // This prevents clusters from flying miles apart
             if (nodes.length === 0) {
                 nodes.push({
-                    id: 'ROOT',
-                    label: 'Comparison',
-                    group: 'root',
+                    id: 'MAIN',
+                    label: query,
+                    group: 'main',
                     type: 'root', // [FIX] Explicit Type
-                    val: 1,
+                    val: 120, // Significantly larger core
                     level: 0,
-                    opacity: 0.0
+                    color: '#10b981', // Emerald
+                    data: {
+                        label: query,
+                        description: `Comparison analysis for: ${query}`,
+                        isRoot: true
+                    }
                 });
             }
             let clusterLabel = `Group ${index + 1}`;
@@ -6587,14 +6744,15 @@ export class JobOrchestrator {
                 nodes.push({
                     id: mainId,
                     label: clusterLabel,
-                    group: 'main',
-                    type: 'main', // [FIX] Explicit Type
-                    val: 50,
-                    level: 1
+                    group: 'cluster',
+                    type: 'cluster', // [FIX] Explicit Type
+                    val: 80, // [FIX] Priority size
+                    level: 1,
+                    color: index === 0 ? '#3b82f6' : '#ec4899', // Blue vs Pink
                 });
                 addedMainNodes.add(mainId);
                 // [FIX] Link to Root
-                links.push({ source: 'ROOT', target: mainId, value: 5 });
+                links.push({ source: 'MAIN', target: mainId, value: 5 });
             }
             // Add nodes for this cluster
             resultSet.slice(0, 50).forEach((record, i) => {
@@ -6681,7 +6839,7 @@ export class JobOrchestrator {
                 // Collect sample evidence (up to 5 per topic)
                 if (!topicEvidence.has(k))
                     topicEvidence.set(k, []);
-                if (topicEvidence.get(k).length < 5) {
+                if (topicEvidence.get(k).length < 30) {
                     topicEvidence.get(k).push({
                         type: 'mention',
                         text: `Found in content of @${p.username} `,
@@ -6700,7 +6858,7 @@ export class JobOrchestrator {
                     // Collect sample evidence (up to 5 per brand)
                     if (!brandEvidence.has(m))
                         brandEvidence.set(m, []);
-                    if (brandEvidence.get(m).length < 5) {
+                    if (brandEvidence.get(m).length < 30) { //30 LIMIT
                         brandEvidence.get(m).push({
                             type: 'bio_mention',
                             text: `Mentioned in bio of @${p.username}: "${bio.substring(0, 60)}..."`,
@@ -7245,16 +7403,18 @@ export class JobOrchestrator {
         // Flatten results (expecting posts)
         const allPosts = results.flat().filter(item => item.type === 'Image' || item.type === 'Video' || item.type === 'Sidecar' || item.caption);
         // Extract the core hashtag
-        const coreHashtag = query.match(/#(\w+)/)?.[0] || query.trim();
+        const queryText = query || (typeof plan === 'string' ? plan : '');
+        const coreHashtag = (queryText.match(/#(\w+)/)?.[0] || queryText || 'hashtag').trim();
         const hashtagLabel = coreHashtag.startsWith('#') ? coreHashtag : `#${coreHashtag}`;
         const mainId = 'MAIN_HASHTAG';
         const nodes = [];
         const links = [];
         // 1. Root Node (The User Request)
         nodes.push({
-            id: 'ROOT',
+            id: 'MAIN',
             label: query,
             type: 'root',
+            group: 'main',
             val: 50,
             level: 0,
             color: '#10b981', // Emerald
@@ -7264,7 +7424,7 @@ export class JobOrchestrator {
         nodes.push({
             id: mainId,
             label: hashtagLabel,
-            group: 'topic',
+            group: 'cluster',
             type: 'topic',
             val: 80,
             level: 1,
@@ -7279,7 +7439,7 @@ export class JobOrchestrator {
                 }
             }
         });
-        links.push({ source: 'ROOT', target: mainId, value: 5 });
+        links.push({ source: 'MAIN', target: mainId, value: 5 });
         // 3. Process Posts
         const coOccurringTags = new Map();
         const authorCounts = new Map();
@@ -8107,12 +8267,19 @@ export class JobOrchestrator {
         const nodes = [];
         const links = [];
         // [FIX] Correct Root Label: Use handle if available, otherwise centralLabel but stripped of "map creators for"
+        // [FIX] Correct Root Label: Use full query for multi-entity intents (Comparison/Overlap)
         let displayLabel = centralLabel;
-        const handleMatch = centralLabel.match(/@([a-zA-Z0-9_.]+)/);
-        if (handleMatch)
-            displayLabel = `@${handleMatch[1]}`;
-        else
-            displayLabel = centralLabel.replace(/map (the )?over-indexed creators (for|of) (followings of followers of )?/i, '').trim();
+        const isComparison = centralLabel.toLowerCase().includes('comparison') || centralLabel.toLowerCase().includes('overlap') || centralLabel.includes(' vs ');
+        if (isComparison) {
+            displayLabel = centralLabel; // Keep the full query context
+        }
+        else {
+            const handleMatch = centralLabel.match(/@([a-zA-Z0-9_.]+)/);
+            if (handleMatch)
+                displayLabel = `@${handleMatch[1]}`;
+            else
+                displayLabel = centralLabel.replace(/map (the )?over-indexed creators (for|of) (followings of followers of )?/i, '').trim();
+        }
         // [FIX] Ensure Root ID is 'MAIN' for link consistency
         nodes.push({ id: 'MAIN', label: displayLabel, group: 'main', val: 50, level: 0, color: '#ffffff' });
         const addedNodeIds = new Set();
@@ -8284,12 +8451,12 @@ export class JobOrchestrator {
                 let scrapedProfile = profileMap.get(nodeId);
                 // [STRICT] Removed fuzzy lookup as per user request. 
                 // We only use the strict alphanumeric ID match from profileMap.get(nodeId)
-                // [CRITICAL] ZERO TOLERANCE FOR AI HALLUCINATIONS
-                // If it's a profile/brand/creator node and we don't have scraped data, DROP IT.
+                // [FIX] SOFT PRUNING: Instead of dropping unverified AI nodes, we keep them
+                // but mark them as incomplete so performDeepEnrichment can pick them up.
                 const isLeafNode = ['creator', 'brand', 'influencer', 'profile'].includes(group);
                 if (isLeafNode && !scrapedProfile) {
-                    console.log(`[GraphGen] ✂️ Pruning unverified AI node: ${nodeId} (${group}) - No scraped data found in profileMap.`);
-                    return;
+                    console.log(`[GraphGen] 🔍 Keeping unverified AI node for enrichment: ${nodeId} (${group})`);
+                    // We don't return/prune here anymore
                 }
                 const realPosts = scrapedProfile?.latestPosts || [];
                 // [NEW] Get Tree Frequency Score (Real vs AI)
