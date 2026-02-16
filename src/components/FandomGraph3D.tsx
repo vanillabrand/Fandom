@@ -249,71 +249,87 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
         const handleContextLost = (event: Event) => {
             event.preventDefault();
-            console.warn('[FandomGraph3D] WebGL context lost! Attempting to restore...');
+            console.error("[FandomGraph3D] WebGL Context Lost! Initiating recovery...");
+            // Force reload or show error UI
+        };
 
-            // [P0] Explicitly dispose of all cached resources to free GPU memory
-            materialCache.current.forEach(m => m.dispose());
-            nodeCache.current.forEach(obj => {
-                obj.traverse((child: any) => {
-                    if (child.geometry) child.geometry.dispose();
-                    if (child.material) {
-                        if (Array.isArray(child.material)) {
-                            child.material.forEach((m: any) => m.dispose());
-                        } else {
-                            child.material.dispose();
-                        }
-                    }
-                });
-            });
+        const handleContextRestored = () => {
+            console.log("[FandomGraph3D] WebGL Context Restored.");
+            // Potentially re-init scene
+        };
 
-            materialCache.current.clear();
+        canvas.addEventListener('webglcontextlost', handleContextLost, false);
+        canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+        return () => {
+            // [FIX] Cleanup listeners
+            canvas.removeEventListener('webglcontextlost', handleContextLost);
+            canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+        };
+    }, [fgRefState]);
+
+    // [NEW] Robust Graph Cleanup & Memory Management
+    useEffect(() => {
+        // This effect runs on mount and unmount, and when data *reference* changes drastically
+        // We want to ensure we don't leak THREE.js objects or keep the old graph running
+
+        return () => {
+            console.log("[FandomGraph3D] Unmounting or Resetting - Cleaning up resources...");
+
+            // 1. Dispose of Geometry Cache
+            Object.values(SHARED_GEOMETRIES).forEach(geo => geo.dispose());
+
+            // 2. Clear Object Caches
             nodeCache.current.clear();
-            hitAreaGeometryCache.current.forEach(g => g.dispose());
+            materialCache.current.forEach(mat => mat.dispose());
+            materialCache.current.clear();
+            hitAreaGeometryCache.current.forEach(geo => geo.dispose());
             hitAreaGeometryCache.current.clear();
+
             if (hitAreaMaterial.current) {
                 hitAreaMaterial.current.dispose();
                 hitAreaMaterial.current = null;
             }
 
-            // Pause simulation
-            if (fgRefState.pauseAnimation) {
-                fgRefState.pauseAnimation();
+            // 3. Dispose of ForceGraph Instance internals if accessible
+            if (fgRefState) {
+                // Pause simulation immediately
+                if (fgRefState.pauseAnimation) fgRefState.pauseAnimation();
+
+                // Attempt to dispose renderer
+                const renderer = fgRefState.renderer();
+                if (renderer) {
+                    renderer.dispose();
+                    renderer.forceContextLoss();
+                }
+
+                // Clear scene
+                const scene = fgRefState.scene();
+                if (scene) {
+                    scene.clear();
+                }
             }
+
+            // 4. Force GC hints
+            setFgRefState(null);
+            sceneInitialized.current = false;
         };
+    }, []); // Run once on mount/unmount
 
-        const handleContextRestored = () => {
-            console.log('[FandomGraph3D] WebGL context restored successfully');
-
-            // Resume simulation
-            if (fgRefState.resumeAnimation) {
-                fgRefState.resumeAnimation();
-            }
-
-            // [FIX] Re-initialize scene settings
-            if (fgRefState.d3ReheatSimulation) {
+    // [NEW] Reset Graph on Data Change (Detect new Dataset ID or major change)
+    useEffect(() => {
+        // If data changes significantly (e.g. completely new nodes array)
+        // we might want to reset the camera or simulation
+        if (nodes.length !== lastDataHash.current.length) {
+            console.log("[FandomGraph3D] Data changed significantly - Resetting Simulation State");
+            if (fgRefState) {
                 fgRefState.d3ReheatSimulation();
+                // Optionally reset camera if it's a new map load
+                // fgRefState.cameraPosition({ x: 0, y: 0, z: 1000 }); 
             }
+        }
+    }, [nodes, links, fgRefState]);
 
-            // Force a re-render by bumping state if needed, 
-            // but usually reheating is enough.
-        };
-
-        const handleContextCreationError = (event: Event) => {
-            console.error('[FandomGraph3D] WebGL context creation failed:', event);
-        };
-
-        // Add event listeners
-        canvas.addEventListener('webglcontextlost', handleContextLost, false);
-        canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
-        canvas.addEventListener('webglcontextcreationerror', handleContextCreationError, false);
-
-        // Cleanup
-        return () => {
-            canvas.removeEventListener('webglcontextlost', handleContextLost);
-            canvas.removeEventListener('webglcontextrestored', handleContextRestored);
-            canvas.removeEventListener('webglcontextcreationerror', handleContextCreationError);
-        };
-    }, [fgRefState]);
 
 
     const activeNodes = (overrideData ? overrideData.nodes : nodes) || [];
@@ -652,15 +668,15 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     // [FIX] Lower threshold for longer activity (0.5 -> 0.1)
                     if (maxVelocity < 0.1) {
                         stableFrames++;
-                        if (stableFrames > 20) { // [FIX] Longer wait before pause (10 -> 20)
+                        if (stableFrames > 100) { // [FIX] Much longer wait before pause (20 -> 100)
                             // console.log('🎯 [Performance] Physics simulation stable - pausing to save CPU');
-                            fgRefState.pauseAnimation();
-                            clearInterval(stabilityCheckInterval);
+                            // fgRefState.pauseAnimation(); // [FIX] DISABLED AUTO-PAUSE
+                            // clearInterval(stabilityCheckInterval);
                         }
                     } else {
                         stableFrames = 0;
                     }
-                }, 200); // Check less frequently (100 -> 200)
+                }, 1000); // Check less frequently (200 -> 1000)
 
                 return () => clearInterval(stabilityCheckInterval);
 
@@ -1465,7 +1481,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         const sInfo = (graphData as any).nodeInfo?.get(sId);
         const tInfo = (graphData as any).nodeInfo?.get(tId);
         const isCore = sInfo?.group === 'main' || tInfo?.group === 'main' || sInfo?.group === 'cluster' || tInfo?.group === 'cluster' || sId === 'MAIN' || tId === 'MAIN';
-    
+     
         return isCore ? 4 : 0;
         */
     }, [graphData]);
@@ -1511,7 +1527,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
             {
                 query && (
                     <div
-                        className={`absolute top-6 left-6 z-10 pointer-events-none transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) ${isOpen ? 'translate-x-0' : 'translate-x-0'}`}
+                        className={`absolute top-6 left-6 z-10 pointer-events-none max-w-[25%] transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) ${isOpen ? 'translate-x-0' : 'translate-x-0'}`}
                         style={{
                             padding: '12px 20px',
                             background: 'rgba(5, 24, 16, 0.7)',
@@ -1522,7 +1538,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                         }}
                     >
                         <div className="text-[10px] text-emerald-500/60 uppercase tracking-[0.2em] font-bold mb-1">Active Query</div>
-                        <div className="text-[9px] font-light text-white tracking-tight">{query}</div>
+                        <div className="text-[11px] font-light text-white tracking-tight">{query}</div>
                     </div>
                 )
             }
@@ -1545,9 +1561,9 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
                     // [FIX] Interaction & Physics Tuning
                     // nodeDragThreshold={1} // [REMOVED] Not supported in this version
-                    d3AlphaDecay={0.05} // [FIX] Faster settling (default ~0.0228)
-                    d3VelocityDecay={0.4} // [FIX] More friction (default 0.4 is standard, raising slightly helps stability)
-                    cooldownTime={3000} // [FIX] Stop simulation after 3s if stable
+                    d3AlphaDecay={0.02} // [FIX] Standard decay (0.02) for stable settling
+                    d3VelocityDecay={0.4} // [FIX] Standard friction (0.4) to prevent explosion
+                    cooldownTime={Infinity} // [FIX] Stop simulation after 3s if stable
 
 
                     showNavInfo={false}
@@ -1611,8 +1627,8 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     backgroundColor="rgba(0,0,0,0)" // [RESTORED] Transparent
                     rendererConfig={{ alpha: true, preserveDrawingBuffer: false }} // [OPTIMIZED] Disable preserveDrawingBuffer
 
-                    warmupTicks={50} // [FIX] Increase warmup
-                    cooldownTicks={Infinity} // [FIX] Keep engine running, let our manual logic handle pause
+                    warmupTicks={30} // [FIX] Reduce warmup so users SEE the graph assemble
+                    cooldownTicks={Infinity} // [FIX] Keep engine running
 
                 />
             </div>

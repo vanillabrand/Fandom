@@ -1211,7 +1211,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
             {
                 query && (
                     <div
-                        className={`absolute top-6 left-6 z-10 pointer-events-none transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) ${isOpen ? 'translate-x-0' : 'translate-x-0'}`}
+                        className={`absolute top-6 left-6 z-10 pointer-events-none max-w-[25%] transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) ${isOpen ? 'translate-x-0' : 'translate-x-0'}`}
                         style={{
                             padding: '12px 20px',
                             background: 'rgba(5, 24, 16, 0.7)',
@@ -1222,7 +1222,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                         }}
                     >
                         <div className="text-[10px] text-emerald-500/60 uppercase tracking-[0.2em] font-bold mb-1">Active Query</div>
-                        <div className="text-[9px] font-light text-white tracking-tight">{query}</div>
+                        <div className="text-[11px] font-light text-white tracking-tight">{query}</div>
                     </div>
                 )
             }

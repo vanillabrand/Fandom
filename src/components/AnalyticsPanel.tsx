@@ -426,32 +426,34 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         if (!node || !node.data) return null;
 
         const d = node.data;
-        // Prioritize calculated metrics
-        const followers = d.followersCount || d.followers || 0;
-        const following = d.followsCount || d.following || 0;
-        const posts = d.mediaCount || d.posts || 0;
+        // Prioritize formatted strings if available, fallback to counts
+        const followers = d.followers || (d.followersCount !== undefined && d.followersCount !== null ? d.followersCount.toLocaleString() : null);
+        const following = d.following || (d.followingCount !== undefined && d.followingCount !== null ? d.followingCount.toLocaleString() : null);
+        const posts = d.posts || (d.postsCount !== undefined && d.postsCount !== null ? d.postsCount.toLocaleString() : null);
         const engRate = d.engagementRate; // String "4.5%" or number
 
-        // Only show if we have meaningful data
+        // Only show if we have meaningful data (at least followers or eng rate)
         if (!followers && !engRate) return null;
 
         return (
             <div className="grid grid-cols-2 gap-2 mb-4 bg-emerald-900/20 p-3 rounded-lg border border-emerald-500/20">
                 <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase">Followers</div>
-                    <div className="text-lg font-bold text-white">{typeof followers === 'number' ? (followers / 1000).toFixed(1) + 'K' : followers}</div>
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Followers</div>
+                    <div className="text-lg font-bold text-white truncate px-1">
+                        {followers || '...'}
+                    </div>
                 </div>
                 <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase">Engagement</div>
-                    <div className="text-lg font-bold text-white">{engRate || 'N/A'}</div>
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Engagement</div>
+                    <div className="text-lg font-bold text-white truncate px-1">{engRate || '...'}</div>
                 </div>
                 <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase">Following</div>
-                    <div className="text-sm font-medium text-gray-300">{following.toLocaleString()}</div>
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Following</div>
+                    <div className="text-sm font-medium text-gray-300 truncate px-1">{following || '...'}</div>
                 </div>
                 <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase">Posts</div>
-                    <div className="text-sm font-medium text-gray-300">{posts.toLocaleString()}</div>
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Posts</div>
+                    <div className="text-sm font-medium text-gray-300 truncate px-1">{posts || '...'}</div>
                 </div>
             </div>
         );
@@ -1821,7 +1823,12 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
 
                     {/* [NEW] 2. Visual DNA (Robust) */}
                     {
-                        (analytics.visual || analytics.visualAnalysis || (activeNode && activeNode.data && (activeNode.data.aestheticTags || activeNode.data.vibeDescription))) && (
+                        (() => {
+                            const vData = analytics.visual || analytics.visualAnalysis || activeNode?.data;
+                            if (!vData) return false;
+                            const vd = vData.visualIdentity || vData;
+                            return (vd.aestheticTags?.length > 0 || vd.aesthetics?.length > 0 || vd.vibeDescription || vd.colorPalette?.length > 0);
+                        })() && (
                             <AccordionItem
                                 title="Visual DNA"
                                 icon={Palette}
@@ -1830,11 +1837,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                 onToggle={() => toggleSection('visuals')}
                             >
                                 <VisualDNAWidget
-                                    data={{
-                                        aestheticTags: (analytics.visual || analytics.visualAnalysis)?.aestheticTags || (activeNode?.data?.aestheticTags) || [],
-                                        vibeDescription: (analytics.visual || analytics.visualAnalysis)?.vibeDescription || (activeNode?.data?.vibeDescription) || '',
-                                        colorPalette: (analytics.visual || analytics.visualAnalysis)?.colorPalette || (activeNode?.data?.colorPalette) || []
-                                    }}
+                                    data={analytics.visual || analytics.visualAnalysis || activeNode?.data}
                                     className="border-none shadow-none bg-transparent p-0"
                                 />
                             </AccordionItem>

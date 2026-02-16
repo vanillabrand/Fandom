@@ -14,6 +14,7 @@ import { findProfileAnalytics } from '../../../services/datasetService.js';
 interface DynamicDashboardProps {
     config: DashboardConfig;
     onNodeClick?: (nodeId: string) => void;
+    isEnriching?: boolean; // [NEW] Pass enrichment status
 }
 
 const containerVariants = {
@@ -49,7 +50,7 @@ const itemVariants = {
     }
 };
 
-export const DynamicDashboard: React.FC<DynamicDashboardProps> = ({ config, onNodeClick }) => {
+export const DynamicDashboard: React.FC<DynamicDashboardProps> = ({ config, onNodeClick, isEnriching }) => {
 
     // State for Drill Down
     const [selectedNodeId, setSelectedNodeId] = React.useState<string | null>(null);
@@ -198,6 +199,7 @@ export const DynamicDashboard: React.FC<DynamicDashboardProps> = ({ config, onNo
                             onNodeClick={handleNodeClick}
                             visualTheme={widget.data?.analytics?.visualTheme} // [NEW] Theme Support
                             query={config.title || "Network Map"} // [NEW] Pass query for label
+                            isEnriching={isEnriching} // [NEW] Pass enrichment status
                         />
                     </div>
                 );
@@ -222,6 +224,7 @@ export const DynamicDashboard: React.FC<DynamicDashboardProps> = ({ config, onNo
                             onNodeClick={handleNodeClick}
                             visualTheme={mapWidget.data?.analytics?.visualTheme} // [NEW] Theme Support
                             query={config.title || "Network Map"} // [NEW] Pass query for label
+                            isEnriching={isEnriching} // [NEW] Pass enrichment status
                         />
                     ) : (
                         <div className="flex items-center justify-center h-full text-gray-500">No Map Data</div>
@@ -311,6 +314,7 @@ export const DynamicDashboard: React.FC<DynamicDashboardProps> = ({ config, onNo
                                 onNodeClick={handleNodeClick}
                                 visualTheme={widget.data?.analytics?.visualTheme} // [NEW] Theme Support
                                 query={config.title || "Network Map"} // [NEW] Pass query for label
+                                isEnriching={isEnriching} // [NEW] Pass enrichment status
                             />
                         </div>
                     ) : (

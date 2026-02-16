@@ -208,36 +208,58 @@ export class JobOrchestrator {
 
         const aliases: Record<string, any[]> = {
             followers: [
-                obj.followersCount, obj.followerCount, obj.followers_count, obj.follower_count, obj.followers,
+                // Priority 1: Nested RICH data (Search/Discovery source) - Most Reliable
+                obj.data?.followersCount, obj.data?.followerCount, obj.data?.followers_count, obj.data?.follower_count, obj.data?.followers,
+                // Priority 2: Top-level specific count fields
+                obj.followersCount, obj.followerCount, obj.followers_count, obj.follower_count,
+                // Priority 3: API specific objects
                 obj.edge_followed_by?.count, obj.edgeFollowedBy?.count,
                 obj.metaData?.followersCount, obj.metaData?.followerCount,
-                obj.owner?.followerCount, obj.owner?.followersCount, obj.owner?.follower_count, obj.owner?.followers_count,
-                obj.owner?.edge_followed_by?.count
+                obj.owner?.followersCount, obj.owner?.followerCount, obj.owner?.followers_count, obj.owner?.follower_count,
+                obj.owner?.edge_followed_by?.count,
+                // Priority 4: Top-level general fields (often have false 0s in stubs)
+                obj.followers
             ],
             following: [
-                obj.followsCount, obj.followingCount, obj.following_count, obj.follows_count, obj.follows, obj.following,
+                // Priority 1: Nested RICH data
+                obj.data?.followsCount, obj.data?.followingCount, obj.data?.following_count, obj.data?.follows_count, obj.data?.following, obj.data?.follows,
+                // Priority 2: Top-level specific count fields
+                obj.followsCount, obj.followingCount, obj.following_count, obj.follows_count,
+                // Priority 3: API specific objects
                 obj.edge_follow?.count, obj.edgeFollow?.count,
                 obj.metaData?.followingCount, obj.metaData?.followsCount,
                 obj.owner?.followingCount, obj.owner?.followsCount, obj.owner?.following_count, obj.owner?.follows_count,
-                obj.owner?.edge_follow?.count
+                obj.owner?.edge_follow?.count,
+                // Priority 4: Top-level general fields
+                obj.follows, obj.following
             ],
             posts: [
-                obj.postsCount, obj.mediaCount, obj.postCount, obj.posts_count, obj.media_count, obj.posts,
+                // Priority 1: Nested RICH data
+                obj.data?.postsCount, obj.data?.mediaCount, obj.data?.postCount, obj.data?.posts_count, obj.data?.media_count, obj.data?.posts,
+                // Priority 2: Top-level specific count fields
+                obj.postsCount, obj.mediaCount, obj.postCount, obj.posts_count, obj.media_count,
+                // Priority 3: API specific objects
                 obj.edge_owner_to_timeline_media?.count, obj.edgeOwnerToTimelineMedia?.count,
                 obj.metaData?.postsCount, obj.metaData?.mediaCount, obj.metaData?.postCount, obj.metaData?.posts_count,
                 obj.owner?.postsCount, obj.owner?.mediaCount, obj.owner?.postCount, obj.owner?.posts_count, obj.owner?.media_count,
-                obj.owner?.edge_owner_to_timeline_media?.count
+                obj.owner?.edge_owner_to_timeline_media?.count,
+                // Priority 4: Top-level general fields
+                obj.posts
             ]
         };
 
         const candidates = aliases[type] || [];
+        let firstZero: number | null = null;
         for (const val of candidates) {
             if (val !== undefined && val !== null) {
                 const parsed = this.parseMetric(val);
-                if (parsed !== null) return parsed; // Accept 0 if explicitly present
+                if (parsed !== null) {
+                    if (parsed > 0) return parsed; // [PRIORITY] Found a real count!
+                    if (firstZero === null) firstZero = 0; // Remember we saw a 0, but keep looking
+                }
             }
         }
-        return null; // Truly missing
+        return firstZero; // Truly zero if no positive numbers found
     }
 
     /**
@@ -348,10 +370,10 @@ export class JobOrchestrator {
                 standard.isPrivate = record.is_private;
                 standard.isVerified = record.is_verified;
 
-                // [FIX] Add basic metric extraction for Network Scraper items
-                standard.followersCount = this.parseMetric(record.followers_count || record.follower_count || 0);
-                standard.followsCount = this.parseMetric(record.following_count || record.follows_count || 0);
-                standard.postsCount = this.parseMetric(record.media_count || record.posts_count || 0);
+                // Use extractMetric to catch all aliases and avoid hardcoded 0 fallbacks
+                standard.followersCount = this.extractMetric(record, 'followers');
+                standard.followsCount = this.extractMetric(record, 'following');
+                standard.postsCount = this.extractMetric(record, 'posts');
             }
             // 5. Instagram Hashtag Scraper / Post Scraper (Post-centric - 'ownerUsername' or 'ownerId')
             else if (record.ownerUsername || record.ownerId) {
@@ -376,18 +398,19 @@ export class JobOrchestrator {
             }
             // Fallback (Generic mapping for miscellaneous scraper formats)
             else {
-                standard.id = record.id || record.pk || record.userId || record.ownerId || '';
-                standard.username = (record.username || record.ownerUsername || record.handle || '').toLowerCase().replace('@', '');
-                standard.fullName = record.fullName || record.full_name || record.name || standard.fullName;
+                standard.id = record.id || record.pk || record.userId || record.ownerId || record.data?.id || record.data?.pk || '';
+                standard.username = (record.username || record.ownerUsername || record.handle || record.data?.username || record.data?.handle || '').toLowerCase().replace('@', '');
+                standard.fullName = record.fullName || record.full_name || record.name || record.data?.fullName || record.data?.full_name || record.data?.name || standard.fullName;
 
-                standard.followersCount = record.followersCount ?? record.followerCount ?? record.followers_count ?? record.follower_count ?? record.followers ?? null;
-                standard.followsCount = record.followsCount ?? record.followingCount ?? record.following_count ?? record.follower_count ?? record.follows ?? record.following ?? null;
-                standard.postsCount = record.postsCount ?? record.mediaCount ?? record.postCount ?? record.posts_count ?? record.media_count ?? record.posts ?? null;
+                standard.followersCount = this.extractMetric(record, 'followers');
+                standard.followsCount = this.extractMetric(record, 'following');
+                standard.postsCount = this.extractMetric(record, 'posts');
 
-                const rawBio = record.biography || record.bio || record.description;
+                const rawBio = record.biography || record.bio || record.description || record.data?.biography || record.data?.bio || record.data?.description;
                 standard.biography = (rawBio && !/Bio unavailable|No bio/i.test(rawBio)) ? rawBio : standard.biography;
-                standard.profilePicUrl = record.profilePicUrl || record.profile_pic_url || record.profilePic || standard.profilePicUrl;
-                standard.isBusinessAccount = record.isBusinessAccount || record.is_business_account || null;
+                standard.profilePicUrl = record.profilePicUrl || record.profile_pic_url || record.profilePic || record.data?.profilePicUrl || record.data?.profile_pic_url || record.data?.profilePic || standard.profilePicUrl;
+                standard.isBusinessAccount = record.isBusinessAccount || record.is_business_account || record.data?.isBusinessAccount || record.data?.is_business_account || null;
+                standard.isVerified = record.isVerified || record.is_verified || record.verified || record.data?.isVerified || record.data?.is_verified || record.data?.verified || null;
 
                 // [NEW] Capture related profiles from raw record if present
                 if (record.relatedProfiles && Array.isArray(record.relatedProfiles)) {
@@ -398,11 +421,10 @@ export class JobOrchestrator {
             console.warn(`[JobOrchestrator] Normalization failed for record: ${e}`);
         }
 
-        // [STRICT] Privacy & Integrity Check
-        // Discard private profiles and those without unique IDs to ensure graph quality
-        if (standard.isPrivate === true) {
-            // [FIX] Do NOT throw error, just skip
-            console.warn(`[JobOrchestrator] Skipping private profile: ${standard.username}`);
+        // [STRICT] Integrity Check
+        // [FIX] Relax private profile skip: We still want metrics if they were scraped
+        if (standard.isPrivate === true && !standard.followersCount) {
+            console.warn(`[JobOrchestrator] Skipping private profile without data: ${standard.username}`);
             return null;
         }
 
@@ -412,7 +434,6 @@ export class JobOrchestrator {
         }
 
         if (!standard.id || standard.id === '') {
-            // [FIX] Do NOT throw error, just skip
             console.warn(`[JobOrchestrator] Skipping profile without ID or Username: ${JSON.stringify(record).substring(0, 100)}...`);
             return null;
         }
@@ -546,32 +567,43 @@ export class JobOrchestrator {
                         profile = profileMap.get(nodeId) || profileMap.get(String(nodeId));
                     }
 
-                    // [PRIORITY 2] Match by Username (Strict, Normalized)
+                    // [PRIORITY 2] Match by Username / Name (Robust, Multi-layered)
                     if (!profile) {
                         const rawCandidates = [
-                            node.data?.handle,
                             node.data?.username,
+                            node.data?.handle,
+                            node.username,
+                            node.handle,
                             node.label,
                             node.name,
-                            node.handle,
+                            node.id,
+                            node.fullName,
+                            node.data?.fullName,
                             // [NEW] Fields common in topContent items
                             (node as any).author,
-                            (node as any).ownerUsername
-                        ].filter(k => k && typeof k === 'string');
+                            (node as any).ownerUsername,
+                            (node as any).authorUsername
+                        ].filter(k => k && typeof k === 'string' && k.length > 2);
 
                         for (const raw of rawCandidates) {
-                            // Strip @, trim, lowercase
+                            // 1. Direct Handle Match (Strip @, trim, lowercase)
                             const key = raw.toLowerCase().replace('@', '').trim();
                             if (profileMap.has(key)) {
                                 profile = profileMap.get(key);
                                 break;
                             }
 
-                            // [NEW] Try slugified version (e.g. "Jack Grealish" -> "jackgrealish")
-                            // This is crucial because identifyEnrichmentGaps slugifies handles for scraping
+                            // 2. Slugified Match (e.g. "Jack Grealish" -> "jackgrealish")
+                            // This helps match full names for creators who use their name as handle or have a name-indexed map entry
                             const slugified = key.replace(/[^a-z0-9]/g, '');
                             if (slugified.length > 2 && profileMap.has(slugified)) {
                                 profile = profileMap.get(slugified);
+                                break;
+                            }
+
+                            // 3. Exact String Match (if not caught by slugify)
+                            if (profileMap.has(raw)) {
+                                profile = profileMap.get(raw);
                                 break;
                             }
                         }
@@ -600,8 +632,8 @@ export class JobOrchestrator {
                             ...hydrated.data,
                             // Ensure these are present
                             id: profile.id || node.data?.id || node.id,
-                            username: profile.username || node.data?.username,
-                            handle: profile.username ? `@${profile.username.replace('@', '')}` : node.data?.handle,
+                            username: profile.username || node.data?.username || node.username,
+                            handle: profile.username ? `@${profile.username.replace('@', '')}` : (node.data?.handle || node.handle),
                             evidence: existingEvidence || hydrated.data.evidence,
                             provenance: existingProvenance || hydrated.data.provenance,
                             citation: existingCitation || hydrated.data.citation
@@ -619,7 +651,8 @@ export class JobOrchestrator {
                             'following', 'followingCount', 'followsCount',
                             'posts', 'postCount', 'postsCount',
                             'engagementRate', 'avgLikes', 'avgComments',
-                            'bio', 'biography', 'profilePicUrl', 'url', 'id', 'username'
+                            'bio', 'biography', 'profilePicUrl', 'url', 'id', 'username',
+                            'fullName', 'isBusinessAccount', 'isVerified'
                         ];
                         flatSyncFields.forEach(field => {
                             if (hydrated.data[field] !== undefined) {
@@ -657,6 +690,9 @@ export class JobOrchestrator {
     private finalizeAnalytics(analytics: any): any {
         if (!analytics) return analytics;
 
+        // [FIX] Handle wrapped analytics object
+        const target = analytics.analytics || analytics;
+
         const deduplicate = (list: any[], idKey: string = 'username') => {
             if (!list || !Array.isArray(list)) return [];
             const seen = new Set();
@@ -669,11 +705,11 @@ export class JobOrchestrator {
             });
         };
 
-        if (analytics.creators) analytics.creators = deduplicate(analytics.creators);
-        if (analytics.brands) analytics.brands = deduplicate(analytics.brands, 'name'); // [FIX] Use 'name' for brands
-        if (analytics.topics) analytics.topics = deduplicate(analytics.topics, 'name');
-        if (analytics.subtopics) analytics.subtopics = deduplicate(analytics.subtopics, 'name');
-        if (analytics.clusters) analytics.clusters = deduplicate(analytics.clusters, 'name');
+        if (target.creators) target.creators = deduplicate(target.creators);
+        if (target.brands) target.brands = deduplicate(target.brands, 'name'); // [FIX] Use 'name' for brands
+        if (target.topics) target.topics = deduplicate(target.topics, 'name');
+        if (target.subtopics) target.subtopics = deduplicate(target.subtopics, 'name');
+        if (target.clusters) target.clusters = deduplicate(target.clusters, 'name');
 
         // Ensure Consistent Sorting for Creators & Brands
         const sortingFn = (a: any, b: any) => {
@@ -699,8 +735,8 @@ export class JobOrchestrator {
             return getFollowers(b) - getFollowers(a);
         };
 
-        if (analytics.creators) analytics.creators.sort(sortingFn);
-        if (analytics.brands) analytics.brands.sort(sortingFn);
+        if (target.creators) target.creators.sort(sortingFn);
+        if (target.brands) target.brands.sort(sortingFn);
 
         return analytics;
     }
@@ -716,7 +752,7 @@ export class JobOrchestrator {
         const checkNode = (node: any) => {
             if (!node) return;
 
-            const isRelevant = node.group === 'creator' || node.group === 'brand' || node.type === 'creator' || node.type === 'brand' || node.group === 'profile';
+            const isRelevant = node.group === 'creator' || node.group === 'brand' || node.group === 'cluster' || node.type === 'creator' || node.type === 'brand' || node.group === 'profile';
 
             if (isRelevant) {
                 const data = node.data || {};
@@ -862,7 +898,7 @@ export class JobOrchestrator {
                 await mongoService.updateDataset(datasetId, { isEnriching: true });
             }
 
-            // [FIX] Increased limit from 20 to 50 to better handle larger graphs (requested by user)
+            // [FIX] Increased limit to handle more breadth in one pass
             const targetHandles = gapHandles.slice(0, 1000);
             console.log(`[Enrichment] Targeted Deep Scrape: ${targetHandles.join(', ')}`);
 
@@ -881,8 +917,28 @@ export class JobOrchestrator {
                 for (const item of stepResult.items) {
                     const profile = this.normalizeToStandardProfile(item);
                     if (profile) {
+                        const indexProfile = (key: string, data: StandardizedProfile) => {
+                            if (!key) return;
+                            const normalizedKey = key.toLowerCase().trim();
+                            if (!profileMap.has(normalizedKey)) {
+                                profileMap.set(normalizedKey, data);
+                            } else {
+                                // Merge if already exists (prevent overwriting good data with partial data)
+                                const current = profileMap.get(normalizedKey)!;
+                                if (data.followersCount !== null && (data.followersCount || 0) > (current.followersCount || 0)) {
+                                    current.followersCount = data.followersCount;
+                                    current.followerCount = data.followersCount;
+                                }
+                                if (data.biography && data.biography.length > (current.biography?.length || 0)) {
+                                    current.biography = data.biography;
+                                    current.bio = data.biography;
+                                }
+                            }
+                        };
+
                         const cleanHandle = (profile.username || '').toLowerCase().replace('@', '').trim();
                         const pk = profile.id;
+                        const slugifiedName = profile.fullName ? profile.fullName.toLowerCase().replace(/[^a-z0-9]/g, '') : null;
 
                         // Identify existing entry (check ID and Username)
                         let existing = profileMap.get(cleanHandle);
@@ -926,21 +982,18 @@ export class JobOrchestrator {
                                 existing.fullName = profile.fullName;
                             }
 
-                            // 5. Engagement Recalculation (if followers changed)
-                            if (existing.latestPosts?.length > 0 && (existing.followersCount || 0) > 0) {
-                                const totalInteractions = existing.latestPosts.reduce((acc: number, post: any) => acc + (post.likesCount || 0) + (post.commentsCount || 0), 0);
-                                const rate = (totalInteractions / existing.latestPosts.length) / (existing.followersCount || 1);
-                                existing.engagementRate = (rate * 100).toFixed(2) + '%';
-                            }
-
-                            // Ensure both ID and handle point to same object
-                            if (pk) profileMap.set(String(pk), existing);
-                            if (cleanHandle) profileMap.set(cleanHandle, existing);
+                            // [NEW] Index by all variants
+                            indexProfile(cleanHandle, existing);
+                            indexProfile(`@${cleanHandle}`, existing);
+                            if (pk) indexProfile(String(pk), existing);
+                            if (slugifiedName && slugifiedName.length > 2) indexProfile(slugifiedName, existing);
 
                         } else {
                             // Fresh entry
-                            if (pk) profileMap.set(String(pk), profile);
-                            if (cleanHandle) profileMap.set(cleanHandle, profile);
+                            indexProfile(cleanHandle, profile);
+                            indexProfile(`@${cleanHandle}`, profile);
+                            if (pk) indexProfile(String(pk), profile);
+                            if (slugifiedName && slugifiedName.length > 2) indexProfile(slugifiedName, profile);
                         }
 
                         // PERSIST to global cache
@@ -990,6 +1043,7 @@ export class JobOrchestrator {
                     await mongoService.updateDataset(datasetId, { 'isEnriching': false } as any);
                 }
                 console.log("[Enrichment] ✅ Persistence complete.");
+
             } else {
                 // If no results but we finished, clear the flag anyway
                 if (jobId) {
@@ -1010,7 +1064,6 @@ export class JobOrchestrator {
             }
         }
     }
-
     /**
      * Calculate optimal enrichment configuration based on dataset size
      * 
@@ -1318,9 +1371,10 @@ export class JobOrchestrator {
 
 
     private async processMapGeneration(job: Job) {
-        const { query, sampleSize, plan: existingPlan, ignoreCache, useThemedNodes, postLimit } = job.metadata; // [MODIFIED] Extract ignoreCache, useThemedNodes, postLimit
-
+        const { query, sampleSize, plan: existingPlan, ignoreCache, useThemedNodes, postLimit } = job.metadata;
         console.log(`[JobOrchestrator] Processing Map Generation: "${query}" (Size: ${sampleSize}, IgnoreCache: ${ignoreCache})`);
+
+        const profileMap = new Map<string, StandardizedProfile>();
 
         // [NEW] 0. Run Seed Scrape to get Context
         let seedContext = "";
@@ -1521,7 +1575,6 @@ export class JobOrchestrator {
 
                 // [CRITICAL FIX] ENRICH GRAPH NODES WITH SCRAPED DATA
                 console.log('[JobOrchestrator] 🛠 Building profile map from scraped data (ID-First Strict Mode)...');
-                const profileMap = new Map<string, StandardizedProfile>();
 
                 for (const item of allItems) {
                     try {
@@ -1895,7 +1948,7 @@ export class JobOrchestrator {
 
         let finalRecordCount = 0;
         if (datasetId) {
-            await this.syncApifyDatasetToLocal(datasetId, query, job.userId, analysisResult, results);
+            await this.syncApifyDatasetToLocal(datasetId, query, job.userId, analysisResult, results, profileMap);
             const ds = await mongoService.getDatasetById(datasetId);
             finalRecordCount = ds?.recordCount || 0;
         }
@@ -3074,7 +3127,7 @@ export class JobOrchestrator {
         return { items, datasetId };
     }
 
-    private async syncApifyDatasetToLocal(apifyDatasetId: string, name: string, userId: string, aiAnalytics: any = null, allResults: any[] = []) {
+    private async syncApifyDatasetToLocal(apifyDatasetId: string, name: string, userId: string, aiAnalytics: any = null, allResults: any[] = [], profileMap?: Map<string, StandardizedProfile>) {
         const apifyToken = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN;
         const res = await fetch(`https://api.apify.com/v2/datasets/${apifyDatasetId}/items?token=${apifyToken}`);
         const items = await res.json();
@@ -3097,41 +3150,69 @@ export class JobOrchestrator {
         // We aggregate profiles from ALL steps to ensure maximum hydration coverage
         const masterProfileMap = new Map<string, any>();
 
-        // 1. Add current items
-        items.forEach((item: any) => {
-            let extracted = item;
-            let username = (item.username || item.ownerUsername || '').toLowerCase().replace(/^@/, '').trim();
-
-            // [FIX] Extract owner from nested post objects if top-level username is missing
-            if (!username && item.owner) {
-                username = (item.owner.username || '').toLowerCase().replace(/^@/, '').trim();
-                extracted = { ...item.owner, ...item }; // Prefer owner details, keep item props
+        // 0. Add existing enriched profiles (Priority)
+        if (profileMap) {
+            for (const [key, value] of profileMap.entries()) {
+                masterProfileMap.set(key, value);
             }
+        }
 
-            if (username) masterProfileMap.set(username, extracted);
+        // 1. Add current items (Normalize first to ensure consistent keys)
+        items.forEach((item: any) => {
+            const profile = this.normalizeToStandardProfile(item);
+            if (!profile) return;
+
+            const username = profile.username.toLowerCase().replace(/^@/, '').trim();
+            const id = profile.id;
+
+            // Safe Merge Helper
+            const safeSet = (key: string, val: StandardizedProfile) => {
+                const existing = masterProfileMap.get(key);
+                if (!existing) {
+                    masterProfileMap.set(key, val);
+                } else {
+                    // [ROBUST MERGE] Prefer non-null Metrics and Bio
+                    masterProfileMap.set(key, {
+                        ...existing,
+                        ...val,
+                        biography: val.biography || existing.biography,
+                        followersCount: val.followersCount ?? existing.followersCount,
+                        followsCount: val.followsCount ?? existing.followsCount,
+                        postsCount: val.postsCount ?? existing.postsCount
+                    });
+                }
+            };
+
+            if (username) safeSet(username, profile);
+            if (id) safeSet(id, profile);
         });
 
-        // 2. Add results from previous steps (if available)
+        // 2. Add results from previous steps (If any)
         allResults.flat().forEach((item: any) => {
-            let extracted = item;
-            let username = (item.username || item.ownerUsername || '').toLowerCase().replace(/^@/, '').trim();
+            const profile = this.normalizeToStandardProfile(item);
+            if (!profile) return;
 
-            // [FIX] Extract owner from nested post objects
-            if (!username && item.owner) {
-                username = (item.owner.username || '').toLowerCase().replace(/^@/, '').trim();
-                extracted = { ...item.owner, ...item };
-            }
+            const username = profile.username.toLowerCase().replace(/^@/, '').trim();
+            const id = profile.id;
 
-            if (username && !masterProfileMap.has(username)) {
-                masterProfileMap.set(username, extracted);
-            } else if (username && masterProfileMap.has(username)) {
-                // Merge if previous result has more data (e.g. bio, posts)
-                const existing = masterProfileMap.get(username);
-                // Prefer objects that have biography or follower counts
-                if ((!existing.biography && extracted.biography) || (!existing.followersCount && extracted.followersCount)) {
-                    masterProfileMap.set(username, { ...existing, ...extracted });
+            const safeSet = (key: string, val: StandardizedProfile) => {
+                const existing = masterProfileMap.get(key);
+                if (!existing) {
+                    masterProfileMap.set(key, val);
+                } else {
+                    masterProfileMap.set(key, {
+                        ...existing,
+                        ...val,
+                        biography: val.biography || existing.biography,
+                        followersCount: val.followersCount ?? existing.followersCount,
+                        followsCount: val.followsCount ?? existing.followsCount,
+                        postsCount: val.postsCount ?? existing.postsCount
+                    });
                 }
-            }
+            };
+
+            if (username) safeSet(username, profile);
+            if (id) safeSet(id, profile);
         });
 
         const records = items.map((item: any) => ({
@@ -3161,8 +3242,41 @@ export class JobOrchestrator {
             const mainLabel = name || 'Analysis';
             addNode({ id: 'MAIN', label: mainLabel, group: 'main', val: 50, color: '#10b981' });
 
-            // [REVISED LOGIC] Use aiAnalytics.root for structure and RECURSIVELY HYDRATE
-            if (aiAnalytics && aiAnalytics.root) {
+            // [FIX] Priority: Pre-computed Graph Topology (Preserves Links)
+            // The AI/Graph generators produce complex network topologies (cross-links, multiple parents)
+            // that are destroyed by the strict tree traversal below. We must prioritize the pre-computed links.
+            if (aiAnalytics && aiAnalytics.graph && aiAnalytics.graph.nodes && aiAnalytics.graph.links && aiAnalytics.graph.links.length > 0) {
+                console.log(`[Sync] Persisting pre-computed graph (${aiAnalytics.graph.nodes.length} nodes, ${aiAnalytics.graph.links.length} links)`);
+
+                // 1. Add Nodes
+                aiAnalytics.graph.nodes.forEach((n: any) => {
+                    // Try to hydrate from master map if possible for fresher metrics
+                    let richData = n.data || {};
+                    // [FIXED] Standardized ID Normalization (Matches generateOverindexGraph)
+                    // Allows underscores and hyphens which are common in handles
+                    const cleanId = (n.id || n.username || '').toLowerCase().replace(/[^a-z0-9_-]/g, '');
+                    if (masterProfileMap.has(cleanId)) {
+                        const fresh = masterProfileMap.get(cleanId);
+                        richData = {
+                            ...richData,
+                            ...fresh,
+                            // Preserve AI-assigned colors/groups if they exist, else allow fresh data to dictate? 
+                            // Usually AI assignment is stricter for the graph.
+                        };
+                    }
+
+                    addNode({
+                        ...n,
+                        data: richData
+                    });
+                });
+
+                // 2. Add Links
+                aiAnalytics.graph.links.forEach((l: any) => {
+                    links.push(l);
+                });
+
+            } else if (aiAnalytics && aiAnalytics.root) {
                 console.log("[Sync] Generating Rich Hierarchical Graph from AI Tree with Re-hydration...");
 
                 const traverseAndHydrate = (node: any, parentId: string) => {
@@ -3210,21 +3324,33 @@ export class JobOrchestrator {
                         const finalScrapedData = scrapedData || {};
                         const realPosts = finalScrapedData.latestPosts || finalScrapedData.posts || [];
 
+                        // [UNIFIED HYDRATION] Distinguish between Missing (null) and Zero (0)
+                        const fCount = finalScrapedData.followersCount ?? (node.data?.followerCount || node.data?.followers || null);
+                        const fFollowing = finalScrapedData.followsCount ?? (node.data?.followingCount || node.data?.following || null);
+                        const fPosts = finalScrapedData.postsCount ?? (node.data?.postCount || node.data?.posts || null);
+
                         const richData = {
                             ...(node.data || {}),
                             ...finalScrapedData,
                             // Ensure priority identifiers
-                            username: cleanId,
-                            handle: `@${cleanId}`,
-                            // Map bio-critical fields
-                            bio: finalScrapedData.biography || finalScrapedData.bio || (node.data && node.data.bio) || '',
-                            profilePicUrl: proxyMediaUrl(finalScrapedData.profilePicUrl || finalScrapedData.profile_pic_url || (node.data && node.data.profilePicUrl)),
-                            latestPosts: realPosts.length > 0 ? realPosts.map((p: any) => proxyMediaFields(p)) : (node.data?.latestPosts || []),
+                            username: node.username || finalScrapedData.username || cleanId,
+                            handle: node.handle || (finalScrapedData.username ? `@${finalScrapedData.username}` : `@${cleanId}`),
 
-                            followerCount: finalScrapedData.followersCount || finalScrapedData.followers || (node.data && (node.data.followerCount || node.data.followers)) || 0,
-                            followingCount: finalScrapedData.followsCount || finalScrapedData.followingCount || (node.data && (node.data.followingCount || node.data.following)) || 0,
-                            postCount: finalScrapedData.postsCount || finalScrapedData.mediaCount || (node.data && (node.data.postCount || node.data.posts)) || 0,
-                            followers: finalScrapedData.followersCount ? finalScrapedData.followersCount.toLocaleString() : '0',
+                            // Map bio-critical fields
+                            bio: finalScrapedData.biography || finalScrapedData.bio || (node.data && node.data.bio) || (node.data && node.data.biography) || '',
+                            profilePicUrl: proxyMediaUrl(finalScrapedData.profilePicUrl || finalScrapedData.profile_pic_url || (node.data && node.data.profilePicUrl)),
+                            latestPosts: realPosts.length > 0 ? realPosts.map((p: any) => proxyMediaFields(p)).filter(Boolean) : (node.data?.latestPosts || []),
+
+                            // Metrics (Numbers)
+                            followerCount: this.parseMetric(fCount),
+                            followingCount: this.parseMetric(fFollowing),
+                            postCount: this.parseMetric(fPosts),
+                            postsCount: this.parseMetric(fPosts),
+
+                            // Formatting (Strings for UI)
+                            followers: (fCount !== null && fCount !== undefined) ? fCount.toLocaleString() : "...",
+                            following: (fFollowing !== null && fFollowing !== undefined) ? fFollowing.toLocaleString() : "...",
+                            posts: (fPosts !== null && fPosts !== undefined) ? fPosts.toLocaleString() : "...",
 
                             // Provenance remains as defined by AI but gets rich evidence if available
                             provenance: {
@@ -3272,7 +3398,7 @@ export class JobOrchestrator {
                             ...item,
                             username: username,
                             profilePicUrl: proxyMediaUrl(item.profilePicUrl || item.profile_pic_url),
-                            latestPosts: (item.latestPosts || []).map((p: any) => proxyMediaFields(p))
+                            latestPosts: (item.latestPosts || []).map((p: any) => proxyMediaFields(p)).filter(Boolean)
                         }
                     });
                     links.push({ source: 'MAIN', target: username, value: 1 });
@@ -4044,8 +4170,8 @@ export class JobOrchestrator {
                                 username: u,
                                 fullName: p.fullName || p.name,
                                 biography: p.biography || p.bio || '',
-                                followersCount: p.followersCount || p.followers || 0,
-                                followsCount: p.followsCount || p.following || 0,
+                                followersCount: p.followersCount ?? p.followers ?? null,
+                                followsCount: p.followsCount ?? p.following ?? null,
                                 profilePicUrl: p.profilePicUrl || p.profilePic,
                                 externalUrl: p.externalUrl,
                                 latestPosts: p.latestPosts || [],
@@ -4061,37 +4187,15 @@ export class JobOrchestrator {
                 analytics = await this.enrichFandomAnalysisParallel(analysis, profileMap);
 
                 // [NEW] GAP DETECTION & FINAL ENRICHMENT (On-Demand Scrape)
-                // Identify handles that are still missing or incomplete (missing bio/followers)
-                const enrichmentGaps = this.identifyEnrichmentGaps(analytics);
+                // Use the centralized helper for robust/deep enrichment
+                const latestDatasetId = executionOutput.datasetIds && executionOutput.datasetIds.length > 0
+                    ? executionOutput.datasetIds[executionOutput.datasetIds.length - 1]
+                    : job.id;
 
-                if (enrichmentGaps.length > 0) {
-                    console.log(`[Orchestration] 🔍 Detected ${enrichmentGaps.length} nodes with incomplete data. Triggering final enrichment scrape...`);
+                await this.performDeepEnrichment(analytics, latestDatasetId, job.id, profileMap);
 
-                    try {
-                        const finalEnrichmentResults = await this.runApifyActor('apify/instagram-profile-scraper', {
-                            usernames: enrichmentGaps.slice(0, 50) // Cap to 50 for performance
-                        }, job.id, {
-                            taskName: `Final Enrichment: ${enrichmentGaps.slice(0, 3).join(', ')}...`,
-                            query: job.metadata?.query || (plan as any).query || 'enrichment',
-                            planId: job.id
-                        });
-
-                        if (finalEnrichmentResults.items && finalEnrichmentResults.items.length > 0) {
-                            console.log(`[Orchestration] ✅ Final enrichment returned ${finalEnrichmentResults.items.length} profiles.`);
-                            finalEnrichmentResults.items.forEach(item => {
-                                const normalized = this.normalizeToStandardProfile(item);
-                                if (normalized && normalized.username) {
-                                    profileMap.set(normalized.username.toLowerCase(), normalized as any);
-                                }
-                            });
-
-                            // FINAL PASS: Re-apply enrichment with the newly scraped data
-                            analytics = await this.enrichFandomAnalysisParallel(analytics, profileMap);
-                        }
-                    } catch (enrichmentError) {
-                        console.error(`[Orchestration] ❌ Final enrichment failed:`, enrichmentError);
-                    }
-                }
+                // FINAL PASS: Re-apply enrichment with the newly scraped data (from performDeepEnrichment updates)
+                analytics = await this.enrichFandomAnalysisParallel(analytics, profileMap);
 
                 // [FIX] Ensure Visual DNA is preserved if present in raw analysis
                 if (analytics && (analysis.visual || analysis.visualAnalysis)) {
@@ -4540,7 +4644,18 @@ export class JobOrchestrator {
             const extractionDatasetId = (executionOutput.datasetIds && executionOutput.datasetIds.length > 0)
                 ? executionOutput.datasetIds[executionOutput.datasetIds.length - 1]
                 : "";
-            await this.performDeepEnrichment(analytics, extractionDatasetId, job.id, profileMap);
+
+            // [FIX] Visual Indicator: Signal enrichment start (using dot notation to preserve other metadata)
+            if (job.id) {
+                await mongoService.updateJob(job.id, { "metadata.isEnriching": true } as any);
+            }
+
+            await this.performDeepEnrichment(graphData, extractionDatasetId, job.id, profileMap);
+
+            // [FIX] Visual Indicator: Signal enrichment end
+            if (job.id) {
+                await mongoService.updateJob(job.id, { "metadata.isEnriching": false } as any);
+            }
 
             // Merge scalar props
             const { creators, brands, topics, clusters, subtopics, topContent, ...others } = graphData.analytics;
@@ -4682,7 +4797,7 @@ export class JobOrchestrator {
                             data: {
                                 bio: profile?.biography || 'Identified via high mention frequency.',
                                 profilePicUrl: this.sanitizeUrl(profile?.profilePicUrl || ''),
-                                followers: profile?.followersCount || 0,
+                                followers: profile?.followersCount ?? null,
                                 provenance: {
                                     source: 'Dataset Frequency',
                                     // [CRITICAL] User asked for "specifically all the occurences referemces"
@@ -6582,7 +6697,7 @@ export class JobOrchestrator {
             evidence.push({
                 type: 'profile_match',
                 label: 'High Authority Profile',
-                snippet: `${p.followersCount.toLocaleString()} followers`,
+                snippet: `${(p.followersCount || 0).toLocaleString()} followers`,
                 score: 5
             });
         }
@@ -6692,7 +6807,7 @@ export class JobOrchestrator {
         }
 
         // Standardize Latest Posts with Proxy
-        const posts = p.latestPosts ? p.latestPosts.slice(0, 3).map((post: any) => ({
+        const posts = p.latestPosts ? p.latestPosts.filter(Boolean).slice(0, 3).map((post: any) => ({
             url: post.url || post.permalink,
             caption: post.caption || post.description || post.text,
             imageUrl: proxyMediaUrl(post.displayUrl || post.mediaUrl || post.thumbnailUrl || post.images?.[0]),
@@ -6731,17 +6846,18 @@ export class JobOrchestrator {
                 followers: (p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count) !== undefined && (p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count) !== null
                     ? (p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count).toLocaleString()
                     : "...",
-                followerCount: p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count ?? null,
+                followerCount: p.followersCount ?? p.followerCount ?? p.followers_count ?? p.follower_count ?? 0,
                 following: (p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count) !== undefined && (p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count) !== null
                     ? (p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count).toLocaleString()
                     : "...",
-                followingCount: p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count ?? null,
-                posts: (p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : null)) !== null
+                followingCount: p.followsCount ?? p.followingCount ?? p.follows_count ?? p.following_count ?? 0,
+                posts: (p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : 0)) !== null && (p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count) !== 0
                     ? (p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts ? p.latestPosts.length : 0)).toLocaleString()
                     : "...",
-                postsCount: p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : null),
-                postCount: p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : null),
+                postsCount: p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : 0),
+                postCount: p.postsCount ?? p.mediaCount ?? p.postCount ?? p.posts_count ?? (p.latestPosts && p.latestPosts.length > 0 ? p.latestPosts.length : 0),
                 isBusinessAccount: p.isBusinessAccount, // [NEW]
+                isVerified: p.isVerified, // [NEW]
                 bio: (p.biography || p.bio || '').replace(/Bio unavailable/i, '').replace(/No bio/i, '').replace(/Placeholder/i, '').trim(),
                 profilePicUrl: ((p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) && (p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD).startsWith('http') ? proxyMediaUrl(p.profilePicUrl || p.profile_pic_url || p.profilePicUrlHD) : null),
                 externalUrl: p.externalUrl || p.url,
@@ -7162,8 +7278,24 @@ export class JobOrchestrator {
             }
         });
 
-        // 5. Clean empty clusters
-        root.children = clusters.filter(c => c.children.length > 0);
+        // 5. Clean empty clusters and aggregate metrics
+        root.children = clusters.filter(c => c.children.length > 0).map(cluster => {
+            // [NEW] Aggregate metrics from children for the cluster node itself
+            const totalFollowers = cluster.children.reduce((acc: number, child: any) => acc + (child.data?.followerCount || 0), 0);
+            const totalFollowing = cluster.children.reduce((acc: number, child: any) => acc + (child.data?.followingCount || 0), 0);
+            const totalPosts = cluster.children.reduce((acc: number, child: any) => acc + (child.data?.postCount || 0), 0);
+
+            cluster.data = {
+                ...cluster.data,
+                followerCount: totalFollowers,
+                followers: totalFollowers.toLocaleString(),
+                followingCount: totalFollowing,
+                following: totalFollowing.toLocaleString(),
+                postCount: totalPosts,
+                posts: totalPosts.toLocaleString()
+            };
+            return cluster;
+        });
 
         // [DEBUG] Log cluster statistics
         console.log(`[GraphGen] Tree Structure: ${root.children.length} clusters with nodes: `);
@@ -7377,6 +7509,12 @@ export class JobOrchestrator {
             if (node.group === 'main' || node.group === 'cluster') score += 5; // Always keep structural nodes
             if (node.group === 'root') score += 100;
 
+            // F. Over-index Score (Critical for Audience/Overlap Graphs)
+            if ((node.data?.frequencyScore && node.data.frequencyScore > 0) || (node.data?.overindexScore && node.data.overindexScore > 0)) {
+                score += 15; // Guarantee survival
+            }
+            if (node.data?.rawCount > 0) score += 5;
+
             return { id: node.id, score, node };
         });
 
@@ -7389,13 +7527,21 @@ export class JobOrchestrator {
 
         // 4. Structural Integrity (Keep bridges and children of important clusters)
         // If a Cluster is kept, keep some of its best children
-        const highValueClusters = nodes.filter(n => (n.group === 'cluster' || n.group === 'main') && relevantNodeIds.has(n.id));
+        // 4. Structural Integrity (Keep bridges and children of important clusters)
+        // If a Cluster is kept, keep some of its best children
+        // [FIX] Added 'topic', 'subtopic', 'overindexed' to protected structural nodes
+        const highValueClusters = nodes.filter(n =>
+            (n.group === 'cluster' || n.group === 'main' || n.group === 'topic' || n.group === 'subtopic' || n.group === 'overindexed')
+            && relevantNodeIds.has(n.id)
+        );
 
         highValueClusters.forEach(cluster => {
             // Find links FROM this cluster
             const childLinks = links.filter(l => l.source === cluster.id);
-            // Keep top 10 children by value regardless of score, to ensure cluster isn't empty
-            childLinks.slice(0, 10).forEach(l => relevantNodeIds.add(l.target));
+            // [FIX] Increased limit from 10 to 50 to match "Occurrences" count better
+            // Sort by value if possible
+            childLinks.sort((a, b) => (b.value || 0) - (a.value || 0));
+            childLinks.slice(0, 50).forEach(l => relevantNodeIds.add(l.target));
         });
 
         // 5. Contextual Expansion for Overindexing
@@ -7431,6 +7577,7 @@ export class JobOrchestrator {
         }
 
         // 7. Cleanup Links
+        // 7. Cleanup Links
         for (let i = links.length - 1; i >= 0; i--) {
             const l = links[i];
             const sourceExists = nodes.find(n => n.id === l.source);
@@ -7438,6 +7585,37 @@ export class JobOrchestrator {
             if (!sourceExists || !targetExists) {
                 links.splice(i, 1);
             }
+        }
+
+        // [NEW] 7.5. Re-Calculate Cluster/Topic Counts to Match Reality
+        // This ensures the "Occurrences" count in UI matches the visible nodes
+        try {
+            nodes.forEach(node => {
+                if (node.group === 'cluster' || node.group === 'topic' || node.group === 'subtopic' || node.group === 'overindexed') {
+                    // Count actual outgoing links
+                    // [FIX] Robust check for source ID (handles both string and object if d3 touched it)
+                    const actualChildren = links.filter(l => {
+                        const srcId = typeof l.source === 'object' ? (l.source as any).id : l.source;
+                        return srcId === node.id;
+                    }).length;
+
+                    // Update node stats if we pruned children
+                    if (actualChildren > 0) {
+                        // Update the display count references
+                        if (node.data) {
+                            node.data.count = actualChildren;
+                            node.data.frequency = actualChildren;
+                            node.data.occurrences = actualChildren;
+                        }
+                        // Also update value to reflect meaningful size
+                        // Ensure val exists and is a number
+                        node.val = 10 + Math.min(40, actualChildren * 1.5);
+                    }
+                }
+            });
+        } catch (err) {
+            console.warn("[GraphGen] Recalculating counts warning:", err);
+            // Non-fatal, continue
         }
 
         console.log(`[GraphGen] Universal Optimization: Kept ${nodes.length}/${initialCount} nodes. (Context: ${JSON.stringify(context)})`);
@@ -8377,7 +8555,7 @@ export class JobOrchestrator {
             type: 'topic',
             val: 80,
             level: 1,
-            color: '#ec4899', // Pink
+            color: '#10b981', // Emerald (Standard Cluster)
             data: {
                 hashtag: hashtagLabel,
                 description: `Analysis for ${hashtagLabel}`,
@@ -8460,7 +8638,7 @@ export class JobOrchestrator {
                 group: 'topic',
                 val: 10 + (count * 2),
                 level: 2,
-                color: '#8b5cf6', // Violet
+                color: '#10b981', // Emerald (Standard Cluster)
                 data: {
                     hashtag: tag,
                     count,
@@ -9361,7 +9539,7 @@ export class JobOrchestrator {
         // [NEW] 1. Create Lookup Map for Scraped Data (Fast Access)
         const profileMap = new Map<string, any>();
         profiles.forEach(p => {
-            const username = (p.username || p.ownerUsername || '').toLowerCase().replace('@', '').trim(); // [FIX] Preserve underscores
+            const username = (p.username || p.ownerUsername || '').toLowerCase().replace('@', '').trim(); // [FIX] Preserve underscores by not stripping non-alphanumeric
             if (username && !profileMap.has(username)) {
                 profileMap.set(username, p);
             } else if (username && profileMap.has(username)) {
@@ -9385,7 +9563,7 @@ export class JobOrchestrator {
 
         // [FIX] Derive coreId from the cleaner displayLabel (e.g. @imjustbait -> imjustbait)
         // This prevents the 'central' node from being added again as a separate node
-        const coreId = displayLabel.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const coreId = displayLabel.toLowerCase().replace(/[^a-z0-9_-]/g, '');
 
         // [FIX] Robust Core Profile Lookup
         let coreProfileData = profileMap.get(coreId) || profileMap.get(displayLabel.replace('@', '').toLowerCase());
@@ -9436,7 +9614,7 @@ export class JobOrchestrator {
                 const sourceHandle = p.username || p.ownerUsername || 'Unknown';
 
                 p.follows.forEach((followedAccount: any) => {
-                    const fUsername = (followedAccount.username || followedAccount.ownerUsername || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const fUsername = (followedAccount.username || followedAccount.ownerUsername || '').toLowerCase().replace(/[^a-z0-9_-]/g, '');
                     if (fUsername && fUsername !== coreId) {
                         realFrequencyMap.set(fUsername, (realFrequencyMap.get(fUsername) || 0) + 1);
 
@@ -9457,7 +9635,7 @@ export class JobOrchestrator {
         const nodeFrequencyMap = new Map<string, number>();
         const scanTreeFrequencies = (node: any) => {
             if (!node) return;
-            const id = (node.data?.handle || node.label || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+            const id = (node.data?.handle || node.label || '').toLowerCase().replace(/[^a-z0-9_-]/g, '');
             if (id) {
                 nodeFrequencyMap.set(id, (nodeFrequencyMap.get(id) || 0) + 1);
             }
@@ -9486,7 +9664,7 @@ export class JobOrchestrator {
                 label: 'Overindexed Profiles', // [FIX] Clearer Label
                 val: 30, // 40 -> 30 (25% reduction)
                 group: 'cluster',
-                color: '#ec4899', // Pink/Magenta
+                color: '#10b981', // Emerald Green (Standard Cluster)
                 data: {
                     name: 'Overindexed Profiles',
                     description: 'Profiles with statistically significant overlap in this network.',
@@ -9508,25 +9686,31 @@ export class JobOrchestrator {
             // Generate ID (Graph Index Aware: lowercase, no @)
             // Generate ID (Graph Index Aware: lowercase, no @, strict chars)
             // Generate ID (Graph Index Aware: lowercase, no @, strict alphanumeric to match scraped data)
+            // Generate ID (Graph Index Aware: lowercase, no @, allow underscores/dashes)
+            // [FIX] Matched to profileMap generation logic
             const rawId = treeNode.data?.handle || treeNode.label || treeNode.name || treeNode.id || `node_${Math.random()}`;
-            const nodeId = rawId.toString().toLowerCase().replace(/[^a-z0-9]/g, '');
+            const nodeId = rawId.toString().toLowerCase().trim().replace(/[^a-z0-9_-]/g, '');
 
-            // Determine Group
-            let group = treeNode.type || inferredGroup || 'unknown'; // [FIX] Use inferred group
+            // Determine Group & Normalize
+            let group = (treeNode.type || inferredGroup || 'unknown').toString().toLowerCase().trim();
             if (group === 'root') group = 'main';
 
-            // Map AI types to Internal Graph Index Groups (See FandomGraph3D.tsx)
-            // align with visual styles: cluster(green), creator(pink), brand(blue), topic(violet), subtopic(light-violet)
+            // Map AI types to Internal Graph Index Groups
             if (group === 'category') group = 'cluster';
-
-            // [FIX] Distinct mapping for Topics vs Clusters
             if (group === 'topic') group = 'topic';
             if (group === 'subtopic') group = 'subtopic';
-
-            // [FIX] Map generic entities to 'creator' or 'brand' or 'overindexed'
             if (group === 'entity') group = 'creator';
             if (group === 'content_node') group = 'post';
             if (group === 'influencer') group = 'creator';
+
+            // [FIX] Explicit Color Assignment (Force Green for Clusters)
+            // This overrides any frontend defaults or AI hallucinations
+            let nodeColor = undefined;
+            if (group === 'cluster' || group === 'subcluster' || group === 'category') nodeColor = '#10b981'; // Emerald Green
+            else if (group === 'topic') nodeColor = '#10b981'; // [FIX] User specifically asked for "Clusters" to be green. Topics = Clusters.
+            else if (group === 'creator' || group === 'profile') nodeColor = '#f472b6'; // Pink
+            else if (group === 'brand') nodeColor = '#3b82f6'; // Blue
+            else if (group === 'post') nodeColor = '#f1f5f9'; // Slate
 
             if (!addedNodeIds.has(nodeId)) {
 
@@ -9663,9 +9847,11 @@ export class JobOrchestrator {
 
                 nodes.push({
                     id: nodeId,
-                    label: treeNode.label || nodeId,
+                    label: treeNode.label || treeNode.name || rawId || nodeId,
                     val: (treeNode.val || 10) + (frequencyScore * 2), // Boost size by occurence
                     group: group,
+                    // [FIX] Enforce visual consistency
+                    color: nodeColor,
                     data: richData
                 });
                 addedNodeIds.add(nodeId);
@@ -9690,85 +9876,101 @@ export class JobOrchestrator {
                     extractedAnalytics.clusters.push(richData);
                 }
 
-                // Create Link to Parent (Moved INSIDE to access richData)
-                if (parentId && parentId !== nodeId) {
-                    let targetParentId = parentId === 'MAIN' ? 'MAIN' : parentId.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+                // Recurse Children
+                if (treeNode.children && Array.isArray(treeNode.children)) {
+                    treeNode.children.forEach((child: any) => processNode(child, nodeId, group === 'cluster' ? 'creator' : inferredGroup));
+                }
+                // [FIX] Recurse Profiles (Inferred as Creators)
+                if (treeNode.data && treeNode.data.profiles && Array.isArray(treeNode.data.profiles)) {
+                    // Determine group for profiles recursion (default to creator if generic)
+                    const profileGroup = (group === 'cluster' || group === 'category') ? 'creator' : group;
+                    treeNode.data.profiles.forEach((profile: any) => processNode(profile, nodeId, profileGroup));
+                }
+            }
 
-                    // [NEW] ORPHAN RESCUE: Strict Topology Rules
-                    // Rule 1: "Overindexed Profiles" MUST have Frequency > 3
-                    // Rule 2: NO "leaf" nodes (profiles, brands, creators) attached to MAIN. ever.
+            // Create Link to Parent (MOVED OUTSIDE 'addedNodeIds' block to allow multi-parent linking)
+            // This ensures that if a node appears in multiple clusters, it is linked to ALL of them.
+            if (parentId && parentId !== nodeId) {
+                // Ensure parentId is normalized for lookup
+                // Since parentId usually comes from recursion (already normalized), we just check it matches
+                // For 'MAIN', we keep it as is.
+                let targetParentId = parentId === 'MAIN' ? 'MAIN' : parentId;
 
-                    // Check if this is a "leaf" type (not a cluster/topic)
-                    const isLeaf = (group === 'creator' || group === 'brand' || group === 'influencer' || group === 'profile' || group.includes('brand'));
+                // If parentId needs normalization (e.g. from raw string), do safely:
+                if (parentId !== 'MAIN' && (parentId.includes('@') || parentId.includes(' '))) {
+                    targetParentId = parentId.toLowerCase().trim().replace(/[^a-z0-9_-]/g, '');
+                }
 
-                    if (isLeaf) {
-                        // 1. FREQUENCY OVERRIDE: High Signal -> Overindexed Cluster
-                        // [FIX] Threshold increased to > 3 per user request
-                        if (frequencyScore > 3 && hasHighAffinity) {
-                            targetParentId = highAffinityClusterId;
-                        }
-                        // 2. SEMANTIC HOMING: Try to find a better cluster match if currently pointing to MAIN (or if we want to be specific)
-                        else if (targetParentId === 'MAIN') {
-                            const nodeBio = (richData.bio || richData.description || nodeId).toLowerCase();
-                            let bestClusterId = 'MAIN';
-                            let maxMatches = 0;
+                // [NEW] ORPHAN RESCUE: Strict Topology Rules
+                // Rule 1: "Overindexed Profiles" MUST have Frequency > 3
+                // Rule 2: NO "leaf" nodes (profiles, brands, creators) attached to MAIN. ever.
 
-                            // Search existing clusters (excluding the special Overindexed one if we didn't qualify above)
-                            nodes.filter(n => n.group === 'cluster' || n.group === 'topic').forEach(cluster => {
-                                if (cluster.id === highAffinityClusterId) return; // Already checked freq requirement
+                // Check if this is a "leaf" type (not a cluster/topic)
+                const isLeaf = (group === 'creator' || group === 'brand' || group === 'influencer' || group === 'profile' || group.includes('brand'));
 
-                                const keywords = cluster.data?.keywords || cluster.label.split(' ');
-                                const matches = keywords.filter((k: string) => nodeBio.includes(k.toLowerCase())).length;
-                                if (matches > maxMatches) {
-                                    maxMatches = matches;
-                                    bestClusterId = cluster.id;
-                                }
-                            });
+                // We need richData. If we just added the node, we have 'richData' in scope? No, scope block ended.
+                // We need to retrieve the node to get its stats for routing logic.
+                const currentNode = nodes.find(n => n.id === nodeId);
 
-                            if (maxMatches > 0) {
-                                targetParentId = bestClusterId;
-                            } else {
-                                // 3. COMMUNITY FALLBACK
-                                // If no semantic match and score <= 3, DUMP to "Community".
-                                // ABSOLUTELY NO VISIBLE NODES ON MAIN HUB.
-                                let communityClusterId = 'c_community';
+                if (isLeaf && currentNode) {
+                    const frequencyScore = currentNode.data?.frequencyScore || 0;
+                    const hasHighAffinity = (sortedOverindexed && sortedOverindexed.length > 5); // Re-check scope variable? It's in parent scope.
 
-                                // Ensure Community Cluster exists
-                                if (!addedNodeIds.has(communityClusterId)) {
-                                    nodes.push({
-                                        id: communityClusterId,
-                                        label: 'Community',
-                                        type: 'cluster',
-                                        group: 'cluster',
-                                        val: 20,
-                                        data: { keywords: ['community', 'profile', 'user'] },
-                                        children: []
-                                    });
-                                    addedNodeIds.add(communityClusterId);
-                                    links.push({ source: 'MAIN', target: communityClusterId, value: 5 });
-                                }
-                                targetParentId = communityClusterId;
+                    // 1. FREQUENCY OVERRIDE: High Signal -> Overindexed Cluster
+                    if (frequencyScore > 3 && hasHighAffinity) {
+                        targetParentId = highAffinityClusterId;
+                    }
+                    // 2. SEMANTIC HOMING: Try to find a better cluster match if currently pointing to MAIN
+                    else if (targetParentId === 'MAIN') {
+                        const nodeBio = (currentNode.data?.bio || currentNode.data?.description || nodeId).toLowerCase();
+                        let bestClusterId = 'MAIN';
+                        let maxMatches = 0;
+
+                        // Search existing clusters
+                        nodes.filter(n => n.group === 'cluster' || n.group === 'topic').forEach(cluster => {
+                            if (cluster.id === highAffinityClusterId) return;
+
+                            const keywords = cluster.data?.keywords || (cluster.label ? cluster.label.split(' ') : []);
+                            const matches = keywords.filter((k: string) => nodeBio.includes(k.toLowerCase())).length;
+                            if (matches > maxMatches) {
+                                maxMatches = matches;
+                                bestClusterId = cluster.id;
                             }
+                        });
+
+                        if (maxMatches > 0) {
+                            targetParentId = bestClusterId;
+                        } else {
+                            // 3. COMMUNITY FALLBACK
+                            let communityClusterId = 'c_community';
+                            if (!addedNodeIds.has(communityClusterId)) {
+                                nodes.push({
+                                    id: communityClusterId,
+                                    label: 'Community',
+                                    type: 'cluster',
+                                    group: 'cluster',
+                                    val: 20,
+                                    color: '#10b981', // Standard Green
+                                    data: { keywords: ['community', 'profile', 'user'] },
+                                    children: []
+                                });
+                                addedNodeIds.add(communityClusterId);
+                                links.push({ source: 'MAIN', target: communityClusterId, value: 5 });
+                            }
+                            targetParentId = communityClusterId;
                         }
                     }
+                }
 
+                // Prevent duplicates
+                const linkExists = links.some(l => l.source === targetParentId && l.target === nodeId);
+                if (!linkExists) {
                     links.push({
                         source: targetParentId,
                         target: nodeId,
                         value: 1
                     });
                 }
-            }
-
-            // Recurse Children
-            if (treeNode.children && Array.isArray(treeNode.children)) {
-                treeNode.children.forEach((child: any) => processNode(child, nodeId, group === 'cluster' ? 'creator' : inferredGroup));
-            }
-            // [FIX] Recurse Profiles (Inferred as Creators)
-            if (treeNode.data && treeNode.data.profiles && Array.isArray(treeNode.data.profiles)) {
-                // Determine group for profiles recursion (default to creator if generic)
-                const profileGroup = (group === 'cluster' || group === 'category') ? 'creator' : group;
-                treeNode.data.profiles.forEach((profile: any) => processNode(profile, nodeId, profileGroup));
             }
         };
 
@@ -9854,6 +10056,7 @@ export class JobOrchestrator {
                     .slice(0, 8);
 
                 topTopics.forEach(([topic, count]) => {
+                    // [FIX] REMOVED TRAILING SPACE which was breaking D3 links
                     const topicId = `topic_${topic}`;
                     if (!addedNodeIds.has(topicId)) {
                         nodes.push({
@@ -9861,7 +10064,7 @@ export class JobOrchestrator {
                             label: `#${topic}`,
                             group: 'topic',
                             val: 10 + (count * 2),
-                            color: '#8b5cf6', // Violet
+                            color: '#10b981', // [FIX] Standard Green (was Violet)
                             data: {
                                 description: `Shared interest among ${count} overindexed profiles`,
                                 count
@@ -9869,6 +10072,9 @@ export class JobOrchestrator {
                         });
                         addedNodeIds.add(topicId);
                         extractedAnalytics.topics.push({ name: topic, count });
+
+                        // [FIX] Link Topic to the Cluster so it's not floating
+                        links.push({ source: highAffinityClusterId, target: topicId, value: 3 });
                     }
 
                     // Link Members to Topic
@@ -10435,6 +10641,7 @@ export class JobOrchestrator {
                 label: cluster.name,
                 group: 'cluster',
                 val: Math.min(cluster.count * 1.5, 40), // Increased cap and scaling for better visibility
+                color: '#10b981', // Emerald Green
                 level: 1,
                 data: {
                     count: cluster.count,
@@ -10545,7 +10752,7 @@ export class JobOrchestrator {
         const topLocations = geoData.slice(0, maxLocations);
 
         topLocations.forEach((loc: any, i: number) => {
-            const lid = `loc_${i} `;
+            const lid = `loc_${i}`;
             const size = Math.min(40, 15 + (loc.count * 2)); // Dynamic size
 
             nodes.push({

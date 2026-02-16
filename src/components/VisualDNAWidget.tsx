@@ -2,19 +2,22 @@
 import React from 'react';
 
 interface VisualDNAProps {
-    data: {
-        aestheticTags: string[];
-        vibeDescription: string;
-        colorPalette: string[];
-    };
+    data: any; // Allow flexible data structure
     className?: string;
 }
 
 const VisualDNAWidget: React.FC<VisualDNAProps> = ({ data, className = '' }) => {
     if (!data) return null;
 
-    // [FIX] Add defensive null-safety checks for all properties
-    const { aestheticTags = [], vibeDescription = '', colorPalette = [] } = data || {};
+    // [FIX] Support both flattened and nested (visualIdentity) formats
+    // Sometimes backend wraps it in visualIdentity, sometimes it flattens it
+    const visualData = data.visualIdentity || data || {};
+    let { aestheticTags = [], vibeDescription = '', colorPalette = [] } = visualData;
+
+    // Handle 'aesthetics' array variant
+    if (aestheticTags.length === 0 && visualData.aesthetics && Array.isArray(visualData.aesthetics)) {
+        aestheticTags = visualData.aesthetics.map((a: any) => typeof a === 'string' ? a : a.style || a.name).filter(Boolean);
+    }
 
     // If all fields are empty, don't render anything
     if (aestheticTags.length === 0 && !vibeDescription && colorPalette.length === 0) {

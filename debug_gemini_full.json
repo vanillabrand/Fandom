@@ -1,899 +1,1039 @@
 {
   "root": {
-    "label": "Mercedes AMG F1 x Luxury Skincare Audience Map",
+    "label": "Reebok Brand Ecosystem",
     "type": "main",
     "children": [
       {
-        "label": "High-Value Lifestyle & Aesthetics",
+        "label": "Official Channels",
         "type": "cluster",
         "data": {
-          "description": "Affluent segments focused on luxury design, equestrian interests, and timeless aesthetics—key targets for high-end skincare partnerships.",
+          "description": "The core official accounts representing Reebok globally and in specific verticals.",
           "keywords": [
-            "Luxury Design",
-            "Equestrian",
-            "Timeless",
-            "Interiorismo"
+            "Brand",
+            "Official",
+            "Global",
+            "Regional"
           ]
         },
         "children": [
           {
-            "label": "Equestrian & Old Money",
-            "type": "subcluster",
+            "label": "reebok",
+            "type": "brand",
+            "val": 100,
+            "provenance": "[ID: 186499819]",
+            "name": "reebok",
             "data": {
-              "description": "Users interested in horses and classic luxury."
+              "bio": "Sport Is Everything.",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/480200310_649254170981222_7930686984493788331_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QGur_9sfZxaDQWjDmFBXi5adzepZvapP9-QDz3QOJc3aYDLZqhJ8oFEB7rx47h7qCo&_nc_ohc=8OKaP1aK3AUQ7kNvwFzYwvQ&_nc_gid=bSe2bZMWztuDbiChtwnlAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgCb-12x4JSag-f-JrgIq_Gx1AUMSfU0xunS4JI9JcFg&oe=6998CBFA&_nc_sid=8b3546",
+              "followers": 4402231,
+              "following": 145,
+              "posts": 747,
+              "externalUrl": "https://www.reebok.com/",
+              "isVerified": true
             },
-            "children": [
-              {
-                "label": "Carmela Medina",
-                "handle": "@carmela.bermed",
-                "type": "creator",
-                "val": 95,
-                "data": {
-                  "bio": "Carmela Medina  \nFounder de Bermed · Luxury & Timeless Design\nModa · Interiorismo · Caballos & lifestyle ecuestre\nConstruyendo Bermed con alma",
-                  "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/463491793_1221676632410639_1941737602356067873_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QHlGq-JtmA5lvWodxmhJvjofLob1Dd04NkZzK8EgIuFNKaZf738FJWjpULeatASMMQ&_nc_ohc=RFWazJHkyjMQ7kNvwEojGHI&_nc_gid=Y2F4D8Tm-7Wot8KnJlDqCQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsD4zbo-KDaw4RaflbD9SxpL-qGeRCNBzRco4be9Bt-GA&oe=6996EE89&_nc_sid=8b3546",
-                  "evidence": "Explicit mention of Luxury, Timeless Design, and Equestrian lifestyle.",
-                  "followers": 1351,
-                  "following": 1410,
-                  "posts": 107,
-                  "externalUrl": "https://www.instagram.com/carmela.bermed",
-                  "isVerified": true
-                },
-                "provenance": "[ID: 67641234143]",
-                "name": "Carmela Medina"
-              }
-            ],
-            "name": "Equestrian & Old Money"
+            "handle": "@reebok"
           },
           {
-            "label": "Curated Design & Fashion",
-            "type": "subcluster",
+            "label": "reebokbasketball",
+            "type": "brand",
+            "val": 90,
+            "provenance": "[ID: 68292913239]",
+            "name": "reebokbasketball",
             "data": {
-              "description": "Users focused on high-end retail, furniture, and fashion."
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/455209353_1662524241266210_1971624613588950272_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QESQzMhY6zRLvTF3jHKyFmr6jJMG_MBAUajjQEC6DxVOvmlIwA_cQOOyUORGrjB-Ms&_nc_ohc=NscrPsxmBSsQ7kNvwGHL-MU&_nc_gid=j0Rla_jWhoBBLPZSK0Rrew&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsLLi9WjR5_YS2bcegt8dOHh2alicocBVk9UEPEJA7gdg&oe=6998A91A&_nc_sid=0055be"
             },
-            "children": [
-              {
-                "label": "Self Edge",
-                "handle": "@selfedge",
-                "type": "brand",
-                "val": 80,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/316968444_212629837866890_8315963892735243877_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NDMuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=oIy8yyniA90Q7kNvwGP4DX6&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvzhUIsKK9Y9gm7fg4xVRvfNJfWSXMg0kInRswNHhlwsw&oe=69970805&_nc_sid=17ea04",
-                  "evidence": "Known high-end denim/fashion retailer implied by handle."
-                },
-                "provenance": "[ID: 1154999]",
-                "name": "Self Edge"
-              },
-              {
-                "label": "A Fold of Chairs",
-                "handle": "@afoldofchairs",
-                "type": "brand",
-                "val": 75,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/387666734_1703893526746921_8487436533416451810_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=tvKMA26eUF4Q7kNvwH_B9eq&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftYshrUIoOu1une6z4_WBiO_ljk3tVow-mnK2gC5ilkvw&oe=6996E1AB&_nc_sid=17ea04",
-                  "evidence": "Niche design/furniture interest."
-                },
-                "provenance": "[ID: 11828221848]",
-                "name": "A Fold of Chairs"
-              }
-            ],
-            "name": "Curated Design & Fashion"
-          }
-        ],
-        "name": "High-Value Lifestyle & Aesthetics"
-      },
-      {
-        "label": "Wellness & Romanticized Living",
-        "type": "cluster",
-        "data": {
-          "description": "The 'Clean Girl' and 'That Girl' aesthetic demographic, focusing on self-improvement, fitness, and skincare rituals.",
-          "keywords": [
-            "Motivation",
-            "Fitness",
-            "Botanicals",
-            "Romanticising Life"
-          ]
-        },
-        "children": [
-          {
-            "label": "Self-Care & Motivation",
-            "type": "subcluster",
-            "data": {
-              "description": "Influencers promoting a healthy, elevated lifestyle."
-            },
-            "children": [
-              {
-                "label": "Angelss Journey",
-                "handle": "@angelss.journey",
-                "type": "creator",
-                "val": 90,
-                "data": {
-                  "bio": "Elevating and romanticising the little moments of live.\nGetting fitter and better\nLifestyle | Motivation | Travel & Food Experiences\nAnd more.......",
-                  "profilePicUrl": "https://scontent-mia5-1.cdninstagram.com/v/t51.2885-19/453438939_1926753341107994_3602337288078238249_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYwLmMyIn0&_nc_ht=scontent-mia5-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QF2b6STuUDkRh3qmCNznn1OZB-oesCrc7NdBcpx-WTubVF557csCyfpWut_X549GE8&_nc_ohc=wzuRhx2-BHoQ7kNvwF-ZBL_&_nc_gid=hQVnY7EwzxV9hVr5U98kdA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsRV8y-fQ-JXjnr1avrAJo9ub0hwhOTeyJnJLmtEMcQNQ&oe=6996E388&_nc_sid=8b3546",
-                  "evidence": "Bio keywords: Elevating, romanticising, fitter, Lifestyle.",
-                  "followers": 22541,
-                  "following": 8218,
-                  "posts": 66,
-                  "externalUrl": "http://linktr.ee/angelss.journey.uk",
-                  "isVerified": true
-                },
-                "provenance": "[ID: 61358725770]",
-                "name": "Angelss Journey"
-              }
-            ],
-            "name": "Self-Care & Motivation"
+            "handle": "@reebokbasketball"
           },
           {
-            "label": "Natural Beauty & Botanicals",
-            "type": "subcluster",
+            "label": "reebokeurope",
+            "type": "brand",
+            "val": 80,
+            "provenance": "[ID: 176902169]",
+            "name": "reebokeurope",
             "data": {
-              "description": "Interest in ingredients and natural skincare solutions."
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/466005384_564107206482011_3304565812355857598_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QG1pJhjlpYVZx6HuCdyA1LKE4JEbLWZJRaMTjrY1opJvcKdA0J_S40_VtMes_q1vbM&_nc_ohc=a8DdrIFUiDMQ7kNvwE_X5p2&_nc_gid=Upy1sd58ucBP8Lw0tseGXw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvAXtlVNXf6O8WgtVKfW1yk0Nx51w7i_cOn1Z-_kcDVCA&oe=6998AB44&_nc_sid=0055be",
+              "isVerified": true
             },
-            "children": [
-              {
-                "label": "Nemeton Botanicals",
-                "handle": "@nemeton.botanicals",
-                "type": "brand",
-                "val": 85,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/630260195_18029609528603702_6885751972517275463_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=-Kvtl4zX1ssQ7kNvwHfK7yi&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvAYB3wxB1capRSrBK1ANOeIooyyqR5Pu-2qCx3ZRFZsw&oe=6996E301&_nc_sid=17ea04",
-                  "evidence": "Handle implies botanical/natural skincare focus."
-                },
-                "provenance": "[ID: 48033131701]",
-                "name": "Nemeton Botanicals"
-              }
-            ],
-            "name": "Natural Beauty & Botanicals"
+            "handle": "@reebokeurope"
+          },
+          {
+            "label": "reebokargentina",
+            "type": "brand",
+            "val": 70,
+            "provenance": "[ID: 2350167754]",
+            "name": "reebokargentina",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/467602720_8660650810700146_8228758222215439854_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40NTQuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QE8a1qbxb_DC7k_Cd4UkcB4oKPCXAdlZb6QFqm0_a4UClrYpV_eX2DaU6PE-ZXZoA0&_nc_ohc=fnIHPTTo8BoQ7kNvwHR1zph&_nc_gid=Isg6mNkjnGDpi_olvEkHPg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvsPvL2gGCKcPJ5dDe9Eylv4YC3tvcQFxKXNEGIcptWEA&oe=6998A97C&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@reebokargentina"
+          },
+          {
+            "label": "reebokbrasil",
+            "type": "brand",
+            "val": 70,
+            "provenance": "[ID: 1046376506]",
+            "name": "reebokbrasil",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/466562609_561682346509134_766901517724519412_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGadrV-7E8UdwXW-BjJ0zuiN7z0xzHYXWiqCW_NQwI7eSDzlghf0TD9PH7VDpa2DoI&_nc_ohc=ybEmPdlohhMQ7kNvwGIB7Ee&_nc_gid=JFFLCr07liEWOILW1Cp7MQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu7PM17JzgsR7A9fIX0NOUkw8Nj2QW6O-nLFGvSqMbSlA&oe=6998B0B9&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@reebokbrasil"
           }
         ],
-        "name": "Wellness & Romanticized Living"
+        "name": "Official Channels"
       },
       {
-        "label": "Core F1 & Automotive Enthusiasts",
+        "label": "Sportswear Competitors",
         "type": "cluster",
         "data": {
-          "description": "The anchor audience: dedicated fans of Mercedes AMG F1 and automotive culture.",
+          "description": "Major global competitors in the athletic footwear and apparel market.",
           "keywords": [
-            "Mercedes",
-            "AMG",
-            "Racing",
-            "Motorsport"
+            "Competition",
+            "Sportswear",
+            "Athleisure",
+            "Sneakers"
           ]
         },
         "children": [
           {
-            "label": "Mercedes Superfans",
-            "type": "subcluster",
+            "label": "adidas",
+            "type": "brand",
+            "val": 95,
+            "provenance": "[ID: 20269764]",
+            "name": "adidas",
             "data": {
-              "description": "Accounts explicitly dedicated to the team."
+              "bio": "#YouGotThis",
+              "profilePicUrl": "https://scontent-dfw6-1.cdninstagram.com/v/t51.2885-19/564201508_18563819479045765_7618693513437726799_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NjMuYzIifQ&_nc_ht=scontent-dfw6-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFcqqjNs6DixQK6fdntfGd6JrvFwU-Gzaixg6IVw9LNBZ-PfrGWqr9WqzXmLdRDVN8&_nc_ohc=m41hjC7AgV4Q7kNvwGUvJlG&_nc_gid=6cX9KTg8jr9UzDnfdsYymQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuR2zO62iKoVnwgFkhHUTqRH64kX_JAatQnCyCECpXVpg&oe=6998CA44&_nc_sid=8b3546",
+              "followers": 29515959,
+              "following": 1030,
+              "posts": 1411,
+              "externalUrl": "https://linktr.ee/adidas",
+              "isVerified": true
             },
-            "children": [
-              {
-                "label": "Mercedeszboy",
-                "handle": "@mercedeszboy",
-                "type": "creator",
-                "val": 98,
-                "data": {
-                  "bio": "ㅤㅤㅤ 𝙧𝙖𝙘¡𝗇𝗀ㅤ;ㅤㅤ©ㅤㅤ࣪ㅤㅤ﹙ 性別﹚ ㅤ12 ㅤ.ᐟ\nㅤ𝓘  alw𝗮𝘆𝘀  𝙩𝙧𝙮  t𝗈  𝙜𝙞𝙫𝙚  𝐦𝐲  𝙗𝙚𝘴𝘵  performance\nㅤㅤ a͟l͟i͟v͟eʀicɦ..ㅤ──ㅤ@mercedesamgf1 ㅤㅤ⌗",
-                  "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/633262848_17924522256246334_7497354141827675161_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QHlCiOk2yKPvHHuAoIUGL2JOxwH6EhulOJLAsouescXuJk8g3jP03kEq3cemRY1f0QQuajdYJin58W_IyDdebgv&_nc_ohc=BQu7x4OAvqAQ7kNvwFrMhPz&_nc_gid=shYXXQVp7MBYzCdqN1KYgg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuDNIiRVRHFhZK3DCmShUZuZhxJqagYXrqNo1xVOrsa3w&oe=6996EEB2&_nc_sid=8b3546",
-                  "evidence": "Bio explicitly tags @mercedesamgf1.",
-                  "followers": 39,
-                  "following": 49,
-                  "externalUrl": "https://www.instagram.com/mercedeszboy"
-                },
-                "provenance": "[ID: 67316974333]",
-                "name": "Mercedeszboy"
-              },
-              {
-                "label": "The AMG Driver",
-                "handle": "@theamgdriver",
-                "type": "creator",
-                "val": 92,
-                "data": {
-                  "bio": "- R230 SL55 AMG | M113K V8 Kompressor\n- Automotive/Motorsport Media \n- Mercedes | AMG Enthusiast\n📍 Miami, FL",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/631578001_18557421517030819_2251130528080078348_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QH6Nz27OxBd7KaRbv67OnIgNnWXQ2NHMdQTjppz3u-QrRLZouoY5ktam9T-uKcYGN8&_nc_ohc=d_00L2d8DpAQ7kNvwF_NE_S&_nc_gid=g5m1-a6ndrC-_qfVpX_zYw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsrXALgB74MKmomPRvgN-VgkwZR33sGN6CJ2_jGTM9NtQ&oe=69970A0F&_nc_sid=8b3546",
-                  "evidence": "Bio states AMG Enthusiast.",
-                  "followers": 254,
-                  "following": 853,
-                  "posts": 7,
-                  "externalUrl": "https://www.instagram.com/theamgdriver"
-                },
-                "provenance": "[ID: 814686818]",
-                "name": "The AMG Driver"
-              },
-              {
-                "label": "Mahad Loves Cars",
-                "handle": "@mahadlovescars",
-                "type": "creator",
-                "val": 70,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/629227210_17922690792251298_2465564790320446160_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=eZePT1GSOAwQ7kNvwEt2y-K&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_Afs7IFH29P-F1kiiDxK4S8hf-3oXm5c17x5QX095PmZAJQ&oe=6996DFBF&_nc_sid=17ea04",
-                  "evidence": "Handle indicates automotive passion."
-                },
-                "provenance": "[ID: 67651459297]",
-                "name": "Mahad Loves Cars"
-              }
-            ],
-            "name": "Mercedes Superfans"
+            "handle": "@adidas"
+          },
+          {
+            "label": "nike",
+            "type": "brand",
+            "val": 95,
+            "provenance": "[ID: 13460080]",
+            "name": "nike",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/551608484_18567162979020081_1135468084872726555_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zOTkuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QELfbjB8emsHSrAJEKpe9OIc_0Iw9-HzMpqy7qGffzfm8QIsEHtTjRh0-efPzpApjI&_nc_ohc=oKEO7KGm_xsQ7kNvwHFLIQZ&_nc_gid=Gds-BbBfr3sf4OGe-DytRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfseC8QiC3dHF1V2IE20x0eJxrveePD6JVcd2PlFcH9LAQ&oe=6998C2B0&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@nike"
+          },
+          {
+            "label": "puma",
+            "type": "brand",
+            "val": 90,
+            "provenance": "[ID: 10145706]",
+            "name": "puma",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/459303202_479954131680638_1811732038334385568_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEYSBqSij0SJVt0xe4BsTZoboiXlEc5nPWb3AYz1clcOGKGV0OUJkr4WgcM_1j2c3Y&_nc_ohc=Pt5YtlEHLL8Q7kNvwHPGyfX&_nc_gid=3MkdlelLC8MUl9IMLTx8cA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuHruR8yXbZCVjROrsaJkFeLgTZwOIpgL1PnM7eepeG1g&oe=6998C21A&_nc_sid=8b3546",
+              "followers": 13094421,
+              "following": 152,
+              "posts": 3341,
+              "externalUrl": "http://clicklinkin.bio/puma",
+              "isVerified": true
+            },
+            "handle": "@puma"
+          },
+          {
+            "label": "underarmour",
+            "type": "brand",
+            "val": 85,
+            "provenance": "[ID: 5858873]",
+            "name": "underarmour",
+            "data": {
+              "bio": "Under Armour makes you better. #ProtectThisHouse",
+              "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/81621819_469797387256268_1598060058422280192_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHHYC5QfKpi_LQwUUFNynFCwBdclkotKQKJSZS32V49FjoOoCq6EU4Nr5IdHiptVBI&_nc_ohc=19qkcDBTOIAQ7kNvwEPO2cN&_nc_gid=_z9FYRfVi1swYDJjQWRoxQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvlkpG9DXpgO3gY8mqxeFnK5VNgMAzHfiKZ8FchM9Fj2Q&oe=6998BB05&_nc_sid=8b3546",
+              "followers": 8277398,
+              "following": 864,
+              "posts": 4419,
+              "externalUrl": "http://underarmour.com/",
+              "isVerified": true
+            },
+            "handle": "@underarmour"
+          },
+          {
+            "label": "newbalancelifestyle",
+            "type": "brand",
+            "val": 80,
+            "provenance": "[ID: 2346204466]",
+            "name": "newbalancelifestyle",
+            "data": {
+              "bio": "WE GOT NOW",
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/502744869_18465802426076467_546118222927950611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHVXy7MCCO3gP2xtFfhS5HgCzIAvcIi1J5i3XJP7s4sThFiqILSGhm_puVs5jPFNQk&_nc_ohc=NfZoWuo2jNUQ7kNvwGFYV88&_nc_gid=VqWtj0srpoejd9LaS9_Myw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsva0CUfpac6XrRsZ-DP9_J35S1STka-B45Et0mWDudMw&oe=6998BF23&_nc_sid=8b3546",
+              "followers": 1787329,
+              "following": 323,
+              "posts": 1808,
+              "externalUrl": "https://youtu.be/QjUiywy1aNQ",
+              "isVerified": true
+            },
+            "handle": "@newbalancelifestyle"
+          },
+          {
+            "label": "asicsrunning",
+            "type": "brand",
+            "val": 75,
+            "provenance": "[ID: 312066235]",
+            "name": "asicsrunning",
+            "data": {
+              "bio": "A Sound Mind in a Sound Body. It’s what we believe in. And it’s never meant more than right now.",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/140367911_164006092158166_7465929359312212639_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGwWjNozi_cc6gZd4LTHQ8TbiXMIT_PWMkA7ahWVizA9hFcmXpRCYn137wDKhj6Gl0&_nc_ohc=0z9P6SGQIf4Q7kNvwFG0Vxx&_nc_gid=rtf6tGUwMJ-KwSjIqMF-VA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftRf5HMV3f074GThb1kfkJF-huLBsRzFPkFgDJO45XAwg&oe=6998ADC2&_nc_sid=8b3546",
+              "followers": 759644,
+              "following": 1085,
+              "posts": 1424,
+              "externalUrl": "https://likeshop.me/asicsrunning",
+              "isVerified": true
+            },
+            "handle": "@asicsrunning"
+          },
+          {
+            "label": "skechers",
+            "type": "brand",
+            "val": 70,
+            "provenance": "[ID: 266628541]",
+            "name": "skechers",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/625062223_18555339667004542_4340853812844596527_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=K2X4xmS6QmAQ7kNvwFY7wva&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvHvJdd8hZT7xcM_NrzIe7xZA0srsJKhUi34Unl38WV_A&oe=6998C44C&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@skechers"
+          },
+          {
+            "label": "kappa",
+            "type": "brand",
+            "val": 65,
+            "provenance": "[ID: 608466556]",
+            "name": "kappa",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/118623640_1949123028555522_5308413955108122628_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDcwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QF_FY9WEGR9bEzUrecURECan_vS9Nd-bvN8gXjatFjt99EnLtrt1OyQ9eK99goz_OI&_nc_ohc=yX7E1IB7OS4Q7kNvwHX3Frb&_nc_gid=H5qfPre5C1h70hOGx1ypsw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftMP1ul6Bp71IdO3or_1lwBxbFlHhje1RmvL9SBmSfNBQ&oe=6998B301&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@kappa"
+          },
+          {
+            "label": "champion",
+            "type": "brand",
+            "val": 65,
+            "provenance": "[ID: 1382145757]",
+            "name": "champion",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/527028056_18517985200001758_5849844742626411322_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLNBt4-S-CmAhnTUHwePdknBWCQ1J5UtzzThf0r9h1xllkJCJDHBCOjQjMFQ8OvzQ&_nc_ohc=xLp9CNNq7-YQ7kNvwGNSTQg&_nc_gid=aMfk8hDf80vLlylC8NnKiQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftS-SnWbdMFKdHdRc0vFYsmULomETsFs9fq9-PHP_VB3g&oe=6998A5F1&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@champion"
           }
         ],
-        "name": "Core F1 & Automotive Enthusiasts"
+        "name": "Sportswear Competitors"
       },
       {
-        "label": "Luxury Travel & Experiences",
+        "label": "Basketball Culture",
         "type": "cluster",
         "data": {
-          "description": "Audience segments prioritizing high-end travel, a key overlap area for F1 hospitality and luxury skincare travel kits.",
+          "description": "Athletes and entities connected to basketball, a key heritage vertical for Reebok.",
           "keywords": [
-            "Travel",
-            "Experiences",
-            "Global"
+            "NBA",
+            "WNBA",
+            "Hoops",
+            "Athletes"
           ]
         },
         "children": [
           {
-            "label": "Travel Agencies & Curators",
-            "type": "subcluster",
+            "label": "areese (Angel Reese)",
+            "type": "creator",
+            "val": 95,
+            "provenance": "[ID: 269551418]",
+            "name": "areese (Angel Reese)"
+          },
+          {
+            "label": "austinreaves12",
+            "type": "creator",
+            "val": 85,
+            "provenance": "[ID: 189668635]",
+            "name": "austinreaves12",
             "data": {
-              "description": "Entities focused on travel logistics and inspiration."
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/562863168_18535516537036636_1704788272338777214_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MDguYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=rq736-HB2vQQ7kNvwHlfxu7&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftPePVF130OLg_E32MusDXuD_l473YOvCSaNE7i_GMSNQ&oe=6998B70A&_nc_sid=0055be",
+              "isVerified": true
             },
-            "children": [
-              {
-                "label": "Beyond Travel Ltd",
-                "handle": "@beyondtravelltd",
-                "type": "brand",
-                "val": 88,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/35341706_1280052295431176_3654695866687553536_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDE3LmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=HODyvFyzlGkQ7kNvwFlDQph&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvGXV1mVHmz-QYxDs-Fx8e1aNtoez2bUmJVrwezeE4RWw&oe=69970602&_nc_sid=17ea04",
-                  "evidence": "Handle implies luxury travel services."
-                },
-                "provenance": "[ID: 7863325989]",
-                "name": "Beyond Travel Ltd"
-              }
-            ],
-            "name": "Travel Agencies & Curators"
+            "handle": "@austinreaves12"
+          },
+          {
+            "label": "stephensonlance",
+            "type": "creator",
+            "val": 80,
+            "provenance": "[ID: 9617327]",
+            "name": "stephensonlance",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/522617478_18513799144017328_7693816337851280351_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42ODMuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHGjMIEhkfr3DOnZM9vZ3QJ_Jxap_cTyd6eELx-YHy2isuNwvzsgmkq_mCljdIW48I&_nc_ohc=11v_Nana94UQ7kNvwHNo-LW&_nc_gid=bko0v4VzyorQ3NNgTGpMIg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft3eayzn7JlCEUSqB_aLtgbXyu-XKAnXgqaLKGEJFDWsQ&oe=6998BCD7&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@stephensonlance"
+          },
+          {
+            "label": "matasbuzelis",
+            "type": "creator",
+            "val": 75,
+            "provenance": "[ID: 1457821049]",
+            "name": "matasbuzelis",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/558976121_18527834131029050_986603077139312089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QED1LlE7KwX6r37V2nzv_6p12LDDxebIZSnGwMtreHC-oUDiMUufFKwGhGui9Mu798&_nc_ohc=jvpIuoo9FaQQ7kNvwGBUddy&_nc_gid=rS7tPT49sonBiJvQoVYJ9A&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuQ6DyMMC16FnImguaPT378ad3XbD5rfjaV3gBmNiBR9Q&oe=6998CC44&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@matasbuzelis"
+          },
+          {
+            "label": "thehezigod",
+            "type": "creator",
+            "val": 70,
+            "provenance": "[ID: 609088289]",
+            "name": "thehezigod",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/621697943_18563450680000290_2385362134779164746_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MjguYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QHGjMIEhkfr3DOnZM9vZ3QJ_Jxap_cTyd6eELx-YHy2isuNwvzsgmkq_mCljdIW48I&_nc_ohc=zQT2pTPgkhoQ7kNvwGCzqGX&_nc_gid=bko0v4VzyorQ3NNgTGpMIg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsGgReWqCozgmGWkzMT-N7BTxWpAC_bQ_SVfekzjNY3VA&oe=6998BDC0&_nc_sid=0055be"
+            },
+            "handle": "@thehezigod"
+          },
+          {
+            "label": "unrivaledbasketball",
+            "type": "brand",
+            "val": 65,
+            "provenance": "[ID: 9295840868]",
+            "name": "unrivaledbasketball",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/450424088_453229907672100_2928036364616311276_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=wnK23QtUGFIQ7kNvwHJJ4dP&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftr83Ikv8JNVbyyK17_VOPVDxKhxU45ZNCbEVdBrvwcJg&oe=6998B685&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@unrivaledbasketball"
           }
         ],
-        "name": "Luxury Travel & Experiences"
+        "name": "Basketball Culture"
       },
       {
-        "label": "Emerging Female Demographics",
+        "label": "Combat Sports (MMA/UFC)",
         "type": "cluster",
         "data": {
-          "description": "General female audience within the network, representing the growth of the female F1 fandom base.",
+          "description": "Fighters and martial artists, representing a significant portion of the athlete demographic in the dataset.",
           "keywords": [
-            "Female",
+            "UFC",
+            "MMA",
+            "Fighting",
+            "Training"
+          ]
+        },
+        "children": [
+          {
+            "label": "dustinpoirier",
+            "type": "creator",
+            "val": 90,
+            "provenance": "[ID: 25812109]",
+            "name": "dustinpoirier",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/447812159_991313212188769_869518833333950706_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYyLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGu7GT6W0rseRZP7cbvAqOKWbKABSrpQiic7OvGI_0aQdURMpYzsaXZwbXrLLum-RA&_nc_ohc=nXfXREIMQ80Q7kNvwFPFV1t&_nc_gid=5C_P90PLI9qx3_P8j4Azeg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuoQNnNPL8ZWIsohh3kM4z23TBFKSvQQ_XXvw5cfWKDpA&oe=6998A7BB&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@dustinpoirier"
+          },
+          {
+            "label": "colbycovington",
+            "type": "creator",
+            "val": 85,
+            "provenance": "[ID: 436660190]",
+            "name": "colbycovington",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/37625846_645422755844589_7012463734916382720_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=QJArRi9GKn4Q7kNvwFwDe90&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs0tTGIXdSyl-EcpUU_4LkbCALhAH_GJ4OTGFiFwR492A&oe=6998C21D&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@colbycovington"
+          },
+          {
+            "label": "bobbykinggreen",
+            "type": "creator",
+            "val": 80,
+            "provenance": "[ID: 1232009265]",
+            "name": "bobbykinggreen",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/621669531_18549437515009266_665803061249337548_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=3I3rDQitogEQ7kNvwEvrli_&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwMWphzgEt0fCmCZUKEZhSN7WQfrl5Vw6B7_y_Z5_QTw&oe=6998A889&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@bobbykinggreen"
+          },
+          {
+            "label": "manelkape",
+            "type": "creator",
+            "val": 75,
+            "provenance": "[ID: 564627334]",
+            "name": "manelkape",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/546563117_18529526209019335_6110374537213598178_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=ZKOtW3zMbaEQ7kNvwHDw9LN&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvpCo3Sc6nWO11L_zO7hi-7XSVBKyk_Nxn1jnjsMzNQrA&oe=6998AA03&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@manelkape"
+          },
+          {
+            "label": "nobickal1",
+            "type": "creator",
+            "val": 75,
+            "provenance": "[ID: 557549268]",
+            "name": "nobickal1",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/286312007_775965753565278_7585274834249673165_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=gIb7iXf6lHUQ7kNvwEhdRAT&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfusftvpOwKNaQPj_cC7UUhcnJOt14qH1E11aWd3iwt2fA&oe=6998BE23&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@nobickal1"
+          },
+          {
+            "label": "romandolidze",
+            "type": "creator",
+            "val": 70,
+            "provenance": "[ID: 667297541]",
+            "name": "romandolidze",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/449659819_1522735348663974_6645320095640087199_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=XE3m4wZZ7rQQ7kNvwEVcdQ7&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwX6kTdqL9AWwWe9lV2Zc0nVBoJpmFPLNrIZ2OikWZMw&oe=6998AF02&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@romandolidze"
+          }
+        ],
+        "name": "Combat Sports (MMA/UFC)"
+      },
+      {
+        "label": "Hip Hop & Pop Culture",
+        "type": "cluster",
+        "data": {
+          "description": "Music artists and celebrities who influence streetwear and sneaker culture.",
+          "keywords": [
+            "Rap",
+            "Music",
             "Lifestyle",
-            "General"
+            "Collabs"
           ]
         },
         "children": [
           {
-            "label": "Potential Lifestyle Consumers",
-            "type": "subcluster",
+            "label": "cardiboffciall",
+            "type": "creator",
+            "val": 95,
+            "provenance": "[ID: 58700846606]",
+            "name": "cardiboffciall",
             "data": {
-              "description": "Profiles with female identifiers likely interested in lifestyle content."
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/612750509_17981429801958607_3490867626456874477_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFd5pr3YWRU7o2UOEFyeI0QANXeT23DiVif4bHHInwPji7jt2eC9bfapXi1TuBeZsM&_nc_ohc=k8rKhW7K-u0Q7kNvwFT4NyE&_nc_gid=nJcChplIhVaaMvDERLc4Vg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuIEPUU3S6ueF33g901VWi8k7taHn_UyuByKg1cMZqCbw&oe=6998AD11&_nc_sid=0055be",
+              "isVerified": true
             },
-            "children": [
-              {
-                "label": "Sonja Borozan",
-                "handle": "@sonjaborozan",
-                "type": "creator",
-                "val": 60,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-bos5-1.cdninstagram.com/v/t51.2885-19/23735270_2015474588732566_2058802524776824832_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4yMDAuYzIifQ&_nc_ht=scontent-bos5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QEkFKORdHgNIJxsI_wIGjY3090383dHP0rEwQnuC6G8w7Ipf9pxueQMLFrVbVSXLzs&_nc_ohc=eSuZg7rhIfQQ7kNvwEq9Toe&_nc_gid=oLpsGgXSL8NNEy6fFEAbaQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu-3fRTJoO_pnVeiQx2zNMFBNKTMaexayxYkIA-bhbmFg&oe=6996E4DE&_nc_sid=8b3546",
-                  "evidence": "Female profile in network.",
-                  "followers": 147,
-                  "following": 283,
-                  "externalUrl": "https://www.instagram.com/sonjaborozan"
-                },
-                "provenance": "[ID: 6423246578]",
-                "name": "Sonja Borozan"
-              },
-              {
-                "label": "Eleonora FG",
-                "handle": "@eleonorafg_",
-                "type": "creator",
-                "val": 60,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/559027323_18534399616047547_7660764411216267252_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=I_1CAFPxRaIQ7kNvwF2m9b0&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftENr-TsHqNRsB1TVtyBuo9PxByC1mQiXESFNfJ__86CA&oe=6996F10C&_nc_sid=17ea04",
-                  "evidence": "Female profile in network."
-                },
-                "provenance": "[ID: 226543546]",
-                "name": "Eleonora FG"
-              },
-              {
-                "label": "Polina Gilburd",
-                "handle": "@polina_gilburd",
-                "type": "creator",
-                "val": 60,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/394708636_258977190039007_6325581170755856759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=wA5CmbdPlQoQ7kNvwF-1UL8&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftTdPb5My4R5n3iK03yivVeqWC-3XMedgbqLiopXdex5A&oe=6996E7FA&_nc_sid=17ea04",
-                  "evidence": "Female profile in network."
-                },
-                "provenance": "[ID: 215973285]",
-                "name": "Polina Gilburd"
-              },
-              {
-                "label": "Jessica Lorenz",
-                "handle": "@thejessicalorenz",
-                "type": "creator",
-                "val": 60,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/624668128_18560161384050589_7064464753432266209_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=DQOmqiTEYwcQ7kNvwF_2BjT&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfuZI7ix65-MPALV-1HeRQaF3nz0CAcW6_nTbznIr15d0Q&oe=6996D49D&_nc_sid=17ea04",
-                  "evidence": "Female profile in network."
-                },
-                "provenance": "[ID: 42034588]",
-                "name": "Jessica Lorenz"
-              },
-              {
-                "label": "Grace Gao Yu",
-                "handle": "@gracegaoyu",
-                "type": "creator",
-                "val": 60,
-                "data": {
-                  "bio": "No bio",
-                  "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/460183123_1258361505607060_4868382055131763676_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NTYuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=jAgy_znDow4Q7kNvwFQXyAx&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_Afu-XJKpOaE9XvvEeOwTf1NRH-mXmnQZqtAPteSLNysCJw&oe=6996DE80&_nc_sid=17ea04",
-                  "evidence": "Female profile in network."
-                },
-                "provenance": "[ID: 8473216701]",
-                "name": "Grace Gao Yu"
-              }
-            ],
-            "name": "Potential Lifestyle Consumers"
+            "handle": "@cardiboffciall"
+          },
+          {
+            "label": "snoopdogg",
+            "type": "creator",
+            "val": 90,
+            "provenance": "[ID: 1574083]",
+            "name": "snoopdogg",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/500711211_18566684437038084_1769774624019550405_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=_55UTQvQ1-AQ7kNvwFLqozr&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuvo-I0zpjbWxPYZFW6xanxtXzIlUz2ZFkPWZt1Mjxnsw&oe=6998D203&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@snoopdogg"
+          },
+          {
+            "label": "eminem",
+            "type": "creator",
+            "val": 90,
+            "provenance": "[ID: 192417402]",
+            "name": "eminem",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/532075297_18536415601033403_2998821746725938326_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=EioQel4BP_MQ7kNvwFgsN6p&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuxDBC6cVDRf_MtcN0FAalRnG98m6aZhSKO2G_KrcTnLA&oe=6998A331&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@eminem"
+          },
+          {
+            "label": "icecube",
+            "type": "creator",
+            "val": 85,
+            "provenance": "[ID: 550719921]",
+            "name": "icecube",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/258081569_578924046545419_2782654269102751612_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NTMuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=E9v_WQg4-3wQ7kNvwHz9ovX&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuOKprLFGhyPel37RByU0UlMShd-P5KOIwsGUriuhnnXg&oe=6998AF33&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@icecube"
+          },
+          {
+            "label": "liltunechi",
+            "type": "creator",
+            "val": 85,
+            "provenance": "[ID: 1665843838]",
+            "name": "liltunechi",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/399044754_7202581209805009_5467156639923170256_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=7mkcZWHyAhUQ7kNvwFGjJDi&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuspsyLXTjVgBRF06a3Tq-vXuiChaclochdIbOIOdHEaQ&oe=6998B9AA&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@liltunechi"
+          },
+          {
+            "label": "playboicarti",
+            "type": "creator",
+            "val": 80,
+            "provenance": "[ID: 279519379]",
+            "name": "playboicarti",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/408258054_853996629535846_4645049116660786165_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NjAuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=Qd1nm9QhXmkQ7kNvwH9xwUV&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsJ07EtFOAVVPc9Rb8GInXYX8G8E5exSMB0bjU0ClbY6Q&oe=6998CD8B&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@playboicarti"
           }
         ],
-        "name": "Emerging Female Demographics"
+        "name": "Hip Hop & Pop Culture"
+      },
+      {
+        "label": "Sneaker Media",
+        "type": "cluster",
+        "data": {
+          "description": "Media outlets and accounts dedicated to sneaker news, drops, and culture.",
+          "keywords": [
+            "Kicks",
+            "Drops",
+            "Hype",
+            "News"
+          ]
+        },
+        "children": [
+          {
+            "label": "sneakerfreakermag",
+            "type": "brand",
+            "val": 85,
+            "provenance": "[ID: 175637134]",
+            "name": "sneakerfreakermag",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/10932599_727809974008700_489743387_a.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGp42fuRflLliIuD2djcTKiR6qZpcTAZ3kDkMu0hKOlMMXmfHgEHQ2amUowCoOVIlU&_nc_ohc=IlfYDcvxN60Q7kNvwGcTopP&_nc_gid=_r6ly8ToxMSWqY4vcqZF5Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfumdbPcEsyDmhZJ6fOuZxf8DHY-4Gc6szcQvSzBtzaWeQ&oe=6998ABFA&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@sneakerfreakermag"
+          },
+          {
+            "label": "soleretriever",
+            "type": "brand",
+            "val": 80,
+            "provenance": "[ID: 7333815028]",
+            "name": "soleretriever",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/165918137_159041499321362_9202058035413816105_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=eiw2vq-OQUkQ7kNvwF1ddFW&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvnKfZ56KWIuYNTiHzEevv-mh_qPVC1RUzUWA9rub9n8Q&oe=6998ADB7&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@soleretriever"
+          },
+          {
+            "label": "houseofheat",
+            "type": "brand",
+            "val": 75,
+            "provenance": "[ID: 1935871542]",
+            "name": "houseofheat",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/339689051_995623634764658_1832934189303072622_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=JlV44LxcfRUQ7kNvwFTN1Sg&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwXD5A6aRVGG6BOjfDSrf4Nk-iHXw4u9bPfkQuYBGclA&oe=6998BF17&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@houseofheat"
+          },
+          {
+            "label": "insanesneaker",
+            "type": "brand",
+            "val": 70,
+            "provenance": "[ID: 9137416371]",
+            "name": "insanesneaker",
+            "data": {
+              "bio": "Bio unavailable",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/442530916_973633671039876_6377844778554427595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGp42fuRflLliIuD2djcTKiR6qZpcTAZ3kDkMu0hKOlMMXmfHgEHQ2amUowCoOVIlU&_nc_ohc=DP8J5IPgtCMQ7kNvwGsRXqO&_nc_gid=_r6ly8ToxMSWqY4vcqZF5Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsrXSSQef6bViSz208ZCXlJZSK_DMijGtQ2UTeiX9DrWw&oe=6998CBC0&_nc_sid=0055be",
+              "isVerified": true
+            },
+            "handle": "@insanesneaker"
+          },
+          {
+            "label": "culture.sneaker55",
+            "type": "creator",
+            "val": 60,
+            "provenance": "[ID: 74070255173]",
+            "name": "culture.sneaker55",
+            "data": {
+              "bio": "Daily Sneaker head | Culture. History. Hype \nNew Drops • Rare kicks • Styling types.\nDm for collabs @culture.sneaker55",
+              "profilePicUrl": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/495721535_17845611984471174_6338551654353129460_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMxIn0&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGa21pWmc4WUyyDIo2M31Nh_OzoGa-zTUVywtvD8Bju0QRIhyZ2U_SBK52jxp5bAgw&_nc_ohc=XmxIYv6B2IEQ7kNvwHydO_I&_nc_gid=S78KV5H7-QHthRY4LR1vPA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu1QNj2Iu4Jb98BLD48-jtu_jxxpX_aBEZ59K73N7q5gQ&oe=6998D0EB&_nc_sid=8b3546",
+              "followers": 1,
+              "following": 35,
+              "externalUrl": "https://www.instagram.com/culture.sneaker55"
+            },
+            "handle": "@culture.sneaker55"
+          }
+        ],
+        "name": "Sneaker Media"
       }
     ],
-    "name": "Mercedes AMG F1 x Luxury Skincare Audience Map"
+    "name": "Reebok Brand Ecosystem"
   },
   "analytics": {
     "clusters": [
-      "High-Value Lifestyle & Aesthetics",
-      "Wellness & Romanticized Living",
-      "Core F1 & Automotive Enthusiasts",
-      "Luxury Travel & Experiences",
-      "Emerging Female Demographics"
+      "Official Channels",
+      "Sportswear Competitors",
+      "Basketball Culture",
+      "Combat Sports (MMA/UFC)",
+      "Hip Hop & Pop Culture",
+      "Sneaker Media"
     ],
     "topics": [
       {
-        "label": "Luxury Design",
+        "label": "Performance Footwear",
         "val": 90,
         "type": "topic",
-        "name": "Luxury Design"
+        "name": "Performance Footwear"
       },
       {
-        "label": "Equestrian Lifestyle",
+        "label": "Basketball Heritage",
         "val": 85,
         "type": "topic",
-        "name": "Equestrian Lifestyle"
+        "name": "Basketball Heritage"
       },
       {
-        "label": "Wellness & Self-Care",
-        "val": 88,
+        "label": "Streetwear & Lifestyle",
+        "val": 85,
         "type": "topic",
-        "name": "Wellness & Self-Care"
+        "name": "Streetwear & Lifestyle"
       },
       {
-        "label": "Formula 1 Racing",
-        "val": 100,
-        "type": "topic",
-        "name": "Formula 1 Racing"
-      },
-      {
-        "label": "Travel Experiences",
+        "label": "Combat Sports Training",
         "val": 80,
         "type": "topic",
-        "name": "Travel Experiences"
+        "name": "Combat Sports Training"
       },
       {
-        "label": "Botanical Skincare",
+        "label": "Sneaker Drops",
         "val": 75,
         "type": "topic",
-        "name": "Botanical Skincare"
+        "name": "Sneaker Drops"
+      },
+      {
+        "label": "Music Collaborations",
+        "val": 75,
+        "type": "topic",
+        "name": "Music Collaborations"
       }
     ],
     "subtopics": [
       {
-        "label": "Old Money Aesthetic",
-        "val": 85,
-        "type": "subtopic",
-        "name": "Old Money Aesthetic"
-      },
-      {
-        "label": "Romanticising Life",
+        "label": "Retro Basketball",
         "val": 80,
         "type": "subtopic",
-        "name": "Romanticising Life"
+        "name": "Retro Basketball"
       },
       {
-        "label": "AMG Performance",
-        "val": 90,
+        "label": "UFC Fight Gear",
+        "val": 75,
         "type": "subtopic",
-        "name": "AMG Performance"
+        "name": "UFC Fight Gear"
       },
       {
-        "label": "Curated Interiors",
+        "label": "Classic Kicks",
         "val": 70,
         "type": "subtopic",
-        "name": "Curated Interiors"
+        "name": "Classic Kicks"
+      },
+      {
+        "label": "Women's Hoops",
+        "val": 65,
+        "type": "subtopic",
+        "name": "Women's Hoops"
       }
     ],
     "creators": [
       {
-        "label": "Angelss Journey",
-        "handle": "@angelss.journey",
+        "label": "Angel Reese",
+        "handle": "@areese",
         "val": 95,
         "data": {
-          "bio": "Elevating and romanticising the little moments of live.\nGetting fitter and better\nLifestyle | Motivation | Travel & Food Experiences\nAnd more.......",
-          "profilePicUrl": "https://scontent-mia5-1.cdninstagram.com/v/t51.2885-19/453438939_1926753341107994_3602337288078238249_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYwLmMyIn0&_nc_ht=scontent-mia5-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QF2b6STuUDkRh3qmCNznn1OZB-oesCrc7NdBcpx-WTubVF557csCyfpWut_X549GE8&_nc_ohc=wzuRhx2-BHoQ7kNvwF-ZBL_&_nc_gid=hQVnY7EwzxV9hVr5U98kdA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsRV8y-fQ-JXjnr1avrAJo9ub0hwhOTeyJnJLmtEMcQNQ&oe=6996E388&_nc_sid=8b3546",
-          "evidence": "High alignment with 'Wellness' and 'Lifestyle' segments.",
-          "followers": 22541,
-          "following": 8218,
-          "posts": 66,
-          "externalUrl": "http://linktr.ee/angelss.journey.uk",
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/509673673_18514946497047419_1392745724930819449_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDU2LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QED1LlE7KwX6r37V2nzv_6p12LDDxebIZSnGwMtreHC-oUDiMUufFKwGhGui9Mu798&_nc_ohc=-me65w9-_-cQ7kNvwGovamx&_nc_gid=rS7tPT49sonBiJvQoVYJ9A&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv6-ab0VOtfJis8Z68C-dSQNhz2Pu_4fsTU7E7RkvO8jA&oe=6998BF81&_nc_sid=0055be",
+          "evidence": "Key Reebok Basketball partner/athlete.",
           "isVerified": true
         },
-        "provenance": "[ID: 61358725770]",
-        "name": "Angelss Journey"
+        "provenance": "[ID: 269551418]",
+        "name": "Angel Reese"
       },
       {
-        "label": "Carmela Medina",
-        "handle": "@carmela.bermed",
-        "val": 92,
+        "label": "Cardi B",
+        "handle": "@cardiboffciall",
+        "val": 95,
         "data": {
-          "bio": "Carmela Medina  \nFounder de Bermed · Luxury & Timeless Design\nModa · Interiorismo · Caballos & lifestyle ecuestre\nConstruyendo Bermed con alma",
-          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/463491793_1221676632410639_1941737602356067873_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QHlGq-JtmA5lvWodxmhJvjofLob1Dd04NkZzK8EgIuFNKaZf738FJWjpULeatASMMQ&_nc_ohc=RFWazJHkyjMQ7kNvwEojGHI&_nc_gid=Y2F4D8Tm-7Wot8KnJlDqCQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsD4zbo-KDaw4RaflbD9SxpL-qGeRCNBzRco4be9Bt-GA&oe=6996EE89&_nc_sid=8b3546",
-          "evidence": "High alignment with 'Luxury' and 'Equestrian' segments.",
-          "followers": 1351,
-          "following": 1410,
-          "posts": 107,
-          "externalUrl": "https://www.instagram.com/carmela.bermed",
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/612750509_17981429801958607_3490867626456874477_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFd5pr3YWRU7o2UOEFyeI0QANXeT23DiVif4bHHInwPji7jt2eC9bfapXi1TuBeZsM&_nc_ohc=k8rKhW7K-u0Q7kNvwFT4NyE&_nc_gid=nJcChplIhVaaMvDERLc4Vg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuIEPUU3S6ueF33g901VWi8k7taHn_UyuByKg1cMZqCbw&oe=6998AD11&_nc_sid=0055be",
+          "evidence": "Major celebrity collaborator with Reebok.",
           "isVerified": true
         },
-        "provenance": "[ID: 67641234143]",
-        "name": "Carmela Medina"
+        "provenance": "[ID: 58700846606]",
+        "name": "Cardi B"
       },
       {
-        "label": "Mercedeszboy",
-        "handle": "@mercedeszboy",
-        "val": 88,
+        "label": "Dustin Poirier",
+        "handle": "@dustinpoirier",
+        "val": 90,
         "data": {
-          "bio": "ㅤㅤㅤ 𝙧𝙖𝙘¡𝗇𝗀ㅤ;ㅤㅤ©ㅤㅤ࣪ㅤㅤ﹙ 性別﹚ ㅤ12 ㅤ.ᐟ\nㅤ𝓘  alw𝗮𝘆𝘀  𝙩𝙧𝙮  t𝗈  𝙜𝙞𝙫𝙚  𝐦𝐲  𝙗𝙚𝘴𝘵  performance\nㅤㅤ a͟l͟i͟v͟eʀicɦ..ㅤ──ㅤ@mercedesamgf1 ㅤㅤ⌗",
-          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/633262848_17924522256246334_7497354141827675161_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QHlCiOk2yKPvHHuAoIUGL2JOxwH6EhulOJLAsouescXuJk8g3jP03kEq3cemRY1f0QQuajdYJin58W_IyDdebgv&_nc_ohc=BQu7x4OAvqAQ7kNvwFrMhPz&_nc_gid=shYXXQVp7MBYzCdqN1KYgg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuDNIiRVRHFhZK3DCmShUZuZhxJqagYXrqNo1xVOrsa3w&oe=6996EEB2&_nc_sid=8b3546",
-          "evidence": "Core F1 fan anchor.",
-          "followers": 39,
-          "following": 49,
-          "externalUrl": "https://www.instagram.com/mercedeszboy"
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/447812159_991313212188769_869518833333950706_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYyLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGu7GT6W0rseRZP7cbvAqOKWbKABSrpQiic7OvGI_0aQdURMpYzsaXZwbXrLLum-RA&_nc_ohc=nXfXREIMQ80Q7kNvwFPFV1t&_nc_gid=5C_P90PLI9qx3_P8j4Azeg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuoQNnNPL8ZWIsohh3kM4z23TBFKSvQQ_XXvw5cfWKDpA&oe=6998A7BB&_nc_sid=0055be",
+          "evidence": "Prominent UFC fighter, aligns with Reebok's combat sports history.",
+          "isVerified": true
         },
-        "provenance": "[ID: 67316974333]",
-        "name": "Mercedeszboy"
+        "provenance": "[ID: 25812109]",
+        "name": "Dustin Poirier"
       },
       {
-        "label": "The AMG Driver",
-        "handle": "@theamgdriver",
+        "label": "Austin Reaves",
+        "handle": "@austinreaves12",
         "val": 85,
         "data": {
-          "bio": "- R230 SL55 AMG | M113K V8 Kompressor\n- Automotive/Motorsport Media \n- Mercedes | AMG Enthusiast\n📍 Miami, FL",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/631578001_18557421517030819_2251130528080078348_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QH6Nz27OxBd7KaRbv67OnIgNnWXQ2NHMdQTjppz3u-QrRLZouoY5ktam9T-uKcYGN8&_nc_ohc=d_00L2d8DpAQ7kNvwF_NE_S&_nc_gid=g5m1-a6ndrC-_qfVpX_zYw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsrXALgB74MKmomPRvgN-VgkwZR33sGN6CJ2_jGTM9NtQ&oe=69970A0F&_nc_sid=8b3546",
-          "evidence": "Core AMG enthusiast.",
-          "followers": 254,
-          "following": 853,
-          "posts": 7,
-          "externalUrl": "https://www.instagram.com/theamgdriver"
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/562863168_18535516537036636_1704788272338777214_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MDguYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=rq736-HB2vQQ7kNvwHlfxu7&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftPePVF130OLg_E32MusDXuD_l473YOvCSaNE7i_GMSNQ&oe=6998B70A&_nc_sid=0055be",
+          "evidence": "NBA player, relevant to basketball vertical.",
+          "isVerified": true
         },
-        "provenance": "[ID: 814686818]",
-        "name": "The AMG Driver"
+        "provenance": "[ID: 189668635]",
+        "name": "Austin Reaves"
       },
       {
-        "label": "Sonja Borozan",
-        "handle": "@sonjaborozan",
+        "label": "Colby Covington",
+        "handle": "@colbycovington",
+        "val": 85,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/37625846_645422755844589_7012463734916382720_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=QJArRi9GKn4Q7kNvwFwDe90&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs0tTGIXdSyl-EcpUU_4LkbCALhAH_GJ4OTGFiFwR492A&oe=6998C21D&_nc_sid=0055be",
+          "evidence": "UFC fighter.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 436660190]",
+        "name": "Colby Covington"
+      },
+      {
+        "label": "Snoop Dogg",
+        "handle": "@snoopdogg",
+        "val": 85,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/500711211_18566684437038084_1769774624019550405_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=_55UTQvQ1-AQ7kNvwFLqozr&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuvo-I0zpjbWxPYZFW6xanxtXzIlUz2ZFkPWZt1Mjxnsw&oe=6998D203&_nc_sid=0055be",
+          "evidence": "Cultural icon relevant to streetwear.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 1574083]",
+        "name": "Snoop Dogg"
+      },
+      {
+        "label": "Lance Stephenson",
+        "handle": "@stephensonlance",
+        "val": 80,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/522617478_18513799144017328_7693816337851280351_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42ODMuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHGjMIEhkfr3DOnZM9vZ3QJ_Jxap_cTyd6eELx-YHy2isuNwvzsgmkq_mCljdIW48I&_nc_ohc=11v_Nana94UQ7kNvwHNo-LW&_nc_gid=bko0v4VzyorQ3NNgTGpMIg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft3eayzn7JlCEUSqB_aLtgbXyu-XKAnXgqaLKGEJFDWsQ&oe=6998BCD7&_nc_sid=0055be",
+          "evidence": "Professional basketball player.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 9617327]",
+        "name": "Lance Stephenson"
+      },
+      {
+        "label": "Matas Buzelis",
+        "handle": "@matasbuzelis",
+        "val": 75,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/558976121_18527834131029050_986603077139312089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QED1LlE7KwX6r37V2nzv_6p12LDDxebIZSnGwMtreHC-oUDiMUufFKwGhGui9Mu798&_nc_ohc=jvpIuoo9FaQQ7kNvwGBUddy&_nc_gid=rS7tPT49sonBiJvQoVYJ9A&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuQ6DyMMC16FnImguaPT378ad3XbD5rfjaV3gBmNiBR9Q&oe=6998CC44&_nc_sid=0055be",
+          "evidence": "Rising basketball talent.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 1457821049]",
+        "name": "Matas Buzelis"
+      },
+      {
+        "label": "Bobby King Green",
+        "handle": "@bobbykinggreen",
+        "val": 75,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/621669531_18549437515009266_665803061249337548_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=3I3rDQitogEQ7kNvwEvrli_&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwMWphzgEt0fCmCZUKEZhSN7WQfrl5Vw6B7_y_Z5_QTw&oe=6998A889&_nc_sid=0055be",
+          "evidence": "UFC fighter.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 1232009265]",
+        "name": "Bobby King Green"
+      },
+      {
+        "label": "Culture Sneaker",
+        "handle": "@culture.sneaker55",
         "val": 60,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-bos5-1.cdninstagram.com/v/t51.2885-19/23735270_2015474588732566_2058802524776824832_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4yMDAuYzIifQ&_nc_ht=scontent-bos5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QEkFKORdHgNIJxsI_wIGjY3090383dHP0rEwQnuC6G8w7Ipf9pxueQMLFrVbVSXLzs&_nc_ohc=eSuZg7rhIfQQ7kNvwEq9Toe&_nc_gid=oLpsGgXSL8NNEy6fFEAbaQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu-3fRTJoO_pnVeiQx2zNMFBNKTMaexayxYkIA-bhbmFg&oe=6996E4DE&_nc_sid=8b3546",
-          "evidence": "Female demographic segment.",
-          "followers": 147,
-          "following": 283,
-          "externalUrl": "https://www.instagram.com/sonjaborozan"
+          "bio": "Daily Sneaker head | Culture. History. Hype \nNew Drops • Rare kicks • Styling types.\nDm for collabs @culture.sneaker55",
+          "profilePicUrl": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/495721535_17845611984471174_6338551654353129460_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMxIn0&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGa21pWmc4WUyyDIo2M31Nh_OzoGa-zTUVywtvD8Bju0QRIhyZ2U_SBK52jxp5bAgw&_nc_ohc=XmxIYv6B2IEQ7kNvwHydO_I&_nc_gid=S78KV5H7-QHthRY4LR1vPA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu1QNj2Iu4Jb98BLD48-jtu_jxxpX_aBEZ59K73N7q5gQ&oe=6998D0EB&_nc_sid=8b3546",
+          "evidence": "Sneaker culture micro-influencer.",
+          "followers": 1,
+          "following": 35,
+          "externalUrl": "https://www.instagram.com/culture.sneaker55"
         },
-        "provenance": "[ID: 6423246578]",
-        "name": "Sonja Borozan"
-      },
-      {
-        "label": "Eleonora FG",
-        "handle": "@eleonorafg_",
-        "val": 55,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/559027323_18534399616047547_7660764411216267252_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=I_1CAFPxRaIQ7kNvwF2m9b0&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftENr-TsHqNRsB1TVtyBuo9PxByC1mQiXESFNfJ__86CA&oe=6996F10C&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 226543546]",
-        "name": "Eleonora FG"
-      },
-      {
-        "label": "Polina Gilburd",
-        "handle": "@polina_gilburd",
-        "val": 55,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/394708636_258977190039007_6325581170755856759_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=wA5CmbdPlQoQ7kNvwF-1UL8&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftTdPb5My4R5n3iK03yivVeqWC-3XMedgbqLiopXdex5A&oe=6996E7FA&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 215973285]",
-        "name": "Polina Gilburd"
-      },
-      {
-        "label": "Jessica Lorenz",
-        "handle": "@thejessicalorenz",
-        "val": 55,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/624668128_18560161384050589_7064464753432266209_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=DQOmqiTEYwcQ7kNvwF_2BjT&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfuZI7ix65-MPALV-1HeRQaF3nz0CAcW6_nTbznIr15d0Q&oe=6996D49D&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 42034588]",
-        "name": "Jessica Lorenz"
-      },
-      {
-        "label": "Grace Gao Yu",
-        "handle": "@gracegaoyu",
-        "val": 55,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/460183123_1258361505607060_4868382055131763676_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NTYuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=jAgy_znDow4Q7kNvwFQXyAx&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_Afu-XJKpOaE9XvvEeOwTf1NRH-mXmnQZqtAPteSLNysCJw&oe=6996DE80&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 8473216701]",
-        "name": "Grace Gao Yu"
-      },
-      {
-        "label": "Almira Absin",
-        "handle": "@almira.absin",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/488905622_565070795988277_7530466284300086681_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=qL2AW339lpkQ7kNvwF5bnLX&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfuC7GMOgW4IECS1f7LiACgG70kMb3ExWUaubwKjkSsWaA&oe=6996F3F5&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 461866286]",
-        "name": "Almira Absin"
-      },
-      {
-        "label": "Mane Khachatryan",
-        "handle": "@mane_khachatryan1",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/601975728_18073210118595968_1543157429421359365_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NjAuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=cbKAcsy7kHEQ7kNvwFSxoze&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftGIcExuh8_Ez8a5PMA3B_z6KcAmCJLhq12UgoVuZMj3Q&oe=6996EE1C&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 47833835967]",
-        "name": "Mane Khachatryan"
-      },
-      {
-        "label": "Athanasiou Nikoletta",
-        "handle": "@athanasiounikoletta",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://instagram.fsac1-1.fna.fbcdn.net/v/t51.2885-19/382128405_1338432053424563_1960486434368958837_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.fsac1-1.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2QGBwrAGB_3XjUH0n9mGuN_c9HoGdMOUQ6--iYPM8AK7bJnB02wlwBgvQ1Nq67ThED1MF5w_Euxl0movIWuyWwXG&_nc_ohc=LmI7F4DdW5MQ7kNvwHdifO3&_nc_gid=3ylj6PDyUG4ZS3P8vMyhZw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfthGRXYKpxU3NZADU6FUoLFLRq9xwWKOgtez57nd-wBCw&oe=6996F13F&_nc_sid=8b3546",
-          "evidence": "Female demographic segment.",
-          "followers": 669,
-          "following": 1370,
-          "posts": 26,
-          "externalUrl": "https://www.instagram.com/athanasiounikoletta"
-        },
-        "provenance": "[ID: 8075491338]",
-        "name": "Athanasiou Nikoletta"
-      },
-      {
-        "label": "Chloe Lin",
-        "handle": "@iamchloelinnnnn",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lax3-1.cdninstagram.com/v/t51.2885-19/190270209_3734473653330298_5220153664855085708_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QGcrClBKvoua7SjYOf9zlI63ESvlR7K2fw-qJy84Y6zPGnmwplE_Clzeuinkqj44gw&_nc_ohc=yuKyND9AKZoQ7kNvwEIlPWj&_nc_gid=n5_K2oYsFELjwesvqkYG0Q&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Aftv98ICGDiLmbVKbw_tVgr7x3qzjfDpplJESW8QHi3Lsw&oe=6996E8B7&_nc_sid=8b3546",
-          "evidence": "Female demographic segment.",
-          "followers": 583,
-          "following": 910,
-          "posts": 392,
-          "externalUrl": "https://www.instagram.com/iamchloelinnnnn"
-        },
-        "provenance": "[ID: 10116601]",
-        "name": "Chloe Lin"
-      },
-      {
-        "label": "Silvia I Arcidiacono",
-        "handle": "@silvia_i_arcidiacono",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/222730010_913558439233743_1762874108654159064_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFgE5C2tRePNSjkbySni0aFna7FP-VbiUUjXZu-hlhWzQvMfoOXW8U6PxTYlRqfcdQ&_nc_ohc=woyx1XrEnT4Q7kNvwEB-FM-&_nc_gid=stVdC9At_mdPuHH6dgGwpQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftpzkutXlu16wpyLtqll21aL4s5kadP4kqxJcSVd3U1xg&oe=6996FB1D&_nc_sid=8b3546",
-          "evidence": "Female demographic segment.",
-          "followers": 381,
-          "following": 413,
-          "posts": 282,
-          "externalUrl": "https://www.instagram.com/silvia_i_arcidiacono"
-        },
-        "provenance": "[ID: 6834523413]",
-        "name": "Silvia I Arcidiacono"
-      },
-      {
-        "label": "Ann Bradbury",
-        "handle": "@bradbury_ann",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/327764395_925161978861355_8969495480987087690_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QECDocWJBfsU6AaCREO8_X4tobrIqJ1vSUKPmjQs-algSfjjBfQiqPeY2dAhdrSIF8&_nc_ohc=ZGEL_QVJ8JUQ7kNvwHUTL1g&_nc_gid=76xiafKpomPm32wkZJM2Ig&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsgY8NO2pxEXDgq1vIOzysOEd93-9_GflNox03Z3S4qsQ&oe=6996E3EE&_nc_sid=8b3546",
-          "evidence": "Female demographic segment.",
-          "followers": 111,
-          "following": 1436,
-          "externalUrl": "https://www.instagram.com/bradbury_ann"
-        },
-        "provenance": "[ID: 8522382611]",
-        "name": "Ann Bradbury"
-      },
-      {
-        "label": "Lella Smith",
-        "handle": "@lellasmith10",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/631505195_17882253276453477_3277785815044463679_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zNTEuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QF9HO0h5SvW7rXjcbNotq9QT0owFRkeKIR7GDKToMqsbJR5HjVzbT0J1e4vNRrLXqM&_nc_ohc=WTen4OqW1HAQ7kNvwEfpFWT&_nc_gid=i1IVgjj_iqM5spD5KVTCiA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afuvx3K0hPIhjb4bK_ZWFyeBKeE06xVuVNVUm3PYZPplpw&oe=69970EC5&_nc_sid=8b3546",
-          "evidence": "Female demographic segment.",
-          "followers": 25,
-          "following": 94,
-          "posts": 2,
-          "externalUrl": "https://www.instagram.com/lellasmith10"
-        },
-        "provenance": "[ID: 73596277476]",
-        "name": "Lella Smith"
-      },
-      {
-        "label": "Berry Berry Cate",
-        "handle": "@berryberrycate",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/464139521_536931942606903_1532733556834775367_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zNjEuYzIifQ&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=F0A6itQ4VvwQ7kNvwFj2njs&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfsG6l96VbLOIIBhLZjZxzZoNIobNG93qw3PHww7tHFq0Q&oe=6996F9A9&_nc_sid=17ea04",
-          "evidence": "Female demographic segment."
-        },
-        "provenance": "[ID: 5612968937]",
-        "name": "Berry Berry Cate"
-      },
-      {
-        "label": "Blueberry Belle Epoque",
-        "handle": "@blueberrybellepoque1",
-        "val": 50,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://instagram.frst1-1.fna.fbcdn.net/v/t51.2885-19/573323465_1219825463302212_7278921664109726296_n.png?stp=dst-jpg_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=instagram.frst1-1.fna.fbcdn.net&_nc_cat=100&_nc_oc=Q6cZ2QG0txV54dxpZZQRcuZvv6vrOJYo-XwtNMg-sUgxtBi7-dkm031Yb4onQyxNE9Z_mzg&_nc_ohc=eQeo-gpIgOcQ7kNvwHgn828&_nc_gid=HOOwFkv8UOLUh7gAbM4ICw&edm=APs17CUBAAAA&ccb=7-5&ig_cache_key=YW5vbnltb3VzX3Byb2ZpbGVfcGlj.3-ccb7-5&oh=00_AftIP85y_oeyAVFHaG2OZ7uhJ9w8uSBj5zrtHNBSsSp6Xg&oe=6996FFAA&_nc_sid=10d13b",
-          "evidence": "Female demographic segment.",
-          "followers": 4,
-          "following": 1926,
-          "externalUrl": "https://www.instagram.com/blueberrybellepoque1"
-        },
-        "provenance": "[ID: 54786863478]",
-        "name": "Blueberry Belle Epoque"
-      },
-      {
-        "label": "Mahad Loves Cars",
-        "handle": "@mahadlovescars",
-        "val": 45,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/629227210_17922690792251298_2465564790320446160_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=eZePT1GSOAwQ7kNvwEt2y-K&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_Afs7IFH29P-F1kiiDxK4S8hf-3oXm5c17x5QX095PmZAJQ&oe=6996DFBF&_nc_sid=17ea04",
-          "evidence": "Automotive interest."
-        },
-        "provenance": "[ID: 67651459297]",
-        "name": "Mahad Loves Cars"
-      },
-      {
-        "label": "Inked Custom",
-        "handle": "@inkedcustom",
-        "val": 40,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/472466100_599351699510026_3769915673211095686_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=pQyB38OzVA4Q7kNvwEHTdGR&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftjDEhOcqRQWmwZNBYvwH-Y_F9OIES_PajSTzT4-xd0lA&oe=69970620&_nc_sid=17ea04",
-          "evidence": "Custom/Design interest."
-        },
-        "provenance": "[ID: 4543082017]",
-        "name": "Inked Custom"
+        "provenance": "[ID: 74070255173]",
+        "name": "Culture Sneaker"
       }
     ],
     "brands": [
       {
-        "label": "Nemeton Botanicals",
-        "handle": "@nemeton.botanicals",
+        "label": "Reebok",
+        "handle": "@reebok",
+        "val": 100,
+        "data": {
+          "bio": "Sport Is Everything.",
+          "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/480200310_649254170981222_7930686984493788331_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QGur_9sfZxaDQWjDmFBXi5adzepZvapP9-QDz3QOJc3aYDLZqhJ8oFEB7rx47h7qCo&_nc_ohc=8OKaP1aK3AUQ7kNvwFzYwvQ&_nc_gid=bSe2bZMWztuDbiChtwnlAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgCb-12x4JSag-f-JrgIq_Gx1AUMSfU0xunS4JI9JcFg&oe=6998CBFA&_nc_sid=8b3546",
+          "evidence": "Primary brand account.",
+          "followers": 4402231,
+          "following": 145,
+          "posts": 747,
+          "externalUrl": "https://www.reebok.com/",
+          "isVerified": true
+        },
+        "provenance": "[ID: 186499819]",
+        "name": "Reebok"
+      },
+      {
+        "label": "Reebok Basketball",
+        "handle": "@reebokbasketball",
         "val": 90,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/630260195_18029609528603702_6885751972517275463_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=-Kvtl4zX1ssQ7kNvwHfK7yi&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvAYB3wxB1capRSrBK1ANOeIooyyqR5Pu-2qCx3ZRFZsw&oe=6996E301&_nc_sid=17ea04",
-          "evidence": "Direct relevance to 'Skincare' query."
+          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/455209353_1662524241266210_1971624613588950272_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QESQzMhY6zRLvTF3jHKyFmr6jJMG_MBAUajjQEC6DxVOvmlIwA_cQOOyUORGrjB-Ms&_nc_ohc=NscrPsxmBSsQ7kNvwGHL-MU&_nc_gid=j0Rla_jWhoBBLPZSK0Rrew&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsLLi9WjR5_YS2bcegt8dOHh2alicocBVk9UEPEJA7gdg&oe=6998A91A&_nc_sid=0055be",
+          "evidence": "Vertical specific account."
         },
-        "provenance": "[ID: 48033131701]",
-        "name": "Nemeton Botanicals"
+        "provenance": "[ID: 68292913239]",
+        "name": "Reebok Basketball"
       },
       {
-        "label": "Beyond Travel Ltd",
-        "handle": "@beyondtravelltd",
+        "label": "Adidas",
+        "handle": "@adidas",
+        "val": 95,
+        "data": {
+          "bio": "#YouGotThis",
+          "profilePicUrl": "https://scontent-dfw6-1.cdninstagram.com/v/t51.2885-19/564201508_18563819479045765_7618693513437726799_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NjMuYzIifQ&_nc_ht=scontent-dfw6-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFcqqjNs6DixQK6fdntfGd6JrvFwU-Gzaixg6IVw9LNBZ-PfrGWqr9WqzXmLdRDVN8&_nc_ohc=m41hjC7AgV4Q7kNvwGUvJlG&_nc_gid=6cX9KTg8jr9UzDnfdsYymQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuR2zO62iKoVnwgFkhHUTqRH64kX_JAatQnCyCECpXVpg&oe=6998CA44&_nc_sid=8b3546",
+          "evidence": "Major competitor/Former parent company.",
+          "followers": 29515959,
+          "following": 1030,
+          "posts": 1411,
+          "externalUrl": "https://linktr.ee/adidas",
+          "isVerified": true
+        },
+        "provenance": "[ID: 20269764]",
+        "name": "Adidas"
+      },
+      {
+        "label": "Nike",
+        "handle": "@nike",
+        "val": 95,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/551608484_18567162979020081_1135468084872726555_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zOTkuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QELfbjB8emsHSrAJEKpe9OIc_0Iw9-HzMpqy7qGffzfm8QIsEHtTjRh0-efPzpApjI&_nc_ohc=oKEO7KGm_xsQ7kNvwHFLIQZ&_nc_gid=Gds-BbBfr3sf4OGe-DytRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfseC8QiC3dHF1V2IE20x0eJxrveePD6JVcd2PlFcH9LAQ&oe=6998C2B0&_nc_sid=0055be",
+          "evidence": "Major competitor.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 13460080]",
+        "name": "Nike"
+      },
+      {
+        "label": "Puma",
+        "handle": "@puma",
+        "val": 90,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/459303202_479954131680638_1811732038334385568_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEYSBqSij0SJVt0xe4BsTZoboiXlEc5nPWb3AYz1clcOGKGV0OUJkr4WgcM_1j2c3Y&_nc_ohc=Pt5YtlEHLL8Q7kNvwHPGyfX&_nc_gid=3MkdlelLC8MUl9IMLTx8cA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuHruR8yXbZCVjROrsaJkFeLgTZwOIpgL1PnM7eepeG1g&oe=6998C21A&_nc_sid=8b3546",
+          "evidence": "Major competitor.",
+          "followers": 13094421,
+          "following": 152,
+          "posts": 3341,
+          "externalUrl": "http://clicklinkin.bio/puma",
+          "isVerified": true
+        },
+        "provenance": "[ID: 10145706]",
+        "name": "Puma"
+      },
+      {
+        "label": "Sneaker Freaker",
+        "handle": "@sneakerfreakermag",
         "val": 85,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/35341706_1280052295431176_3654695866687553536_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDE3LmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=HODyvFyzlGkQ7kNvwFlDQph&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvGXV1mVHmz-QYxDs-Fx8e1aNtoez2bUmJVrwezeE4RWw&oe=69970602&_nc_sid=17ea04",
-          "evidence": "Luxury travel relevance."
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/10932599_727809974008700_489743387_a.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGp42fuRflLliIuD2djcTKiR6qZpcTAZ3kDkMu0hKOlMMXmfHgEHQ2amUowCoOVIlU&_nc_ohc=IlfYDcvxN60Q7kNvwGcTopP&_nc_gid=_r6ly8ToxMSWqY4vcqZF5Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfumdbPcEsyDmhZJ6fOuZxf8DHY-4Gc6szcQvSzBtzaWeQ&oe=6998ABFA&_nc_sid=0055be",
+          "evidence": "Key sneaker media outlet.",
+          "isVerified": true
         },
-        "provenance": "[ID: 7863325989]",
-        "name": "Beyond Travel Ltd"
+        "provenance": "[ID: 175637134]",
+        "name": "Sneaker Freaker"
       },
       {
-        "label": "Self Edge",
-        "handle": "@selfedge",
+        "label": "Sole Retriever",
+        "handle": "@soleretriever",
         "val": 80,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/316968444_212629837866890_8315963892735243877_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NDMuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=oIy8yyniA90Q7kNvwGP4DX6&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvzhUIsKK9Y9gm7fg4xVRvfNJfWSXMg0kInRswNHhlwsw&oe=69970805&_nc_sid=17ea04",
-          "evidence": "High-end fashion/retail."
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/165918137_159041499321362_9202058035413816105_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=eiw2vq-OQUkQ7kNvwF1ddFW&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvnKfZ56KWIuYNTiHzEevv-mh_qPVC1RUzUWA9rub9n8Q&oe=6998ADB7&_nc_sid=0055be",
+          "evidence": "Sneaker release info.",
+          "isVerified": true
         },
-        "provenance": "[ID: 1154999]",
-        "name": "Self Edge"
+        "provenance": "[ID: 7333815028]",
+        "name": "Sole Retriever"
       },
       {
-        "label": "A Fold of Chairs",
-        "handle": "@afoldofchairs",
+        "label": "Under Armour",
+        "handle": "@underarmour",
+        "val": 85,
+        "data": {
+          "bio": "Under Armour makes you better. #ProtectThisHouse",
+          "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/81621819_469797387256268_1598060058422280192_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHHYC5QfKpi_LQwUUFNynFCwBdclkotKQKJSZS32V49FjoOoCq6EU4Nr5IdHiptVBI&_nc_ohc=19qkcDBTOIAQ7kNvwEPO2cN&_nc_gid=_z9FYRfVi1swYDJjQWRoxQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvlkpG9DXpgO3gY8mqxeFnK5VNgMAzHfiKZ8FchM9Fj2Q&oe=6998BB05&_nc_sid=8b3546",
+          "evidence": "Competitor.",
+          "followers": 8277398,
+          "following": 864,
+          "posts": 4419,
+          "externalUrl": "http://underarmour.com/",
+          "isVerified": true
+        },
+        "provenance": "[ID: 5858873]",
+        "name": "Under Armour"
+      },
+      {
+        "label": "New Balance Lifestyle",
+        "handle": "@newbalancelifestyle",
+        "val": 80,
+        "data": {
+          "bio": "WE GOT NOW",
+          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/502744869_18465802426076467_546118222927950611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHVXy7MCCO3gP2xtFfhS5HgCzIAvcIi1J5i3XJP7s4sThFiqILSGhm_puVs5jPFNQk&_nc_ohc=NfZoWuo2jNUQ7kNvwGFYV88&_nc_gid=VqWtj0srpoejd9LaS9_Myw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsva0CUfpac6XrRsZ-DP9_J35S1STka-B45Et0mWDudMw&oe=6998BF23&_nc_sid=8b3546",
+          "evidence": "Competitor in lifestyle segment.",
+          "followers": 1787329,
+          "following": 323,
+          "posts": 1808,
+          "externalUrl": "https://youtu.be/QjUiywy1aNQ",
+          "isVerified": true
+        },
+        "provenance": "[ID: 2346204466]",
+        "name": "New Balance Lifestyle"
+      },
+      {
+        "label": "Reebok Europe",
+        "handle": "@reebokeurope",
         "val": 75,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/387666734_1703893526746921_8487436533416451810_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=tvKMA26eUF4Q7kNvwH_B9eq&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftYshrUIoOu1une6z4_WBiO_ljk3tVow-mnK2gC5ilkvw&oe=6996E1AB&_nc_sid=17ea04",
-          "evidence": "Design/Interiors."
-        },
-        "provenance": "[ID: 11828221848]",
-        "name": "A Fold of Chairs"
-      },
-      {
-        "label": "Bermed",
-        "handle": "@carmela.bermed",
-        "val": 70,
-        "data": {
-          "bio": "Carmela Medina  \nFounder de Bermed · Luxury & Timeless Design\nModa · Interiorismo · Caballos & lifestyle ecuestre\nConstruyendo Bermed con alma",
-          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/463491793_1221676632410639_1941737602356067873_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QHlGq-JtmA5lvWodxmhJvjofLob1Dd04NkZzK8EgIuFNKaZf738FJWjpULeatASMMQ&_nc_ohc=RFWazJHkyjMQ7kNvwEojGHI&_nc_gid=Y2F4D8Tm-7Wot8KnJlDqCQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsD4zbo-KDaw4RaflbD9SxpL-qGeRCNBzRco4be9Bt-GA&oe=6996EE89&_nc_sid=8b3546",
-          "evidence": "Brand founder profile.",
-          "followers": 1351,
-          "following": 1410,
-          "posts": 107,
-          "externalUrl": "https://www.instagram.com/carmela.bermed",
+          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/466005384_564107206482011_3304565812355857598_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QG1pJhjlpYVZx6HuCdyA1LKE4JEbLWZJRaMTjrY1opJvcKdA0J_S40_VtMes_q1vbM&_nc_ohc=a8DdrIFUiDMQ7kNvwE_X5p2&_nc_gid=Upy1sd58ucBP8Lw0tseGXw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvAXtlVNXf6O8WgtVKfW1yk0Nx51w7i_cOn1Z-_kcDVCA&oe=6998AB44&_nc_sid=0055be",
+          "evidence": "Regional account.",
           "isVerified": true
         },
-        "provenance": "[ID: 67641234143]",
-        "name": "Bermed"
+        "provenance": "[ID: 176902169]",
+        "name": "Reebok Europe"
       }
     ],
     "topContent": [
       {
-        "label": "Elevating and Romanticising Life",
-        "val": 95,
+        "label": "Reebok Brand Statement",
+        "val": 100,
         "data": {
-          "mediaUrl": "https://scontent-mia5-1.cdninstagram.com/v/t51.2885-19/453438939_1926753341107994_3602337288078238249_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYwLmMyIn0&_nc_ht=scontent-mia5-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QF2b6STuUDkRh3qmCNznn1OZB-oesCrc7NdBcpx-WTubVF557csCyfpWut_X549GE8&_nc_ohc=wzuRhx2-BHoQ7kNvwF-ZBL_&_nc_gid=hQVnY7EwzxV9hVr5U98kdA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsRV8y-fQ-JXjnr1avrAJo9ub0hwhOTeyJnJLmtEMcQNQ&oe=6996E388&_nc_sid=8b3546",
-          "postUrl": ""
+          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/480200310_649254170981222_7930686984493788331_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QGur_9sfZxaDQWjDmFBXi5adzepZvapP9-QDz3QOJc3aYDLZqhJ8oFEB7rx47h7qCo&_nc_ohc=8OKaP1aK3AUQ7kNvwFzYwvQ&_nc_gid=bSe2bZMWztuDbiChtwnlAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgCb-12x4JSag-f-JrgIq_Gx1AUMSfU0xunS4JI9JcFg&oe=6998CBFA&_nc_sid=8b3546",
+          "postUrl": "https://instagram.com/reebok",
+          "caption": "Sport Is Everything."
         },
-        "name": "Elevating and Romanticising Life"
+        "name": "Reebok Brand Statement"
       },
       {
-        "label": "Luxury & Timeless Design",
+        "label": "Adidas Originals Philosophy",
         "val": 90,
         "data": {
-          "mediaUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/463491793_1221676632410639_1941737602356067873_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QHlGq-JtmA5lvWodxmhJvjofLob1Dd04NkZzK8EgIuFNKaZf738FJWjpULeatASMMQ&_nc_ohc=RFWazJHkyjMQ7kNvwEojGHI&_nc_gid=Y2F4D8Tm-7Wot8KnJlDqCQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsD4zbo-KDaw4RaflbD9SxpL-qGeRCNBzRco4be9Bt-GA&oe=6996EE89&_nc_sid=8b3546",
-          "postUrl": ""
+          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/371530742_306129595288664_7629456093525801129_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFAFLa3oaMzgHTg2BaIQhVAwjltUVPyYPl_xnFqP3j63j-mMl7ViVv37QG4X0_nNEE&_nc_ohc=boBthZRN5dYQ7kNvwHnqYaR&_nc_gid=5welemRHvlPJGf08oDik5A&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvnHb_PmfycxImPP2sdEBXbY8yX2NNUS86kT7wmut1Kvw&oe=6998C232&_nc_sid=8b3546",
+          "postUrl": "https://instagram.com/adidasoriginals",
+          "caption": "Before there can be a thousand, there’s - The Original."
         },
-        "name": "Luxury & Timeless Design"
+        "name": "Adidas Originals Philosophy"
       },
       {
-        "label": "Mercedes AMG Enthusiast Media",
+        "label": "Under Armour Campaign",
         "val": 85,
         "data": {
-          "mediaUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/631578001_18557421517030819_2251130528080078348_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QH6Nz27OxBd7KaRbv67OnIgNnWXQ2NHMdQTjppz3u-QrRLZouoY5ktam9T-uKcYGN8&_nc_ohc=d_00L2d8DpAQ7kNvwF_NE_S&_nc_gid=g5m1-a6ndrC-_qfVpX_zYw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfsrXALgB74MKmomPRvgN-VgkwZR33sGN6CJ2_jGTM9NtQ&oe=69970A0F&_nc_sid=8b3546",
-          "postUrl": ""
+          "mediaUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/81621819_469797387256268_1598060058422280192_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHHYC5QfKpi_LQwUUFNynFCwBdclkotKQKJSZS32V49FjoOoCq6EU4Nr5IdHiptVBI&_nc_ohc=19qkcDBTOIAQ7kNvwEPO2cN&_nc_gid=_z9FYRfVi1swYDJjQWRoxQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvlkpG9DXpgO3gY8mqxeFnK5VNgMAzHfiKZ8FchM9Fj2Q&oe=6998BB05&_nc_sid=8b3546",
+          "postUrl": "https://instagram.com/underarmour",
+          "caption": "Under Armour makes you better. #ProtectThisHouse"
         },
-        "name": "Mercedes AMG Enthusiast Media"
+        "name": "Under Armour Campaign"
       },
       {
-        "label": "Racing Performance",
+        "label": "New Balance Slogan",
         "val": 80,
         "data": {
-          "mediaUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/633262848_17924522256246334_7497354141827675161_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QHlCiOk2yKPvHHuAoIUGL2JOxwH6EhulOJLAsouescXuJk8g3jP03kEq3cemRY1f0QQuajdYJin58W_IyDdebgv&_nc_ohc=BQu7x4OAvqAQ7kNvwFrMhPz&_nc_gid=shYXXQVp7MBYzCdqN1KYgg&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuDNIiRVRHFhZK3DCmShUZuZhxJqagYXrqNo1xVOrsa3w&oe=6996EEB2&_nc_sid=8b3546",
-          "postUrl": ""
+          "mediaUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/502744869_18465802426076467_546118222927950611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHVXy7MCCO3gP2xtFfhS5HgCzIAvcIi1J5i3XJP7s4sThFiqILSGhm_puVs5jPFNQk&_nc_ohc=NfZoWuo2jNUQ7kNvwGFYV88&_nc_gid=VqWtj0srpoejd9LaS9_Myw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsva0CUfpac6XrRsZ-DP9_J35S1STka-B45Et0mWDudMw&oe=6998BF23&_nc_sid=8b3546",
+          "postUrl": "https://instagram.com/newbalancelifestyle",
+          "caption": "WE GOT NOW"
         },
-        "name": "Racing Performance"
+        "name": "New Balance Slogan"
       },
       {
-        "label": "Botanical Aesthetics",
-        "val": 75,
-        "data": {
-          "mediaUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/630260195_18029609528603702_6885751972517275463_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=-Kvtl4zX1ssQ7kNvwHfK7yi&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvAYB3wxB1capRSrBK1ANOeIooyyqR5Pu-2qCx3ZRFZsw&oe=6996E301&_nc_sid=17ea04",
-          "postUrl": ""
-        },
-        "name": "Botanical Aesthetics"
-      },
-      {
-        "label": "Luxury Travel Destinations",
+        "label": "Sneaker Culture Post",
         "val": 70,
         "data": {
-          "mediaUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/35341706_1280052295431176_3654695866687553536_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDE3LmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=HODyvFyzlGkQ7kNvwFlDQph&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvGXV1mVHmz-QYxDs-Fx8e1aNtoez2bUmJVrwezeE4RWw&oe=69970602&_nc_sid=17ea04",
-          "postUrl": ""
+          "mediaUrl": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/495721535_17845611984471174_6338551654353129460_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMxIn0&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGa21pWmc4WUyyDIo2M31Nh_OzoGa-zTUVywtvD8Bju0QRIhyZ2U_SBK52jxp5bAgw&_nc_ohc=XmxIYv6B2IEQ7kNvwHydO_I&_nc_gid=S78KV5H7-QHthRY4LR1vPA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu1QNj2Iu4Jb98BLD48-jtu_jxxpX_aBEZ59K73N7q5gQ&oe=6998D0EB&_nc_sid=8b3546",
+          "postUrl": "https://instagram.com/culture.sneaker55",
+          "caption": "Daily Sneaker head | Culture. History. Hype"
         },
-        "name": "Luxury Travel Destinations"
-      },
-      {
-        "label": "High-End Denim & Fashion",
-        "val": 65,
-        "data": {
-          "mediaUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/316968444_212629837866890_8315963892735243877_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NDMuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=oIy8yyniA90Q7kNvwGP4DX6&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AfvzhUIsKK9Y9gm7fg4xVRvfNJfWSXMg0kInRswNHhlwsw&oe=69970805&_nc_sid=17ea04",
-          "postUrl": ""
-        },
-        "name": "High-End Denim & Fashion"
-      },
-      {
-        "label": "Interior Design Curation",
-        "val": 60,
-        "data": {
-          "mediaUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/387666734_1703893526746921_8487436533416451810_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHZIv9X1EfMudJ3wHqj0ax0DXXKZU_m7YO1rrDKy9tCmwRX0FDYB3ylzFjfoPS7o_I&_nc_ohc=tvKMA26eUF4Q7kNvwH_B9eq&_nc_gid=815ahRgwcEGHgln-cbbsxg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_AftYshrUIoOu1une6z4_WBiO_ljk3tVow-mnK2gC5ilkvw&oe=6996E1AB&_nc_sid=17ea04",
-          "postUrl": ""
-        },
-        "name": "Interior Design Curation"
-      },
-      {
-        "label": "Automotive Passion",
-        "val": 55,
-        "data": {
-          "mediaUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/629227210_17922690792251298_2465564790320446160_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QE8qN2C8xTIj9VyV9WVqH54YTI2Gu4y_3IbLlS-Q9nELVcKlHWPNNQMAKuQWrer1gU&_nc_ohc=eZePT1GSOAwQ7kNvwEt2y-K&_nc_gid=6naxqxSzlMddk7RmYCc7mg&edm=AOG-cTkBAAAA&ccb=7-5&oh=00_Afs7IFH29P-F1kiiDxK4S8hf-3oXm5c17x5QX095PmZAJQ&oe=6996DFBF&_nc_sid=17ea04",
-          "postUrl": ""
-        },
-        "name": "Automotive Passion"
-      },
-      {
-        "label": "Lifestyle Moments",
-        "val": 50,
-        "data": {
-          "mediaUrl": "https://scontent-bos5-1.cdninstagram.com/v/t51.2885-19/23735270_2015474588732566_2058802524776824832_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4yMDAuYzIifQ&_nc_ht=scontent-bos5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QEkFKORdHgNIJxsI_wIGjY3090383dHP0rEwQnuC6G8w7Ipf9pxueQMLFrVbVSXLzs&_nc_ohc=eSuZg7rhIfQQ7kNvwEq9Toe&_nc_gid=oLpsGgXSL8NNEy6fFEAbaQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu-3fRTJoO_pnVeiQx2zNMFBNKTMaexayxYkIA-bhbmFg&oe=6996E4DE&_nc_sid=8b3546",
-          "postUrl": ""
-        },
-        "name": "Lifestyle Moments"
+        "name": "Sneaker Culture Post"
       }
     ],
-    "vibeDescription": "The audience overlap sits at the intersection of 'The Paddock Club' exclusivity and 'Clean Girl' wellness. It is characterized by a strong appreciation for high-performance engineering (Mercedes) mirrored by an interest in high-performance skincare (Augustinus Bader). The vibe is sophisticated, aspirational, and deeply rooted in a 'Quiet Luxury' aesthetic that values timeless design, equestrian heritage, and curated travel experiences.",
+    "vibeDescription": "The analysis of @reebok reveals a brand deeply entrenched in two distinct but overlapping worlds: high-performance athletics (specifically Basketball and MMA) and street culture (Hip Hop and Sneakerheads). The network shows strong connections to combat sports via numerous UFC fighters, a revitalized basketball division led by connections to figures like Angel Reese, and a persistent relevance in lifestyle fashion through proximity to icons like Cardi B and Snoop Dogg. The ecosystem is surrounded by fierce competition from giants like Nike and Adidas, but maintains a unique niche by bridging retro heritage with gritty, high-contact sports.",
     "visualAnalysis": {
       "brands": [],
       "aestheticTags": [
-        "Modern",
+        "Monochrome",
+        "Minimalist",
         "Luxury",
-        "Vintage",
-        "Light",
-        "Vibrant"
+        "Modern",
+        "Bold"
       ],
-      "vibeDescription": "A curated blend of modern luxury and personal lifestyle moments, transitioning from vibrant travel scenes to intimate, nostalgic portraits.",
+      "vibeDescription": "A sophisticated collection defined by high-contrast monochrome imagery, iconic branding, and sleek portraiture. The overall aesthetic is timeless and minimalist, exuding a sense of modern luxury and confidence.",
       "colorPalette": [
-        "#007ACC",
-        "#E3D4C2",
-        "#1C1C1C",
-        "#D4A056",
-        "#F4F4F4"
+        "#000000",
+        "#FFFFFF",
+        "#808080",
+        "#A52A2A",
+        "#D2B48C"
       ],
       "products": []
     },
     "visualTheme": {
-      "primaryColor": "#007ACC",
-      "textureStyle": "Modern",
+      "primaryColor": "#000000",
+      "textureStyle": "Monochrome",
       "nodeTypeMapping": {}
     }
   }
