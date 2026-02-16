@@ -9,6 +9,17 @@ import { useGraphScene } from '../hooks/useGraphScene.js';
 // import { Node, Link } from '../../types.js';
 import { RefreshCw } from 'lucide-react';
 
+// [UNIFIED] Frontend ID Normalization (Matches JobOrchestrator)
+const normalizeId = (rawId: any): string => {
+    if (!rawId) return '';
+    return rawId.toString()
+        .toLowerCase()
+        .trim()
+        .replace(/@/g, '')
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_-]/g, '');
+};
+
 interface Node {
     id: string;
     label?: string;
@@ -96,12 +107,12 @@ const getNodeColor = (group: string, visualTheme?: any) => {
         case 'brand': return '#4f46e5'; // Indigo (more distinct from brand)
         case 'media': return '#38bdf8'; // Sky
         case 'post': return '#38bdf8'; // Sky
-        case 'profile': return '#9ca3af';
+        case 'profile': return '#d946ef'; // [FIX] Vibrant Fuchsia (was grey #9ca3af)
         case 'nonRelatedInterest': return '#f59e0b';
         case 'topic': return '#8b5cf6';
         case 'subtopic': return '#f59e0b'; // Amber for subtopic
         case 'hashtag': return '#14b8a6';
-        default: return '#9ca3af';
+        default: return '#64748b'; // [FIX] Slate 500 for true unknowns
     }
 };
 
@@ -316,22 +327,6 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         };
     }, []); // Run once on mount/unmount
 
-    // [NEW] Reset Graph on Data Change (Detect new Dataset ID or major change)
-    useEffect(() => {
-        // If data changes significantly (e.g. completely new nodes array)
-        // we might want to reset the camera or simulation
-        if (nodes.length !== lastDataHash.current.length) {
-            console.log("[FandomGraph3D] Data changed significantly - Resetting Simulation State");
-            if (fgRefState) {
-                fgRefState.d3ReheatSimulation();
-                // Optionally reset camera if it's a new map load
-                // fgRefState.cameraPosition({ x: 0, y: 0, z: 1000 }); 
-            }
-        }
-    }, [nodes, links, fgRefState]);
-
-
-
     const activeNodes = (overrideData ? overrideData.nodes : nodes) || [];
     const activeLinks = (overrideData ? overrideData.links : links) || [];
 
@@ -348,25 +343,29 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         activeNodes.forEach((n: any) => {
             // Must have a valid string or number ID
             if (n.id !== undefined && n.id !== null && n.id !== '') {
-                const sId = String(n.id).toLowerCase();
-                const isRoot = sId === 'main' || sId === 'root';
+                const sId = normalizeId(n.id);
+                const isRoot = sId === 'main' || sId === 'root' || sId === 'main_';
+
+                // [CRITICAL] Standardize the ID to normalized version to ensure link matching
+                const finalId = isRoot ? 'MAIN' : sId;
 
                 const newNode = {
                     ...n,
-                    id: isRoot ? 'MAIN' : n.id, // Standardize to MAIN internally
+                    id: finalId, // Use normalized ID for everything
                     // [FIX] Ensure numeric coordinates exist to prevent D3 crash
                     x: typeof n.x === 'number' && !isNaN(n.x) ? n.x : Math.random(),
                     y: typeof n.y === 'number' && !isNaN(n.y) ? n.y : Math.random(),
                     z: typeof n.z === 'number' && !isNaN(n.z) ? n.z : Math.random()
                 };
                 validNodes.push(newNode);
-                validNodeIds.add(String(newNode.id));
+                validNodeIds.add(finalId);
             } else {
                 console.warn("[FandomGraph3D] Dropping invalid node (missing ID):", n);
             }
         });
 
         // Strict Link Sanitization
+        let droppedLinkCount = 0;
         const validLinks = activeLinks
             .map((l: any) => {
                 if (!l) return null;
@@ -379,13 +378,18 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
                 if (!sourceId || !targetId) return null;
 
-                // [FIX] Standardize to MAIN for link consistency
-                const sIdStr = String(sourceId).toLowerCase();
-                const tIdStr = String(targetId).toLowerCase();
-                const finalSource = (sIdStr === 'main' || sIdStr === 'root') ? 'MAIN' : String(sourceId);
-                const finalTarget = (tIdStr === 'main' || tIdStr === 'root') ? 'MAIN' : String(targetId);
+                // [FIX] Robust normalization matching backend JobOrchestrator
+                const finalSource = normalizeId(sourceId);
+                const finalTarget = normalizeId(targetId);
 
-                return { ...l, source: finalSource, target: finalTarget };
+                // Check for MAIN/root
+                const isSourceMain = finalSource === 'main' || finalSource === 'root' || finalSource === 'main_';
+                const isTargetMain = finalTarget === 'main' || finalTarget === 'root' || finalTarget === 'main_';
+
+                const sId = isSourceMain ? 'MAIN' : finalSource;
+                const tId = isTargetMain ? 'MAIN' : finalTarget;
+
+                return { ...l, source: sId, target: tId };
             })
             .filter((l: any) => {
                 if (!l) return false;
@@ -393,6 +397,12 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                 const hasTarget = validNodeIds.has(l.target);
 
                 if (!hasSource || !hasTarget) {
+                    // [DEBUG] Log first 5 dropped links to diagnose mismatch
+                    if (droppedLinkCount < 5) {
+                        droppedLinkCount++;
+                        console.warn(`[FandomGraph3D] Dropping link: ${l.source} -> ${l.target}. Valid Source? ${hasSource} (${l.source}), Valid Target? ${hasTarget} (${l.target})`);
+                        if (!hasSource) console.log(`[DEBUG] checked validNodeIds has ${l.source}?`, validNodeIds.has(String(l.source)));
+                    }
                     return false;
                 }
                 return true;
@@ -442,26 +452,46 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                 } else {
                     // [RE-PARENT] Orphan node attempting to connect to Hub
                     // Redirect to a cluster instead
-                    const targetCluster = getNextCluster();
-                    if (targetCluster) {
-                        finalLinks.push({
-                            source: targetCluster.id,
-                            target: otherId,
-                            // Preserve original link properties if any
-                            ...link
-                        });
-                        console.log(`[Topology] Re-parented orphan ${otherId} from MAIN to ${targetCluster.id}`);
+                    const c = getNextCluster();
+                    if (c) {
+                        finalLinks.push({ ...link, source: sId === 'MAIN' || sId === 'ROOT' ? c.id : sId, target: tId === 'MAIN' || tId === 'ROOT' ? c.id : tId });
                     }
                 }
-            } else {
-                // Keep non-hub links as is
-                finalLinks.push(link);
+                return;
             }
+
+            // Normal links
+            finalLinks.push(link);
         });
 
         // Replace validLinks with strict topology links
         validLinks.length = 0;
         validLinks.push(...finalLinks);
+
+        // [NEW] ORPHAN LINKER FAIL-SAFE
+        // Ensure every node is connected to something, otherwise they float off-screen
+        const linkedNodeIds = new Set<string>();
+        validLinks.forEach(l => {
+            linkedNodeIds.add(String(l.source));
+            linkedNodeIds.add(String(l.target));
+        });
+
+        const rootId = validNodeIds.has('MAIN') ? 'MAIN' : (clusterNodes[0]?.id || null);
+
+        if (rootId) {
+            validNodes.forEach(node => {
+                const nid = String(node.id);
+                if (nid !== rootId && !linkedNodeIds.has(nid)) {
+                    // console.log(`[FandomGraph3D] Linking orphan node ${nid} to cluster: ${clusterNodes[0]?.id || 'root'}`);
+                    validLinks.push({
+                        source: clusterNodes[0]?.id || rootId,
+                        target: nid,
+                        value: 2,
+                        label: 'Inferred Association'
+                    });
+                }
+            });
+        }
 
         console.log(`[FandomGraph3D] Sanitized Graph: ${validNodes.length} nodes, ${validLinks.length} links`);
 
@@ -484,8 +514,19 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
             const isHiddenType = n.data?.evidenceType && hiddenTypes.has(n.data.evidenceType);
 
-            return !isHiddenLabel && !isHiddenType;
+            if (isHiddenLabel || isHiddenType) {
+                // [DEBUG] Log hidden nodes to understand what's missing
+                // console.log(`[FandomGraph3D] Hiding node: ${n.label} (Type: ${n.data?.evidenceType})`);
+                return false;
+            }
+            return true;
         });
+
+        console.log(`[FandomGraph3D] Filtering Report:
+        - Input Nodes: ${activeNodes.length}
+        - Valid Nodes (IDs OK): ${validNodes.length}
+        - Visible Nodes (After Filter): ${visibleNodes.length}
+        - Hidden Count: ${validNodes.length - visibleNodes.length}`);
 
         // [FILTER] Exclude links connected to hidden nodes
         const visibleNodeIds = new Set(visibleNodes.map((n: any) => n.id));
@@ -501,6 +542,68 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
             nodeInfo: nodeInfoMap
         };
     }, [activeNodes, activeLinks]); // [FIX] Use objects directly to catch property changes
+
+    // [NEW] Intelligent Force Tuning for Clustered Topology
+    useEffect(() => {
+        if (!fgRefState) return;
+
+        // Tune Forces
+        const forceLink = fgRefState.d3Force('link');
+        if (forceLink) {
+            forceLink.distance((link: any) => {
+                const sId = normalizeId(typeof link.source === 'object' ? link.source.id : link.source);
+                const tId = normalizeId(typeof link.target === 'object' ? link.target.id : link.target);
+
+                // Keep thematic clusters closer to root, and profiles closer to clusters
+                if (sId === 'MAIN' || tId === 'MAIN') return 80; // [FIX] Reduced from 150 for tighter hub
+                return 30; // [FIX] Tighter spacing for cluster members
+            });
+            forceLink.strength(2.0); // [FIX] Increased from 1.5 to pull them harder
+        }
+
+        const forceCharge = fgRefState.d3Force('charge');
+        if (forceCharge) {
+            forceCharge.strength(-100); // [FIX] Reduced repulsion from -120
+        }
+
+        const forceCenter = fgRefState.d3Force('center');
+        if (forceCenter) {
+            forceCenter.strength(1.2); // [NEW] Stronger centering to prevent drifting
+        }
+
+    }, [fgRefState, graphData]); // Re-tune when data or ref changes
+
+    // [NEW] Intelligent Reset Graph on Data Change
+    useEffect(() => {
+        const dataHash = `${activeNodes.length}-${activeLinks.length}-${query || 'no-query'}`;
+
+        if (lastDataHash.current !== dataHash) {
+            console.log("[FandomGraph3D] New Dataset Detected! Initializing Simulation Warmup...");
+
+            if (fgRefState) {
+                // [FIX] REMOVED scene.clear() - it breaks the internal THREE state on second load
+                // Instead, we trust the React-Force-Graph component to reconcile children
+
+                // 2. Data Cache Cleanup
+                nodeCache.current.clear();
+
+                // 3. Reset Simulation
+                fgRefState.d3ReheatSimulation();
+
+                // 4. Force specific cooldown state
+                if (typeof fgRefState.d3AlphaTarget === 'function') {
+                    fgRefState.d3AlphaTarget(0.3); // Reheat
+                    setTimeout(() => {
+                        if (fgRefState.d3AlphaTarget) fgRefState.d3AlphaTarget(0);
+                    }, 2000);
+                }
+            }
+
+            lastDataHash.current = dataHash;
+        }
+    }, [activeNodes, activeLinks, query, fgRefState]);
+
+
 
     useEffect(() => {
         // [FORCE CACHE DISPOSAL] on mount and data transition
@@ -524,19 +627,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         nodeCache.current.clear();
         materialCache.current.clear();
 
-        // [NEW] Force Camera Reset & Add Test Object
-        if (fgRefState) {
-            console.log("[FandomGraph3D] Resetting camera to fixed distance...");
-
-            // Allow simulation to expand before positioning
-            const timer = setTimeout(() => {
-                if (fgRefState) {
-                    fgRefState.cameraPosition({ x: 0, y: 100, z: 1200 }, { x: 0, y: 0, z: 0 }, 1000);
-                }
-            }, 1000);
-
-            return () => clearTimeout(timer);
-        }
+        // [FIX] Consolidate camera reset logic in the main effect below
     }, [fgRefState, graphData.nodes.length]); // [OPTIMIZED] Use primitive dependency
 
     // [REMOVED] Expensive debug useEffect that re-ran on every graphData/dimensions change
@@ -569,24 +660,39 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
     useEffect(() => {
         if (!focusedNodeId || !fgRefState || isClickingNode.current) return;
 
-        // Give D3 a moment to update node positions if they just changed
+        // [FIX] Camera Jitter Stabilization
+        // 1. Pause physics temporarily to prevent "fighting" between force engine and camera tween
+        if (typeof fgRefState.d3Force === 'function') {
+            // Optional: fgRefState.d3Force('charge').strength(0); 
+            // Better: Just let the camera move, but ensure we aren't re-updating the graph data midway
+        }
+
         const timer = setTimeout(() => {
             const node = graphData.nodes.find((n: any) => String(n.id) === String(focusedNodeId));
-            if (node) {
-                console.log(`[FandomGraph3D] Animating camera to focused node: ${focusedNodeId}`);
-                const distance = 80;
-                const dist = Math.hypot(node.x, node.y, node.z);
-                const newPos = dist < 1
-                    ? { x: 0, y: 0, z: distance }
-                    : {
-                        x: node.x * (1 + distance / dist),
-                        y: node.y * (1 + distance / dist),
-                        z: node.z * (1 + distance / dist)
-                    };
+            if (node && typeof node.x === 'number') {
+                console.log(`[FandomGraph3D] 🎥 Animating camera to: ${node.label} (${node.x.toFixed(0)}, ${node.y.toFixed(0)}, ${node.z.toFixed(0)})`);
 
-                fgRefState.cameraPosition(newPos, node, 1500);
+                // [FIX] Calculate optimal viewing distance based on node size
+                // Larger nodes need the camera further back
+                const nodeSize = node.val || 10;
+                const viewDist = 100 + (nodeSize * 2);
+
+                const dist = Math.hypot(node.x, node.y, node.z);
+                const ratio = 1 + (viewDist / (dist || 1));
+
+                const newPos = {
+                    x: node.x * ratio,
+                    y: node.y * ratio,
+                    z: node.z * ratio
+                };
+
+                // If node is at (0,0,0), pull camera back along Z
+                if (dist < 1) { newPos.z = viewDist + 100; }
+
+                // [FIX] Longer duration for smoother feel, custom easing
+                fgRefState.cameraPosition(newPos, node, 2000);
             }
-        }, 100);
+        }, 50); // Reduced delay slightly for responsiveness
 
         return () => clearTimeout(timer);
     }, [focusedNodeId, fgRefState, graphData.nodes]);
@@ -605,13 +711,30 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                 if (typeof fgRefState.d3Force === 'function') {
                     console.log("[FandomGraph3D] Updating Physics Forces (Active Mode)...");
 
+                    // 0. [CRITICAL] Center Force to keep graph on screen
+                    if (fgRefState.d3Force('center')) {
+                        fgRefState.d3Force('center').strength(1.0); // Strict centering
+                    }
+
                     // 1. Charge (Repulsion)
                     const chargeForce = fgRefState.d3Force('charge');
                     if (chargeForce) {
                         chargeForce
-                            .strength(-100)
+                            .strength(-120) // [FIX] Increased from -100 for better spread
                             .distanceMin(20)
                             .distanceMax(2000);
+                    }
+
+                    // 1.5 [NEW] Collision Force (Prevent Overlap)
+                    if (fgRefState.d3Force('collide')) {
+                        fgRefState.d3Force('collide')
+                            .radius((node: any) => {
+                                // Calculate radius based on node 'val' (size) with some padding
+                                const size = node.val || 10;
+                                return Math.sqrt(size) * 4 + 5; // Heuristic: Scale similar to visual node size
+                            })
+                            .strength(0.7) // Soft collision to allow some settling
+                            .iterations(2);
                     }
                 }
 
@@ -713,9 +836,11 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         requestAnimationFrame(() => {
             if (fg && typeof fg.d3ReheatSimulation === 'function') {
                 try {
-                    // Double check engine existence inside the frame
+                    // Double check engine existence and safety
                     if (fg.d3Force && fg.d3Force('charge')) {
                         fg.d3ReheatSimulation();
+                    } else {
+                        console.warn("[Layout] Skipping reheat - d3Force not ready");
                     }
                 } catch (e) {
                     console.warn("[Layout] Failed to reheat simulation safely:", e);
@@ -848,32 +973,15 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         return () => clearTimeout(timer);
     }, [isTourActive, tourIndex, graphData.nodes, fgRefState]);
 
-    // [CLEANUP] Explicitly dispose of Three.js resources on unmount
+    // [FIX] Robust Cleanup on Unmount / Reset
     useEffect(() => {
         return () => {
-            console.log("[FandomGraph3D] Cleaning up graph resources...");
+            console.log("[FandomGraph3D] Unmounting or Resetting - Cleaning up resources...");
 
-            // 0. [CRITICAL] Cancel all active animations
-            animationFrameIds.current.forEach(id => cancelAnimationFrame(id));
-            animationFrameIds.current.clear();
-            console.log("[FandomGraph3D] Cancelled all animation frames.");
+            // 1. Dispose of Geometry Cache
+            Object.values(SHARED_GEOMETRIES).forEach(geo => geo.dispose());
 
-            // 1. Stop Simulation
-            if (fgRefState) {
-                try {
-                    console.log("[FandomGraph3D] Stopping Simulation & Animation...");
-                    // [HACK] Guard against 'removeEventListener' error by nulling internal handlers before pause
-                    if ((fgRefState as any)._controls) (fgRefState as any)._controls.enabled = false;
-
-                    fgRefState.pauseAnimation();
-                    // Hard stop the D3 engine
-                    if (fgRefState.d3Alpha) fgRefState.d3Alpha(0);
-                } catch (e) {
-                    console.warn("Could not pause animation safely:", e);
-                }
-            }
-
-            // 2. Dispose Caches
+            // 2. Clear Object Caches
             // Create a Set of shared geometries for fast lookup
             const sharedGeometrySet = new Set(Object.values(SHARED_GEOMETRIES));
 
@@ -887,8 +995,6 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     // They'll be disposed in the material cache cleanup
                 });
             });
-            nodeCache.current.clear();
-
             nodeCache.current.clear();
 
             // 2b. Dispose Material Cache
@@ -906,9 +1012,6 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
             hitAreaGeometryCache.current.clear();
 
             // 3. Clear Scene (Safe Mode)
-            // We do NOT dispose the renderer here as it kills the WebGL context for future renders.
-            // React & Browsers will handle the canvas and context GC.
-            // 3. Clear Scene & Dispose Renderer (CRITICAL FOR LEAK PREVENTION)
             if (fgRefState) {
                 const scene = fgRefState.scene();
                 if (scene) {
@@ -925,21 +1028,6 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     });
                     scene.clear();
                 }
-
-                // const renderer = fgRefState.renderer();
-                // if (renderer) {
-                //     console.log("[FandomGraph3D] Disposing WebGL Renderer to prevent context leak...");
-                //     renderer.dispose();
-
-                //     // Force context loss to prevent "Too many active WebGL contexts"
-                //     const gl = renderer.getContext();
-                //     const looseContextExt = gl?.getExtension('WEBGL_lose_context');
-                //     if (looseContextExt) {
-                //         looseContextExt.loseContext();
-                //     }
-
-                //     renderer.domElement = null;
-                // }
             }
 
             sceneInitialized.current = false; // Reset for next mount
@@ -985,14 +1073,18 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     controls.rotateSpeed = 0.5;
                     controls.target.set(0, 0, 0); // [CRITICAL] Reset look-at target to origin
 
-                    // Initial Camera Position
-                    fgRefState.cameraPosition(
-                        { x: 0, y: 0, z: initialZoom || 400 }, // Back off significantly
-                        { x: 0, y: 0, z: 0 },
-                        isFirstLoad.current ? 2000 : 800 // Shorter transition for resets
-                    );
+                    // [FIX] Use zoomToFit instead of hardcoded coordinates
+                    // This ensures the graph is always visible regardless of scale
+                    console.log("[FandomGraph3D] Auto-fitting graph to view (Pass 1)...");
+                    fgRefState.zoomToFit(1000, 100); // 1s transition, 100px padding
+
+                    // [RELAYOUT] Second pass after physics has spread nodes out
+                    setTimeout(() => {
+                        console.log("[FandomGraph3D] Auto-fitting graph to view (Pass 2 - Stabilized)...");
+                        fgRefState.zoomToFit(1000, 80);
+                    }, 2000);
                 }
-            }, 300); // Slightly shorter wait
+            }, 500); // Wait longer for initial render (300 -> 500)
 
             isFirstLoad.current = false;
             lastDataHash.current = dataHash;
@@ -1433,15 +1525,13 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
     // Memoize link styling functions
     const getLinkColor = useCallback((link: any) => {
-        if (highlightLinks.has(link)) return '#34d399'; // Brighter on hover
-        // const sId = String(typeof link.source === 'object' ? link.source.id : link.source);
-        // const tId = String(typeof link.target === 'object' ? link.target.id : link.target);
-        return 'rgba(6, 78, 59, 0.5)'; // [FIX] Uniform 50% opacity
+        if (highlightLinks.has(link)) return '#10b981'; // Brighter Emerald on hover
+        return 'rgba(16, 185, 129, 0.4)'; // [FIX] Bright Emerald with 40% opacity
     }, [highlightLinks]);
 
     const getLinkWidth = useCallback((link: any) => {
-        if (highlightLinks.has(link)) return 2;
-        return 1; // [FIX] Uniform 1px width
+        if (highlightLinks.has(link)) return 3;
+        return 1.5; // [FIX] Increased base width for visibility
     }, [highlightLinks]);
 
     const getLinkCurve = useCallback((link: any) => {
@@ -1561,9 +1651,9 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
 
                     // [FIX] Interaction & Physics Tuning
                     // nodeDragThreshold={1} // [REMOVED] Not supported in this version
-                    d3AlphaDecay={0.02} // [FIX] Standard decay (0.02) for stable settling
-                    d3VelocityDecay={0.4} // [FIX] Standard friction (0.4) to prevent explosion
-                    cooldownTime={Infinity} // [FIX] Stop simulation after 3s if stable
+                    d3AlphaDecay={0.02} // [FIX] Faster decay to stop expansion (0.01 -> 0.02)
+                    d3VelocityDecay={0.4} // [FIX] Higher friction to keep graph compact (0.3 -> 0.4)
+                    cooldownTime={20000} // [FIX] Run longer to ensure full layout (Infinity -> 20s)
 
 
                     showNavInfo={false}
@@ -1627,8 +1717,8 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                     backgroundColor="rgba(0,0,0,0)" // [RESTORED] Transparent
                     rendererConfig={{ alpha: true, preserveDrawingBuffer: false }} // [OPTIMIZED] Disable preserveDrawingBuffer
 
-                    warmupTicks={30} // [FIX] Reduce warmup so users SEE the graph assemble
-                    cooldownTicks={Infinity} // [FIX] Keep engine running
+                    warmupTicks={100} // [FIX] Pre-calculate layout before render
+                    cooldownTicks={200} // [FIX] Stop simulation after ~3-4s to save CPU
 
                 />
             </div>

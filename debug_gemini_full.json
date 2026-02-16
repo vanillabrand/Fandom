@@ -1,1039 +1,1001 @@
 {
   "root": {
-    "label": "Reebok Brand Ecosystem",
+    "label": "Follower Analysis: @betpandaofficial",
     "type": "main",
     "children": [
       {
-        "label": "Official Channels",
+        "label": "Crypto Gambling & Casino Ecosystem",
         "type": "cluster",
         "data": {
-          "description": "The core official accounts representing Reebok globally and in specific verticals.",
+          "description": "A dense network of competitor casinos, crypto betting platforms, and gambling streamers, reflecting the core industry of the target account.",
           "keywords": [
-            "Brand",
-            "Official",
-            "Global",
-            "Regional"
+            "Casino",
+            "Crypto",
+            "Slots",
+            "Betting",
+            "Streamer"
           ]
         },
         "children": [
           {
-            "label": "reebok",
+            "label": "Stake",
             "type": "brand",
-            "val": 100,
-            "provenance": "[ID: 186499819]",
-            "name": "reebok",
+            "val": 95,
             "data": {
-              "bio": "Sport Is Everything.",
-              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/480200310_649254170981222_7930686984493788331_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QGur_9sfZxaDQWjDmFBXi5adzepZvapP9-QDz3QOJc3aYDLZqhJ8oFEB7rx47h7qCo&_nc_ohc=8OKaP1aK3AUQ7kNvwFzYwvQ&_nc_gid=bSe2bZMWztuDbiChtwnlAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgCb-12x4JSag-f-JrgIq_Gx1AUMSfU0xunS4JI9JcFg&oe=6998CBFA&_nc_sid=8b3546",
-              "followers": 4402231,
-              "following": 145,
-              "posts": 747,
-              "externalUrl": "https://www.reebok.com/",
+              "bio": "World’s Largest Casino\nStake.com unavailable in US UK AU 18+",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/250299809_421319846102557_2690881369803074364_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHyQ9y2NJ7hjCe75FOSuKy-UjOpZtc2Q3-bE64v542SFm6CVGNVSOOGdy3DgwkJ4nA&_nc_ohc=bvpk9lU0TtoQ7kNvwHb9QkY&_nc_gid=8jN4G713pbY8YtAyQY3xrg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftAiyiNLjQ2fd5ukY5n82vw1n1wWO8R-SUgi8Au2w1P4A&oe=69992E4D&_nc_sid=0055be",
+              "evidence": "Direct competitor and major industry player.",
+              "externalUrl": "http://stake.com",
               "isVerified": true
             },
-            "handle": "@reebok"
+            "provenance": "[ID: 1751416]",
+            "name": "Stake",
+            "handle": "@stake"
           },
           {
-            "label": "reebokbasketball",
+            "label": "Roobet",
             "type": "brand",
             "val": 90,
-            "provenance": "[ID: 68292913239]",
-            "name": "reebokbasketball",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/455209353_1662524241266210_1971624613588950272_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QESQzMhY6zRLvTF3jHKyFmr6jJMG_MBAUajjQEC6DxVOvmlIwA_cQOOyUORGrjB-Ms&_nc_ohc=NscrPsxmBSsQ7kNvwGHL-MU&_nc_gid=j0Rla_jWhoBBLPZSK0Rrew&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsLLi9WjR5_YS2bcegt8dOHh2alicocBVk9UEPEJA7gdg&oe=6998A91A&_nc_sid=0055be"
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/556952413_18074357984325843_1973776644057861089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=4bjB1P3AS0sQ7kNvwG5C_Z0&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftHBfo2zeI1GcUDnB6gCI43fd6anMmej9Oom-tMNYxxtQ&oe=69990E76&_nc_sid=0055be",
+              "evidence": "Prominent crypto casino brand.",
+              "isVerified": true
             },
-            "handle": "@reebokbasketball"
+            "provenance": "[ID: 39624597842]",
+            "name": "Roobet",
+            "handle": "@roobet"
           },
           {
-            "label": "reebokeurope",
+            "label": "Lux27 Casino",
+            "type": "creator",
+            "val": 85,
+            "data": {
+              "bio": "PROMO CODE ON BETPANDA: lux27 GAMBLER & STREAMER 🎰 5000$ MONTHLY REWARDS 💰",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/628405638_17854316337657913_569228393642367761_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=-XQEOzru4w8Q7kNvwHwcVoo&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuy3q78cPfQPiUYhfKhstglPN-v9eEuNxlhGjCaHwBFzg&oe=699940CC&_nc_sid=0055be",
+              "evidence": "Explicit affiliate and streamer for BetPanda."
+            },
+            "provenance": "[ID: 79708897912]",
+            "name": "Lux27 Casino"
+          },
+          {
+            "label": "Rollbit",
             "type": "brand",
             "val": 80,
-            "provenance": "[ID: 176902169]",
-            "name": "reebokeurope",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/466005384_564107206482011_3304565812355857598_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QG1pJhjlpYVZx6HuCdyA1LKE4JEbLWZJRaMTjrY1opJvcKdA0J_S40_VtMes_q1vbM&_nc_ohc=a8DdrIFUiDMQ7kNvwE_X5p2&_nc_gid=Upy1sd58ucBP8Lw0tseGXw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvAXtlVNXf6O8WgtVKfW1yk0Nx51w7i_cOn1Z-_kcDVCA&oe=6998AB44&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/276026894_146862697802968_6333519285539505276_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=s97DkS62xBUQ7kNvwFvuMPF&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft03BOn2lMXxBp0w5wPyLyNly5ShHPEkx_5-d7hdIxgNg&oe=69990F35&_nc_sid=0055be",
+              "evidence": "Crypto trading and casino platform."
             },
-            "handle": "@reebokeurope"
+            "provenance": "[ID: 30281096002]",
+            "name": "Rollbit",
+            "handle": "@rollbit"
           },
           {
-            "label": "reebokargentina",
+            "label": "BitStarz",
             "type": "brand",
-            "val": 70,
-            "provenance": "[ID: 2350167754]",
-            "name": "reebokargentina",
+            "val": 75,
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/467602720_8660650810700146_8228758222215439854_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40NTQuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QE8a1qbxb_DC7k_Cd4UkcB4oKPCXAdlZb6QFqm0_a4UClrYpV_eX2DaU6PE-ZXZoA0&_nc_ohc=fnIHPTTo8BoQ7kNvwHR1zph&_nc_gid=Isg6mNkjnGDpi_olvEkHPg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvsPvL2gGCKcPJ5dDe9Eylv4YC3tvcQFxKXNEGIcptWEA&oe=6998A97C&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/461821471_521007707376817_745770855191245699_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41MTIuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=clrm0-71Hz8Q7kNvwFY76JK&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuu4a8a_I83UQjNUZVvE-NUS3hax6ToPCtv8Q1X7S-sCA&oe=69993800&_nc_sid=0055be",
+              "evidence": "Competitor crypto casino."
             },
-            "handle": "@reebokargentina"
+            "provenance": "[ID: 60294721103]",
+            "name": "BitStarz"
           },
           {
-            "label": "reebokbrasil",
+            "label": "Metaspins",
             "type": "brand",
             "val": 70,
-            "provenance": "[ID: 1046376506]",
-            "name": "reebokbrasil",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/466562609_561682346509134_766901517724519412_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGadrV-7E8UdwXW-BjJ0zuiN7z0xzHYXWiqCW_NQwI7eSDzlghf0TD9PH7VDpa2DoI&_nc_ohc=ybEmPdlohhMQ7kNvwGIB7Ee&_nc_gid=JFFLCr07liEWOILW1Cp7MQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu7PM17JzgsR7A9fIX0NOUkw8Nj2QW6O-nLFGvSqMbSlA&oe=6998B0B9&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/306538328_7842509349152337_6646185794204386686_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QGWpCB_ZVS6nx5Yj3EhpXB4N1NoyQqUC2K6-Z25H_LHzjR4RyWDbNR8WzBSwqyxsQs&_nc_ohc=qa3ppcDsB40Q7kNvwFLNHa2&_nc_gid=Lo6Adw7xPS7Ki_XjhRTQZw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs_K0OXCo5b8xqH_Lo-FjKc6scltslGdu7KBDGW4_bScg&oe=699912A5&_nc_sid=0055be",
+              "evidence": "Crypto casino platform."
             },
-            "handle": "@reebokbrasil"
+            "provenance": "[ID: 54361664094]",
+            "name": "Metaspins"
+          },
+          {
+            "label": "Rainbet",
+            "type": "brand",
+            "val": 65,
+            "data": {
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/586687691_18065546246625715_6587802242077323670_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=l-jQT5O3jKgQ7kNvwGpn94p&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs02lRaELFqrxjo9rMn779kdwtlEdQPylpLMKeBqoB6_A&oe=69992107&_nc_sid=0055be",
+              "evidence": "Crypto betting platform."
+            },
+            "provenance": "[ID: 48825609714]",
+            "name": "Rainbet"
+          },
+          {
+            "label": "Slot King Rob",
+            "type": "creator",
+            "val": 60,
+            "data": {
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/625977042_17892261111421599_2278366003890663474_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=rfVw9tcAFOUQ7kNvwFN9KA7&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft_2GMICkT-oSPKQ_EcZY3RnsGbty67_xGx3omQa9Ax4A&oe=6999175A&_nc_sid=0055be",
+              "evidence": "Slots/Gambling content creator."
+            },
+            "provenance": "[ID: 72579261598]",
+            "name": "Slot King Rob"
           }
         ],
-        "name": "Official Channels"
+        "name": "Crypto Gambling & Casino Ecosystem"
       },
       {
-        "label": "Sportswear Competitors",
+        "label": "Latin Urban & Regional Mexican Music",
         "type": "cluster",
         "data": {
-          "description": "Major global competitors in the athletic footwear and apparel market.",
+          "description": "High-profile Reggaeton, Trap, and Corridos Tumbados artists. This aligns with BetPanda's sponsorship of Anuel AA.",
           "keywords": [
-            "Competition",
-            "Sportswear",
-            "Athleisure",
-            "Sneakers"
+            "Reggaeton",
+            "Trap",
+            "Corridos Tumbados",
+            "Musica",
+            "Latin"
           ]
         },
         "children": [
           {
-            "label": "adidas",
-            "type": "brand",
-            "val": 95,
-            "provenance": "[ID: 20269764]",
-            "name": "adidas",
-            "data": {
-              "bio": "#YouGotThis",
-              "profilePicUrl": "https://scontent-dfw6-1.cdninstagram.com/v/t51.2885-19/564201508_18563819479045765_7618693513437726799_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NjMuYzIifQ&_nc_ht=scontent-dfw6-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFcqqjNs6DixQK6fdntfGd6JrvFwU-Gzaixg6IVw9LNBZ-PfrGWqr9WqzXmLdRDVN8&_nc_ohc=m41hjC7AgV4Q7kNvwGUvJlG&_nc_gid=6cX9KTg8jr9UzDnfdsYymQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuR2zO62iKoVnwgFkhHUTqRH64kX_JAatQnCyCECpXVpg&oe=6998CA44&_nc_sid=8b3546",
-              "followers": 29515959,
-              "following": 1030,
-              "posts": 1411,
-              "externalUrl": "https://linktr.ee/adidas",
-              "isVerified": true
-            },
-            "handle": "@adidas"
-          },
-          {
-            "label": "nike",
-            "type": "brand",
-            "val": 95,
-            "provenance": "[ID: 13460080]",
-            "name": "nike",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/551608484_18567162979020081_1135468084872726555_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zOTkuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QELfbjB8emsHSrAJEKpe9OIc_0Iw9-HzMpqy7qGffzfm8QIsEHtTjRh0-efPzpApjI&_nc_ohc=oKEO7KGm_xsQ7kNvwHFLIQZ&_nc_gid=Gds-BbBfr3sf4OGe-DytRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfseC8QiC3dHF1V2IE20x0eJxrveePD6JVcd2PlFcH9LAQ&oe=6998C2B0&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@nike"
-          },
-          {
-            "label": "puma",
-            "type": "brand",
+            "label": "Anuel Fan Page",
+            "type": "creator",
             "val": 90,
-            "provenance": "[ID: 10145706]",
-            "name": "puma",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/459303202_479954131680638_1811732038334385568_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEYSBqSij0SJVt0xe4BsTZoboiXlEc5nPWb3AYz1clcOGKGV0OUJkr4WgcM_1j2c3Y&_nc_ohc=Pt5YtlEHLL8Q7kNvwHPGyfX&_nc_gid=3MkdlelLC8MUl9IMLTx8cA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuHruR8yXbZCVjROrsaJkFeLgTZwOIpgL1PnM7eepeG1g&oe=6998C21A&_nc_sid=8b3546",
-              "followers": 13094421,
-              "following": 152,
-              "posts": 3341,
-              "externalUrl": "http://clicklinkin.bio/puma",
-              "isVerified": true
+              "bio": "@anuel fanpage",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/533514226_18359023894159905_4904428351951327466_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=2SARMGF3BSMQ7kNvwH6jf25&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu7YytU8A67uMbXBc7itPKVqdOUP5V6GPnSZu-Uu-rwOA&oe=6999289F&_nc_sid=0055be",
+              "evidence": "Fan account for Anuel, a key sponsor of BetPanda."
             },
-            "handle": "@puma"
+            "provenance": "[ID: 4633551904]",
+            "name": "Anuel Fan Page"
           },
           {
-            "label": "underarmour",
-            "type": "brand",
-            "val": 85,
-            "provenance": "[ID: 5858873]",
-            "name": "underarmour",
-            "data": {
-              "bio": "Under Armour makes you better. #ProtectThisHouse",
-              "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/81621819_469797387256268_1598060058422280192_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHHYC5QfKpi_LQwUUFNynFCwBdclkotKQKJSZS32V49FjoOoCq6EU4Nr5IdHiptVBI&_nc_ohc=19qkcDBTOIAQ7kNvwEPO2cN&_nc_gid=_z9FYRfVi1swYDJjQWRoxQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvlkpG9DXpgO3gY8mqxeFnK5VNgMAzHfiKZ8FchM9Fj2Q&oe=6998BB05&_nc_sid=8b3546",
-              "followers": 8277398,
-              "following": 864,
-              "posts": 4419,
-              "externalUrl": "http://underarmour.com/",
-              "isVerified": true
-            },
-            "handle": "@underarmour"
-          },
-          {
-            "label": "newbalancelifestyle",
-            "type": "brand",
-            "val": 80,
-            "provenance": "[ID: 2346204466]",
-            "name": "newbalancelifestyle",
-            "data": {
-              "bio": "WE GOT NOW",
-              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/502744869_18465802426076467_546118222927950611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHVXy7MCCO3gP2xtFfhS5HgCzIAvcIi1J5i3XJP7s4sThFiqILSGhm_puVs5jPFNQk&_nc_ohc=NfZoWuo2jNUQ7kNvwGFYV88&_nc_gid=VqWtj0srpoejd9LaS9_Myw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsva0CUfpac6XrRsZ-DP9_J35S1STka-B45Et0mWDudMw&oe=6998BF23&_nc_sid=8b3546",
-              "followers": 1787329,
-              "following": 323,
-              "posts": 1808,
-              "externalUrl": "https://youtu.be/QjUiywy1aNQ",
-              "isVerified": true
-            },
-            "handle": "@newbalancelifestyle"
-          },
-          {
-            "label": "asicsrunning",
-            "type": "brand",
-            "val": 75,
-            "provenance": "[ID: 312066235]",
-            "name": "asicsrunning",
-            "data": {
-              "bio": "A Sound Mind in a Sound Body. It’s what we believe in. And it’s never meant more than right now.",
-              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/140367911_164006092158166_7465929359312212639_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGwWjNozi_cc6gZd4LTHQ8TbiXMIT_PWMkA7ahWVizA9hFcmXpRCYn137wDKhj6Gl0&_nc_ohc=0z9P6SGQIf4Q7kNvwFG0Vxx&_nc_gid=rtf6tGUwMJ-KwSjIqMF-VA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftRf5HMV3f074GThb1kfkJF-huLBsRzFPkFgDJO45XAwg&oe=6998ADC2&_nc_sid=8b3546",
-              "followers": 759644,
-              "following": 1085,
-              "posts": 1424,
-              "externalUrl": "https://likeshop.me/asicsrunning",
-              "isVerified": true
-            },
-            "handle": "@asicsrunning"
-          },
-          {
-            "label": "skechers",
-            "type": "brand",
-            "val": 70,
-            "provenance": "[ID: 266628541]",
-            "name": "skechers",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/625062223_18555339667004542_4340853812844596527_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=K2X4xmS6QmAQ7kNvwFY7wva&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvHvJdd8hZT7xcM_NrzIe7xZA0srsJKhUi34Unl38WV_A&oe=6998C44C&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@skechers"
-          },
-          {
-            "label": "kappa",
-            "type": "brand",
-            "val": 65,
-            "provenance": "[ID: 608466556]",
-            "name": "kappa",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/118623640_1949123028555522_5308413955108122628_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDcwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QF_FY9WEGR9bEzUrecURECan_vS9Nd-bvN8gXjatFjt99EnLtrt1OyQ9eK99goz_OI&_nc_ohc=yX7E1IB7OS4Q7kNvwHX3Frb&_nc_gid=H5qfPre5C1h70hOGx1ypsw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftMP1ul6Bp71IdO3or_1lwBxbFlHhje1RmvL9SBmSfNBQ&oe=6998B301&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@kappa"
-          },
-          {
-            "label": "champion",
-            "type": "brand",
-            "val": 65,
-            "provenance": "[ID: 1382145757]",
-            "name": "champion",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/527028056_18517985200001758_5849844742626411322_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLNBt4-S-CmAhnTUHwePdknBWCQ1J5UtzzThf0r9h1xllkJCJDHBCOjQjMFQ8OvzQ&_nc_ohc=xLp9CNNq7-YQ7kNvwGNSTQg&_nc_gid=aMfk8hDf80vLlylC8NnKiQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftS-SnWbdMFKdHdRc0vFYsmULomETsFs9fq9-PHP_VB3g&oe=6998A5F1&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@champion"
-          }
-        ],
-        "name": "Sportswear Competitors"
-      },
-      {
-        "label": "Basketball Culture",
-        "type": "cluster",
-        "data": {
-          "description": "Athletes and entities connected to basketball, a key heritage vertical for Reebok.",
-          "keywords": [
-            "NBA",
-            "WNBA",
-            "Hoops",
-            "Athletes"
-          ]
-        },
-        "children": [
-          {
-            "label": "areese (Angel Reese)",
+            "label": "Fuerza Regida",
             "type": "creator",
-            "val": 95,
-            "provenance": "[ID: 269551418]",
-            "name": "areese (Angel Reese)"
+            "val": 88,
+            "data": {
+              "bio": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=RmEPyRKScGwQ7kNvwEIIQC1&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsT6mjmRAILCpEcQOEQWBjBN0zDY1MHmXMcy0cTOMaLzA&oe=69991F4B&_nc_sid=0055be",
+              "evidence": "Major Regional Mexican group."
+            },
+            "provenance": "[ID: 1672632164]",
+            "name": "Fuerza Regida"
           },
           {
-            "label": "austinreaves12",
+            "label": "Blessd",
             "type": "creator",
             "val": 85,
-            "provenance": "[ID: 189668635]",
-            "name": "austinreaves12",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/562863168_18535516537036636_1704788272338777214_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MDguYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=rq736-HB2vQQ7kNvwHlfxu7&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftPePVF130OLg_E32MusDXuD_l473YOvCSaNE7i_GMSNQ&oe=6998B70A&_nc_sid=0055be",
+              "bio": "Dios💕\nTICKETS COLOMBIA 🇨🇴 AQUI 👇🏻",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/624542081_18561272938019732_9137874051752649602_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=GvTDFkySU5sQ7kNvwHfQ94b&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfskdgMHp1GII9Q-a5MljS0Sb65oAREHSZ7eyPL8_AvTiw&oe=69993974&_nc_sid=0055be",
+              "evidence": "Colombian Reggaeton artist.",
+              "followers": 7312191,
+              "following": 357,
+              "posts": 1462,
+              "externalUrl": "https://linktr.ee/blessd",
               "isVerified": true
             },
-            "handle": "@austinreaves12"
+            "provenance": "[ID: 1618003731]",
+            "name": "Blessd",
+            "handle": "@blessd"
           },
           {
-            "label": "stephensonlance",
+            "label": "Farruko",
+            "type": "creator",
+            "val": 85,
+            "data": {
+              "bio": "LA167 ⛽️ 🍃🪾🍂🛡️🏁",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/552884577_18533944069036575_3581394513607636577_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=ZGQxsJzTlqMQ7kNvwEwOiBt&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvQL1saBHBMfmj5YdYVvIIpijvc-D7fK23ENZvpUBxskg&oe=69991BC1&_nc_sid=0055be",
+              "evidence": "Global Latin urban artist.",
+              "followers": 22993673,
+              "following": 3007,
+              "posts": 815,
+              "externalUrl": "https://sml.lnk.to/AyDale",
+              "isVerified": true
+            },
+            "provenance": "[ID: 249828574]",
+            "name": "Farruko",
+            "handle": "@farruko"
+          },
+          {
+            "label": "Jaziel Avilez",
             "type": "creator",
             "val": 80,
-            "provenance": "[ID: 9617327]",
-            "name": "stephensonlance",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/522617478_18513799144017328_7693816337851280351_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42ODMuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHGjMIEhkfr3DOnZM9vZ3QJ_Jxap_cTyd6eELx-YHy2isuNwvzsgmkq_mCljdIW48I&_nc_ohc=11v_Nana94UQ7kNvwHNo-LW&_nc_gid=bko0v4VzyorQ3NNgTGpMIg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft3eayzn7JlCEUSqB_aLtgbXyu-XKAnXgqaLKGEJFDWsQ&oe=6998BCD7&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "999 En constante evolución 𒅒𒈔𒅒𒇫𒄆 La Fe por delante🇻🇮",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/601646771_18541807210004395_5633762338729808037_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45OTUuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QH6QSHmTHJ5g--kcNEayi31xjoBdatf24NClcqJixczJYGmnT-EMwOKGuhAtPwLjeM&_nc_ohc=JbKpSNm_4R0Q7kNvwEEscA2&_nc_gid=wgr6nrsjHfFR3rL5bH-jyg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv3mOpmCihm1a9rMgKcZxECK_rIx8W8l7d3jhW8spUzwg&oe=699942E1&_nc_sid=0055be",
+              "evidence": "Regional Mexican artist."
             },
-            "handle": "@stephensonlance"
+            "provenance": "[ID: 1091140394]",
+            "name": "Jaziel Avilez"
           },
           {
-            "label": "matasbuzelis",
+            "label": "El Bogueto",
+            "type": "creator",
+            "val": 78,
+            "data": {
+              "bio": "El Chakal Más Caro , El Boo , NHLQNC👑 CNEC , remix out now ! 👑👹👁️👹",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/602944666_18546047596045059_362291304507770872_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=iwBgxuxnwuYQ7kNvwGK-LGK&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afvgoxn5_hkL60H6P3_w2QaJOm0xuZt4eZFN_Iwm9_cJ8w&oe=69994122&_nc_sid=0055be",
+              "evidence": "Mexican urban artist."
+            },
+            "provenance": "[ID: 1151021058]",
+            "name": "El Bogueto"
+          },
+          {
+            "label": "Juanka El Problematik",
             "type": "creator",
             "val": 75,
-            "provenance": "[ID: 1457821049]",
-            "name": "matasbuzelis",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/558976121_18527834131029050_986603077139312089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QED1LlE7KwX6r37V2nzv_6p12LDDxebIZSnGwMtreHC-oUDiMUufFKwGhGui9Mu798&_nc_ohc=jvpIuoo9FaQQ7kNvwGBUddy&_nc_gid=rS7tPT49sonBiJvQoVYJ9A&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuQ6DyMMC16FnImguaPT378ad3XbD5rfjaV3gBmNiBR9Q&oe=6998CC44&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "Juannkaaaa @e.i.d.l.m 🏰 RipKolikaLaTorre🕊",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/607795905_18551745988031770_2285967624091848558_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=-PL_yqTgFpYQ7kNvwGJyHVH&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvZT6p3M8aVm9_XGJ3S1wvuxE5euU6t95sxGW_unzC2-A&oe=69992311&_nc_sid=0055be",
+              "evidence": "Puerto Rican Reggaeton artist."
             },
-            "handle": "@matasbuzelis"
-          },
-          {
-            "label": "thehezigod",
-            "type": "creator",
-            "val": 70,
-            "provenance": "[ID: 609088289]",
-            "name": "thehezigod",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/621697943_18563450680000290_2385362134779164746_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MjguYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QHGjMIEhkfr3DOnZM9vZ3QJ_Jxap_cTyd6eELx-YHy2isuNwvzsgmkq_mCljdIW48I&_nc_ohc=zQT2pTPgkhoQ7kNvwGCzqGX&_nc_gid=bko0v4VzyorQ3NNgTGpMIg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsGgReWqCozgmGWkzMT-N7BTxWpAC_bQ_SVfekzjNY3VA&oe=6998BDC0&_nc_sid=0055be"
-            },
-            "handle": "@thehezigod"
-          },
-          {
-            "label": "unrivaledbasketball",
-            "type": "brand",
-            "val": 65,
-            "provenance": "[ID: 9295840868]",
-            "name": "unrivaledbasketball",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/450424088_453229907672100_2928036364616311276_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=wnK23QtUGFIQ7kNvwHJJ4dP&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftr83Ikv8JNVbyyK17_VOPVDxKhxU45ZNCbEVdBrvwcJg&oe=6998B685&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@unrivaledbasketball"
+            "provenance": "[ID: 42399769]",
+            "name": "Juanka El Problematik"
           }
         ],
-        "name": "Basketball Culture"
+        "name": "Latin Urban & Regional Mexican Music"
       },
       {
-        "label": "Combat Sports (MMA/UFC)",
+        "label": "Combat Sports (MMA & Boxing)",
         "type": "cluster",
         "data": {
-          "description": "Fighters and martial artists, representing a significant portion of the athlete demographic in the dataset.",
+          "description": "Professional fighters and organizations, particularly UFC and Boxing, which heavily overlap with betting demographics.",
           "keywords": [
             "UFC",
             "MMA",
-            "Fighting",
-            "Training"
+            "Boxing",
+            "Fighter",
+            "Champion"
           ]
         },
         "children": [
           {
-            "label": "dustinpoirier",
-            "type": "creator",
-            "val": 90,
-            "provenance": "[ID: 25812109]",
-            "name": "dustinpoirier",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/447812159_991313212188769_869518833333950706_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYyLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGu7GT6W0rseRZP7cbvAqOKWbKABSrpQiic7OvGI_0aQdURMpYzsaXZwbXrLLum-RA&_nc_ohc=nXfXREIMQ80Q7kNvwFPFV1t&_nc_gid=5C_P90PLI9qx3_P8j4Azeg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuoQNnNPL8ZWIsohh3kM4z23TBFKSvQQ_XXvw5cfWKDpA&oe=6998A7BB&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@dustinpoirier"
-          },
-          {
-            "label": "colbycovington",
-            "type": "creator",
-            "val": 85,
-            "provenance": "[ID: 436660190]",
-            "name": "colbycovington",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/37625846_645422755844589_7012463734916382720_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=QJArRi9GKn4Q7kNvwFwDe90&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs0tTGIXdSyl-EcpUU_4LkbCALhAH_GJ4OTGFiFwR492A&oe=6998C21D&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@colbycovington"
-          },
-          {
-            "label": "bobbykinggreen",
-            "type": "creator",
-            "val": 80,
-            "provenance": "[ID: 1232009265]",
-            "name": "bobbykinggreen",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/621669531_18549437515009266_665803061249337548_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=3I3rDQitogEQ7kNvwEvrli_&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwMWphzgEt0fCmCZUKEZhSN7WQfrl5Vw6B7_y_Z5_QTw&oe=6998A889&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@bobbykinggreen"
-          },
-          {
-            "label": "manelkape",
-            "type": "creator",
-            "val": 75,
-            "provenance": "[ID: 564627334]",
-            "name": "manelkape",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/546563117_18529526209019335_6110374537213598178_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=ZKOtW3zMbaEQ7kNvwHDw9LN&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvpCo3Sc6nWO11L_zO7hi-7XSVBKyk_Nxn1jnjsMzNQrA&oe=6998AA03&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@manelkape"
-          },
-          {
-            "label": "nobickal1",
-            "type": "creator",
-            "val": 75,
-            "provenance": "[ID: 557549268]",
-            "name": "nobickal1",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/286312007_775965753565278_7585274834249673165_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=gIb7iXf6lHUQ7kNvwEhdRAT&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfusftvpOwKNaQPj_cC7UUhcnJOt14qH1E11aWd3iwt2fA&oe=6998BE23&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@nobickal1"
-          },
-          {
-            "label": "romandolidze",
-            "type": "creator",
-            "val": 70,
-            "provenance": "[ID: 667297541]",
-            "name": "romandolidze",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/449659819_1522735348663974_6645320095640087199_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=XE3m4wZZ7rQQ7kNvwEVcdQ7&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwX6kTdqL9AWwWe9lV2Zc0nVBoJpmFPLNrIZ2OikWZMw&oe=6998AF02&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@romandolidze"
-          }
-        ],
-        "name": "Combat Sports (MMA/UFC)"
-      },
-      {
-        "label": "Hip Hop & Pop Culture",
-        "type": "cluster",
-        "data": {
-          "description": "Music artists and celebrities who influence streetwear and sneaker culture.",
-          "keywords": [
-            "Rap",
-            "Music",
-            "Lifestyle",
-            "Collabs"
-          ]
-        },
-        "children": [
-          {
-            "label": "cardiboffciall",
-            "type": "creator",
+            "label": "UFC",
+            "type": "brand",
             "val": 95,
-            "provenance": "[ID: 58700846606]",
-            "name": "cardiboffciall",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/612750509_17981429801958607_3490867626456874477_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFd5pr3YWRU7o2UOEFyeI0QANXeT23DiVif4bHHInwPji7jt2eC9bfapXi1TuBeZsM&_nc_ohc=k8rKhW7K-u0Q7kNvwFT4NyE&_nc_gid=nJcChplIhVaaMvDERLc4Vg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuIEPUU3S6ueF33g901VWi8k7taHn_UyuByKg1cMZqCbw&oe=6998AD11&_nc_sid=0055be",
+              "bio": "The official UFC Instagram brings you fight photos and video from around the world.",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/460224848_904323201748535_5161631215796810656_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=TdWgpHV7SH8Q7kNvwFCohve&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afumun3N-aF7_JbLCqOfwf-fAVsvScr9ch04Uevf2WMDzQ&oe=699925CB&_nc_sid=0055be",
+              "evidence": "Premier MMA organization.",
+              "followers": 49623272,
+              "following": 1291,
+              "posts": 44255,
+              "externalUrl": "http://linktr.ee/UFCSOCIAL",
               "isVerified": true
             },
-            "handle": "@cardiboffciall"
+            "provenance": "[ID: 22832340]",
+            "name": "UFC",
+            "handle": "@ufc"
           },
           {
-            "label": "snoopdogg",
-            "type": "creator",
-            "val": 90,
-            "provenance": "[ID: 1574083]",
-            "name": "snoopdogg",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/500711211_18566684437038084_1769774624019550405_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=_55UTQvQ1-AQ7kNvwFLqozr&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuvo-I0zpjbWxPYZFW6xanxtXzIlUz2ZFkPWZt1Mjxnsw&oe=6998D203&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@snoopdogg"
-          },
-          {
-            "label": "eminem",
-            "type": "creator",
-            "val": 90,
-            "provenance": "[ID: 192417402]",
-            "name": "eminem",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/532075297_18536415601033403_2998821746725938326_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=EioQel4BP_MQ7kNvwFgsN6p&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuxDBC6cVDRf_MtcN0FAalRnG98m6aZhSKO2G_KrcTnLA&oe=6998A331&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@eminem"
-          },
-          {
-            "label": "icecube",
+            "label": "Marlon 'Chito' Vera",
             "type": "creator",
             "val": 85,
-            "provenance": "[ID: 550719921]",
-            "name": "icecube",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/258081569_578924046545419_2782654269102751612_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NTMuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=E9v_WQg4-3wQ7kNvwHz9ovX&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuOKprLFGhyPel37RByU0UlMShd-P5KOIwsGUriuhnnXg&oe=6998AF33&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "Fighting is life. @chitoverapodcast",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/610600517_18551693656024286_2950264396004903185_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40ODAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=XA3HS3C1MoQQ7kNvwEJsX2k&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv8V7C9oMmYw10iKs2jBtUfFW0tK2rz_Jm737ZzrrN3YQ&oe=69993022&_nc_sid=0055be",
+              "evidence": "Top UFC contender."
             },
-            "handle": "@icecube"
+            "provenance": "[ID: 214936285]",
+            "name": "Marlon 'Chito' Vera"
           },
           {
-            "label": "liltunechi",
+            "label": "Ilia Topuria",
             "type": "creator",
             "val": 85,
-            "provenance": "[ID: 1665843838]",
-            "name": "liltunechi",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/399044754_7202581209805009_5467156639923170256_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=7mkcZWHyAhUQ7kNvwFGjJDi&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuspsyLXTjVgBRF06a3Tq-vXuiChaclochdIbOIOdHEaQ&oe=6998B9AA&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/552698052_18529068400030276_2340663579980792983_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QF682x8BpiENbd926kYeteTRyxEnfWqvgnDtutt8Rk9G0fMlLDaUpjoXC4ywxmfqEY&_nc_ohc=pubA1a2Y8qAQ7kNvwFVUCS-&_nc_gid=VrlD_Msy5uWuJMu8SMQxtw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsO04FF8m3dedHuwk0n2kZ6bR_t-9aYHSv3ekycv-wgAQ&oe=69990E57&_nc_sid=0055be",
+              "evidence": "UFC Champion."
             },
-            "handle": "@liltunechi"
+            "provenance": "[ID: 500894275]",
+            "name": "Ilia Topuria"
           },
           {
-            "label": "playboicarti",
+            "label": "Paddy The Baddy",
             "type": "creator",
             "val": 80,
-            "provenance": "[ID: 279519379]",
-            "name": "playboicarti",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/408258054_853996629535846_4645049116660786165_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45NjAuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=Qd1nm9QhXmkQ7kNvwH9xwUV&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsJ07EtFOAVVPc9Rb8GInXYX8G8E5exSMB0bjU0ClbY6Q&oe=6998CD8B&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "Gym: @nextgenmmalpool Manager: @graham_boylan Sponsored Athlete: @underarmour @appliednutrition",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/275252879_924206994943869_5211974124298049163_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MzMuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=7rIW0nJjQRsQ7kNvwHnCA0G&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuybHNC9PbF5OZh1dPfPzD-lponjf1As63aPvC1UUl0nQ&oe=69993E8A&_nc_sid=0055be",
+              "evidence": "Popular UFC fighter (handle: theufcbaddy)."
             },
-            "handle": "@playboicarti"
+            "provenance": "[ID: 51629244817]",
+            "name": "Paddy The Baddy"
+          },
+          {
+            "label": "Xander Zayas",
+            "type": "creator",
+            "val": 75,
+            "data": {
+              "bio": "UNIFICADO @worldboxingorg & @wbaboxingofficial 154👑 #CríaBoricua 🇵🇷",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/624737477_18506169205079432_5926355179068110386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=BLrAwJpw4U0Q7kNvwE41gI7&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuOGECBrUAhFqf32kq8HAZNVovCEk0dbtONqUh5Y5ba3Q&oe=699911D2&_nc_sid=0055be",
+              "evidence": "Professional Boxer."
+            },
+            "provenance": "[ID: 2252303431]",
+            "name": "Xander Zayas"
           }
         ],
-        "name": "Hip Hop & Pop Culture"
+        "name": "Combat Sports (MMA & Boxing)"
       },
       {
-        "label": "Sneaker Media",
+        "label": "Global Sports Icons (NBA & Football)",
         "type": "cluster",
         "data": {
-          "description": "Media outlets and accounts dedicated to sneaker news, drops, and culture.",
+          "description": "Top-tier athletes from NBA and European Football, representing the sports betting interest of the audience.",
           "keywords": [
-            "Kicks",
-            "Drops",
-            "Hype",
-            "News"
+            "NBA",
+            "Football",
+            "Basketball",
+            "Athlete",
+            "Soccer"
           ]
         },
         "children": [
           {
-            "label": "sneakerfreakermag",
+            "label": "NBA",
             "type": "brand",
+            "val": 95,
+            "data": {
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/582086582_18603572488024487_7141348984943669969_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=GhY728UCdL0Q7kNvwFVGSjS&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsENtM7LcgsE8iF7sWRA4oRq07oBC7GfyqmQ9fY_IZMCQ&oe=69990E6C&_nc_sid=0055be",
+              "evidence": "Major sports league.",
+              "isVerified": true
+            },
+            "provenance": "[ID: 20824486]",
+            "name": "NBA",
+            "handle": "@nba"
+          },
+          {
+            "label": "Kylian Mbappé",
+            "type": "creator",
+            "val": 92,
+            "data": {
+              "bio": "@realmadrid @equipedefrance",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/252713041_231066042425309_8989807381344431608_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=_yCcN1kCEI4Q7kNvwFSFzyN&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftZh8vbCuFHZFJhn1bZsuT-yybWvKD580wzucF29h7hOw&oe=69991E02&_nc_sid=0055be",
+              "evidence": "Global football superstar."
+            },
+            "provenance": "[ID: 4213518589]",
+            "name": "Kylian Mbappé"
+          },
+          {
+            "label": "LeBron James",
+            "type": "creator",
+            "val": 90,
+            "data": {
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/581636686_18588003070018588_8358206635436958501_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=_6H2G7fbT4UQ7kNvwG_vP3c&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvoOg2IdiCtEkakQGt6TKyrwrTT3OxjezT3IXp4uLmYdw&oe=69990D63&_nc_sid=0055be",
+              "evidence": "NBA Legend."
+            },
+            "provenance": "[ID: 19410587]",
+            "name": "LeBron James"
+          },
+          {
+            "label": "Stephen Curry",
+            "type": "creator",
+            "val": 88,
+            "data": {
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/456618331_336606462878714_3369030573647129701_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=wQNi6S8KC6gQ7kNvwHgEros&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft8pOcz7GSbyeEz1IwAIibnPoe9d6Gsoc8GwzryVB1pew&oe=6999302D&_nc_sid=0055be",
+              "evidence": "NBA Superstar."
+            },
+            "provenance": "[ID: 324599988]",
+            "name": "Stephen Curry"
+          },
+          {
+            "label": "Trae Young",
+            "type": "creator",
             "val": 85,
-            "provenance": "[ID: 175637134]",
-            "name": "sneakerfreakermag",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/10932599_727809974008700_489743387_a.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGp42fuRflLliIuD2djcTKiR6qZpcTAZ3kDkMu0hKOlMMXmfHgEHQ2amUowCoOVIlU&_nc_ohc=IlfYDcvxN60Q7kNvwGcTopP&_nc_gid=_r6ly8ToxMSWqY4vcqZF5Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfumdbPcEsyDmhZJ6fOuZxf8DHY-4Gc6szcQvSzBtzaWeQ&oe=6998ABFA&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "#3",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/268423501_574373954011386_8025719458389483833_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=Rv7Eah89BXEQ7kNvwHY7p5Q&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvQNw8YMnqS9vW-HMyya3QvBOQXZoH6Gq5BNWy8-Dd7vw&oe=69992CB7&_nc_sid=0055be",
+              "evidence": "NBA Player."
             },
-            "handle": "@sneakerfreakermag"
+            "provenance": "[ID: 21823686]",
+            "name": "Trae Young"
+          }
+        ],
+        "name": "Global Sports Icons (NBA & Football)"
+      },
+      {
+        "label": "Balkan Influencers & Lifestyle",
+        "type": "cluster",
+        "data": {
+          "description": "A distinct cluster of influencers, singers, and personalities from Serbia, Bosnia, and Croatia, suggesting a regional marketing focus or origin.",
+          "keywords": [
+            "Serbia",
+            "Bosnia",
+            "Balkan",
+            "Singer",
+            "Influencer"
+          ]
+        },
+        "children": [
+          {
+            "label": "Milica Todorovic",
+            "type": "creator",
+            "val": 85,
+            "data": {
+              "bio": "🎶Singer🎶 Booking: +381646855303 Marko",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/462524491_545049194772041_2925686720168680870_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=z23V4jFqRp4Q7kNvwECg2vf&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfswXRgyJ9z1JMFHpIWWIl7YaEFazvTuCW5l_uqtc9dszw&oe=69993672&_nc_sid=0055be",
+              "evidence": "Popular Serbian singer."
+            },
+            "provenance": "[ID: 208469425]",
+            "name": "Milica Todorovic"
           },
           {
-            "label": "soleretriever",
-            "type": "brand",
-            "val": 80,
-            "provenance": "[ID: 7333815028]",
-            "name": "soleretriever",
-            "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/165918137_159041499321362_9202058035413816105_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=eiw2vq-OQUkQ7kNvwF1ddFW&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvnKfZ56KWIuYNTiHzEevv-mh_qPVC1RUzUWA9rub9n8Q&oe=6998ADB7&_nc_sid=0055be",
-              "isVerified": true
-            },
-            "handle": "@soleretriever"
-          },
-          {
-            "label": "houseofheat",
-            "type": "brand",
+            "label": "Pinki Prase",
+            "type": "creator",
             "val": 75,
-            "provenance": "[ID: 1935871542]",
-            "name": "houseofheat",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/339689051_995623634764658_1832934189303072622_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=JlV44LxcfRUQ7kNvwFTN1Sg&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwXD5A6aRVGG6BOjfDSrf4Nk-iHXw4u9bPfkQuYBGclA&oe=6998BF17&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-gig4-1.cdninstagram.com/v/t51.2885-19/573323465_1219825463302212_7278921664109726296_n.png?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-gig4-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEDOxmp5UJOOYNDZmmdjkAolczq8nzSQhYk1mRgi8BDgj39EEubpiutkI0aE5VlkWBZMGDCAxb8igucZvTTQALX&_nc_ohc=s7mE-xL-e24Q7kNvwH6Gpsr&_nc_gid=rmJT_IZaSQfb3gntwFdPlg&edm=ALCvFkgBAAAA&ccb=7-5&ig_cache_key=YW5vbnltb3VzX3Byb2ZpbGVfcGlj.3-ccb7-5&oh=00_Aft6yJrdi4ivyN-3Z3oh0jrXQDJkDPUbuS18c_68R8IU-w&oe=6999322A&_nc_sid=6d62aa",
+              "evidence": "Balkan YouTuber/Influencer."
             },
-            "handle": "@houseofheat"
+            "provenance": "[ID: 79385555422]",
+            "name": "Pinki Prase"
           },
           {
-            "label": "insanesneaker",
-            "type": "brand",
+            "label": "Marko Vuletic",
+            "type": "creator",
             "val": 70,
-            "provenance": "[ID: 9137416371]",
-            "name": "insanesneaker",
             "data": {
-              "bio": "Bio unavailable",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/442530916_973633671039876_6377844778554427595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGp42fuRflLliIuD2djcTKiR6qZpcTAZ3kDkMu0hKOlMMXmfHgEHQ2amUowCoOVIlU&_nc_ohc=DP8J5IPgtCMQ7kNvwGsRXqO&_nc_gid=_r6ly8ToxMSWqY4vcqZF5Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsrXSSQef6bViSz208ZCXlJZSK_DMijGtQ2UTeiX9DrWw&oe=6998CBC0&_nc_sid=0055be",
-              "isVerified": true
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/346248837_1443561486381484_8791853541680320181_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFrqjNf4fiNJxIbHWBdkFQTJt0BIYeyAbiYAXgK8JGz8fsIRMW3vhWzsXBPmRjvIC4&_nc_ohc=lnlUuOWG9DoQ7kNvwEA9TaW&_nc_gid=GH7Ua4U8hvLYM79YiLM2kA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvRlmF7vM5XQaN5EIk4E2f07MStl6KlNvZBaRJzuGr0jQ&oe=69991901&_nc_sid=0055be",
+              "evidence": "Croatian influencer."
             },
-            "handle": "@insanesneaker"
+            "provenance": "[ID: 328877004]",
+            "name": "Marko Vuletic"
           },
           {
-            "label": "culture.sneaker55",
+            "label": "Zombijana",
+            "type": "creator",
+            "val": 65,
+            "data": {
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/496863054_18507604444013694_6348779724540194496_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFrqjNf4fiNJxIbHWBdkFQTJt0BIYeyAbiYAXgK8JGz8fsIRMW3vhWzsXBPmRjvIC4&_nc_ohc=Pin1bPRvf4YQ7kNvwFkHxqi&_nc_gid=GH7Ua4U8hvLYM79YiLM2kA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuv05_9N3THHQfGc-vu9fHmTAgBztxOUDz0iJ2JxqE1mg&oe=69992379&_nc_sid=0055be",
+              "evidence": "Montenegrin/Balkan influencer.",
+              "isVerified": true
+            },
+            "provenance": "[ID: 342157693]",
+            "name": "Zombijana",
+            "handle": "@zombijana"
+          },
+          {
+            "label": "Lobanjica",
             "type": "creator",
             "val": 60,
-            "provenance": "[ID: 74070255173]",
-            "name": "culture.sneaker55",
             "data": {
-              "bio": "Daily Sneaker head | Culture. History. Hype \nNew Drops • Rare kicks • Styling types.\nDm for collabs @culture.sneaker55",
-              "profilePicUrl": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/495721535_17845611984471174_6338551654353129460_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMxIn0&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGa21pWmc4WUyyDIo2M31Nh_OzoGa-zTUVywtvD8Bju0QRIhyZ2U_SBK52jxp5bAgw&_nc_ohc=XmxIYv6B2IEQ7kNvwHydO_I&_nc_gid=S78KV5H7-QHthRY4LR1vPA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu1QNj2Iu4Jb98BLD48-jtu_jxxpX_aBEZ59K73N7q5gQ&oe=6998D0EB&_nc_sid=8b3546",
-              "followers": 1,
-              "following": 35,
-              "externalUrl": "https://www.instagram.com/culture.sneaker55"
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/342706112_4216088511950141_7915095511491941313_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QEV-yjum-gqwwEojA_NRR3bdeXoOPjdDOcQV5n9Z6-wdkFK-6EO1rDGH0Nk4SZ0F1c&_nc_ohc=2O2IMEltvRIQ7kNvwGWkSw_&_nc_gid=tXmsledr8Lb8IR5rZavcaA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvkEdUHxQCpL5YDOUpjmudzl_duix-nJnzvkT2CQjmolA&oe=6999434D&_nc_sid=0055be",
+              "evidence": "Montenegrin CS:GO streamer/bodybuilder."
             },
-            "handle": "@culture.sneaker55"
+            "provenance": "[ID: 7004961839]",
+            "name": "Lobanjica"
           }
         ],
-        "name": "Sneaker Media"
+        "name": "Balkan Influencers & Lifestyle"
+      },
+      {
+        "label": "Hip Hop & Underground Music",
+        "type": "cluster",
+        "data": {
+          "description": "Independent rappers, producers, and music magazines, distinct from the Latin cluster.",
+          "keywords": [
+            "Rapper",
+            "Producer",
+            "Underground",
+            "Hip Hop",
+            "Music"
+          ]
+        },
+        "children": [
+          {
+            "label": "Russ P",
+            "type": "creator",
+            "val": 70,
+            "data": {
+              "bio": "📀Music Exec. @fredthegodsonmusic 🕊 •Founder of 𝐆𝐨𝐝𝐋𝐞𝐠𝐚𝐜𝐲 EST. 941 ™️",
+              "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/329603506_3373121326244883_7525387571551100766_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=85aX5bdeTQMQ7kNvwHmzs1r&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvIfBj_CCazBL5-G2e1N4YKgBiD0bSi2RhvPRHRuuM51w&oe=69993D7A&_nc_sid=0055be",
+              "evidence": "Music executive and producer."
+            },
+            "provenance": "[ID: 191211984]",
+            "name": "Russ P"
+          },
+          {
+            "label": "Undrgrnd Magazine",
+            "type": "brand",
+            "val": 65,
+            "data": {
+              "bio": "Hard Copy & Digital Music Magazine 👽 Home to @undrgrnd.studiola 🏡",
+              "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/273819738_503116344504210_8273331440584903591_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzkuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=incifPuh64YQ7kNvwF3_12Z&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsfxEq9c2mFFBRHytD2HmVqYsqA6w-juzeQ_ec5xz7g3A&oe=69991D15&_nc_sid=0055be",
+              "evidence": "Music publication."
+            },
+            "provenance": "[ID: 26101955371]",
+            "name": "Undrgrnd Magazine"
+          },
+          {
+            "label": "Young Certifyed",
+            "type": "creator",
+            "val": 60,
+            "data": {
+              "bio": "ROSE UP FROM THE CONCRETE🪨🌹 BORN 2 STEP ON THE DEVIL🥾🐍",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/603253176_18546297472033025_5158977280718951595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MzkuYzIifQ&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=UmHd4nyOd6kQ7kNvwFP5bHF&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuSxM4yCFNn6YAdh_7_Svo0Uo4Z1kdCHMIQCM_eAaaqmw&oe=69990F02&_nc_sid=0055be",
+              "evidence": "Independent artist."
+            },
+            "provenance": "[ID: 253729024]",
+            "name": "Young Certifyed"
+          }
+        ],
+        "name": "Hip Hop & Underground Music"
       }
     ],
-    "name": "Reebok Brand Ecosystem"
+    "name": "Follower Analysis: @betpandaofficial"
   },
   "analytics": {
     "clusters": [
-      "Official Channels",
-      "Sportswear Competitors",
-      "Basketball Culture",
-      "Combat Sports (MMA/UFC)",
-      "Hip Hop & Pop Culture",
-      "Sneaker Media"
+      "Crypto Gambling & Casino Ecosystem",
+      "Latin Urban & Regional Mexican Music",
+      "Combat Sports (MMA & Boxing)",
+      "Global Sports Icons (NBA & Football)",
+      "Balkan Influencers & Lifestyle",
+      "Hip Hop & Underground Music"
     ],
     "topics": [
       {
-        "label": "Performance Footwear",
+        "label": "Online Gambling",
+        "val": 100,
+        "type": "topic",
+        "name": "Online Gambling"
+      },
+      {
+        "label": "Reggaeton",
         "val": 90,
         "type": "topic",
-        "name": "Performance Footwear"
+        "name": "Reggaeton"
       },
       {
-        "label": "Basketball Heritage",
+        "label": "MMA/UFC",
         "val": 85,
         "type": "topic",
-        "name": "Basketball Heritage"
+        "name": "MMA/UFC"
       },
       {
-        "label": "Streetwear & Lifestyle",
-        "val": 85,
-        "type": "topic",
-        "name": "Streetwear & Lifestyle"
-      },
-      {
-        "label": "Combat Sports Training",
+        "label": "Cryptocurrency",
         "val": 80,
         "type": "topic",
-        "name": "Combat Sports Training"
+        "name": "Cryptocurrency"
       },
       {
-        "label": "Sneaker Drops",
+        "label": "Basketball",
         "val": 75,
         "type": "topic",
-        "name": "Sneaker Drops"
+        "name": "Basketball"
       },
       {
-        "label": "Music Collaborations",
-        "val": 75,
+        "label": "Regional Mexican Music",
+        "val": 70,
         "type": "topic",
-        "name": "Music Collaborations"
+        "name": "Regional Mexican Music"
+      },
+      {
+        "label": "Balkan Lifestyle",
+        "val": 60,
+        "type": "topic",
+        "name": "Balkan Lifestyle"
       }
     ],
     "subtopics": [
       {
-        "label": "Retro Basketball",
+        "label": "Corridos Tumbados",
+        "val": 85,
+        "type": "subtopic",
+        "name": "Corridos Tumbados"
+      },
+      {
+        "label": "Crypto Casino Streamers",
         "val": 80,
         "type": "subtopic",
-        "name": "Retro Basketball"
+        "name": "Crypto Casino Streamers"
       },
       {
-        "label": "UFC Fight Gear",
-        "val": 75,
+        "label": "Balkan YouTube Scene",
+        "val": 60,
         "type": "subtopic",
-        "name": "UFC Fight Gear"
-      },
-      {
-        "label": "Classic Kicks",
-        "val": 70,
-        "type": "subtopic",
-        "name": "Classic Kicks"
-      },
-      {
-        "label": "Women's Hoops",
-        "val": 65,
-        "type": "subtopic",
-        "name": "Women's Hoops"
+        "name": "Balkan YouTube Scene"
       }
     ],
     "creators": [
       {
-        "label": "Angel Reese",
-        "handle": "@areese",
+        "label": "Lux27 Casino",
+        "handle": "@lux27casino",
         "val": 95,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/509673673_18514946497047419_1392745724930819449_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDU2LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QED1LlE7KwX6r37V2nzv_6p12LDDxebIZSnGwMtreHC-oUDiMUufFKwGhGui9Mu798&_nc_ohc=-me65w9-_-cQ7kNvwGovamx&_nc_gid=rS7tPT49sonBiJvQoVYJ9A&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv6-ab0VOtfJis8Z68C-dSQNhz2Pu_4fsTU7E7RkvO8jA&oe=6998BF81&_nc_sid=0055be",
-          "evidence": "Key Reebok Basketball partner/athlete.",
-          "isVerified": true
+          "bio": "PROMO CODE ON BETPANDA: lux27\nGAMBLER & STREAMER 🎰\n5000$ MONTHLY REWARDS 💰",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/628405638_17854316337657913_569228393642367761_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=-XQEOzru4w8Q7kNvwHwcVoo&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuy3q78cPfQPiUYhfKhstglPN-v9eEuNxlhGjCaHwBFzg&oe=699940CC&_nc_sid=0055be",
+          "evidence": "Direct affiliate.",
+          "followers": 27370,
+          "following": 2,
+          "externalUrl": "https://bit.ly/Lux27"
         },
-        "provenance": "[ID: 269551418]",
-        "name": "Angel Reese"
+        "provenance": "[ID: 79708897912]",
+        "name": "Lux27 Casino"
       },
       {
-        "label": "Cardi B",
-        "handle": "@cardiboffciall",
-        "val": 95,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/612750509_17981429801958607_3490867626456874477_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFd5pr3YWRU7o2UOEFyeI0QANXeT23DiVif4bHHInwPji7jt2eC9bfapXi1TuBeZsM&_nc_ohc=k8rKhW7K-u0Q7kNvwFT4NyE&_nc_gid=nJcChplIhVaaMvDERLc4Vg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuIEPUU3S6ueF33g901VWi8k7taHn_UyuByKg1cMZqCbw&oe=6998AD11&_nc_sid=0055be",
-          "evidence": "Major celebrity collaborator with Reebok.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 58700846606]",
-        "name": "Cardi B"
-      },
-      {
-        "label": "Dustin Poirier",
-        "handle": "@dustinpoirier",
+        "label": "Anuel Fan Page",
+        "handle": "@anuelfan29",
         "val": 90,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/447812159_991313212188769_869518833333950706_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDYyLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGu7GT6W0rseRZP7cbvAqOKWbKABSrpQiic7OvGI_0aQdURMpYzsaXZwbXrLLum-RA&_nc_ohc=nXfXREIMQ80Q7kNvwFPFV1t&_nc_gid=5C_P90PLI9qx3_P8j4Azeg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuoQNnNPL8ZWIsohh3kM4z23TBFKSvQQ_XXvw5cfWKDpA&oe=6998A7BB&_nc_sid=0055be",
-          "evidence": "Prominent UFC fighter, aligns with Reebok's combat sports history.",
-          "isVerified": true
+          "bio": "@anuel fanpage",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/533514226_18359023894159905_4904428351951327466_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=2SARMGF3BSMQ7kNvwH6jf25&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu7YytU8A67uMbXBc7itPKVqdOUP5V6GPnSZu-Uu-rwOA&oe=6999289F&_nc_sid=0055be",
+          "evidence": "Fan page for main sponsor.",
+          "followers": 54207,
+          "following": 85,
+          "posts": 567,
+          "externalUrl": "https://www.instagram.com/anuelfan29"
         },
-        "provenance": "[ID: 25812109]",
-        "name": "Dustin Poirier"
+        "provenance": "[ID: 4633551904]",
+        "name": "Anuel Fan Page"
       },
       {
-        "label": "Austin Reaves",
-        "handle": "@austinreaves12",
+        "label": "Marlon 'Chito' Vera",
+        "handle": "@chitoveraufc",
+        "val": 88,
+        "data": {
+          "bio": "Fighting is life.\n @chitoverapodcast",
+          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/610600517_18551693656024286_2950264396004903185_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40ODAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=XA3HS3C1MoQQ7kNvwEJsX2k&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv8V7C9oMmYw10iKs2jBtUfFW0tK2rz_Jm737ZzrrN3YQ&oe=69993022&_nc_sid=0055be",
+          "evidence": "UFC Fighter.",
+          "followers": 1416075,
+          "following": 730,
+          "posts": 3873,
+          "externalUrl": "https://linktr.ee/chitovera",
+          "isVerified": true
+        },
+        "provenance": "[ID: 214936285]",
+        "name": "Marlon 'Chito' Vera"
+      },
+      {
+        "label": "Blessd",
+        "handle": "@blessd",
         "val": 85,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/562863168_18535516537036636_1704788272338777214_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MDguYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=rq736-HB2vQQ7kNvwHlfxu7&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftPePVF130OLg_E32MusDXuD_l473YOvCSaNE7i_GMSNQ&oe=6998B70A&_nc_sid=0055be",
-          "evidence": "NBA player, relevant to basketball vertical.",
+          "bio": "Dios💕\nTICKETS COLOMBIA 🇨🇴 AQUI 👇🏻",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/624542081_18561272938019732_9137874051752649602_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=GvTDFkySU5sQ7kNvwHfQ94b&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfskdgMHp1GII9Q-a5MljS0Sb65oAREHSZ7eyPL8_AvTiw&oe=69993974&_nc_sid=0055be",
+          "evidence": "Reggaeton Artist.",
+          "followers": 7312191,
+          "following": 357,
+          "posts": 1462,
+          "externalUrl": "https://linktr.ee/blessd",
           "isVerified": true
         },
-        "provenance": "[ID: 189668635]",
-        "name": "Austin Reaves"
+        "provenance": "[ID: 1618003731]",
+        "name": "Blessd"
       },
       {
-        "label": "Colby Covington",
-        "handle": "@colbycovington",
-        "val": 85,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/37625846_645422755844589_7012463734916382720_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=QJArRi9GKn4Q7kNvwFwDe90&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs0tTGIXdSyl-EcpUU_4LkbCALhAH_GJ4OTGFiFwR492A&oe=6998C21D&_nc_sid=0055be",
-          "evidence": "UFC fighter.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 436660190]",
-        "name": "Colby Covington"
-      },
-      {
-        "label": "Snoop Dogg",
-        "handle": "@snoopdogg",
-        "val": 85,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/500711211_18566684437038084_1769774624019550405_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHyoGB0-lBlCbRfIIYS3sYmiavzUBpj2mq1v0IZjeDOaNZIz_Oee6eCZSuYBqE7IVM&_nc_ohc=_55UTQvQ1-AQ7kNvwFLqozr&_nc_gid=dQlc9fsPZGLpc4loUsbPig&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuvo-I0zpjbWxPYZFW6xanxtXzIlUz2ZFkPWZt1Mjxnsw&oe=6998D203&_nc_sid=0055be",
-          "evidence": "Cultural icon relevant to streetwear.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 1574083]",
-        "name": "Snoop Dogg"
-      },
-      {
-        "label": "Lance Stephenson",
-        "handle": "@stephensonlance",
+        "label": "Milica Todorovic",
+        "handle": "@milicatodorovicofficial",
         "val": 80,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/522617478_18513799144017328_7693816337851280351_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42ODMuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHGjMIEhkfr3DOnZM9vZ3QJ_Jxap_cTyd6eELx-YHy2isuNwvzsgmkq_mCljdIW48I&_nc_ohc=11v_Nana94UQ7kNvwHNo-LW&_nc_gid=bko0v4VzyorQ3NNgTGpMIg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft3eayzn7JlCEUSqB_aLtgbXyu-XKAnXgqaLKGEJFDWsQ&oe=6998BCD7&_nc_sid=0055be",
-          "evidence": "Professional basketball player.",
+          "bio": "🎶Singer🎶\nBooking: +381646855303 Marko",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/462524491_545049194772041_2925686720168680870_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=z23V4jFqRp4Q7kNvwECg2vf&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfswXRgyJ9z1JMFHpIWWIl7YaEFazvTuCW5l_uqtc9dszw&oe=69993672&_nc_sid=0055be",
+          "evidence": "Serbian Singer.",
+          "followers": 796653,
+          "following": 2758,
+          "posts": 201,
+          "externalUrl": "https://linktr.ee/milicatodorovic",
           "isVerified": true
         },
-        "provenance": "[ID: 9617327]",
-        "name": "Lance Stephenson"
+        "provenance": "[ID: 208469425]",
+        "name": "Milica Todorovic"
       },
       {
-        "label": "Matas Buzelis",
-        "handle": "@matasbuzelis",
+        "label": "Paddy The Baddy",
+        "handle": "@theufcbaddy",
+        "val": 80,
+        "data": {
+          "bio": "Gym: @nextgenmmalpool \nManager: @graham_boylan\nSponsored Athlete: @underarmour @appliednutrition",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/275252879_924206994943869_5211974124298049163_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MzMuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=7rIW0nJjQRsQ7kNvwHnCA0G&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuybHNC9PbF5OZh1dPfPzD-lponjf1As63aPvC1UUl0nQ&oe=69993E8A&_nc_sid=0055be",
+          "evidence": "UFC Fighter.",
+          "followers": 5292772,
+          "following": 116,
+          "posts": 1081,
+          "externalUrl": "https://thebaddy.com/the-baddy-foundation/",
+          "isVerified": true
+        },
+        "provenance": "[ID: 51629244817]",
+        "name": "Paddy The Baddy"
+      },
+      {
+        "label": "Fuerza Regida",
+        "handle": "@fuerzaregida",
+        "val": 78,
+        "data": {
+          "bio": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=RmEPyRKScGwQ7kNvwEIIQC1&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsT6mjmRAILCpEcQOEQWBjBN0zDY1MHmXMcy0cTOMaLzA&oe=69991F4B&_nc_sid=0055be",
+          "evidence": "Regional Mexican Group.",
+          "followers": 10560561,
+          "following": 241,
+          "posts": 444,
+          "externalUrl": "https://signup.ticketmaster.com/fuerzaregida",
+          "isVerified": true
+        },
+        "provenance": "[ID: 1672632164]",
+        "name": "Fuerza Regida"
+      },
+      {
+        "label": "Slot King Rob",
+        "handle": "@slotkingrob_",
         "val": 75,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-1.cdninstagram.com/v/t51.2885-19/558976121_18527834131029050_986603077139312089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QED1LlE7KwX6r37V2nzv_6p12LDDxebIZSnGwMtreHC-oUDiMUufFKwGhGui9Mu798&_nc_ohc=jvpIuoo9FaQQ7kNvwGBUddy&_nc_gid=rS7tPT49sonBiJvQoVYJ9A&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuQ6DyMMC16FnImguaPT378ad3XbD5rfjaV3gBmNiBR9Q&oe=6998CC44&_nc_sid=0055be",
-          "evidence": "Rising basketball talent.",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/625977042_17892261111421599_2278366003890663474_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=rfVw9tcAFOUQ7kNvwFN9KA7&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft_2GMICkT-oSPKQ_EcZY3RnsGbty67_xGx3omQa9Ax4A&oe=6999175A&_nc_sid=0055be",
+          "evidence": "Gambling Creator.",
           "isVerified": true
         },
-        "provenance": "[ID: 1457821049]",
-        "name": "Matas Buzelis"
+        "provenance": "[ID: 72579261598]",
+        "name": "Slot King Rob"
       },
       {
-        "label": "Bobby King Green",
-        "handle": "@bobbykinggreen",
-        "val": 75,
+        "label": "Lobanjica",
+        "handle": "@lobanjica853",
+        "val": 70,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/621669531_18549437515009266_665803061249337548_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGXKaeGqYroCUBH8fjjTFMOM7qJX4pKSbgYZAwzvJ-EWXiBRpakKrFK-eN8rNXYEqM&_nc_ohc=3I3rDQitogEQ7kNvwEvrli_&_nc_gid=nQNYWUGnDYhpxR2CGRKIkA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuwMWphzgEt0fCmCZUKEZhSN7WQfrl5Vw6B7_y_Z5_QTw&oe=6998A889&_nc_sid=0055be",
-          "evidence": "UFC fighter.",
+          "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/342706112_4216088511950141_7915095511491941313_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QEV-yjum-gqwwEojA_NRR3bdeXoOPjdDOcQV5n9Z6-wdkFK-6EO1rDGH0Nk4SZ0F1c&_nc_ohc=2O2IMEltvRIQ7kNvwGWkSw_&_nc_gid=tXmsledr8Lb8IR5rZavcaA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvkEdUHxQCpL5YDOUpjmudzl_duix-nJnzvkT2CQjmolA&oe=6999434D&_nc_sid=0055be",
+          "evidence": "Streamer/Influencer.",
           "isVerified": true
         },
-        "provenance": "[ID: 1232009265]",
-        "name": "Bobby King Green"
+        "provenance": "[ID: 7004961839]",
+        "name": "Lobanjica"
       },
       {
-        "label": "Culture Sneaker",
-        "handle": "@culture.sneaker55",
-        "val": 60,
+        "label": "Russ P",
+        "handle": "@russpg22",
+        "val": 65,
         "data": {
-          "bio": "Daily Sneaker head | Culture. History. Hype \nNew Drops • Rare kicks • Styling types.\nDm for collabs @culture.sneaker55",
-          "profilePicUrl": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/495721535_17845611984471174_6338551654353129460_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMxIn0&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGa21pWmc4WUyyDIo2M31Nh_OzoGa-zTUVywtvD8Bju0QRIhyZ2U_SBK52jxp5bAgw&_nc_ohc=XmxIYv6B2IEQ7kNvwHydO_I&_nc_gid=S78KV5H7-QHthRY4LR1vPA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu1QNj2Iu4Jb98BLD48-jtu_jxxpX_aBEZ59K73N7q5gQ&oe=6998D0EB&_nc_sid=8b3546",
-          "evidence": "Sneaker culture micro-influencer.",
-          "followers": 1,
-          "following": 35,
-          "externalUrl": "https://www.instagram.com/culture.sneaker55"
+          "bio": "📀Music Exec. @fredthegodsonmusic 🕊\n •Founder of 𝐆𝐨𝐝𝐋𝐞𝐠𝐚𝐜𝐲 EST. 941 ™️\n •A&R | Curator | Creator | #𝗧𝗕𝗠®️FTG 📍\nSway in the Morning Interview: 🔗⬇️",
+          "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/329603506_3373121326244883_7525387571551100766_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=85aX5bdeTQMQ7kNvwHmzs1r&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvIfBj_CCazBL5-G2e1N4YKgBiD0bSi2RhvPRHRuuM51w&oe=69993D7A&_nc_sid=0055be",
+          "evidence": "Music Executive.",
+          "followers": 49784,
+          "following": 3124,
+          "posts": 472,
+          "externalUrl": "https://youtu.be/qSZqGFeVz6Y?si=m1tKv-EyAeTA7zMO",
+          "isVerified": true
         },
-        "provenance": "[ID: 74070255173]",
-        "name": "Culture Sneaker"
+        "provenance": "[ID: 191211984]",
+        "name": "Russ P"
       }
     ],
     "brands": [
       {
-        "label": "Reebok",
-        "handle": "@reebok",
-        "val": 100,
-        "data": {
-          "bio": "Sport Is Everything.",
-          "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/480200310_649254170981222_7930686984493788331_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QGur_9sfZxaDQWjDmFBXi5adzepZvapP9-QDz3QOJc3aYDLZqhJ8oFEB7rx47h7qCo&_nc_ohc=8OKaP1aK3AUQ7kNvwFzYwvQ&_nc_gid=bSe2bZMWztuDbiChtwnlAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgCb-12x4JSag-f-JrgIq_Gx1AUMSfU0xunS4JI9JcFg&oe=6998CBFA&_nc_sid=8b3546",
-          "evidence": "Primary brand account.",
-          "followers": 4402231,
-          "following": 145,
-          "posts": 747,
-          "externalUrl": "https://www.reebok.com/",
-          "isVerified": true
-        },
-        "provenance": "[ID: 186499819]",
-        "name": "Reebok"
-      },
-      {
-        "label": "Reebok Basketball",
-        "handle": "@reebokbasketball",
-        "val": 90,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/455209353_1662524241266210_1971624613588950272_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDAwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QESQzMhY6zRLvTF3jHKyFmr6jJMG_MBAUajjQEC6DxVOvmlIwA_cQOOyUORGrjB-Ms&_nc_ohc=NscrPsxmBSsQ7kNvwGHL-MU&_nc_gid=j0Rla_jWhoBBLPZSK0Rrew&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsLLi9WjR5_YS2bcegt8dOHh2alicocBVk9UEPEJA7gdg&oe=6998A91A&_nc_sid=0055be",
-          "evidence": "Vertical specific account."
-        },
-        "provenance": "[ID: 68292913239]",
-        "name": "Reebok Basketball"
-      },
-      {
-        "label": "Adidas",
-        "handle": "@adidas",
+        "label": "Stake",
+        "handle": "@stake",
         "val": 95,
         "data": {
-          "bio": "#YouGotThis",
-          "profilePicUrl": "https://scontent-dfw6-1.cdninstagram.com/v/t51.2885-19/564201508_18563819479045765_7618693513437726799_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42NjMuYzIifQ&_nc_ht=scontent-dfw6-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFcqqjNs6DixQK6fdntfGd6JrvFwU-Gzaixg6IVw9LNBZ-PfrGWqr9WqzXmLdRDVN8&_nc_ohc=m41hjC7AgV4Q7kNvwGUvJlG&_nc_gid=6cX9KTg8jr9UzDnfdsYymQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuR2zO62iKoVnwgFkhHUTqRH64kX_JAatQnCyCECpXVpg&oe=6998CA44&_nc_sid=8b3546",
-          "evidence": "Major competitor/Former parent company.",
-          "followers": 29515959,
-          "following": 1030,
-          "posts": 1411,
-          "externalUrl": "https://linktr.ee/adidas",
+          "bio": "World’s Largest Casino\nStake.com unavailable in US UK AU 18+",
+          "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/250299809_421319846102557_2690881369803074364_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHyQ9y2NJ7hjCe75FOSuKy-UjOpZtc2Q3-bE64v542SFm6CVGNVSOOGdy3DgwkJ4nA&_nc_ohc=bvpk9lU0TtoQ7kNvwHb9QkY&_nc_gid=8jN4G713pbY8YtAyQY3xrg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftAiyiNLjQ2fd5ukY5n82vw1n1wWO8R-SUgi8Au2w1P4A&oe=69992E4D&_nc_sid=0055be",
+          "evidence": "Major Competitor.",
+          "externalUrl": "http://stake.com",
           "isVerified": true
         },
-        "provenance": "[ID: 20269764]",
-        "name": "Adidas"
+        "provenance": "[ID: 1751416]",
+        "name": "Stake"
       },
       {
-        "label": "Nike",
-        "handle": "@nike",
-        "val": 95,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/551608484_18567162979020081_1135468084872726555_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zOTkuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QELfbjB8emsHSrAJEKpe9OIc_0Iw9-HzMpqy7qGffzfm8QIsEHtTjRh0-efPzpApjI&_nc_ohc=oKEO7KGm_xsQ7kNvwHFLIQZ&_nc_gid=Gds-BbBfr3sf4OGe-DytRg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfseC8QiC3dHF1V2IE20x0eJxrveePD6JVcd2PlFcH9LAQ&oe=6998C2B0&_nc_sid=0055be",
-          "evidence": "Major competitor.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 13460080]",
-        "name": "Nike"
-      },
-      {
-        "label": "Puma",
-        "handle": "@puma",
+        "label": "UFC",
+        "handle": "@ufc",
         "val": 90,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/459303202_479954131680638_1811732038334385568_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEYSBqSij0SJVt0xe4BsTZoboiXlEc5nPWb3AYz1clcOGKGV0OUJkr4WgcM_1j2c3Y&_nc_ohc=Pt5YtlEHLL8Q7kNvwHPGyfX&_nc_gid=3MkdlelLC8MUl9IMLTx8cA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfuHruR8yXbZCVjROrsaJkFeLgTZwOIpgL1PnM7eepeG1g&oe=6998C21A&_nc_sid=8b3546",
-          "evidence": "Major competitor.",
-          "followers": 13094421,
-          "following": 152,
-          "posts": 3341,
-          "externalUrl": "http://clicklinkin.bio/puma",
+          "bio": "The official UFC Instagram brings you fight photos and video from around the world.",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/460224848_904323201748535_5161631215796810656_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=TdWgpHV7SH8Q7kNvwFCohve&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afumun3N-aF7_JbLCqOfwf-fAVsvScr9ch04Uevf2WMDzQ&oe=699925CB&_nc_sid=0055be",
+          "evidence": "Sports Organization.",
+          "followers": 49623272,
+          "following": 1291,
+          "posts": 44255,
+          "externalUrl": "http://linktr.ee/UFCSOCIAL",
           "isVerified": true
         },
-        "provenance": "[ID: 10145706]",
-        "name": "Puma"
+        "provenance": "[ID: 22832340]",
+        "name": "UFC"
       },
       {
-        "label": "Sneaker Freaker",
-        "handle": "@sneakerfreakermag",
+        "label": "Roobet",
+        "handle": "@roobet",
         "val": 85,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/10932599_727809974008700_489743387_a.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGp42fuRflLliIuD2djcTKiR6qZpcTAZ3kDkMu0hKOlMMXmfHgEHQ2amUowCoOVIlU&_nc_ohc=IlfYDcvxN60Q7kNvwGcTopP&_nc_gid=_r6ly8ToxMSWqY4vcqZF5Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfumdbPcEsyDmhZJ6fOuZxf8DHY-4Gc6szcQvSzBtzaWeQ&oe=6998ABFA&_nc_sid=0055be",
-          "evidence": "Key sneaker media outlet.",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/556952413_18074357984325843_1973776644057861089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=4bjB1P3AS0sQ7kNvwG5C_Z0&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftHBfo2zeI1GcUDnB6gCI43fd6anMmej9Oom-tMNYxxtQ&oe=69990E76&_nc_sid=0055be",
+          "evidence": "Crypto Casino.",
           "isVerified": true
         },
-        "provenance": "[ID: 175637134]",
-        "name": "Sneaker Freaker"
+        "provenance": "[ID: 39624597842]",
+        "name": "Roobet"
       },
       {
-        "label": "Sole Retriever",
-        "handle": "@soleretriever",
-        "val": 80,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/165918137_159041499321362_9202058035413816105_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFNNpzLYdkwa0gtlZTj6rEcaLjK78Xh49SEAL9orOQGYWEvcWtMDh9Yr6FLea0O1Uk&_nc_ohc=eiw2vq-OQUkQ7kNvwF1ddFW&_nc_gid=8HNmufh8R23FBO9rDB80KQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvnKfZ56KWIuYNTiHzEevv-mh_qPVC1RUzUWA9rub9n8Q&oe=6998ADB7&_nc_sid=0055be",
-          "evidence": "Sneaker release info.",
-          "isVerified": true
-        },
-        "provenance": "[ID: 7333815028]",
-        "name": "Sole Retriever"
-      },
-      {
-        "label": "Under Armour",
-        "handle": "@underarmour",
+        "label": "NBA",
+        "handle": "@nba",
         "val": 85,
         "data": {
-          "bio": "Under Armour makes you better. #ProtectThisHouse",
-          "profilePicUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/81621819_469797387256268_1598060058422280192_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHHYC5QfKpi_LQwUUFNynFCwBdclkotKQKJSZS32V49FjoOoCq6EU4Nr5IdHiptVBI&_nc_ohc=19qkcDBTOIAQ7kNvwEPO2cN&_nc_gid=_z9FYRfVi1swYDJjQWRoxQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvlkpG9DXpgO3gY8mqxeFnK5VNgMAzHfiKZ8FchM9Fj2Q&oe=6998BB05&_nc_sid=8b3546",
-          "evidence": "Competitor.",
-          "followers": 8277398,
-          "following": 864,
-          "posts": 4419,
-          "externalUrl": "http://underarmour.com/",
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/582086582_18603572488024487_7141348984943669969_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=GhY728UCdL0Q7kNvwFVGSjS&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsENtM7LcgsE8iF7sWRA4oRq07oBC7GfyqmQ9fY_IZMCQ&oe=69990E6C&_nc_sid=0055be",
+          "evidence": "Sports League.",
           "isVerified": true
         },
-        "provenance": "[ID: 5858873]",
-        "name": "Under Armour"
+        "provenance": "[ID: 20824486]",
+        "name": "NBA"
       },
       {
-        "label": "New Balance Lifestyle",
-        "handle": "@newbalancelifestyle",
+        "label": "Rollbit",
+        "handle": "@rollbit",
         "val": 80,
         "data": {
-          "bio": "WE GOT NOW",
-          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/502744869_18465802426076467_546118222927950611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHVXy7MCCO3gP2xtFfhS5HgCzIAvcIi1J5i3XJP7s4sThFiqILSGhm_puVs5jPFNQk&_nc_ohc=NfZoWuo2jNUQ7kNvwGFYV88&_nc_gid=VqWtj0srpoejd9LaS9_Myw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsva0CUfpac6XrRsZ-DP9_J35S1STka-B45Et0mWDudMw&oe=6998BF23&_nc_sid=8b3546",
-          "evidence": "Competitor in lifestyle segment.",
-          "followers": 1787329,
-          "following": 323,
-          "posts": 1808,
-          "externalUrl": "https://youtu.be/QjUiywy1aNQ",
-          "isVerified": true
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/276026894_146862697802968_6333519285539505276_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=s97DkS62xBUQ7kNvwFvuMPF&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft03BOn2lMXxBp0w5wPyLyNly5ShHPEkx_5-d7hdIxgNg&oe=69990F35&_nc_sid=0055be",
+          "evidence": "Crypto Casino."
         },
-        "provenance": "[ID: 2346204466]",
-        "name": "New Balance Lifestyle"
+        "provenance": "[ID: 30281096002]",
+        "name": "Rollbit"
       },
       {
-        "label": "Reebok Europe",
-        "handle": "@reebokeurope",
-        "val": 75,
+        "label": "Undrgrnd Magazine",
+        "handle": "@undrgrndmagazine",
+        "val": 70,
+        "data": {
+          "bio": "Hard Copy & Digital Music Magazine 👽\nHome to @undrgrnd.studiola 🏡 \nIssue 17 OUT NOW‼️hard copies👇\nAndrew Mason & @pofsky3 👨‍💻🧑‍💻",
+          "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/273819738_503116344504210_8273331440584903591_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzkuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=incifPuh64YQ7kNvwF3_12Z&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsfxEq9c2mFFBRHytD2HmVqYsqA6w-juzeQ_ec5xz7g3A&oe=69991D15&_nc_sid=0055be",
+          "evidence": "Music Media.",
+          "followers": 8737,
+          "following": 6027,
+          "posts": 3667,
+          "externalUrl": "http://undrgrndmag.com/magazines"
+        },
+        "provenance": "[ID: 26101955371]",
+        "name": "Undrgrnd Magazine"
+      },
+      {
+        "label": "Betplay.io",
+        "handle": "@betplayio",
+        "val": 65,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/466005384_564107206482011_3304565812355857598_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QG1pJhjlpYVZx6HuCdyA1LKE4JEbLWZJRaMTjrY1opJvcKdA0J_S40_VtMes_q1vbM&_nc_ohc=a8DdrIFUiDMQ7kNvwE_X5p2&_nc_gid=Upy1sd58ucBP8Lw0tseGXw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvAXtlVNXf6O8WgtVKfW1yk0Nx51w7i_cOn1Z-_kcDVCA&oe=6998AB44&_nc_sid=0055be",
-          "evidence": "Regional account.",
+          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/424543895_1327257191264026_3045383881870516180_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4yMDAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=EKOwFJaQWE8Q7kNvwGUHm2K&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvNm8nFI7kcPmQUNsYVbI91dg0Hq3f5uuIOkVJptU39og&oe=69992145&_nc_sid=0055be",
+          "evidence": "Crypto Betting Site."
+        },
+        "provenance": "[ID: 63155888447]",
+        "name": "Betplay.io"
+      },
+      {
+        "label": "Golden Panorama Apartments",
+        "handle": "@golden.panorama.apartments",
+        "val": 60,
+        "data": {
+          "bio": "Gradimo Vaše snove!\nLuksuzni apartmani u mirnom delu Zlatibora!\n📧 info@goldenpanorama.rs\n📞+381640360000- prodaja \n📞+381640270000- izdavanje",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/289433371_382787370384555_7683088273940263222_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=SxgD9FNE0DkQ7kNvwHT7QOT&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsN1eW5LbB56rEMAaxnk-5SQnm8BfaTTAioS0yP51AsNQ&oe=699939A3&_nc_sid=0055be",
+          "evidence": "Real Estate (Balkan).",
+          "followers": 443160,
+          "posts": 466,
+          "externalUrl": "https://goldenpanorama.rs/ponuda-apartmana/",
           "isVerified": true
         },
-        "provenance": "[ID: 176902169]",
-        "name": "Reebok Europe"
+        "provenance": "[ID: 53003221864]",
+        "name": "Golden Panorama Apartments"
       }
     ],
     "topContent": [
       {
-        "label": "Reebok Brand Statement",
+        "label": "Welcome Bonus up to 1 BTC 🎰 Proud Sponsor @anuel @g2esports @afaseleccion 🐼",
         "val": 100,
         "data": {
-          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/480200310_649254170981222_7930686984493788331_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QGur_9sfZxaDQWjDmFBXi5adzepZvapP9-QDz3QOJc3aYDLZqhJ8oFEB7rx47h7qCo&_nc_ohc=8OKaP1aK3AUQ7kNvwFzYwvQ&_nc_gid=bSe2bZMWztuDbiChtwnlAQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AftgCb-12x4JSag-f-JrgIq_Gx1AUMSfU0xunS4JI9JcFg&oe=6998CBFA&_nc_sid=8b3546",
-          "postUrl": "https://instagram.com/reebok",
-          "caption": "Sport Is Everything."
+          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/626037939_18034613603780795_5220742144397691696_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=DwAaKIu9kkUQ7kNvwEHbYEu&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsyC7PF6vhOo3CoGUh1TxahXbqJOYy9XTbEwDoU0yMlfg&oe=69994004&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/betpandaofficial"
         },
-        "name": "Reebok Brand Statement"
+        "name": "Welcome Bonus up to 1 BTC 🎰 Proud Sponsor @anuel @g2esports @afaseleccion 🐼"
       },
       {
-        "label": "Adidas Originals Philosophy",
+        "label": "PROMO CODE ON BETPANDA: lux27 GAMBLER & STREAMER 🎰",
+        "val": 95,
+        "data": {
+          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/628405638_17854316337657913_569228393642367761_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=-XQEOzru4w8Q7kNvwHwcVoo&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuy3q78cPfQPiUYhfKhstglPN-v9eEuNxlhGjCaHwBFzg&oe=699940CC&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/lux27casino"
+        },
+        "name": "PROMO CODE ON BETPANDA: lux27 GAMBLER & STREAMER 🎰"
+      },
+      {
+        "label": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
         "val": 90,
         "data": {
-          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/371530742_306129595288664_7629456093525801129_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFAFLa3oaMzgHTg2BaIQhVAwjltUVPyYPl_xnFqP3j63j-mMl7ViVv37QG4X0_nNEE&_nc_ohc=boBthZRN5dYQ7kNvwHnqYaR&_nc_gid=5welemRHvlPJGf08oDik5A&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvnHb_PmfycxImPP2sdEBXbY8yX2NNUS86kT7wmut1Kvw&oe=6998C232&_nc_sid=8b3546",
-          "postUrl": "https://instagram.com/adidasoriginals",
-          "caption": "Before there can be a thousand, there’s - The Original."
+          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=RmEPyRKScGwQ7kNvwEIIQC1&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsT6mjmRAILCpEcQOEQWBjBN0zDY1MHmXMcy0cTOMaLzA&oe=69991F4B&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/fuerzaregida"
         },
-        "name": "Adidas Originals Philosophy"
+        "name": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️"
       },
       {
-        "label": "Under Armour Campaign",
+        "label": "World’s Largest Casino Stake.com unavailable in US UK AU 18+",
         "val": 85,
         "data": {
-          "mediaUrl": "https://scontent-lax3-2.cdninstagram.com/v/t51.2885-19/81621819_469797387256268_1598060058422280192_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lax3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHHYC5QfKpi_LQwUUFNynFCwBdclkotKQKJSZS32V49FjoOoCq6EU4Nr5IdHiptVBI&_nc_ohc=19qkcDBTOIAQ7kNvwEPO2cN&_nc_gid=_z9FYRfVi1swYDJjQWRoxQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfvlkpG9DXpgO3gY8mqxeFnK5VNgMAzHfiKZ8FchM9Fj2Q&oe=6998BB05&_nc_sid=8b3546",
-          "postUrl": "https://instagram.com/underarmour",
-          "caption": "Under Armour makes you better. #ProtectThisHouse"
+          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/250299809_421319846102557_2690881369803074364_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHyQ9y2NJ7hjCe75FOSuKy-UjOpZtc2Q3-bE64v542SFm6CVGNVSOOGdy3DgwkJ4nA&_nc_ohc=bvpk9lU0TtoQ7kNvwHb9QkY&_nc_gid=8jN4G713pbY8YtAyQY3xrg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftAiyiNLjQ2fd5ukY5n82vw1n1wWO8R-SUgi8Au2w1P4A&oe=69992E4D&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/stake"
         },
-        "name": "Under Armour Campaign"
+        "name": "World’s Largest Casino Stake.com unavailable in US UK AU 18+"
       },
       {
-        "label": "New Balance Slogan",
+        "label": "Dios💕 TICKETS COLOMBIA 🇨🇴 AQUI 👇🏻",
         "val": 80,
         "data": {
-          "mediaUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/502744869_18465802426076467_546118222927950611_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHVXy7MCCO3gP2xtFfhS5HgCzIAvcIi1J5i3XJP7s4sThFiqILSGhm_puVs5jPFNQk&_nc_ohc=NfZoWuo2jNUQ7kNvwGFYV88&_nc_gid=VqWtj0srpoejd9LaS9_Myw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afsva0CUfpac6XrRsZ-DP9_J35S1STka-B45Et0mWDudMw&oe=6998BF23&_nc_sid=8b3546",
-          "postUrl": "https://instagram.com/newbalancelifestyle",
-          "caption": "WE GOT NOW"
+          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/624542081_18561272938019732_9137874051752649602_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=GvTDFkySU5sQ7kNvwHfQ94b&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfskdgMHp1GII9Q-a5MljS0Sb65oAREHSZ7eyPL8_AvTiw&oe=69993974&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/blessd"
         },
-        "name": "New Balance Slogan"
+        "name": "Dios💕 TICKETS COLOMBIA 🇨🇴 AQUI 👇🏻"
       },
       {
-        "label": "Sneaker Culture Post",
+        "label": "Fighting is life. @chitoverapodcast",
+        "val": 75,
+        "data": {
+          "mediaUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/610600517_18551693656024286_2950264396004903185_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40ODAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=XA3HS3C1MoQQ7kNvwEJsX2k&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv8V7C9oMmYw10iKs2jBtUfFW0tK2rz_Jm737ZzrrN3YQ&oe=69993022&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/chitoveraufc"
+        },
+        "name": "Fighting is life. @chitoverapodcast"
+      },
+      {
+        "label": "🎶Singer🎶 Booking: +381646855303 Marko",
         "val": 70,
         "data": {
-          "mediaUrl": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/495721535_17845611984471174_6338551654353129460_n.jpg?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMxIn0&_nc_ht=scontent-sea1-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGa21pWmc4WUyyDIo2M31Nh_OzoGa-zTUVywtvD8Bju0QRIhyZ2U_SBK52jxp5bAgw&_nc_ohc=XmxIYv6B2IEQ7kNvwHydO_I&_nc_gid=S78KV5H7-QHthRY4LR1vPA&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afu1QNj2Iu4Jb98BLD48-jtu_jxxpX_aBEZ59K73N7q5gQ&oe=6998D0EB&_nc_sid=8b3546",
-          "postUrl": "https://instagram.com/culture.sneaker55",
-          "caption": "Daily Sneaker head | Culture. History. Hype"
+          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/462524491_545049194772041_2925686720168680870_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=z23V4jFqRp4Q7kNvwECg2vf&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfswXRgyJ9z1JMFHpIWWIl7YaEFazvTuCW5l_uqtc9dszw&oe=69993672&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/milicatodorovicofficial"
         },
-        "name": "Sneaker Culture Post"
+        "name": "🎶Singer🎶 Booking: +381646855303 Marko"
+      },
+      {
+        "label": "Hard Copy & Digital Music Magazine 👽 Home to @undrgrnd.studiola 🏡",
+        "val": 65,
+        "data": {
+          "mediaUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/273819738_503116344504210_8273331440584903591_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzkuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=incifPuh64YQ7kNvwF3_12Z&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsfxEq9c2mFFBRHytD2HmVqYsqA6w-juzeQ_ec5xz7g3A&oe=69991D15&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/undrgrndmagazine"
+        },
+        "name": "Hard Copy & Digital Music Magazine 👽 Home to @undrgrnd.studiola 🏡"
+      },
+      {
+        "label": "UNIFICADO @worldboxingorg & @wbaboxingofficial 154👑 #CríaBoricua 🇵🇷",
+        "val": 60,
+        "data": {
+          "mediaUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/624737477_18506169205079432_5926355179068110386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=BLrAwJpw4U0Q7kNvwE41gI7&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuOGECBrUAhFqf32kq8HAZNVovCEk0dbtONqUh5Y5ba3Q&oe=699911D2&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/xander.zayas"
+        },
+        "name": "UNIFICADO @worldboxingorg & @wbaboxingofficial 154👑 #CríaBoricua 🇵🇷"
+      },
+      {
+        "label": "ROSE UP FROM THE CONCRETE🪨🌹 BORN 2 STEP ON THE DEVIL🥾🐍",
+        "val": 55,
+        "data": {
+          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/603253176_18546297472033025_5158977280718951595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MzkuYzIifQ&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=UmHd4nyOd6kQ7kNvwFP5bHF&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuSxM4yCFNn6YAdh_7_Svo0Uo4Z1kdCHMIQCM_eAaaqmw&oe=69990F02&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/youngcertifyed"
+        },
+        "name": "ROSE UP FROM THE CONCRETE🪨🌹 BORN 2 STEP ON THE DEVIL🥾🐍"
       }
     ],
-    "vibeDescription": "The analysis of @reebok reveals a brand deeply entrenched in two distinct but overlapping worlds: high-performance athletics (specifically Basketball and MMA) and street culture (Hip Hop and Sneakerheads). The network shows strong connections to combat sports via numerous UFC fighters, a revitalized basketball division led by connections to figures like Angel Reese, and a persistent relevance in lifestyle fashion through proximity to icons like Cardi B and Snoop Dogg. The ecosystem is surrounded by fierce competition from giants like Nike and Adidas, but maintains a unique niche by bridging retro heritage with gritty, high-contact sports.",
+    "vibeDescription": "The audience is a high-energy mix of crypto-gambling enthusiasts, Latin urban music fans, and combat sports followers. There is a strong overlap between betting culture and the fanbases of Reggaeton/Trap artists (like Anuel AA) and UFC fighters. A distinct, localized cluster of Balkan influencers suggests a specific regional foothold or origin for the brand.",
     "visualAnalysis": {
       "brands": [],
       "aestheticTags": [
-        "Monochrome",
-        "Minimalist",
-        "Luxury",
         "Modern",
-        "Bold"
+        "Bold",
+        "Grunge",
+        "Vibrant",
+        "Dark"
       ],
-      "vibeDescription": "A sophisticated collection defined by high-contrast monochrome imagery, iconic branding, and sleek portraiture. The overall aesthetic is timeless and minimalist, exuding a sense of modern luxury and confidence.",
+      "vibeDescription": "A dynamic blend of urban lifestyle and personal expression, characterized by high-contrast imagery and streetwear aesthetics. The collection shifts between dark, edgy tones and vibrant pops of color, reflecting a raw and authentic social media energy.",
       "colorPalette": [
-        "#000000",
-        "#FFFFFF",
-        "#808080",
-        "#A52A2A",
-        "#D2B48C"
+        "#1A1A1A",
+        "#E31C25",
+        "#F1C40F",
+        "#4A6572",
+        "#FFFFFF"
       ],
       "products": []
     },
     "visualTheme": {
-      "primaryColor": "#000000",
-      "textureStyle": "Monochrome",
+      "primaryColor": "#1A1A1A",
+      "textureStyle": "Modern",
       "nodeTypeMapping": {}
     }
   }

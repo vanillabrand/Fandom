@@ -25,6 +25,11 @@ const PROXY_LIST = [
     PROXY_FALL        // Fallback 2: ProxyJet any
 ].filter(p => p && p.trim().length > 0).map(p => p!.startsWith('http') ? p! : `http://${p}`);
 
+// [DEBUG] Log available proxies on startup (mask credentials)
+console.log(`[Proxy] Initialized with ${PROXY_LIST.length} proxies.`);
+if (APIFY_PROXY_URL) console.log(`[Proxy] Primary: ${APIFY_PROXY_URL.replace(/:[^:]*@/, ':****@')}`);
+else console.warn(`[Proxy] WARNING: APIFY_PROXY_URL is missing!`);
+
 const JWT_SECRET = process.env.JWT_SECRET || 'secret-key-change-me';
 const GOOGLE_CLIENT_ID = process.env.VITE_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID;
 
@@ -156,7 +161,12 @@ router.get('/proxy-image', async (req: any, res) => {
             // [FIX] Add Dynamic Referer headers for Social Media Scrapes
             const headers: any = {
                 'Accept': 'video/webm,video/ogg,video/*;q=0.9,image/webp,image/apng,image/*,*/*;q=0.8',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+                'Sec-Fetch-Site': 'cross-site',
+                'Sec-Fetch-Mode': 'no-cors',
+                'Sec-Fetch-Dest': 'image',
+                'Accept-Encoding': 'identity', // Avoid issues with brotli/gzip for now unless properly handled
+                'Accept-Language': 'en-US,en;q=0.9'
             };
 
             if (targetUrl.includes('instagram.com')) {
@@ -176,6 +186,9 @@ router.get('/proxy-image', async (req: any, res) => {
                 timeout: 10000, // Faster timeout (10s) for rotation
                 headers: headers
             }, (proxyRes) => {
+                const proxyUrlMasked = proxyUrl.replace(/:[^:]*@/, ':****@');
+                console.log(`[Proxy] Request to ${targetUrl} via ${proxyUrlMasked} returned ${proxyRes.statusCode}`);
+
                 if (proxyRes.statusCode && proxyRes.statusCode >= 400 && attempt < PROXY_LIST.length - 1) {
                     console.warn(`[Proxy] Attempt ${attempt + 1} failed with ${proxyRes.statusCode}. Trying next proxy...`);
                     resolve(false);

@@ -52,6 +52,19 @@ const AccordionItem = ({
 };
 
 
+// [UNIFIED] Frontend ID Normalization (Matches JobOrchestrator)
+const normalizeId = (rawId: any): string => {
+    if (!rawId) return '';
+    return rawId.toString()
+        .toLowerCase()
+        .trim()
+        .replace(/@/g, '')
+        .replace(/\s+/g, '_')
+        .replace(/[^a-z0-9_-]/g, '');
+};
+
+const profileGroups = ['main', 'creator', 'brand', 'profile', 'user', 'overindexed', 'topic', 'subtopic', 'hashtag', 'concept'];
+
 const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, onSelect, isOpen, onToggle }) => {
     // [CRITICAL FIX] Stabilize data references to prevent infinite render loops
     // The `data` prop may get a new reference on every parent render, causing all
@@ -425,35 +438,42 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
     const renderEnrichedStats = (node: any) => {
         if (!node || !node.data) return null;
 
-        const d = node.data;
-        // Prioritize formatted strings if available, fallback to counts
-        const followers = d.followers || (d.followersCount !== undefined && d.followersCount !== null ? d.followersCount.toLocaleString() : null);
-        const following = d.following || (d.followingCount !== undefined && d.followingCount !== null ? d.followingCount.toLocaleString() : null);
-        const posts = d.posts || (d.postsCount !== undefined && d.postsCount !== null ? d.postsCount.toLocaleString() : null);
-        const engRate = d.engagementRate; // String "4.5%" or number
+        // [FIX] Robust Count Display
+        // We accept 0 as a valid number, but reject null/undefined
+        // Use loose equality != null to check for both null and undefined
+        const getCount = (vals: any[]) => {
+            for (const v of vals) {
+                const n = Number(v);
+                if (!isNaN(n) && v != null) return n;
+            }
+            return null; // Data Missing
+        };
 
-        // Only show if we have meaningful data (at least followers or eng rate)
-        if (!followers && !engRate) return null;
+        const followers = getCount([node.data.followersCount, node.data.followerCount, node.data.followers, node.followersCount]);
+        const following = getCount([node.data.followingCount, node.data.followsCount, node.data.following, node.followingCount]);
+        const posts = getCount([node.data.postsCount, node.data.mediaCount, node.data.posts, node.postsCount]);
+
+        if (followers === null && following === null && posts === null) return null;
 
         return (
-            <div className="grid grid-cols-2 gap-2 mb-4 bg-emerald-900/20 p-3 rounded-lg border border-emerald-500/20">
-                <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Followers</div>
-                    <div className="text-lg font-bold text-white truncate px-1">
-                        {followers || '...'}
+            <div className="grid grid-cols-3 gap-2 mb-4 bg-emerald-900/20 p-3 rounded-lg border border-emerald-500/10">
+                <div className="text-center">
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-wider mb-1">Followers</div>
+                    <div className="text-lg font-bold text-white break-all">
+                        {followers !== null ? followers.toLocaleString() : '-'}
                     </div>
                 </div>
-                <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Engagement</div>
-                    <div className="text-lg font-bold text-white truncate px-1">{engRate || '...'}</div>
+                <div className="text-center border-l border-emerald-500/10">
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-wider mb-1">Following</div>
+                    <div className="text-lg font-bold text-white break-all">
+                        {following !== null ? following.toLocaleString() : '-'}
+                    </div>
                 </div>
-                <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Following</div>
-                    <div className="text-sm font-medium text-gray-300 truncate px-1">{following || '...'}</div>
-                </div>
-                <div className="text-center p-2 bg-black/20 rounded">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-tighter">Posts</div>
-                    <div className="text-sm font-medium text-gray-300 truncate px-1">{posts || '...'}</div>
+                <div className="text-center border-l border-emerald-500/10">
+                    <div className="text-xs text-emerald-400/70 uppercase tracking-wider mb-1">Posts</div>
+                    <div className="text-lg font-bold text-white break-all">
+                        {posts !== null ? posts.toLocaleString() : '-'}
+                    </div>
                 </div>
             </div>
         );
@@ -475,18 +495,18 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
 
         // [PRIORITY 4] Look up Node in Graph and check for scraped URLs
         const targetName = item.name || item.label || '';
-        const cleanTarget = targetName.replace('@', '').toLowerCase().trim();
-        const node = data.nodes.find(n => {
-            const nId = n.id.replace('@', '').toLowerCase().trim();
-            const nLabel = (n.label || '').replace('@', '').toLowerCase().trim();
+        const cleanTarget = normalizeId(targetName);
+        const match = data.nodes.find(n => {
+            const nId = normalizeId(n.id);
+            const nLabel = normalizeId(n.label || '');
             return nId === cleanTarget || nLabel === cleanTarget;
         }) as any;
 
-        if (node && node.data) {
+        if (match && match.data) {
             // Check node's scraped URLs FIRST
-            if (node.data.profileUrl && node.data.profileUrl.startsWith('http')) return node.data.profileUrl;
-            if (node.data.url && node.data.url.startsWith('http')) return node.data.url;
-            if (node.data.externalUrl && node.data.externalUrl.startsWith('http')) return node.data.externalUrl;
+            if (match.data.profileUrl && match.data.profileUrl.startsWith('http')) return match.data.profileUrl;
+            if (match.data.url && match.data.url.startsWith('http')) return match.data.url;
+            if (match.data.externalUrl && match.data.externalUrl.startsWith('http')) return match.data.externalUrl;
         }
 
         // [PRIORITY 5 - FALLBACK] Construct from username (LAST RESORT)
@@ -498,18 +518,18 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             return `https://www.instagram.com/${cleanUsername}/`;
         }
 
-        if (node && node.data && node.data.username) {
-            const cleanUsername = node.data.username.replace('@', '').trim();
+        if (match && match.data && match.data.username) {
+            const cleanUsername = match.data.username.replace('@', '').trim();
             return `https://www.instagram.com/${cleanUsername}/`;
         }
 
-        if (node) {
-            const cleanHandle = (node.username || node.label || node.id).replace(/@/g, '').replace(/\s+/g, '').toLowerCase().trim();
+        if (match) {
+            const cleanHandle = normalizeId(match.username || match.label || match.id);
             return `https://www.instagram.com/${cleanHandle}/`;
         }
 
         // [PRIORITY 6 - ABSOLUTE FALLBACK] Generate from name
-        const cleanHandle = targetName.replace(/@/g, '').replace(/\s+/g, '').toLowerCase().trim();
+        const cleanHandle = normalizeId(targetName);
         return `https://www.instagram.com/${cleanHandle}/`;
     }, [data.nodes]);
 
@@ -542,7 +562,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             // Find links targeting this node (Followers of this profile in our sample)
             const incomingLinks = data.links.filter(l => {
                 const targetId = typeof l.target === 'object' ? (l.target as any).id : l.target;
-                return targetId === node.id;
+                return normalizeId(targetId) === normalizeId(node.id);
             });
 
             // Resolve source profiles (The members of our audience who follow this account)
@@ -552,7 +572,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                 // But in this graph, usually 'main' -> 'cluster' -> 'profile' or similar. 
                 // Actually, for "Overindexed", the structure is usually Main -> Cluster -> Profile.
                 // Or Main -> Profile directly.
-                return data.nodes.find(n => n.id === sourceId);
+                return data.nodes.find(n => normalizeId(n.id) === normalizeId(sourceId));
             }).filter(n => n);
 
             const evidence = sources.map(s => {
@@ -657,13 +677,13 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                         const rawId = rp.id || rp.username;
                         if (!rawId) return;
 
-                        const id = String(rawId).toLowerCase().trim();
+                        const id = normalizeId(rawId);
                         // Prevent duplicates within this loop and check if already in main list (optimization)
                         if (!seenInRaw.has(id)) {
                             // Check if this profile is already in our 'creators' list to avoid redundant processing
                             const exists = creators.some(c =>
-                                (c.id && c.id.toLowerCase() === id) ||
-                                (c.username && c.username.toLowerCase().replace('@', '') === rp.username.toLowerCase().replace('@', ''))
+                                (c.id && normalizeId(c.id) === id) ||
+                                (c.username && normalizeId(c.username) === normalizeId(rp.username))
                             );
 
                             if (!exists) {
@@ -701,9 +721,9 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         // [DEDUPLICATION] Ensure unique creators by username/id (Final Safety Check)
         return creators.filter((c, index, self) =>
             index === self.findIndex((t) => (
-                (t.id && c.id && t.id.toLowerCase() === c.id.toLowerCase()) ||
-                (t.username && c.username && t.username.replace('@', '').toLowerCase() === c.username.replace('@', '').toLowerCase()) ||
-                (t.label && c.label && t.label.replace('@', '').toLowerCase() === c.label.replace('@', '').toLowerCase())
+                (t.id && c.id && normalizeId(t.id) === normalizeId(c.id)) ||
+                (t.username && c.username && normalizeId(t.username) === normalizeId(c.username)) ||
+                (t.label && c.label && normalizeId(t.label) === normalizeId(c.label))
             ))
         ).map(creator => {
             if (creator.provenance && creator.provenance.evidence && creator.provenance.evidence.length > 0) {
@@ -711,21 +731,21 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             }
 
             // Derive evidence from Graph Topology
-            const creatorId = (creator.id || creator.username || creator.label || '').toLowerCase().trim();
-            const node = data.nodes.find(n => n.id.toLowerCase().trim() === creatorId || (n.label && n.label.toLowerCase().trim() === creatorId));
+            const creatorId = normalizeId(creator.id || creator.username || creator.label || '');
+            const node = data.nodes.find(n => normalizeId(n.id) === creatorId || (n.label && normalizeId(n.label) === creatorId));
 
             if (!node) return creator;
 
             // Find incoming links (Audience members who follow this creator)
             const incomingLinks = data.links.filter(l => {
-                const targetId = typeof l.target === 'object' ? (l.target as any).id.toLowerCase().trim() : l.target.toLowerCase().trim();
-                return targetId === node.id.toLowerCase().trim();
+                const targetId = normalizeId(typeof l.target === 'object' ? (l.target as any).id : l.target);
+                return targetId === normalizeId(node.id);
             });
 
             // Map links to source profiles
             const evidence = incomingLinks.map(l => {
                 const sourceId = typeof l.source === 'object' ? (l.source as any).id : l.source;
-                const sourceNode = data.nodes.find(n => n.id === sourceId);
+                const sourceNode = data.nodes.find(n => normalizeId(n.id) === normalizeId(sourceId));
                 if (!sourceNode) return null;
 
                 const handle = sourceNode.label || 'Unknown';
@@ -762,7 +782,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             analytics.brands.forEach((b: any) => {
                 const rawName = b.id || b.username || b.name || '';
                 if (!rawName) return;
-                const cleanName = String(rawName).toLowerCase().replace('@', '').trim();
+                const cleanName = normalizeId(rawName);
 
                 if (!seenIds.has(cleanName)) {
                     brands.push(b);
@@ -776,7 +796,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             analytics.overindexing.topBrands.forEach((b: any) => {
                 const rawName = b.id || b.username || b.name || '';
                 if (!rawName) return;
-                const cleanName = String(rawName).toLowerCase().replace('@', '').trim();
+                const cleanName = normalizeId(rawName);
 
                 if (!seenIds.has(cleanName)) {
                     brands.push(b);
@@ -789,9 +809,9 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         stableNodes
             .filter(n => n.group === 'brand' || n.group === 'company')
             .forEach(n => {
-                const id = (n.id || n.label || '').toLowerCase().trim();
-                const label = (n.label || '').toLowerCase().trim();
-                const cleanLabel = label.replace('@', '').trim();
+                const id = normalizeId(n.id || n.label || '');
+                const label = (n.label || '').trim();
+                const cleanLabel = normalizeId(label);
 
                 // [FIX] Strict Deduplication against AI results
                 if (!seenIds.has(id) && !seenIds.has(label) && !seenIds.has(cleanLabel)) {
@@ -828,26 +848,23 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         const clusterNodes = stableNodes.filter(n => n.group === 'cluster');
 
         return clusterNodes.map(node => {
-            const nodeId = node.id.toLowerCase().trim();
+            // NEW: Graph-based clustering evidence
+            const nodeId = normalizeId(node.id);
+            const stableNodes = data.nodes;
+            const stableLinks = data.links;
 
-            // Find all links involving this cluster (Members + Root)
-            const clusterLinks = stableLinks.filter(l => {
-                const targetId = (typeof l.target === 'object' ? (l.target as any).id : l.target).toLowerCase().trim();
-                const sourceId = (typeof l.source === 'object' ? (l.source as any).id : l.source).toLowerCase().trim();
+            const memberLinks = stableLinks.filter(l => {
+                const targetId = normalizeId(typeof l.target === 'object' ? (l.target as any).id : l.target);
+                const sourceId = normalizeId(typeof l.source === 'object' ? (l.source as any).id : l.source);
                 return targetId === nodeId || sourceId === nodeId;
             });
 
-            // Identify members (exclude link to MAIN/root)
-            const memberNodes = clusterLinks.map(l => {
-                const targetId = (typeof l.target === 'object' ? (l.target as any).id : l.target).toLowerCase().trim();
-                const sourceId = (typeof l.source === 'object' ? (l.source as any).id : l.source).toLowerCase().trim();
+            const memberNodes = memberLinks.map(l => {
+                const targetId = normalizeId(typeof l.target === 'object' ? (l.target as any).id : l.target);
+                const sourceId = normalizeId(typeof l.source === 'object' ? (l.source as any).id : l.source);
                 const otherId = targetId === nodeId ? sourceId : targetId;
-
-                // Exclude root node
-                if (otherId === 'main' || otherId === 'core') return null;
-
-                return data.nodes.find(n => n.id.toLowerCase().trim() === otherId);
-            }).filter(n => n && n.group !== 'main' && n.group !== 'cluster');
+                return data.nodes.find(n => normalizeId(n.id) === otherId);
+            }).filter(n => n && profileGroups.includes(n.group) && n.group !== 'main');
 
             // Unique members list
             const uniqueMembers = Array.from(new Set(memberNodes.map(m => m!.id)))
@@ -889,7 +906,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         // 1. AI Topics
         if (analytics.topics && analytics.topics.length > 0) {
             analytics.topics.forEach((t: any) => {
-                const id = (t.id || t.name || t.label).toLowerCase().trim();
+                const id = normalizeId(t.id || t.name || t.label);
                 if (!seenIds.has(id)) {
                     topics.push(t);
                     seenIds.add(id);
@@ -901,7 +918,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         (data.nodes || [])
             .filter(n => n.group === 'topic' || n.group === 'concept')
             .forEach(n => {
-                const id = (n.id || n.label).toLowerCase().trim();
+                const id = normalizeId(n.id || n.label);
                 // Deduplicate
                 if (!seenIds.has(id)) {
                     topics.push({
@@ -923,20 +940,21 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             }
 
             // Match to graph node
-            const topicId = (topic.id || topic.name || topic.label || '').toLowerCase().trim();
-            const node = stableNodes.find(n => n.id.toLowerCase().trim() === topicId || (n.label && n.label.toLowerCase().trim() === topicId));
+            const topicId = normalizeId(topic.id || topic.name || topic.label || '');
+            const node = stableNodes.find(n => normalizeId(n.id) === topicId || (n.label && normalizeId(n.label) === topicId));
 
             if (!node) return topic;
 
             // Find incoming links (People talking about this topic)
             const incomingLinks = stableLinks.filter(l => {
-                const targetId = typeof l.target === 'object' ? (l.target as any).id.toLowerCase().trim() : l.target.toLowerCase().trim();
-                return targetId === node.id.toLowerCase().trim();
+                const targetId = normalizeId(typeof l.target === 'object' ? (l.target as any).id : l.target);
+                return targetId === normalizeId(node.id);
             });
+            const incomingCount = incomingLinks.length;
 
             const evidence = incomingLinks.map(l => {
                 const sourceId = typeof l.source === 'object' ? (l.source as any).id : l.source;
-                const sourceNode = stableNodes.find(n => n.id === sourceId);
+                const sourceNode = stableNodes.find(n => normalizeId(n.id) === normalizeId(sourceId));
                 if (!sourceNode) return null;
                 if (sourceNode.group === 'main' || sourceNode.group === 'cluster') return null; // Filter out structural nodes
 
@@ -1019,7 +1037,6 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
     // [NEW] Robust Overindexed Profiles Derivation
 
     // [MOVED BACK] Robust item selection across all lists
-    const profileGroups = ['main', 'creator', 'brand', 'profile', 'user', 'overindexed'];
     const selectedItem = React.useMemo(() => {
         if (!focusedNodeId) return null;
 
@@ -1062,7 +1079,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
     // [OPTIMIZED] Create Node Map for O(1) lookup
     const nodeMap = React.useMemo(() => {
         const map = new Map();
-        data.nodes.forEach(n => map.set(n.id.toLowerCase().trim(), n));
+        data.nodes.forEach(n => map.set(normalizeId(n.id), n));
         return map;
     }, [data.nodes]);
 
@@ -1070,7 +1087,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
     const mentions = React.useMemo(() => {
         if (!isTopic || !selectedItem) return [];
 
-        const itemId = ((selectedItem as any).id || (selectedItem as any).username || (selectedItem as any).name || '').toLowerCase().trim();
+        const itemId = normalizeId((selectedItem as any).id || (selectedItem as any).username || (selectedItem as any).name || '');
         if (!itemId) return [];
 
         const uniqueMemberIds = new Set<string>();
@@ -1078,8 +1095,8 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
 
         // Single pass through links O(L)
         data.links.forEach(l => {
-            const targetId = (typeof l.target === 'object' ? (l.target as any).id : l.target).toLowerCase().trim();
-            const sourceId = (typeof l.source === 'object' ? (l.source as any).id : l.source).toLowerCase().trim();
+            const targetId = normalizeId(typeof l.target === 'object' ? (l.target as any).id : l.target);
+            const sourceId = normalizeId(typeof l.source === 'object' ? (l.source as any).id : l.source);
 
             if (targetId === itemId || sourceId === itemId) {
                 const otherId = targetId === itemId ? sourceId : targetId;

@@ -31,9 +31,37 @@ export const SidebarQueryBuilder: React.FC<SidebarQueryBuilderProps> = ({ onMapR
     const [ignoreCache, setIgnoreCache] = useState(false);
     const [useDeepAnalysis, setUseDeepAnalysis] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loadingMessage, setLoadingMessage] = useState("Analyze requirements");
     const [error, setError] = useState<string | null>(null);
     const [plan, setPlan] = useState<MapGenerationPlan | null>(null);
     const [postDepthLimit, setPostDepthLimit] = useState(2);
+
+    // [NEW] Dynamic Loading Messages
+    useEffect(() => {
+        if (!loading) {
+            setLoadingMessage("Analyze requirements");
+            return;
+        }
+
+        const messages = [
+            "Analyzing request...",
+            "Identifying key entities...",
+            "Checking Apify actors...",
+            "Estimating costs...",
+            "Drafting blueprint...",
+            "Validating strategy..."
+        ];
+
+        let i = 0;
+        setLoadingMessage(messages[0]);
+
+        const interval = setInterval(() => {
+            i = (i + 1) % messages.length;
+            setLoadingMessage(messages[i]);
+        }, 2500);
+
+        return () => clearInterval(interval);
+    }, [loading]);
 
     // Execution State
     const [executionLogs, setExecutionLogs] = useState<string[]>([]);
@@ -440,7 +468,12 @@ export const SidebarQueryBuilder: React.FC<SidebarQueryBuilderProps> = ({ onMapR
                     disabled={loading || !query.trim()}
                     className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 rounded-lg flex items-center justify-center gap-2 font-bold text-xs transition-all shadow-lg shadow-emerald-900/20 hover:shadow-emerald-900/40 mt-3"
                 >
-                    {loading ? <Loader2 className="animate-spin" size={14} /> : (
+                    {loading ? (
+                        <>
+                            <Loader2 className="animate-spin" size={14} />
+                            <span className="animate-pulse">{loadingMessage}</span>
+                        </>
+                    ) : (
                         <>
                             <Search size={14} strokeWidth={2.5} /> Analyze requirements
                         </>
