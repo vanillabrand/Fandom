@@ -5,6 +5,11 @@ import VisualDNAWidget from './VisualDNAWidget.js';
 import { ReasoningPanel } from './dashboard/ReasoningPanel.js';
 import { ProxiedImage } from './ProxiedImage.js';
 import { MediaPreview } from './MediaPreview.js';
+import { EnrichedStats } from './analytics/EnrichedStats.js';
+import { MediaGallery } from './analytics/MediaGallery.js';
+import { getEvidence } from '../utils/analytics/evidenceUtils.js';
+import { normalizeId } from '../utils/analytics/generalUtils.js';
+import { useOverindexedProfiles } from '../hooks/useOverindexedProfiles.js';
 
 interface AnalyticsPanelProps {
     data: FandomData;
@@ -53,15 +58,7 @@ const AccordionItem = ({
 
 
 // [UNIFIED] Frontend ID Normalization (Matches JobOrchestrator)
-const normalizeId = (rawId: any): string => {
-    if (!rawId) return '';
-    return rawId.toString()
-        .toLowerCase()
-        .trim()
-        .replace(/@/g, '')
-        .replace(/\s+/g, '_')
-        .replace(/[^a-z0-9_-]/g, '');
-};
+
 
 const profileGroups = ['main', 'creator', 'brand', 'profile', 'user', 'overindexed']; // [FIX] Exclude structural nodes (topic, subtopic, etc.) so they use Topic/Cluster header layout
 
@@ -102,79 +99,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
 
 
 
-    const getEvidence = (target: any) => {
-        if (!data || !target) return [];
 
-        const evidence: any[] = [];
-        // [OPTIMIZED] Use server-hydrated posts directly
-        const posts = target.data?.latestPosts || target.latestPosts;
-
-        if (posts && Array.isArray(posts)) {
-            posts.forEach((post: any) => {
-                // [FIX] Ensure post and post.url exist before accessing
-                if (!post) return;
-
-                const authorHandle = post.ownerUsername || post.username || post.author || target.label || 'Unknown';
-                // Ensure we link to the post if possible, otherwise the author
-                let finalUrl = post.url || post.permalink || post.postUrl;
-
-                if (!finalUrl && post.shortCode) {
-                    finalUrl = `https://www.instagram.com/p/${post.shortCode}/`;
-                }
-
-                // Fallback to profile link if no post link
-                if (!finalUrl || finalUrl === '#') {
-                    const cleanAuthor = authorHandle.replace('@', '').trim();
-                    if (cleanAuthor !== 'Unknown') {
-                        finalUrl = `https://www.instagram.com/${cleanAuthor}/`;
-                    } else {
-                        finalUrl = '#';
-                    }
-                }
-
-                evidence.push({
-                    type: 'post',
-                    text: post.caption || post.text || 'No caption',
-                    url: finalUrl,
-                    date: post.date || post.timestamp || 'Recent',
-                    author: authorHandle,
-                    displayUrl: post.displayUrl || post.imageUrl,
-                    videoUrl: post.videoUrl,
-                    children: post.children,
-                    postType: post.type, // 'Image', 'Video', 'Sidecar'
-                    videoViewCount: post.videoViewCount
-                });
-            });
-        }
-
-        // 2. Structural Evidence (AI Reasoning)
-        if (target.data && target.data.evidence) {
-            // If AI evidence is just a string, we can't do much with URL
-            // But if it's an object, we might extract more
-            evidence.push({
-                type: 'insight',
-                text: typeof target.data.evidence === 'string' ? target.data.evidence : JSON.stringify(target.data.evidence),
-                url: '#', // Contextual insight usually doesn't have a direct link
-                date: 'AI Analysis',
-                author: 'System'
-            });
-        }
-
-        // [NEW] Add pre-calculated evidence from backend provenance
-        const provEvidence = target.provenance?.evidence || target.data?.provenance?.evidence;
-        if (provEvidence && Array.isArray(provEvidence)) {
-            provEvidence.forEach(ev => {
-                // Deduplicate if already added (by URL)
-                if (!evidence.some(existing => existing.url === ev.url)) {
-                    // [Refinement] Ensure backend evidence also follows the rules if possible
-                    // But assume backend provides correct URLs usually.
-                    evidence.push(ev);
-                }
-            });
-        }
-
-        return evidence;
-    };
     /* LEGACY LOGIC
     const _legacy_getEvidence = (target: any) => {
         if (!data || !target || !analytics) return [];
@@ -428,9 +353,12 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         }
         // Just switch to the provenance tab
         setExpandedSection('provenance');
-        if (scrollRef.current) {
-            scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // [UX] Scroll to BOTTOM to see the provenance
+        setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+            }
+        }, 100);
     }, [onSelect]);
 
     const toggleSection = useCallback((section: string) => {
@@ -444,50 +372,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
     }, [focusedNodeId, data.nodes]);
 
 
-    // [NEW] Helper to render enriched stats
-    const renderEnrichedStats = (node: any) => {
-        if (!node || !node.data) return null;
 
-        // [FIX] Robust Count Display
-        // We accept 0 as a valid number, but reject null/undefined
-        // Use loose equality != null to check for both null and undefined
-        const getCount = (vals: any[]) => {
-            for (const v of vals) {
-                const n = Number(v);
-                if (!isNaN(n) && v != null) return n;
-            }
-            return null; // Data Missing
-        };
-
-        const followers = getCount([node.data.followersCount, node.data.followerCount, node.data.followers, node.followersCount]);
-        const following = getCount([node.data.followingCount, node.data.followsCount, node.data.following, node.followingCount]);
-        const posts = getCount([node.data.postsCount, node.data.mediaCount, node.data.posts, node.postsCount]);
-
-        if (followers === null && following === null && posts === null) return null;
-
-        return (
-            <div className="grid grid-cols-3 gap-2 mb-4 bg-emerald-900/20 p-3 rounded-lg border border-emerald-500/10">
-                <div className="text-center">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-wider mb-1">Followers</div>
-                    <div className="text-lg font-bold text-white break-all">
-                        {followers !== null ? followers.toLocaleString() : '-'}
-                    </div>
-                </div>
-                <div className="text-center border-l border-emerald-500/10">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-wider mb-1">Following</div>
-                    <div className="text-lg font-bold text-white break-all">
-                        {following !== null ? following.toLocaleString() : '-'}
-                    </div>
-                </div>
-                <div className="text-center border-l border-emerald-500/10">
-                    <div className="text-xs text-emerald-400/70 uppercase tracking-wider mb-1">Posts</div>
-                    <div className="text-lg font-bold text-white break-all">
-                        {posts !== null ? posts.toLocaleString() : '-'}
-                    </div>
-                </div>
-            </div>
-        );
-    };
     const getInstagramUrl = React.useCallback((item: any) => {
         // [PRIORITY 1] Scraped Profile URL (HIGHEST PRIORITY - from dataset)
         if (item.profileUrl && item.profileUrl.startsWith('http')) return item.profileUrl;
@@ -556,87 +441,20 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
     }, [data.nodes]);
 
     // [NEW] Robust Overindexed Profiles Derivation
-    const derivedOverindexedProfiles = React.useMemo(() => {
-        // 1. Get nodes explicitly marked as 'overindexed' OR 'creator'/'brand' with high overindex scores
-        // The user specifically asked for an "Overindexed Profiles" panel.
-        // We look for nodes with group='overindexed' OR any node with 'overindexScore' data.
-        const relevantNodes = data.nodes.filter(n =>
-        (n.group === 'overindexed' ||
-            (n.data && typeof n.data.overindexScore === 'number' && n.data.overindexScore > 1))
-        );
+    const derivedOverindexedProfiles = useOverindexedProfiles(data);
 
-        // Filter out the main profile AND Unknown profiles to avoid circularity and invalid data
-        const filteredNodes = relevantNodes.filter(n => {
-            const label = (n.label || '').toLowerCase();
-            const username = (n.data?.username || '').toLowerCase();
-            const id = (n.id || '').toLowerCase();
-            // Exclude MAIN, main group, and any "unknown" profiles
-            return n.id !== 'MAIN' &&
-                n.group !== 'main' &&
-                label !== 'unknown' &&
-                username !== 'unknown' &&
-                id !== 'unknown';
-        });
-
-        return filteredNodes.map(node => {
-            // Find links targeting this node (Followers of this profile in our sample)
-            const incomingLinks = data.links.filter(l => {
-                const targetId = typeof l.target === 'object' ? (l.target as any).id : l.target;
-                return normalizeId(targetId) === normalizeId(node.id);
-            });
-
-            // Resolve source profiles (The members of our audience who follow this account)
-            const sources = incomingLinks.map(l => {
-                const sourceId = typeof l.source === 'object' ? (l.source as any).id : l.source;
-                // We only care about sources that represent our "Audience" (usually 'user' or 'profile' group depending on data model)
-                // But in this graph, usually 'main' -> 'cluster' -> 'profile' or similar. 
-                // Actually, for "Overindexed", the structure is usually Main -> Cluster -> Profile.
-                // Or Main -> Profile directly.
-                return data.nodes.find(n => normalizeId(n.id) === normalizeId(sourceId));
-            }).filter(n => n);
-
-            const evidence = sources.map(s => {
-                const handle = s?.label || 'Unknown';
-                const cleanHandle = handle.replace('@', '').trim();
-                return {
-                    type: 'social_graph',
-                    text: `Followed by ${handle}`,
-                    author: handle,
-                    date: 'Observed Connection', // [FIX] Required for ReasoningPanel to render header
-                    url: cleanHandle !== 'Unknown' ? `https://www.instagram.com/${cleanHandle}/` : '#'
-                };
-            });
-
-            return {
-                id: node.id,
-                username: node.label, // Label is usually the handle
-                fullName: node.data?.fullName,
-                profilePicUrl: node.data?.profilePicUrl || node.data?.profile_pic_url,
-                profileUrl: node.data?.profileUrl || node.data?.externalUrl || node.data?.sourceUrl || node.data?.url,
-                // [FIX] Ensure we pass raw score and fallback to value/val if needed
-                overindexScore: node.data?.overindexScore || node.data?.frequencyScore || node.val || node.value || (evidence.length > 0 ? evidence.length : 0),
-                // [CRITICAL] Sync count with node value if evidence is partial, otherwise use evidence length
-                count: Math.round(node.val || node.value || evidence.length || 0),
-                followersCount: node.data?.followerCount,
-                category: node.group,
-                provenance: {
-                    source: 'Graph Topology',
-                    method: 'Over-indexing Analysis',
-                    evidence: evidence,
-                    confidence: 1.0
-                }
-            };
-        }).sort((a, b) => (b.overindexScore || 0) - (a.overindexScore || 0));
-    }, [data.nodes, data.links]);
+    // [NEW] Intent Detection
+    const isOverIndexing = React.useMemo(() => {
+        const intent = (analytics as any).intent || '';
+        const query = (analytics.searchQuery || '').toLowerCase();
+        return intent === 'over_indexing' ||
+            intent === 'overindexing' ||
+            query.includes('overindex') ||
+            query.includes('over-index');
+    }, [analytics]);
 
     // [NEW] Dynamic Title for Creators Section
-    const creatorsTitle = React.useMemo(() => {
-        if (analytics.overindexing && (analytics.overindexing.topCreators?.length > 0 || derivedOverindexedProfiles.length > 0)) {
-            return "Over-indexed Profiles"; // [FIX] Kept as Over-indexed per user request semantics, but check user intent
-        }
-        if (analytics.creators && analytics.creators.length > 0) return "Popular Profiles";
-        return "Popular Profiles"; // [FIX] Renamed from "Rising Popularity"
-    }, [analytics.creators, analytics.overindexing, derivedOverindexedProfiles]);
+    const creatorsTitle = "Rising Popularity"; // Default for non-overindexing intent
 
     // [NEW] Fallback: Derive Creators/Brands from nodes if analytics missing
     const fallbackCreators = React.useMemo(() => {
@@ -1444,9 +1262,9 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                             )}
                                         </div>
                                     )}
-                                    <div className="flex-1 min-w-0">
+                                    <div className="flex-1 min-w-0 max-w-[calc(100%-10px)]">
                                         <div className="flex items-center justify-between">
-                                            <h3 className="text-lg font-bold text-white mb-1 break-words whitespace-normal leading-snug pr-3">
+                                            <h3 className="text-lg font-bold text-white mb-1 truncate pr-2" title={displayFullName}>
                                                 {displayFullName}
                                             </h3>
                                             {(selectedItem && ((selectedItem as any).provenance || (selectedItem as any).data?.provenance)) && (
@@ -1459,7 +1277,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                 </button>
                                             )}
                                         </div>
-                                        <p className="text-xs text-gray-300 leading-snug line-clamp-3 mb-2 font-light whitespace-normal break-words pr-3">
+                                        <p className="text-xs text-gray-300 leading-snug line-clamp-3 mb-2 font-light break-words pr-2">
                                             {displayProfile.biography || "No biography available."}
                                         </p>
 
@@ -1467,7 +1285,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                             href={getInstagramUrl(selectedItem || activeNode || {})}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="flex items-center gap-1.5 text-[10px] text-emerald-400 hover:text-emerald-300 hover:underline transition-colors mt-1 min-w-0"
+                                            className="flex items-center gap-1.5 text-[10px] text-emerald-400 hover:text-emerald-300 hover:underline transition-colors mt-1 min-w-0 max-w-full"
                                             title={getInstagramUrl(selectedItem || activeNode || {})}
                                         >
                                             <Instagram size={12} className="shrink-0" />
@@ -1491,7 +1309,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                                 href={displayProfile.externalUrl.startsWith('http') ? displayProfile.externalUrl : `https://${displayProfile.externalUrl}`}
                                                 target="_blank"
                                                 rel="noreferrer"
-                                                className="flex items-center gap-1.5 text-[10px] text-sky-400 hover:text-sky-300 hover:underline transition-colors mt-0.5"
+                                                className="flex items-center gap-1.5 text-[10px] text-sky-400 hover:text-sky-300 hover:underline transition-colors mt-0.5 max-w-full"
                                             >
                                                 <ExternalLink size={12} />
                                                 <span className="font-mono truncate max-w-[150px]">
@@ -1513,58 +1331,8 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                         </p>
                                     </div>
                                 ) : (
-                                    <div className="grid grid-cols-3 gap-2">
-                                        <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
-                                            <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Followers</span>
-                                            <span className="text-sm font-mono text-emerald-400">
-                                                {(() => {
-                                                    const val = displayProfile.followerCount;
-                                                    if (val === undefined || val === null) return ((selectedItem as any)?.size > 5 || (selectedItem as any)?.frequency > 10) ? 'High' : '-';
-                                                    if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
-                                                    const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
-                                                    if (isNaN(num)) return '-';
-                                                    // [FIX] Round to whole numbers
-                                                    const rounded = Math.round(num);
-                                                    if (rounded >= 1000000) return (rounded / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-                                                    if (rounded >= 1000) return (rounded / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-                                                    return rounded.toLocaleString();
-                                                })()}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
-                                            <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Following</span>
-                                            <span className="text-sm font-mono text-emerald-400">
-                                                {(() => {
-                                                    const val = displayProfile.followingCount;
-                                                    if (val === undefined || val === null) return '-';
-                                                    if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
-                                                    const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
-                                                    if (isNaN(num)) return '-';
-                                                    // [FIX] Round to whole numbers
-                                                    const rounded = Math.round(num);
-                                                    if (rounded >= 1000000) return (rounded / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-                                                    if (rounded >= 1000) return (rounded / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-                                                    return rounded.toLocaleString();
-                                                })()}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
-                                            <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Posts</span>
-                                            <span className="text-sm font-mono text-emerald-400">
-                                                {(() => {
-                                                    const val = displayProfile.postCount;
-                                                    if (val === undefined || val === null) return '-';
-                                                    if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
-                                                    const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
-                                                    if (isNaN(num)) return '-';
-                                                    // [FIX] Round to whole numbers
-                                                    const rounded = Math.round(num);
-                                                    if (rounded >= 1000000) return (rounded / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-                                                    if (rounded >= 1000) return (rounded / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-                                                    return rounded.toLocaleString();
-                                                })()}
-                                            </span>
-                                        </div>
+                                    <div className="mb-4">
+                                        <EnrichedStats node={{ data: displayProfile }} />
                                     </div>
                                 )}
                             </div>
@@ -1580,64 +1348,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                             isOpen={expandedSection === 'media'}
                             onToggle={() => toggleSection('media')}
                         >
-                            {(() => {
-                                // [FIX] Include latestPosts from enriched node data
-                                const evidence = getEvidence(selectedItem);
-                                const evidenceMedia = evidence.filter((e: any) => e.displayUrl || e.videoUrl || e.children);
-
-                                // Get latestPosts from node data (enriched profile data)
-                                const nodeData = (selectedItem as any)?.data || selectedItem;
-                                const latestPosts = nodeData?.latestPosts || [];
-
-                                // Combine both sources
-                                const allMedia = [
-                                    ...evidenceMedia,
-                                    // [FIX] Removed redundant latestPosts mapping as getEvidence() already includes them
-                                    // and the double mapping caused duplicates that resisted filtering
-                                ];
-
-                                // [DEDUPLICATION] Filter out duplicates based on URL or ID
-                                const uniqueMedia = allMedia.filter((item, index, self) =>
-                                    index === self.findIndex((t) => (
-                                        (t.url && item.url && t.url === item.url) ||
-                                        (t.displayUrl && item.displayUrl && t.displayUrl === item.displayUrl) ||
-                                        (t.videoUrl && item.videoUrl && t.videoUrl === item.videoUrl)
-                                    ))
-                                );
-
-                                if (uniqueMedia.length === 0) {
-                                    return <div className="text-xs text-gray-500 italic p-2">No media content found.</div>;
-                                }
-
-                                return (
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {uniqueMedia.map((item: any, idx: number) => (
-                                            <a
-                                                key={idx}
-                                                href={item.url}
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                className="relative aspect-square rounded-lg overflow-hidden bg-black/20 group block cursor-pointer transition-transform hover:scale-[1.02]"
-                                            >
-                                                <MediaPreview
-                                                    post={{
-                                                        type: item.postType || (item.videoUrl ? 'Video' : 'Image'),
-                                                        url: item.url,
-                                                        displayUrl: item.displayUrl,
-                                                        videoUrl: item.videoUrl,
-                                                        children: item.children
-                                                    }}
-                                                    className="w-full h-full"
-                                                />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2 opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
-                                                    <div className="text-[9px] text-white font-bold truncate">{item.author || 'Unknown'}</div>
-                                                    <div className="text-[8px] text-gray-300 line-clamp-2">{item.text}</div>
-                                                </div>
-                                            </a>
-                                        ))}
-                                    </div>
-                                );
-                            })()}
+                            <MediaGallery items={getEvidence(selectedItem)} />
                         </AccordionItem>
                     )}
 
@@ -1739,7 +1450,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                 {derivedTopics.slice(0, 20).map((topic: any, idx: number) => (
                                     <div
                                         key={idx}
-                                        onClick={() => onSelect(topic.id || topic.name)}
+                                        onClick={() => handleShowReasoning(topic, 'Topic Analysis')}
                                         className="p-2 rounded hover:bg-white/5 cursor-pointer group flex items-start justify-between"
                                     >
                                         <div className="flex-1 min-w-0 mr-2">
@@ -1788,7 +1499,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                 {analytics.subtopics.slice(0, 20).map((sub: any, idx: number) => (
                                     <div
                                         key={idx}
-                                        onClick={() => onSelect(sub.id || sub.name)}
+                                        onClick={() => handleShowReasoning(sub, 'Subculture Analysis')}
                                         className="p-2 rounded hover:bg-white/5 cursor-pointer group flex items-center justify-between"
                                     >
                                         <div className="flex items-center gap-2">
@@ -1938,9 +1649,9 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                         )
                     }
 
-                    {/* 2. Top Creators (Enriched) */}
+                    {/* 2. Top Creators (Rising Popularity) - Show ONLY if intent is NOT over-indexing */}
                     {
-                        fallbackCreators.length > 0 && (
+                        !isOverIndexing && fallbackCreators.length > 0 && (
                             <AccordionItem
                                 title={creatorsTitle}
                                 icon={Users}
@@ -2129,11 +1840,9 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                         )
                     }
 
-                    {/* 3.5. Over-indexed Accounts (derived) - CONDITIONALLY SHOWN based on intent */}
+                    {/* 3.5. Over-indexed Accounts - Show ONLY if intent IS over-indexing */}
                     {
-                        derivedOverindexedProfiles.length > 0 &&
-                        // [FIX] Conditionally show ONLY if over-indexing data is present in analytics structure
-                        (analytics.overindexing) && (
+                        isOverIndexing && derivedOverindexedProfiles.length > 0 && (
                             <AccordionItem
                                 title={`Over-indexed Profiles (${derivedOverindexedProfiles.length})`}
                                 icon={TrendingUp}
@@ -2146,7 +1855,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                         <div
                                             key={idx}
                                             style={{ animationDelay: `${idx * 30}ms` }}
-                                            onClick={() => onSelect(account.id)}
+                                            onClick={() => handleShowReasoning(account, 'Rising Popularity')}
                                             className="flex items-center justify-between p-2 rounded hover:bg-white/5 cursor-pointer group animate-fade-in-up"
                                         >
                                             <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -2225,7 +1934,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                             <div
                                                 key={idx}
                                                 style={{ animationDelay: `${idx * 30}ms` }}
-                                                onClick={() => onSelect(subtopic.id)}
+                                                onClick={() => handleShowReasoning(subtopic, 'Subculture Analysis')}
                                                 className="flex items-center justify-between p-2 rounded hover:bg-white/5 cursor-pointer group animate-fade-in-up"
                                             >
                                                 <div className="flex items-center gap-2 flex-1 min-w-0">

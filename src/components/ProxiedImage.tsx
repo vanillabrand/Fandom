@@ -24,9 +24,9 @@ export const ProxiedImage: React.FC<ProxiedImageProps> = ({ src, alt, className,
     const [retryWithOriginal, setRetryWithOriginal] = useState(false);
 
     useEffect(() => {
-        setRetryWithOriginal(false); // Reset on new src
         if (!src) {
             setImgSrc(undefined);
+            setRetryWithOriginal(false);
             return;
         }
 
@@ -37,6 +37,12 @@ export const ProxiedImage: React.FC<ProxiedImageProps> = ({ src, alt, className,
             return;
         }
 
+        // Reset retry state ONLY if the src generic prop has changed compared to previous run
+        // We can't easily detect "prevProps" in useEffect without a ref, but we can rely on
+        // this effect running.
+        // ACTUALLY: The loop happens because we call setRetryWithOriginal(false) unconditionally.
+        // We should check if we are currently retrying.
+
         // Check if we need to proxy
         const shouldProxy = DOMAINS_TO_PROXY.some(d => src.includes(d));
 
@@ -46,11 +52,18 @@ export const ProxiedImage: React.FC<ProxiedImageProps> = ({ src, alt, className,
             const tokenParam = token ? `&token=${token}` : '';
             setImgSrc(`/api/proxy-image?url=${encodeURIComponent(src)}${tokenParam}`);
         } else {
-            console.log(retryWithOriginal && shouldProxy ? '[ProxiedImage] Proxy failed, falling back to direct URL' : '[ProxiedImage] Loading direct URL');
+            if (retryWithOriginal && shouldProxy) {
+                console.log('[ProxiedImage] Proxy failed, falling back to direct URL');
+            }
             setImgSrc(src);
         }
         setError(false);
     }, [src, token, retryWithOriginal]);
+
+    // [FIX] Reset retry state when src prop changes
+    useEffect(() => {
+        setRetryWithOriginal(false);
+    }, [src]);
 
     if (!src || error) {
         return <>{fallback || <div className={`flex items-center justify-center bg-white/5 ${className}`}><User className="text-white/20" /></div>}</>;

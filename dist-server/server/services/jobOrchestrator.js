@@ -14,6 +14,9 @@ import { costCalculator } from './costCalculator.js';
 import { generateScrapeFingerprint, extractMetadataFromPayload, calculateTTL, isFingerprintFresh } from '../utils/scrapeFingerprintUtil.js';
 import * as queryAccuracyService from '../../services/queryAccuracyService.js';
 import { safeParseJson } from '../../utils/jsonUtils.js';
+import { MetricNormalizationService } from './normalization/MetricNormalizationService.js';
+import { ProfileNormalizationService } from './normalization/ProfileNormalizationService.js';
+import { EnrichmentService } from './enrichment/EnrichmentService.js';
 // --- CONFIGURATION CONSTANTS ---
 // Batch Processing
 const ENRICHMENT_BATCH_SIZE_SMALL = 100; // For datasets < 200 nodes
@@ -63,224 +66,31 @@ export class JobOrchestrator {
      * [NEW] Safe Metric Parser
      * Handles numbers, strings with commas (e.g. "1,234"), and nulls.
      */
+    /**
+     * [DEPRECATED] Use MetricNormalizationService.parse instead
+     */
     parseMetric(val) {
-        if (val === null || val === undefined)
-            return null;
-        if (typeof val === 'number')
-            return val;
-        if (typeof val === 'string') {
-            // [ROBUST] Handle common social media formats: "1.3M", "10k", "1,234"
-            const sanitized = val.toLowerCase().replace(/,/g, '').replace(/\s/g, '').trim();
-            if (!sanitized)
-                return null;
-            let multiplier = 1;
-            if (sanitized.endsWith('m'))
-                multiplier = 1000000;
-            else if (sanitized.endsWith('k'))
-                multiplier = 1000;
-            const numericPart = sanitized.replace(/[mk]$/, '');
-            const parsed = parseFloat(numericPart);
-            return isNaN(parsed) ? null : Math.round(parsed * multiplier);
-        }
-        return null;
+        return MetricNormalizationService.parse(val);
     }
     /**
      * UNIFIED METRIC EXTRACTOR
      * Safely probes an object for various common metric aliases using null-coalescing.
      */
+    /**
+     * [DEPRECATED] Use MetricNormalizationService.extract instead
+     */
     extractMetric(obj, type) {
-        if (!obj)
-            return null;
-        const aliases = {
-            followers: [
-                // Priority 1: Nested RICH data (Search/Discovery source) - Most Reliable
-                obj.data?.followersCount, obj.data?.followerCount, obj.data?.followers_count, obj.data?.follower_count, obj.data?.followers,
-                // Priority 2: Top-level specific count fields
-                obj.followersCount, obj.followerCount, obj.followers_count, obj.follower_count,
-                // Priority 3: API specific objects
-                obj.edge_followed_by?.count, obj.edgeFollowedBy?.count,
-                obj.metaData?.followersCount, obj.metaData?.followerCount,
-                obj.owner?.followersCount, obj.owner?.followerCount, obj.owner?.followers_count, obj.owner?.follower_count,
-                obj.owner?.edge_followed_by?.count,
-                // Priority 4: Top-level general fields (often have false 0s in stubs)
-                obj.followers
-            ],
-            following: [
-                // Priority 1: Nested RICH data
-                obj.data?.followsCount, obj.data?.followingCount, obj.data?.following_count, obj.data?.follows_count, obj.data?.following, obj.data?.follows,
-                // Priority 2: Top-level specific count fields
-                obj.followsCount, obj.followingCount, obj.following_count, obj.follows_count,
-                // Priority 3: API specific objects
-                obj.edge_follow?.count, obj.edgeFollow?.count,
-                obj.metaData?.followingCount, obj.metaData?.followsCount,
-                obj.owner?.followingCount, obj.owner?.followsCount, obj.owner?.following_count, obj.owner?.follows_count,
-                obj.owner?.edge_follow?.count,
-                // Priority 4: Top-level general fields
-                obj.follows, obj.following
-            ],
-            posts: [
-                // Priority 1: Nested RICH data
-                obj.data?.postsCount, obj.data?.mediaCount, obj.data?.postCount, obj.data?.posts_count, obj.data?.media_count, obj.data?.posts,
-                // Priority 2: Top-level specific count fields
-                obj.postsCount, obj.mediaCount, obj.postCount, obj.posts_count, obj.media_count,
-                // Priority 3: API specific objects
-                obj.edge_owner_to_timeline_media?.count, obj.edgeOwnerToTimelineMedia?.count,
-                obj.metaData?.postsCount, obj.metaData?.mediaCount, obj.metaData?.postCount, obj.metaData?.posts_count,
-                obj.owner?.postsCount, obj.owner?.mediaCount, obj.owner?.postCount, obj.owner?.posts_count, obj.owner?.media_count,
-                obj.owner?.edge_owner_to_timeline_media?.count,
-                // Priority 4: Top-level general fields
-                obj.posts
-            ]
-        };
-        const candidates = aliases[type] || [];
-        let firstZero = null;
-        for (const val of candidates) {
-            if (val !== undefined && val !== null) {
-                const parsed = this.parseMetric(val);
-                if (parsed !== null) {
-                    if (parsed > 0)
-                        return parsed; // [PRIORITY] Found a real count!
-                    // [FIX] Only accept 0 if it comes from a tailored field, not a generic one like 'posts' which might be a stub
-                    // We only "remember" the zero if it seems credible (e.g. from an API object)
-                    if (firstZero === null)
-                        firstZero = 0;
-                }
-            }
-        }
-        // [STRICT] If we only found 0s, return null to force re-enrichment ONLY if the field was likely a stub
-        // But for now, returning 0 is safer than null if we genuinely think it's 0. 
-        // Logic: specific fields (followersCount) = 0 is likely real. Generic (followers) = 0 might be stub.
-        return firstZero;
+        return MetricNormalizationService.extract(obj, type);
     }
     /**
      * NORMALIZATION HELPER
      * Maps disparate scraper outputs to a unified StandardizedProfile
      */
+    /**
+     * [DEPRECATED] Use ProfileNormalizationService.normalize instead
+     */
     normalizeToStandardProfile(record) {
-        // DEFAULT: Empty Profile
-        const standard = {
-            id: '',
-            username: '',
-            fullName: null,
-            biography: null,
-            profilePicUrl: null,
-            externalUrl: null,
-            followersCount: null,
-            followsCount: null,
-            isPrivate: null,
-            isVerified: null,
-            isBusinessAccount: null,
-            postsCount: null,
-            engagementRate: null,
-            latestPosts: [],
-            relatedProfiles: [] // [NEW] Initialize
-        };
-        try {
-            // DETECT SOURCE SCHEMA
-            // 1. Instagram API Scraper - Post/Details Mode (Rich 'metaData' Object)
-            if (record.metaData) {
-                const meta = record.metaData;
-                standard.id = meta.id || record.ownerId || '';
-                standard.username = meta.username || record.ownerUsername || '';
-                standard.fullName = meta.fullName;
-                standard.biography = meta.biography;
-                standard.profilePicUrl = meta.profilePicUrl;
-                // [ROBUST] Extract Metrics using Unified Helper
-                standard.followersCount = this.extractMetric(meta, 'followers') || this.extractMetric(record, 'followers');
-                standard.followsCount = this.extractMetric(meta, 'following') || this.extractMetric(record, 'following');
-                standard.postsCount = this.extractMetric(meta, 'posts') || this.extractMetric(record, 'posts');
-                standard.isPrivate = meta.isPrivate;
-                standard.isVerified = meta.isVerified;
-                standard.isBusinessAccount = meta.isBusinessAccount;
-                standard.externalUrl = meta.externalUrl || meta.url;
-                // ...
-            }
-            // 2. Instagram Profile Scraper (Deep Dive - 'owner' object or flat)
-            else if (record.edge_followed_by || record.biography !== undefined || record.bio !== undefined || record.followerCount !== undefined || record.followersCount !== undefined || record.followers_count !== undefined) {
-                standard.id = record.id || record.pk || record.ownerId || record.userId;
-                standard.username = record.username || record.ownerUsername || record.handle;
-                standard.fullName = record.full_name || record.fullName || record.name;
-                standard.biography = record.biography || record.bio || record.description;
-                standard.profilePicUrl = record.profile_pic_url_hd || record.profile_pic_url || record.profilePicUrl || record.profilePic;
-                // [ROBUST] Use unified extractor to catch all aliases
-                standard.followersCount = this.extractMetric(record, 'followers');
-                standard.followsCount = this.extractMetric(record, 'following');
-                standard.postsCount = this.extractMetric(record, 'posts');
-                standard.isPrivate = record.is_private || record.isPrivate || record.private;
-                standard.isVerified = record.is_verified || record.isVerified || record.verified;
-                standard.isBusinessAccount = record.is_business_account || record.isBusinessAccount;
-                standard.externalUrl = record.external_url || record.externalUrl || record.url;
-            }
-            // 4. Instagram Network Scraper (Followers/Following - Minimal)
-            else if ((record.username) && (record.followed_by_viewer !== undefined || record.requested_by_viewer !== undefined)) {
-                standard.id = record.id ? String(record.id) : '';
-                standard.username = record.username;
-                standard.fullName = record.full_name;
-                standard.profilePicUrl = record.profile_pic_url;
-                standard.isPrivate = record.is_private;
-                standard.isVerified = record.is_verified;
-                // Use extractMetric to catch all aliases and avoid hardcoded 0 fallbacks
-                standard.followersCount = this.extractMetric(record, 'followers');
-                standard.followsCount = this.extractMetric(record, 'following');
-                standard.postsCount = this.extractMetric(record, 'posts');
-            }
-            // 5. Instagram Hashtag Scraper / Post Scraper (Post-centric - 'ownerUsername' or 'ownerId')
-            else if (record.ownerUsername || record.ownerId) {
-                standard.id = record.ownerId || '';
-                standard.username = record.ownerUsername || '';
-                standard.fullName = record.ownerFullName || null;
-                standard.profilePicUrl = record.ownerProfilePicUrl || null;
-                // For hashtag posts, we map the post itself into latestPosts
-                standard.latestPosts = [{
-                        id: record.id,
-                        caption: record.caption || '',
-                        url: record.url || (record.shortCode ? `https://www.instagram.com/p/${record.shortCode}/` : ''),
-                        displayUrl: record.displayUrl || record.videoUrl || record.url,
-                        timestamp: record.timestamp,
-                        likesCount: record.likesCount || 0,
-                        commentsCount: record.commentsCount || 0,
-                        type: record.type === 'Video' ? 'Video' : (record.type === 'Sidecar' ? 'Sidecar' : 'Image'),
-                        videoUrl: record.videoUrl,
-                        videoViewCount: record.videoViewCount
-                    }];
-            }
-            // Fallback (Generic mapping for miscellaneous scraper formats)
-            else {
-                standard.id = record.id || record.pk || record.userId || record.ownerId || record.data?.id || record.data?.pk || '';
-                standard.username = (record.username || record.ownerUsername || record.handle || record.data?.username || record.data?.handle || '').toLowerCase().replace('@', '');
-                standard.fullName = record.fullName || record.full_name || record.name || record.data?.fullName || record.data?.full_name || record.data?.name || standard.fullName;
-                standard.followersCount = this.extractMetric(record, 'followers');
-                standard.followsCount = this.extractMetric(record, 'following');
-                standard.postsCount = this.extractMetric(record, 'posts');
-                const rawBio = record.biography || record.bio || record.description || record.data?.biography || record.data?.bio || record.data?.description;
-                standard.biography = (rawBio && !/Bio unavailable|No bio/i.test(rawBio)) ? rawBio : standard.biography;
-                standard.profilePicUrl = record.profilePicUrl || record.profile_pic_url || record.profilePic || record.data?.profilePicUrl || record.data?.profile_pic_url || record.data?.profilePic || standard.profilePicUrl;
-                standard.isBusinessAccount = record.isBusinessAccount || record.is_business_account || record.data?.isBusinessAccount || record.data?.is_business_account || null;
-                standard.isVerified = record.isVerified || record.is_verified || record.verified || record.data?.isVerified || record.data?.is_verified || record.data?.verified || null;
-                // [NEW] Capture related profiles from raw record if present
-                if (record.relatedProfiles && Array.isArray(record.relatedProfiles)) {
-                    standard.relatedProfiles = record.relatedProfiles;
-                }
-            }
-        }
-        catch (e) {
-            console.warn(`[JobOrchestrator] Normalization failed for record: ${e}`);
-        }
-        // [STRICT] Integrity Check
-        // [FIX] Relax private profile skip: We still want metrics if they were scraped
-        if (standard.isPrivate === true && !standard.followersCount) {
-            console.warn(`[JobOrchestrator] Skipping private profile without data: ${standard.username}`);
-            return null;
-        }
-        // [FIX] Fallback ID to username if missing
-        if (!standard.id || standard.id === '') {
-            standard.id = standard.username;
-        }
-        if (!standard.id || standard.id === '') {
-            console.warn(`[JobOrchestrator] Skipping profile without ID or Username: ${JSON.stringify(record).substring(0, 100)}...`);
-            return null;
-        }
-        return standard;
+        return ProfileNormalizationService.normalize(record);
     }
     /**
      * ENRICHMENT HELPER (Traverse & Hydrate)
@@ -433,51 +243,16 @@ export class JobOrchestrator {
                     if (profile) {
                         hydrationCount++;
                         // [CRITICAL FIX] Preserve existing AI Evidence/Provenance
-                        const existingEvidence = node.data?.evidence || node.evidence;
-                        const existingProvenance = node.data?.provenance || node.provenance;
-                        const existingCitation = node.data?.citation || node.citation;
+                        // EnrichmentService handles this internally now.
                         // [UNIFIED] Use central hydration helper
-                        const hydrated = this.hydrateNodeData(profile, node.group || 'creator', existingEvidence);
-                        // [NEW] Sync top-level properties from hydrated result to ensure UI consistency
-                        node.label = hydrated.label || node.label;
-                        node.val = Math.max(node.val || 10, hydrated.val || 10); // Don't shrink nodes, only grow
-                        node.profilePic = hydrated.profilePic || node.profilePic;
-                        // Merge data while preserving mission-critical AI-generated fields if they aren't in 'hydrated'
-                        node.data = {
-                            ...node.data,
-                            ...hydrated.data,
-                            // Ensure these are present
-                            id: profile.id || node.data?.id || node.id,
-                            username: profile.username || node.data?.username || node.username,
-                            handle: profile.username ? `@${profile.username.replace('@', '')}` : (node.data?.handle || node.handle),
-                            evidence: existingEvidence || hydrated.data.evidence,
-                            provenance: existingProvenance || hydrated.data.provenance,
-                            citation: existingCitation || hydrated.data.citation
-                        };
-                        // Update top-level visual properties
-                        node.label = hydrated.label;
-                        node.profilePic = hydrated.profilePic;
-                        node.color = hydrated.color;
-                        // [NEW] 8. FLAT SYNC: For items in sub-lists (Creators/Brands/etc.), 
-                        // the UI often expects metrics at the top level of the object.
-                        const flatSyncFields = [
-                            'followers', 'followerCount', 'followersCount',
-                            'following', 'followingCount', 'followsCount',
-                            'posts', 'postCount', 'postsCount',
-                            'engagementRate', 'avgLikes', 'avgComments',
-                            'bio', 'biography', 'profilePicUrl', 'url', 'id', 'username',
-                            'fullName', 'isBusinessAccount', 'isVerified'
-                        ];
-                        flatSyncFields.forEach(field => {
-                            if (hydrated.data[field] !== undefined) {
-                                node[field] = hydrated.data[field];
-                            }
-                        });
+                        EnrichmentService.enrichNode(node, profile);
                     }
                     else {
                         // Sanitize Hallucinated URLs for un-hydrated nodes
                         if (node.data && node.data.profilePicUrl) {
-                            node.data.profilePicUrl = this.sanitizeUrl(node.data.profilePicUrl);
+                            if (node.data.profilePicUrl.includes('fxxx.fbcdn') || node.data.profilePicUrl.includes('instagram.fxxx')) {
+                                node.data.profilePicUrl = '';
+                            }
                         }
                     }
                 }
@@ -889,91 +664,9 @@ export class JobOrchestrator {
     enrichFandomAnalysis(analytics, profileMap) {
         if (!analytics || !analytics.root)
             return analytics;
-        console.log(`[Enrichment] Hydrating Graph Nodes with Scraped Data...`);
-        let hydrationCount = 0;
-        const traverseAndHydrate = (node) => {
-            if (!node)
-                return;
-            // Attempt to find matching profile
-            // [FIX] Enhanced matching with more candidates and normalization
-            const rawCandidates = [
-                node.id,
-                node.data?.handle,
-                node.data?.username,
-                node.label,
-                node.name,
-                node.handle
-            ].filter(k => k && typeof k === 'string');
-            // Match Logic
-            const candidates = rawCandidates.map(k => k.toLowerCase().replace('@', '').trim());
-            let profile;
-            // 1. Try Local Map (Current Scrape)
-            for (const key of candidates) {
-                profile = profileMap.get(key);
-                if (profile)
-                    break;
-            }
-            // 2. [NEW] Global Lookup (Ghost Node Hydration)
-            // If not found in current scrape, check global DB to fill gaps ("Ghost Nodes")
-            if (!profile && candidates.length > 0) {
-                const bestHandle = candidates.find(c => !c.includes(' ')); // Prefer handle over name
-                if (bestHandle) {
-                    // Sync lookup is not possible here as traverse is synchronous.
-                    // We must rely on the fact that 'findGlobalProfile' is async.
-                    // CRITICAL: This method (enrichFandomAnalysis) needs to be async or we need to pre-fetch ghost nodes.
-                    // DESIGN CHANGE: We cannot await inside this sync traversal easily. 
-                    // instead, we will just fix the URL sanitization here and handle global lookup earlier if possible.
-                    // OR, we make this function async? Refactoring to async is risky for the whole chain.
-                    // ALT: We just skip bad URLs.
-                }
-            }
-            // [FIX] Sanitization Helper
-            const sanitizeUrl = (url) => {
-                if (!url || url.includes('fxxx.fbcdn') || url.includes('instagram.fxxx'))
-                    return '';
-                return url;
-            };
-            // Hydrate if found
-            if (profile) {
-                hydrationCount++;
-                if (!node.data)
-                    node.data = {};
-                node.data.fullName = profile.fullName || node.data.fullName || node.label;
-                node.data.profilePicUrl = proxyMediaUrl(profile.profilePicUrl || node.data.profilePicUrl || '');
-                node.data.bio = profile.biography || node.data.bio || '';
-                node.data.followers = (profile.followersCount ?? node.data.followerCount ?? 0).toLocaleString();
-                node.data.followerCount = profile.followersCount ?? node.data.followerCount ?? 0;
-                node.data.followingCount = profile.followsCount ?? node.data.followingCount ?? 0;
-                node.data.postCount = profile.postsCount ?? profile.mediaCount ?? (profile.latestPosts ? profile.latestPosts.length : 0);
-                node.data.sourceUrl = profile.externalUrl || `https://instagram.com/${profile.username}`;
-                // [FIX] Ensure we trigger the "Verified" badge in UI
-                node.data.isVerified = true;
-                // Attach Latest Posts (Images/Videos)
-                if (profile.latestPosts && profile.latestPosts.length > 0) {
-                    node.data.latestPosts = profile.latestPosts.map(post => ({
-                        url: post.url,
-                        type: post.type,
-                        caption: post.caption,
-                        imageUrl: proxyMediaUrl(post.displayUrl || post.url),
-                        videoUrl: proxyMediaUrl(post.videoUrl),
-                        date: post.timestamp
-                    }));
-                }
-            }
-            else {
-                // [NEW] Sanitize Hallucinated URLs for un-hydrated nodes
-                if (node.data && node.data.profilePicUrl) {
-                    node.data.profilePicUrl = sanitizeUrl(node.data.profilePicUrl);
-                }
-            }
-            // Recurse
-            if (node.children && Array.isArray(node.children)) {
-                node.children.forEach(traverseAndHydrate);
-            }
-        };
-        // Start from Root
-        traverseAndHydrate(analytics.root);
-        console.log(`[Enrichment] Hydrated ${hydrationCount} nodes.`);
+        console.log(`[JobOrchestrator] Hydrating Graph Nodes with Scraped Data...`);
+        const hydrationCount = EnrichmentService.enrichGraph(analytics, profileMap);
+        console.log(`[JobOrchestrator] Hydrated ${hydrationCount} nodes.`);
         return analytics;
     }
     async startPolling(intervalMs = 10000) {

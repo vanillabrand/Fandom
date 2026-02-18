@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Users, UserCheck, Link, Mail, Heart, MessageCircle, Instagram, ShoppingBag, Hash, Zap, Star, MapPin, AtSign, Sparkles, BrainCircuit, Loader2, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProxiedImage } from '../ProxiedImage.js';
+import { formatNumber } from '../../utils/analytics/generalUtils.js';
 
 interface ProfileMetricsPanelProps {
     data: any; // The enriched profile object
@@ -29,12 +30,8 @@ export const ProfileMetricsPanel: React.FC<ProfileMetricsPanelProps> = ({ data, 
     if (!data) return null;
 
     // Helper to format large numbers
-    const formatNumber = (num: number) => {
-        if (!num) return '0';
-        if (num > 1000000) return (num / 1000000).toFixed(1) + 'M';
-        if (num > 1000) return (num / 1000).toFixed(1) + 'k';
-        return num.toLocaleString();
-    };
+    // [REFACTORED] Use shared utility
+    // const formatNumber = (num: number) => { ... }
 
     // Extract fields
     let rawIdentifier = data.username || data.ownerUsername || data.label || 'Unknown';
