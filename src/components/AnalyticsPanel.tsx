@@ -63,13 +63,23 @@ const normalizeId = (rawId: any): string => {
         .replace(/[^a-z0-9_-]/g, '');
 };
 
-const profileGroups = ['main', 'creator', 'brand', 'profile', 'user', 'overindexed', 'topic', 'subtopic', 'hashtag', 'concept'];
+const profileGroups = ['main', 'creator', 'brand', 'profile', 'user', 'overindexed']; // [FIX] Exclude structural nodes (topic, subtopic, etc.) so they use Topic/Cluster header layout
 
 const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, onSelect, isOpen, onToggle }) => {
     // [CRITICAL FIX] Stabilize data references to prevent infinite render loops
     // The `data` prop may get a new reference on every parent render, causing all
     // useMemo hooks below to recompute infinitely and crash the browser
-    const stableNodes = useMemo(() => data.nodes || [], [data.nodes?.length, data.nodes?.[0]?.id]);
+    // [FIX] Filter out "Unknown" profiles before rendering
+    const stableNodes = useMemo(() => {
+        const nodes = data.nodes || [];
+        return nodes.filter(node => {
+            const label = (node.label || '').toLowerCase();
+            const username = ((node as any).username || '').toLowerCase();
+            const id = (node.id || '').toLowerCase();
+            // Exclude nodes with "unknown" as label, username, or id
+            return label !== 'unknown' && username !== 'unknown' && id !== 'unknown';
+        });
+    }, [data.nodes?.length, data.nodes?.[0]?.id]);
     const stableLinks = useMemo(() => data.links || [], [data.links?.length, data.links?.[0]?.source]);
 
     // Ensure analytics exists with fallbacks
@@ -555,8 +565,18 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
             (n.data && typeof n.data.overindexScore === 'number' && n.data.overindexScore > 1))
         );
 
-        // Filter out the main profile to avoid circularity if it happens to be tagged
-        const filteredNodes = relevantNodes.filter(n => n.id !== 'MAIN' && n.group !== 'main');
+        // Filter out the main profile AND Unknown profiles to avoid circularity and invalid data
+        const filteredNodes = relevantNodes.filter(n => {
+            const label = (n.label || '').toLowerCase();
+            const username = (n.data?.username || '').toLowerCase();
+            const id = (n.id || '').toLowerCase();
+            // Exclude MAIN, main group, and any "unknown" profiles
+            return n.id !== 'MAIN' &&
+                n.group !== 'main' &&
+                label !== 'unknown' &&
+                username !== 'unknown' &&
+                id !== 'unknown';
+        });
 
         return filteredNodes.map(node => {
             // Find links targeting this node (Followers of this profile in our sample)
@@ -582,6 +602,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                     type: 'social_graph',
                     text: `Followed by ${handle}`,
                     author: handle,
+                    date: 'Observed Connection', // [FIX] Required for ReasoningPanel to render header
                     url: cleanHandle !== 'Unknown' ? `https://www.instagram.com/${cleanHandle}/` : '#'
                 };
             });
@@ -592,9 +613,10 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                 fullName: node.data?.fullName,
                 profilePicUrl: node.data?.profilePicUrl || node.data?.profile_pic_url,
                 profileUrl: node.data?.profileUrl || node.data?.externalUrl || node.data?.sourceUrl || node.data?.url,
-                // [FIX] Ensure we pass raw score for UI "3x" display
-                overindexScore: node.data?.overindexScore || node.data?.frequencyScore || 0,
-                count: incomingLinks.length || node.val || 0, // "count of the number of times THE PROFILE appears"
+                // [FIX] Ensure we pass raw score and fallback to value/val if needed
+                overindexScore: node.data?.overindexScore || node.data?.frequencyScore || node.val || node.value || (evidence.length > 0 ? evidence.length : 0),
+                // [CRITICAL] Sync count with node value if evidence is partial, otherwise use evidence length
+                count: Math.round(node.val || node.value || evidence.length || 0),
                 followersCount: node.data?.followerCount,
                 category: node.group,
                 provenance: {
@@ -604,17 +626,16 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                     confidence: 1.0
                 }
             };
-        }).sort((a, b) => (b.count || 0) - (a.count || 0));
+        }).sort((a, b) => (b.overindexScore || 0) - (a.overindexScore || 0));
     }, [data.nodes, data.links]);
 
     // [NEW] Dynamic Title for Creators Section
     const creatorsTitle = React.useMemo(() => {
-        // [FIX] Prioritize 'Overindexed Profiles' if that intent data exists
         if (analytics.overindexing && (analytics.overindexing.topCreators?.length > 0 || derivedOverindexedProfiles.length > 0)) {
-            return "Overindexed Profiles";
+            return "Over-indexed Profiles"; // [FIX] Kept as Over-indexed per user request semantics, but check user intent
         }
-        if (analytics.creators && analytics.creators.length > 0) return "Rising Popularity";
-        return "Rising Popularity"; // Default/Fallback
+        if (analytics.creators && analytics.creators.length > 0) return "Popular Profiles";
+        return "Popular Profiles"; // [FIX] Renamed from "Rising Popularity"
     }, [analytics.creators, analytics.overindexing, derivedOverindexedProfiles]);
 
     // [NEW] Fallback: Derive Creators/Brands from nodes if analytics missing
@@ -622,16 +643,22 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         let creators: any[] = [];
 
         if (analytics.creators && analytics.creators.length > 0) {
-            // [SORTING] Sort by overindexScore or affinity if available
-            creators = [...analytics.creators].sort((a, b) => {
+            // [SORTING] Sort by overindexScore or affinity if available, and sanitize frequency
+            creators = analytics.creators.map((c: any) => ({
+                ...c,
+                frequency: Math.round(c.frequency || c.rawCount || c.count || 0)
+            })).sort((a: any, b: any) => {
                 const scoreA = (a.overindexScore || a.affinity || a.affinityPercent || 0);
                 const scoreB = (b.overindexScore || b.affinity || b.affinityPercent || 0);
                 if (scoreA !== scoreB) return scoreB - scoreA;
                 return (b.frequency || b.val || 0) - (a.frequency || a.val || 0);
             });
         } else if (analytics.overindexing && analytics.overindexing.topCreators && analytics.overindexing.topCreators.length > 0) {
-            // Sort by overindexScore if available
-            creators = [...analytics.overindexing.topCreators].sort((a, b) => {
+            // Sort by overindexScore if available, and sanitize frequency
+            creators = analytics.overindexing.topCreators.map((c: any) => ({
+                ...c,
+                frequency: Math.round(c.frequency || c.rawCount || c.val || 0)
+            })).sort((a: any, b: any) => {
                 // [NEW] Prioritize Affinity Percent
                 const affA = parseFloat(a.affinityPercent || '0');
                 const affB = parseFloat(b.affinityPercent || '0');
@@ -649,7 +676,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                 .filter(n => n.id !== 'MAIN' && n.group !== 'main')
                 .map(n => ({
                     username: n.label,
-                    frequency: n.val || n.value || 0,
+                    frequency: Math.round(n.val || n.value || 0),
                     category: 'creator', // Fallback
                     percentage: 0, // Fallback
                     overindexScore: n.data?.overindexScore || 0, // [NEW] Pass score
@@ -692,7 +719,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                     username: rp.username || rp.full_name,
                                     full_name: rp.full_name,
                                     firstName: rp.full_name ? rp.full_name.split(' ')[0] : '',
-                                    frequency: 1, // Default weight
+                                    frequency: 1, // Default weight (already integer)
                                     category: 'related_profile',
                                     percentage: 0,
                                     overindexScore: 0,
@@ -769,7 +796,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                     confidence: 1.0
                 }
             };
-        });
+        }).sort((a, b) => (b.overindexScore || 0) - (a.overindexScore || 0));
     }, [analytics.creators, analytics.overindexing, stableNodes, stableLinks]);
 
 
@@ -780,28 +807,33 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         // 1. Analytics Brands (AI detected)
         if (analytics.brands && analytics.brands.length > 0) {
             analytics.brands.forEach((b: any) => {
-                const rawName = b.id || b.username || b.name || '';
-                if (!rawName) return;
-                const cleanName = normalizeId(rawName);
+                const id = normalizeId(b.id);
+                const username = normalizeId(b.username || b.name || b.label);
 
-                if (!seenIds.has(cleanName)) {
-                    brands.push(b);
-                    seenIds.add(cleanName);
+                // [FIX] Check both ID and Username for duplicates
+                if ((id && seenIds.has(id)) || (username && seenIds.has(username))) {
+                    return;
                 }
+
+                brands.push(b);
+                if (id) seenIds.add(id);
+                if (username) seenIds.add(username);
             });
         }
 
         // 2. Overindexed Brands (Graph detected)
         if (analytics.overindexing && analytics.overindexing.topBrands) {
             analytics.overindexing.topBrands.forEach((b: any) => {
-                const rawName = b.id || b.username || b.name || '';
-                if (!rawName) return;
-                const cleanName = normalizeId(rawName);
+                const id = normalizeId(b.id);
+                const username = normalizeId(b.username || b.name || b.label);
 
-                if (!seenIds.has(cleanName)) {
-                    brands.push(b);
-                    seenIds.add(cleanName);
+                if ((id && seenIds.has(id)) || (username && seenIds.has(username))) {
+                    return;
                 }
+
+                brands.push(b);
+                if (id) seenIds.add(id);
+                if (username) seenIds.add(username);
             });
         }
 
@@ -809,37 +841,52 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         stableNodes
             .filter(n => n.group === 'brand' || n.group === 'company')
             .forEach(n => {
-                const id = normalizeId(n.id || n.label || '');
-                const label = (n.label || '').trim();
-                const cleanLabel = normalizeId(label);
+                const id = normalizeId(n.id);
+                const label = normalizeId(n.label);
 
                 // [FIX] Strict Deduplication against AI results
-                if (!seenIds.has(id) && !seenIds.has(label) && !seenIds.has(cleanLabel)) {
-                    brands.push({
-                        id: n.id,
-                        username: n.label,
-                        name: n.label, // Ensure name is set for consistency
-                        frequency: n.val || n.value || 0,
-                        category: 'brand',
-                        percentage: 0,
-                        overindexScore: n.data?.overindexScore || 0,
-                        // [NEW] Pass through rich AI data
-                        citation: n.data?.citation,
-                        searchQuery: n.data?.searchQuery,
-                        sourceUrl: n.data?.sourceUrl,
-                        evidence: n.data?.evidence,
-                        provenance: n.data?.provenance || { source: 'Graph', method: 'Raw Node' },
-                        ...n.data
-                    });
-                    seenIds.add(id);
+                if ((id && seenIds.has(id)) || (label && seenIds.has(label))) {
+                    return; // Skip if either ID or Label has been seen
                 }
+
+                brands.push({
+                    id: n.id,
+                    username: n.label,
+                    name: n.label, // Ensure name is set for consistency
+                    frequency: n.val || n.value || 0,
+                    category: 'brand',
+                    percentage: 0,
+                    overindexScore: n.data?.overindexScore || 0,
+                    // [NEW] Pass through rich AI data
+                    citation: n.data?.citation,
+                    searchQuery: n.data?.searchQuery,
+                    sourceUrl: n.data?.sourceUrl,
+                    evidence: n.data?.evidence,
+                    provenance: n.data?.provenance || { source: 'Graph', method: 'Raw Node' },
+                    ...n.data
+                });
+
+                if (id) seenIds.add(id);
+                if (label) seenIds.add(label);
             });
 
-        return brands.sort((a, b) => {
+        const sortedBrands = brands.sort((a, b) => {
             const scoreA = (a.overindexScore || a.affinity || a.affinityPercent || 0);
             const scoreB = (b.overindexScore || b.affinity || b.affinityPercent || 0);
             if (scoreA !== scoreB) return scoreB - scoreA;
             return (b.frequency || b.val || 0) - (a.frequency || a.val || 0);
+        });
+
+        // [FIX] Final Deduplication Pass on Sorted List
+        // This ensures distinct visual entries even if source IDs mismatched
+        const finalSeen = new Set<string>();
+        return sortedBrands.filter(b => {
+            const displayKey = normalizeId(b.username || b.name || b.label || b.id);
+            if (displayKey && finalSeen.has(displayKey)) {
+                return false;
+            }
+            if (displayKey) finalSeen.add(displayKey);
+            return true;
         });
     }, [stableNodes, analytics.brands, analytics.overindexing]);
 
@@ -1093,6 +1140,10 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
         const uniqueMemberIds = new Set<string>();
         const members: any[] = [];
 
+        // [FIX] Define groups that should be counted as "members" or visible sub-nodes
+        // This includes profiles AND structural nodes (sub-clusters) but excludes evidence/junk
+        const countableGroups = new Set([...profileGroups, 'topic', 'subtopic', 'cluster', 'emerging_subculture']);
+
         // Single pass through links O(L)
         data.links.forEach(l => {
             const targetId = normalizeId(typeof l.target === 'object' ? (l.target as any).id : l.target);
@@ -1103,7 +1154,8 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                 // Filter out root and duplicates immediately
                 if (otherId !== 'main' && otherId !== 'core' && otherId !== 'main' && !uniqueMemberIds.has(otherId)) {
                     const node = nodeMap.get(otherId);
-                    if (node && profileGroups.includes(node.group) && node.group !== 'main') {
+                    // Use countableGroups instead of just profileGroups
+                    if (node && countableGroups.has(node.group) && node.group !== 'main') {
                         uniqueMemberIds.add(otherId);
                         members.push(node);
                     }
@@ -1283,86 +1335,93 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                             {(selectedItem as any).group}
                                         </span>
                                     </div>
-                                    <button
-                                        onClick={() => {
-                                            // [FIX] Dynamically generate provenance from members if not present
-                                            const baseProv = (selectedItem as any).provenance || (selectedItem as any).data?.provenance || {};
-                                            const richEvidence = mentions.map(m => {
-                                                const bio = m.data?.biography || m.data?.bio || '';
-                                                const topPost = m.data?.latestPosts?.[0]?.caption || '';
-                                                const snippet = bio ? `Bio: ${bio.slice(0, 100)}...` : (topPost ? `Post: ${topPost.slice(0, 100)}...` : 'Connected to topic');
 
-                                                return {
-                                                    type: 'member_context',
-                                                    text: snippet,
-                                                    author: m.label,
-                                                    url: `https://instagram.com/${(m.label || '').replace('@', '')}`,
-                                                    date: 'Recent'
+                                    {/* [FIX] Show Data Provenance for Clusters OR if provenance exists */}
+                                    {((selectedItem as any).group === 'cluster' || (selectedItem as any).provenance || (selectedItem as any).data?.provenance) && (
+                                        <button
+                                            onClick={() => {
+                                                // [FIX] Dynamically generate provenance from members if not present
+                                                const baseProv = (selectedItem as any).provenance || (selectedItem as any).data?.provenance || {};
+                                                const richEvidence = mentions.map(m => {
+                                                    const bio = m.data?.biography || m.data?.bio || '';
+                                                    const topPost = m.data?.latestPosts?.[0]?.caption || '';
+                                                    const snippet = bio ? `Bio: ${bio.slice(0, 100)}...` : (topPost ? `Post: ${topPost.slice(0, 100)}...` : 'Connected to topic');
+
+                                                    return {
+                                                        type: 'member_context',
+                                                        text: snippet,
+                                                        author: m.label,
+                                                        url: `https://instagram.com/${(m.label || '').replace('@', '')}`,
+                                                        date: 'Recent'
+                                                    };
+                                                });
+
+                                                const richItem = {
+                                                    ...(selectedItem as any),
+                                                    provenance: {
+                                                        source: 'Graph Clusters',
+                                                        method: 'Topic Aggregation',
+                                                        evidence: [...(baseProv.evidence || []), ...richEvidence],
+                                                        confidence: 1.0
+                                                    }
                                                 };
-                                            });
-
-                                            const richItem = {
-                                                ...(selectedItem as any),
-                                                provenance: {
-                                                    source: 'Graph Clusters',
-                                                    method: 'Topic Aggregation',
-                                                    evidence: [...(baseProv.evidence || []), ...richEvidence],
-                                                    confidence: 1.0
-                                                }
-                                            };
-                                            handleShowReasoning(richItem, 'Topic Composition');
-                                        }}
-                                        className="text-emerald-500/50 hover:text-emerald-300 transition-colors flex items-center gap-1 text-[10px]"
-                                        title="View Contributing Data (Bios, Posts)"
-                                    >
-                                        <HelpCircle size={12} />
-                                        <span className="uppercase tracking-wider font-bold">Data Provenance</span>
-                                    </button>
+                                                handleShowReasoning(richItem, 'Topic Composition');
+                                            }}
+                                            className="text-emerald-500/50 hover:text-emerald-300 transition-colors flex items-center gap-1 text-[10px]"
+                                            title="View Contributing Data (Bios, Posts)"
+                                        >
+                                            <HelpCircle size={12} />
+                                            <span className="uppercase tracking-wider font-bold">Data Provenance</span>
+                                        </button>
+                                    )}
                                 </div>
                                 <h3 className="text-xs font-light text-white leading-tight break-words">
                                     {(selectedItem as any).label}
                                 </h3>
                             </div>
 
-                            {/* STATS */}
-                            <div className="mb-4">
-                                <div className="bg-[#051810]/50 rounded p-3 text-center border border-emerald-500/10">
-                                    <div className="text-[10px] text-emerald-500/70 uppercase tracking-widest mb-1">Occurrences</div>
-                                    <div className="text-xl font-bold text-white">
-                                        {mentions.length > 0 ? mentions.length : ((selectedItem as any).frequency || (selectedItem as any).count || (selectedItem as any).val || 0)}
+                            {/* [FIX] STATS & MEMBERS - Only for Clusters */}
+                            {(selectedItem as any).group === 'cluster' && (
+                                <>
+                                    <div className="mb-4">
+                                        <div className="bg-[#051810]/50 rounded p-3 text-center border border-emerald-500/10">
+                                            <div className="text-[10px] text-emerald-500/70 uppercase tracking-widest mb-1">Occurrences</div>
+                                            <div className="text-xl font-bold text-white">
+                                                {mentions.length > 0 ? mentions.length : ((selectedItem as any).frequency || (selectedItem as any).count || (selectedItem as any).val || 0)}
+                                            </div>
+                                            <div className="text-[8px] text-emerald-500/40 uppercase tracking-widest mt-1">Number of sub-nodes</div>
+                                        </div>
                                     </div>
-                                    <div className="text-[8px] text-emerald-500/40 uppercase tracking-widest mt-1">Number of sub-nodes</div>
-                                </div>
-                            </div>
 
-                            {/* MEMBERS LIST */}
-                            <div className="space-y-2">
-                                <div className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-widest">Members</div>
-                                {mentions.length > 0 ? (
-                                    <div className="space-y-1">
-                                        {mentions.slice(0, 10).map((m: any, i: number) => (
-                                            <div
-                                                key={i}
-                                                className="flex items-center gap-2 p-2 rounded bg-white/5 hover:bg-white/10 cursor-pointer transition-colors border border-transparent hover:border-emerald-500/30"
-                                                onClick={() => onSelect(m.id)}
-                                            >
-                                                <div className="w-6 h-6 rounded-full bg-emerald-800 flex items-center justify-center text-[10px] font-bold text-emerald-200">
-                                                    {(m.label || '').substring(0, 1).toUpperCase()}
-                                                </div>
-                                                <span className="text-xs text-gray-200 truncate flex-1">{m.label}</span>
-                                                <ExternalLink className="w-3 h-3 text-emerald-500/50" />
+                                    <div className="space-y-2">
+                                        <div className="text-[10px] font-bold text-emerald-500/50 uppercase tracking-widest">Members</div>
+                                        {mentions.length > 0 ? (
+                                            <div className="space-y-1">
+                                                {mentions.slice(0, 10).map((m: any, i: number) => (
+                                                    <div
+                                                        key={i}
+                                                        className="flex items-center gap-2 p-2 rounded bg-white/5 hover:bg-white/10 cursor-pointer transition-colors border border-transparent hover:border-emerald-500/30"
+                                                        onClick={() => onSelect(m.id)}
+                                                    >
+                                                        <div className="w-6 h-6 rounded-full bg-emerald-800 flex items-center justify-center text-[10px] font-bold text-emerald-200">
+                                                            {(m.label || '').substring(0, 1).toUpperCase()}
+                                                        </div>
+                                                        <span className="text-xs text-gray-200 truncate flex-1">{m.label}</span>
+                                                        <ExternalLink className="w-3 h-3 text-emerald-500/50" />
+                                                    </div>
+                                                ))}
+                                                {mentions.length > 10 && (
+                                                    <div className="text-[10px] text-center text-emerald-500/50 pt-1">
+                                                        + {mentions.length - 10} more
+                                                    </div>
+                                                )}
                                             </div>
-                                        ))}
-                                        {mentions.length > 10 && (
-                                            <div className="text-[10px] text-center text-emerald-500/50 pt-1">
-                                                + {mentions.length - 10} more
-                                            </div>
+                                        ) : (
+                                            <div className="text-xs text-gray-500 italic">No members found.</div>
                                         )}
                                     </div>
-                                ) : (
-                                    <div className="text-xs text-gray-500 italic">No members found.</div>
-                                )}
-                            </div>
+                                </>
+                            )}
                         </div>
                     ) : (
                         /* PROFILE HEADER (Standard) */
@@ -1443,53 +1502,71 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-3 gap-2">
-                                    <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
-                                        <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Followers</span>
-                                        <span className="text-sm font-mono text-emerald-400">
-                                            {(() => {
-                                                const val = displayProfile.followerCount;
-                                                if (val === undefined || val === null) return ((selectedItem as any)?.size > 5 || (selectedItem as any)?.frequency > 10) ? 'High' : '-';
-                                                if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
-                                                const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
-                                                if (isNaN(num)) return '-';
-                                                if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-                                                if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-                                                return num.toLocaleString();
-                                            })()}
-                                        </span>
+                                {/* [FIX] 21+ Restricted Badge for zero-count profiles */}
+                                {displayProfile.followerCount === 0 && displayProfile.followingCount === 0 ? (
+                                    <div className="flex flex-col items-center justify-center p-6 bg-red-900/20 rounded-lg border-2 border-red-500/30">
+                                        <div className="w-20 h-20 rounded-full bg-red-500/20 border-2 border-red-500 flex items-center justify-center mb-3 shadow-lg shadow-red-500/50">
+                                            <span className="text-3xl font-bold text-red-400">21+</span>
+                                        </div>
+                                        <p className="text-xs text-red-300/80 text-center leading-relaxed max-w-[200px]">
+                                            This profile may be age-restricted or private. Instagram policy prevents data access.
+                                        </p>
                                     </div>
-                                    <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
-                                        <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Following</span>
-                                        <span className="text-sm font-mono text-emerald-400">
-                                            {(() => {
-                                                const val = displayProfile.followingCount;
-                                                if (val === undefined || val === null) return '-';
-                                                if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
-                                                const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
-                                                if (isNaN(num)) return '-';
-                                                if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-                                                if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-                                                return num.toLocaleString();
-                                            })()}
-                                        </span>
+                                ) : (
+                                    <div className="grid grid-cols-3 gap-2">
+                                        <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
+                                            <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Followers</span>
+                                            <span className="text-sm font-mono text-emerald-400">
+                                                {(() => {
+                                                    const val = displayProfile.followerCount;
+                                                    if (val === undefined || val === null) return ((selectedItem as any)?.size > 5 || (selectedItem as any)?.frequency > 10) ? 'High' : '-';
+                                                    if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
+                                                    const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
+                                                    if (isNaN(num)) return '-';
+                                                    // [FIX] Round to whole numbers
+                                                    const rounded = Math.round(num);
+                                                    if (rounded >= 1000000) return (rounded / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                                                    if (rounded >= 1000) return (rounded / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+                                                    return rounded.toLocaleString();
+                                                })()}
+                                            </span>
+                                        </div>
+                                        <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
+                                            <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Following</span>
+                                            <span className="text-sm font-mono text-emerald-400">
+                                                {(() => {
+                                                    const val = displayProfile.followingCount;
+                                                    if (val === undefined || val === null) return '-';
+                                                    if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
+                                                    const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
+                                                    if (isNaN(num)) return '-';
+                                                    // [FIX] Round to whole numbers
+                                                    const rounded = Math.round(num);
+                                                    if (rounded >= 1000000) return (rounded / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                                                    if (rounded >= 1000) return (rounded / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+                                                    return rounded.toLocaleString();
+                                                })()}
+                                            </span>
+                                        </div>
+                                        <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
+                                            <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Posts</span>
+                                            <span className="text-sm font-mono text-emerald-400">
+                                                {(() => {
+                                                    const val = displayProfile.postCount;
+                                                    if (val === undefined || val === null) return '-';
+                                                    if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
+                                                    const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
+                                                    if (isNaN(num)) return '-';
+                                                    // [FIX] Round to whole numbers
+                                                    const rounded = Math.round(num);
+                                                    if (rounded >= 1000000) return (rounded / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                                                    if (rounded >= 1000) return (rounded / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+                                                    return rounded.toLocaleString();
+                                                })()}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col items-center p-2 bg-black/20 rounded-lg border border-emerald-500/10">
-                                        <span className="text-[10px] text-emerald-500/50 uppercase font-bold mb-1">Posts</span>
-                                        <span className="text-sm font-mono text-emerald-400">
-                                            {(() => {
-                                                const val = displayProfile.postCount;
-                                                if (val === undefined || val === null) return '-';
-                                                if (typeof val === 'string' && /[kM]$/i.test(val)) return val;
-                                                const num = typeof val === 'string' ? parseFloat(val.replace(/,/g, '')) : val;
-                                                if (isNaN(num)) return '-';
-                                                if (num >= 1000000) return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-                                                if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-                                                return num.toLocaleString();
-                                            })()}
-                                        </span>
-                                    </div>
-                                </div>
+                                )}
                             </div>
                         )
                     )}
@@ -2052,9 +2129,11 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                         )
                     }
 
-                    {/* 3.5. Over-indexed Accounts (derived) */}
+                    {/* 3.5. Over-indexed Accounts (derived) - CONDITIONALLY SHOWN based on intent */}
                     {
-                        derivedOverindexedProfiles.length > 0 && (
+                        derivedOverindexedProfiles.length > 0 &&
+                        // [FIX] Conditionally show ONLY if over-indexing data is present in analytics structure
+                        (analytics.overindexing) && (
                             <AccordionItem
                                 title={`Over-indexed Profiles (${derivedOverindexedProfiles.length})`}
                                 icon={TrendingUp}
@@ -2100,7 +2179,7 @@ const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({ data, focusedNodeId, on
                                             <div className="flex items-center gap-2">
                                                 {account.overindexScore > 0 && (
                                                     <span className="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded font-mono">
-                                                        {Math.round(account.overindexScore)}x
+                                                        {account.overindexScore >= 10 ? Math.round(account.overindexScore) : Number(account.overindexScore).toFixed(1)}x
                                                     </span>
                                                 )}
                                                 <button

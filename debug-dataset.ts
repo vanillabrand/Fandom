@@ -79,10 +79,6 @@ async function analyseDataset(dataset: any, db: any) {
     }
 
     process.exit(0);
-} catch (e) {
-    console.error("Error:", e);
-    process.exit(1);
-}
 }
 
 run();

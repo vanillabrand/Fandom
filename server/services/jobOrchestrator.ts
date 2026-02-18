@@ -6913,6 +6913,16 @@ export class JobOrchestrator {
             .replace(/[^a-z0-9_-]/g, '');
     }
 
+    // [FIX] Global Label Formatter (snake_case -> Title Case)
+    private formatLabel(s: string): string {
+        if (!s) return '';
+        // Handle underscores, hyphens, and multiple spaces
+        return s.split(/[_\-\s]+/)
+            .filter(w => w.length > 0)
+            .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+            .join(' ');
+    }
+
     private hydrateNodeData(p: any, group: string, evidence?: string, query?: string): any {
         if (!p) return {};
 
@@ -6922,6 +6932,30 @@ export class JobOrchestrator {
             const parsed = this.parseMetric(v);
             return parsed !== null ? parsed : 0;
         };
+
+        // [FIX] TOPIC/SUBTOPIC HANDLING
+        // If this is a topic, DO NOT look for profile metrics or bio
+        if (group === 'topic' || group === 'subtopic' || group === 'cluster') {
+            return {
+                id: p.id || `topic_${p.label || Math.random()}`,
+                label: this.formatLabel(p.label || p.name || p.id || "Unknown"), // [FIX] Apply formatting
+                val: p.val || 10,
+                type: group, // Explicitly set type to topic/subtopic
+                group: group,
+                data: {
+                    // Only keep relevant topic data
+                    occurrences: p.data?.occurrences || p.count || 0,
+                    provenance: p.data?.provenance || evidence || null,
+                    // [CLEANUP] Explicitly exclude profile fields to prevent UI pollution
+                    followersCount: undefined,
+                    followingCount: undefined,
+                    postsCount: undefined,
+                    profilePicUrl: null,
+                    biography: null,
+                    isVerified: false
+                }
+            };
+        }
 
         const followers = getVal(this.extractMetric(p, 'followers'));
         const following = getVal(this.extractMetric(p, 'following'));
@@ -7109,18 +7143,19 @@ export class JobOrchestrator {
             console.log(`[GraphGen] Using AI-defined clusters for structure...`);
             // We use the AI's cluster definitions but RE-POPULATE them with local data to ensure richness
             clusters = analytics.root.children.map((aiCluster: any, idx: number) => {
-                // [FIX] Helper to format labels (snake_case -> Title Case)
-                const formatLabel = (s: string) => {
-                    if (!s) return `Cluster ${idx + 1}`;
-                    return s.split(/[_\s]+/)
-                        .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-                        .join(' ');
-                };
+                // [FIX] Detect if label is purely numeric (likely an ID, not a name)
+                const rawLabel = aiCluster.label || aiCluster.name || '';
+                const isNumericId = /^\d+$/.test(rawLabel.toString().trim());
+
+                // Use name if label is numeric, or fallback to descriptive label
+                const finalLabel = isNumericId
+                    ? (aiCluster.name || aiCluster.description || `Cluster ${idx + 1}`)
+                    : rawLabel;
 
                 return {
                     ...aiCluster,
-                    id: aiCluster.id || this.normalizeId(`cluster_${idx}_${aiCluster.label || 'cluster'}`),
-                    label: formatLabel(aiCluster.label), // [FIX] Human Readable Label
+                    id: aiCluster.id || this.normalizeId(`cluster_${idx}_${finalLabel || 'cluster'}`),
+                    label: this.formatLabel(finalLabel), // [FIX] Use validated label, not numeric ID
                     type: aiCluster.type || 'cluster',
                     color: aiCluster.color || '#10b981',
                     group: aiCluster.group || 'cluster',
@@ -7550,10 +7585,10 @@ export class JobOrchestrator {
             .slice(0, 20);
 
         sortedTopics.forEach(([topic, data], i) => {
-            const tid = `topic_${i} `;
+            const tid = `topic_${i}`;
             nodes.push({
                 id: tid,
-                label: topic,
+                label: this.formatLabel(topic), // [FIX] Apply Title Case formatting
                 group: 'topic',
                 val: Math.min(30, 10 + data.count / 10),
                 level: 1,
@@ -9738,38 +9773,78 @@ export class JobOrchestrator {
         addedNodeIds.add(coreId); // Prevent duplicate if core appears in results
 
         // [NEW] Real Calculation of Over-Indexing Scores
-        // Iterate through all profiles to find "Followed By" relationships
-        const realFrequencyMap = new Map<string, number>();
-        const realSourceMap = new Map<string, string[]>(); // [NEW] Track WHO follows who
+        // Helper to normalize IDs consistently
+        const normalizeId = (raw: string): string => {
+            if (!raw) return '';
+            return raw.toLowerCase().trim().replace(/@/g, '').replace(/[^a-z0-9._]/g, '');
+        };
+
+        // 1. Build Frequency Map & Source Map
+        const uniqueInteractions = new Map<string, Set<string>>(); // Target -> Set<SourceID>
+        const realSourceMap = new Map<string, string[]>(); // Target -> Array<SourceHandles>
         let totalSourceProfiles = 0;
 
+        // Helper to add interaction
+        const registerInteraction = (target: string, source: string, type: 'follow' | 'mention') => {
+            const cleanTarget = normalizeId(target);
+            const cleanSource = normalizeId(source);
+
+            if (!cleanTarget || !cleanSource || cleanTarget === normalizeId(coreId)) return;
+
+            if (!uniqueInteractions.has(cleanTarget)) uniqueInteractions.set(cleanTarget, new Set());
+            uniqueInteractions.get(cleanTarget)!.add(cleanSource);
+
+            // Add Evidence (limit to 20 unique sources for UI)
+            if (!realSourceMap.has(cleanTarget)) realSourceMap.set(cleanTarget, []);
+            const evidenceList = realSourceMap.get(cleanTarget)!;
+            // Store original source handle for display if possible, or fallback to clean
+            const displaySource = source || cleanSource;
+
+            // Check against clean ID to prevent dupes, but store display name
+            const existingSources = evidenceList.map(s => normalizeId(s));
+            if (!existingSources.includes(cleanSource) && evidenceList.length < 20) {
+                evidenceList.push(displaySource);
+            }
+        };
+
         profiles.forEach(p => {
-            // [FIX] Filter out PRIVATE accounts from the source audience (followers)
+            // [FIX] Filter out PRIVATE accounts from the source audience
             if (p.isPrivate || p.is_private) return;
+            totalSourceProfiles++;
 
-            // "p" is a profile (e.g. a follower of the core target).
-            // "p.follows" contains the list of accounts that "p" follows.
+            const sourceHandle = p.username || p.ownerUsername || 'Unknown';
+            if (sourceHandle === 'Unknown' || !sourceHandle) return;
+
+            // 1. Process Follows
             if (p.follows && Array.isArray(p.follows)) {
-                totalSourceProfiles++;
-                const sourceHandle = p.username || p.ownerUsername || 'Unknown';
-
                 p.follows.forEach((followedAccount: any) => {
-                    const fUsername = this.normalizeId(followedAccount.username || followedAccount.ownerUsername || '');
-                    if (fUsername && fUsername !== coreId) {
-                        realFrequencyMap.set(fUsername, (realFrequencyMap.get(fUsername) || 0) + 1);
+                    const fUsername = followedAccount.username || followedAccount.ownerUsername || '';
+                    if (fUsername) {
+                        registerInteraction(fUsername, sourceHandle, 'follow');
+                    }
+                });
+            }
 
-                        // [NEW] Track Source Evidence
-                        if (!realSourceMap.has(fUsername)) realSourceMap.set(fUsername, []);
-                        // Limit to 20 sources to save space/bandwidth
-                        if (realSourceMap.get(fUsername)!.length < 20) {
-                            realSourceMap.get(fUsername)!.push(sourceHandle);
-                        }
+            // 2. Process Mentions in Bio/Captions
+            const textToScan = `${p.biography || ''} ${p.latestPosts?.map((post: any) => post.caption || '').join(' ') || ''}`.toLowerCase();
+            const mentions = textToScan.match(/@([a-zA-Z0-9_.]+)/g);
+            if (mentions) {
+                mentions.forEach((m: string) => {
+                    const target = m.replace('@', '');
+                    if (normalizeId(target) !== normalizeId(sourceHandle)) { // Avoid self-mentions
+                        registerInteraction(target, sourceHandle, 'mention');
                     }
                 });
             }
         });
 
-        console.log(`[OverIndex] Calculated frequencies across ${totalSourceProfiles} non-private source profiles.`);
+        // Convert Set to Count for downstream compatibility
+        const realFrequencyMap = new Map<string, number>();
+        uniqueInteractions.forEach((sources, targetId) => {
+            realFrequencyMap.set(targetId, sources.size);
+        });
+
+        console.log(`[OverIndex] Calculated unique frequencies across ${totalSourceProfiles} sources (Follows + Mentions).`);
 
         // [NEW] 0. Pre-Scan Tree for Frequencies (Ranking Signal)
         const nodeFrequencyMap = new Map<string, number>();

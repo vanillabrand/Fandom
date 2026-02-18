@@ -1,51 +1,106 @@
-# Deployment Guide: Google Cloud Run & Apify Proxy
+# Deployment Guide: Google Cloud Run
 
-## Overview
-This application is designed to run on Google Cloud Run as a containerized service. It uses a custom **Server-Side Proxy** (`/apify-api`) to handle authentication with the Apify API securely, ensuring that API tokens are never exposed to the client browser.
+This guide details the requirements, configuration, and steps to deploy the **Fandom Mapper** application to Google Cloud Run.
 
-## Architecture
-- **Frontend**: Vite SPA (Single Page Application)
-- **Backend**: Express.js server (serves specific API routes + static frontend)
-- **Database**: MongoDB (Atlas)
-- **External APIs**: Gemini (Google), Apify (Scraping)
+## 1. Prerequisites
 
-## Environment Variables
-The application relies on runtime environment variables.
+Before deploying, ensure you have the following:
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `GEMINI_API_KEY` | Google Gemini API Key for AI Analysis | Yes |
-| `APIFY_API_TOKEN` | Apify API Token for Scraping | Yes |
-| `MONGO_DB_CONNECT`| MongoDB Connection String | Yes |
-| `PORT` | Server Port (Automatically set by Cloud Run) | Yes (Default 3001) |
+### Google Cloud Platform (GCP)
+- **GCP Project**: An active Google Cloud Project (e.g., `huntsocial-fandom-analytics`).
+- **Billing Enabled**: Cloud Run and Cloud Build require an enabled billing account.
+- **Enabled APIs**:
+  - Cloud Run Admin API
+  - Cloud Build API
+  - Artifact Registry API
+  - Container Registry API
 
-### **Important: Runtime Injection**
-Since the frontend is built statically (`vite build`), it cannot access server-side environment variables directly.
-We solve this via **Runtime Injection** in `server/index.js`:
-1. The Express server intercepts requests to `index.html`.
-2. It reads the `GEMINI_API_KEY` and `APIFY_API_TOKEN` from the server's `process.env`.
-3. It injects them into a global `window.__ENV__` object in the HTML `<head>`.
-4. The client (`geminiService.ts`, `orchestrationService.ts`) reads from `window.__ENV__`.
+### Local Tools
+- **Google Cloud SDK (`gcloud`)**: Installed and initialized.
+  - [Install Guide](https://cloud.google.com/sdk/docs/install)
+  - Run `gcloud auth login` and `gcloud config set project [PROJECT_ID]`.
+- **Node.js**: v18+ (for local testing).
+- **Docker**: (Optional) For testing the container build locally.
 
-## Apify Proxy (`/apify-api`)
-To prevent CORS errors and protect the Apify Token, the client **does NOT** call Apify directly.
-Instead, it calls the internal proxy:
-1. **Client**: `fetch('/apify-api/v2/acts/...')` (No Token attached)
-2. **Server**: Middleware in `server/index.js`:
-   - Intercepts requests to `/apify-api`
-   - Attaches `Authorization: Bearer <APIFY_API_TOKEN>` header
-   - Proxies request to `https://api.apify.com`
-3. **Result**: Secure, CORS-free scraping.
+---
 
-## Deployment Command
-Deploy to Cloud Run using `gcloud`:
+## 2. Configuration
 
-```bash
-gcloud run deploy fandom-mapper-ph1 \
-  --source . \
-  --region europe-west2 \
-  --allow-unauthenticated \
-  --env-vars-file env.yaml
+### Environment Variables (`env_cloudrun.yaml`)
+The application relies on a comprehensive set of environment variables defined in `env_cloudrun.yaml`.
+**Critical Variables** include:
+- `GEMINI_API_KEY`: AI Analysis.
+- `APIFY_API_TOKEN`: Scraping.
+- `MONGO_DB_CONNECT`: Database connection constraint.
+- `STRIPE_SECRET_KEY` / `STRIPE_PUBLISHABLE_KEY`: Payments.
+- `JWT_SECRET`: Authentication security.
+- `Example`:
+  ```yaml
+  GEMINI_API_KEY: "AIzaSy..."
+  APIFY_API_TOKEN: "apify_api_..."
+  MONGO_DB_CONNECT: "mongodb+srv://..."
+  AI_TEMPERATURE: "0.3"
+  ```
+
+### Dockerfile
+The project uses a standard `Dockerfile` located in the root directory:
+- **Base Image**: `node:20`
+- **Port**: `8080` (Cloud Run default)
+- **Build Step**: Runs `npm run build` and `npm run build:server`.
+- **Start Command**: `npm start`.
+
+---
+
+## 3. Deployment Steps
+
+### Step 1: Prepare the Environment File
+Ensure `env_cloudrun.yaml` is present in the root directory and contains active, production-ready keys.
+
+### Step 2: Deploy to Cloud Run
+Run the following command from the project root:
+
+```powershell
+gcloud run deploy fandom-mapper-ph1 `
+  --source . `
+  --region europe-west2 `
+  --allow-unauthenticated `
+  --env-vars-file .\env_cloudrun.yaml
 ```
 
-**Note**: Ensure `env.yaml` is populated with valid production keys before deploying.
+**Explanation of Flags**:
+- `--source .`: Uploads the current directory to Cloud Build to create the container image.
+- `--region europe-west2`: Deploys to the London region (adjust if needed).
+- `--allow-unauthenticated`: Makes the service publicly accessible via HTTPS.
+- `--env-vars-file .\env_cloudrun.yaml`: Injects the variables from the YAML file into the container environment.
+
+### Step 3: Verify Deployment
+Once the command completes, it will output the **Service URL**:
+`Service URL: https://fandom-mapper-ph1-.......run.app`
+
+Open this URL in your browser to verify the application is running.
+
+---
+
+## 4. Troubleshooting
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| **Build Failed** | Dockerfile error or dependency issue | Check the "Logs are available at..." URL in the console output. Look for "Step #..." errors in Cloud Build. |
+| **403 Forbidden** | IAM Permissions | Ensure `--allow-unauthenticated` was passed. Or check "Cloud Run Invoker" role for "allUsers" in GCP Console. |
+| **503 Service Unavailable** | Server crash or Port mismatch | Check "Logs" tab in Cloud Run Console. Ensure `PORT` env var is not manually set to something other than 8080 (Cloud Run injects PORT=8080). |
+| **Database Connection Error** | IP Whitelist | Ensure "Allow access from anywhere" (0.0.0.0/0) is enabled in MongoDB Atlas Network Access, as Cloud Run IPs are dynamic. |
+| **CORS Errors** | Frontend URL mismatch | Update `VITE_API_URL` or `SCRAPER_URL` in `env_cloudrun.yaml` if they point to localhost. |
+
+## 5. Local Testing (Docker)
+
+To test the *exact* container that will be deployed:
+
+1. **Build**:
+   ```bash
+   docker build -t fandom-mapper .
+   ```
+2. **Run** (injecting env vars):
+   ```bash
+   docker run -p 8080:8080 --env-file env_cloudrun.yaml fandom-mapper
+   ```
+3. **Access**: http://localhost:8080

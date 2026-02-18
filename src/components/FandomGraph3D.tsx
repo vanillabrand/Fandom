@@ -110,7 +110,7 @@ const getNodeColor = (group: string, visualTheme?: any) => {
         case 'profile': return '#d946ef'; // [FIX] Vibrant Fuchsia (was grey #9ca3af)
         case 'nonRelatedInterest': return '#f59e0b';
         case 'topic': return '#8b5cf6';
-        case 'subtopic': return '#f59e0b'; // Amber for subtopic
+        case 'subtopic': return '#34d399'; // [FIX] Neon Green (was Amber #f59e0b)
         case 'hashtag': return '#14b8a6';
         default: return '#64748b'; // [FIX] Slate 500 for true unknowns
     }
@@ -1200,7 +1200,9 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
         if (node.group === 'main' || node.id === 'MAIN') {
             rawRadius = 60;
         } else if (node.group === 'cluster') {
-            rawRadius = 40;
+            rawRadius = 30; // [FIX] Reduced by 25% (40 -> 30) for less clutter
+        } else if (node.group === 'subtopic') {
+            rawRadius = 15; // [FIX] Half size of cluster (30/2 = 15)
         } else if (node.group === 'topic') {
             rawRadius = 18; // [FIX] Increased by 50% (12 -> 18)
         } else {
@@ -1227,7 +1229,7 @@ const FandomGraph3D: React.FC<FandomGraph3DProps> = ({
                 baseGeometry = SHARED_GEOMETRIES.cone;
                 break;
             case 'subtopic':
-                baseGeometry = SHARED_GEOMETRIES.octahedron;
+                baseGeometry = SHARED_GEOMETRIES.icosahedron; // [FIX] Same as cluster (was octahedron)
                 break;
             case 'main':
                 baseGeometry = SHARED_GEOMETRIES.tetrahedron;

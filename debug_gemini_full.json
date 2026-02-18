@@ -1,1001 +1,1197 @@
 {
   "root": {
-    "label": "Follower Analysis: @betpandaofficial",
+    "label": "BuzzBallz Audience Analysis",
     "type": "main",
     "children": [
       {
-        "label": "Crypto Gambling & Casino Ecosystem",
+        "label": "Ready-to-Drink (RTD) & Party Alcohol",
         "type": "cluster",
         "data": {
-          "description": "A dense network of competitor casinos, crypto betting platforms, and gambling streamers, reflecting the core industry of the target account.",
+          "description": "Direct competitors and complementary alcohol brands favored by the audience, focusing on high-ABV, convenient, and flavored beverages.",
           "keywords": [
-            "Casino",
-            "Crypto",
-            "Slots",
-            "Betting",
-            "Streamer"
+            "RTD",
+            "Shots",
+            "Party Drinks",
+            "Flavored Malt",
+            "Spirits"
           ]
         },
         "children": [
           {
-            "label": "Stake",
+            "label": "Twisted Tea",
             "type": "brand",
             "val": 95,
             "data": {
-              "bio": "World’s Largest Casino\nStake.com unavailable in US UK AU 18+",
-              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/250299809_421319846102557_2690881369803074364_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHyQ9y2NJ7hjCe75FOSuKy-UjOpZtc2Q3-bE64v542SFm6CVGNVSOOGdy3DgwkJ4nA&_nc_ohc=bvpk9lU0TtoQ7kNvwHb9QkY&_nc_gid=8jN4G713pbY8YtAyQY3xrg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftAiyiNLjQ2fd5ukY5n82vw1n1wWO8R-SUgi8Au2w1P4A&oe=69992E4D&_nc_sid=0055be",
-              "evidence": "Direct competitor and major industry player.",
-              "externalUrl": "http://stake.com",
-              "isVerified": true
+              "handle": "@twistedtea",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/361386928_1746201442464527_583423675011543650_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGiQCsecTTnZwxBAdkyznuLY_mGPGRxF58kmjrOo8Umy-CO2_6HKKVobO3pdJx9Jm8&_nc_ohc=MNTDH7LGN8MQ7kNvwHkVq7O&_nc_gid=9N3EsvIXPyhoavtO6Kz4Qg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftcsigZWULmM5c7qc4sSyXFPg0dym0YJ2Qmri3GzMWTCw&oe=699A1052&_nc_sid=0055be",
+              "evidence": "High affinity RTD brand in follower network.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/361386928_1746201442464527_583423675011543650_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGiQCsecTTnZwxBAdkyznuLY_mGPGRxF58kmjrOo8Umy-CO2_6HKKVobO3pdJx9Jm8&_nc_ohc=MNTDH7LGN8MQ7kNvwHkVq7O&_nc_gid=9N3EsvIXPyhoavtO6Kz4Qg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftcsigZWULmM5c7qc4sSyXFPg0dym0YJ2Qmri3GzMWTCw&oe=699A1052&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Twisted Tea"
             },
-            "provenance": "[ID: 1751416]",
-            "name": "Stake",
-            "handle": "@stake"
+            "provenance": "[ID: 399342807]",
+            "name": "Twisted Tea"
           },
           {
-            "label": "Roobet",
+            "label": "BeatBox Beverages",
+            "type": "brand",
+            "val": 92,
+            "data": {
+              "handle": "@beatboxbeverages",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/629809024_18560696128057294_3358270637487750171_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QG6okiDhnP8xVy9fHBIpiACSyBFmS1j3c2uEZOULPJHkmhij3U9c16E8W3w9k1fi9g&_nc_ohc=vDsnGzkDyzoQ7kNvwG38Tvp&_nc_gid=HegjQG8w2-MjcppbMmqnwQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft41apdbFzKCCUVVeyPjCd43daVwQSBJ2gRnCD0aylCNQ&oe=6999E2EA&_nc_sid=0055be",
+              "evidence": "Similar target demographic (party/festival crowd).",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/629809024_18560696128057294_3358270637487750171_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QG6okiDhnP8xVy9fHBIpiACSyBFmS1j3c2uEZOULPJHkmhij3U9c16E8W3w9k1fi9g&_nc_ohc=vDsnGzkDyzoQ7kNvwG38Tvp&_nc_gid=HegjQG8w2-MjcppbMmqnwQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft41apdbFzKCCUVVeyPjCd43daVwQSBJ2gRnCD0aylCNQ&oe=6999E2EA&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "BeatBox Beverages"
+            },
+            "provenance": "[ID: 222649293]",
+            "name": "BeatBox Beverages"
+          },
+          {
+            "label": "Big Sipz",
             "type": "brand",
             "val": 90,
             "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/556952413_18074357984325843_1973776644057861089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=4bjB1P3AS0sQ7kNvwG5C_Z0&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftHBfo2zeI1GcUDnB6gCI43fd6anMmej9Oom-tMNYxxtQ&oe=69990E76&_nc_sid=0055be",
-              "evidence": "Prominent crypto casino brand.",
-              "isVerified": true
+              "handle": "@bigsipz",
+              "bio": "Fuerza Regida's Cherry Manifest Available Now 🍒💥\nENTER TO WIN $16,000 DOLLARS 💵\nEnjoy Responsibly 21+\n© 2026 Patco Brands, Big Sipz® Las Vegas, NV",
+              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/466504967_1764658864303048_2878163338664500410_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=Ks9tB-Dt6QsQ7kNvwExLtKx&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsU838J-ctoq8OONeaftD1Qwbr9yHgDF8Q2b-W4RL4hEw&oe=699A02A7&_nc_sid=0055be",
+              "evidence": "Direct competitor with strong music tie-ins.",
+              "data": {
+                "bio": "Fuerza Regida's Cherry Manifest Available Now 🍒💥\nENTER TO WIN $16,000 DOLLARS 💵\nEnjoy Responsibly 21+\n© 2026 Patco Brands, Big Sipz® Las Vegas, NV",
+                "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/466504967_1764658864303048_2878163338664500410_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=Ks9tB-Dt6QsQ7kNvwExLtKx&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsU838J-ctoq8OONeaftD1Qwbr9yHgDF8Q2b-W4RL4hEw&oe=699A02A7&_nc_sid=0055be",
+                "externalUrl": "https://hoo.be/bigsipz"
+              },
+              "label": "Big Sipz"
             },
-            "provenance": "[ID: 39624597842]",
-            "name": "Roobet",
-            "handle": "@roobet"
+            "provenance": "[ID: 55611814352]",
+            "name": "Big Sipz"
           },
           {
-            "label": "Lux27 Casino",
-            "type": "creator",
+            "label": "Fireball Whisky",
+            "type": "brand",
+            "val": 88,
+            "data": {
+              "handle": "@fireballwhisky",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/491463187_18505526386041267_2187880176853067514_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zODQuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFXNDx5xGWWtGoKTxe7mFIdMdvZ_1XggpLrYQcMf4fkL9VgA-aYOGEjF5MjBRmjr-U&_nc_ohc=aZSeFEiiEJQQ7kNvwFHtXTY&_nc_gid=UlXdOH0SmF7tu-ZpHG2O8w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afus92YyVp9CfCSqYEQ98xOOGZzOpUUUkxpUpSMUpn5sVw&oe=6999E4BF&_nc_sid=0055be",
+              "evidence": "Popular party shot brand.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/491463187_18505526386041267_2187880176853067514_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zODQuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFXNDx5xGWWtGoKTxe7mFIdMdvZ_1XggpLrYQcMf4fkL9VgA-aYOGEjF5MjBRmjr-U&_nc_ohc=aZSeFEiiEJQQ7kNvwFHtXTY&_nc_gid=UlXdOH0SmF7tu-ZpHG2O8w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afus92YyVp9CfCSqYEQ98xOOGZzOpUUUkxpUpSMUpn5sVw&oe=6999E4BF&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Fireball Whisky"
+            },
+            "provenance": "[ID: 12073266]",
+            "name": "Fireball Whisky"
+          },
+          {
+            "label": "Cutwater Spirits",
+            "type": "brand",
             "val": 85,
             "data": {
-              "bio": "PROMO CODE ON BETPANDA: lux27 GAMBLER & STREAMER 🎰 5000$ MONTHLY REWARDS 💰",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/628405638_17854316337657913_569228393642367761_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=-XQEOzru4w8Q7kNvwHwcVoo&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuy3q78cPfQPiUYhfKhstglPN-v9eEuNxlhGjCaHwBFzg&oe=699940CC&_nc_sid=0055be",
-              "evidence": "Explicit affiliate and streamer for BetPanda."
+              "handle": "@cutwaterspirits",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/323712856_196322259617505_9210405387377694286_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QG6okiDhnP8xVy9fHBIpiACSyBFmS1j3c2uEZOULPJHkmhij3U9c16E8W3w9k1fi9g&_nc_ohc=KepBexo-NzgQ7kNvwG2sKLs&_nc_gid=HegjQG8w2-MjcppbMmqnwQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afubs9x7hnVJQkHaJH-llJc-4LdwB6GWvVaN_iBa0wghtA&oe=6999F377&_nc_sid=0055be",
+              "evidence": "Premium canned cocktail competitor.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/323712856_196322259617505_9210405387377694286_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QG6okiDhnP8xVy9fHBIpiACSyBFmS1j3c2uEZOULPJHkmhij3U9c16E8W3w9k1fi9g&_nc_ohc=KepBexo-NzgQ7kNvwG2sKLs&_nc_gid=HegjQG8w2-MjcppbMmqnwQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afubs9x7hnVJQkHaJH-llJc-4LdwB6GWvVaN_iBa0wghtA&oe=6999F377&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Cutwater"
             },
-            "provenance": "[ID: 79708897912]",
-            "name": "Lux27 Casino"
+            "provenance": "[ID: 3036563271]",
+            "name": "Cutwater Spirits"
           },
           {
-            "label": "Rollbit",
+            "label": "KickBack Shots",
             "type": "brand",
             "val": 80,
             "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/276026894_146862697802968_6333519285539505276_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=s97DkS62xBUQ7kNvwFvuMPF&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft03BOn2lMXxBp0w5wPyLyNly5ShHPEkx_5-d7hdIxgNg&oe=69990F35&_nc_sid=0055be",
-              "evidence": "Crypto trading and casino platform."
+              "handle": "@kickbackshots",
+              "bio": "📝- Patent pending \n🚀- Alc brand delivering a shot then chaser on the go\n🍹- Vodka + lemonade\n👇- Find a store near you (LA) or order online! (21+)",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/469890045_1121551199581062_5229667399895302594_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=beHFHfDLA4gQ7kNvwFcbhZs&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsx9TM8lcyAM7BVYtsytLaiTTrsrSoO8Kx2UNXJ4JkEjw&oe=699A0257&_nc_sid=0055be",
+              "evidence": "Innovative RTD shot format.",
+              "data": {
+                "bio": "📝- Patent pending \n🚀- Alc brand delivering a shot then chaser on the go\n🍹- Vodka + lemonade\n👇- Find a store near you (LA) or order online! (21+)",
+                "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/469890045_1121551199581062_5229667399895302594_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=beHFHfDLA4gQ7kNvwFcbhZs&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsx9TM8lcyAM7BVYtsytLaiTTrsrSoO8Kx2UNXJ4JkEjw&oe=699A0257&_nc_sid=0055be",
+                "followers": 10754,
+                "following": 567,
+                "posts": 55,
+                "externalUrl": "https://kickbackshots.com/"
+              },
+              "label": "Kickbacks Shot + Chaser ™"
             },
-            "provenance": "[ID: 30281096002]",
-            "name": "Rollbit",
-            "handle": "@rollbit"
+            "provenance": "[ID: 1932853338]",
+            "name": "KickBack Shots"
           },
           {
-            "label": "BitStarz",
+            "label": "Angry Orchard",
             "type": "brand",
             "val": 75,
             "data": {
+              "handle": "@angryorchard",
               "bio": "No bio",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/461821471_521007707376817_745770855191245699_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41MTIuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=clrm0-71Hz8Q7kNvwFY76JK&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuu4a8a_I83UQjNUZVvE-NUS3hax6ToPCtv8Q1X7S-sCA&oe=69993800&_nc_sid=0055be",
-              "evidence": "Competitor crypto casino."
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/487696317_1059399172681497_571176500465549471_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=zhwwl_H_mbwQ7kNvwHl-Yv9&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvXJEpgWrwmoYQpOPxlW8z2SO70daT7nRSeOA1BzZbCzw&oe=699A026C&_nc_sid=0055be",
+              "evidence": "Sweet alcoholic beverage preference.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/487696317_1059399172681497_571176500465549471_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=zhwwl_H_mbwQ7kNvwHl-Yv9&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvXJEpgWrwmoYQpOPxlW8z2SO70daT7nRSeOA1BzZbCzw&oe=699A026C&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Angry Orchard"
             },
-            "provenance": "[ID: 60294721103]",
-            "name": "BitStarz"
+            "provenance": "[ID: 256597946]",
+            "name": "Angry Orchard"
           },
           {
-            "label": "Metaspins",
+            "label": "CantaDrink",
             "type": "brand",
             "val": 70,
             "data": {
+              "handle": "@cantadrink",
               "bio": "No bio",
-              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/306538328_7842509349152337_6646185794204386686_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QGWpCB_ZVS6nx5Yj3EhpXB4N1NoyQqUC2K6-Z25H_LHzjR4RyWDbNR8WzBSwqyxsQs&_nc_ohc=qa3ppcDsB40Q7kNvwFLNHa2&_nc_gid=Lo6Adw7xPS7Ki_XjhRTQZw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs_K0OXCo5b8xqH_Lo-FjKc6scltslGdu7KBDGW4_bScg&oe=699912A5&_nc_sid=0055be",
-              "evidence": "Crypto casino platform."
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/331795484_928223424879899_7110389981437303362_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QGA5RC88sKjbAAgvzPL_aOvu3evllZSC1qjoorHWdyyN4ukCrUlVIokSloHV4oZWmg&_nc_ohc=QAYRz9CndcQQ7kNvwE4GZS-&_nc_gid=GUN6UL59oaYH47aZAgsBmA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftmlgqa0oFnBbOkoRnc4hs_KR3tvcos9F-2rljApfRDdA&oe=699A05CE&_nc_sid=0055be",
+              "evidence": "Cantaritos style drink, aligning with Latin demographic.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/331795484_928223424879899_7110389981437303362_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QGA5RC88sKjbAAgvzPL_aOvu3evllZSC1qjoorHWdyyN4ukCrUlVIokSloHV4oZWmg&_nc_ohc=QAYRz9CndcQQ7kNvwE4GZS-&_nc_gid=GUN6UL59oaYH47aZAgsBmA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftmlgqa0oFnBbOkoRnc4hs_KR3tvcos9F-2rljApfRDdA&oe=699A05CE&_nc_sid=0055be"
+              },
+              "label": "Cantadrink Cantaritos"
             },
-            "provenance": "[ID: 54361664094]",
-            "name": "Metaspins"
-          },
-          {
-            "label": "Rainbet",
-            "type": "brand",
-            "val": 65,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/586687691_18065546246625715_6587802242077323670_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=l-jQT5O3jKgQ7kNvwGpn94p&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afs02lRaELFqrxjo9rMn779kdwtlEdQPylpLMKeBqoB6_A&oe=69992107&_nc_sid=0055be",
-              "evidence": "Crypto betting platform."
-            },
-            "provenance": "[ID: 48825609714]",
-            "name": "Rainbet"
-          },
-          {
-            "label": "Slot King Rob",
-            "type": "creator",
-            "val": 60,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/625977042_17892261111421599_2278366003890663474_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=rfVw9tcAFOUQ7kNvwFN9KA7&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft_2GMICkT-oSPKQ_EcZY3RnsGbty67_xGx3omQa9Ax4A&oe=6999175A&_nc_sid=0055be",
-              "evidence": "Slots/Gambling content creator."
-            },
-            "provenance": "[ID: 72579261598]",
-            "name": "Slot King Rob"
+            "provenance": "[ID: 52354654519]",
+            "name": "CantaDrink",
+            "handle": "@cantadrink"
           }
         ],
-        "name": "Crypto Gambling & Casino Ecosystem"
+        "name": "Ready-to-Drink (RTD) & Party Alcohol"
       },
       {
-        "label": "Latin Urban & Regional Mexican Music",
+        "label": "Regional Mexican & Latin Urban Music",
         "type": "cluster",
         "data": {
-          "description": "High-profile Reggaeton, Trap, and Corridos Tumbados artists. This aligns with BetPanda's sponsorship of Anuel AA.",
+          "description": "A dominant cultural pillar for the audience, featuring artists from the Corridos Tumbados and modern Regional Mexican scene.",
           "keywords": [
-            "Reggaeton",
-            "Trap",
             "Corridos Tumbados",
-            "Musica",
-            "Latin"
+            "Regional Mexican",
+            "Latin Urban",
+            "Musica Mexicana"
           ]
         },
         "children": [
           {
-            "label": "Anuel Fan Page",
-            "type": "creator",
-            "val": 90,
-            "data": {
-              "bio": "@anuel fanpage",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/533514226_18359023894159905_4904428351951327466_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=2SARMGF3BSMQ7kNvwH6jf25&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu7YytU8A67uMbXBc7itPKVqdOUP5V6GPnSZu-Uu-rwOA&oe=6999289F&_nc_sid=0055be",
-              "evidence": "Fan account for Anuel, a key sponsor of BetPanda."
-            },
-            "provenance": "[ID: 4633551904]",
-            "name": "Anuel Fan Page"
-          },
-          {
             "label": "Fuerza Regida",
             "type": "creator",
-            "val": 88,
+            "val": 98,
             "data": {
+              "handle": "@fuerzaregida",
               "bio": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=RmEPyRKScGwQ7kNvwEIIQC1&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsT6mjmRAILCpEcQOEQWBjBN0zDY1MHmXMcy0cTOMaLzA&oe=69991F4B&_nc_sid=0055be",
-              "evidence": "Major Regional Mexican group."
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=6DeAVWZRA7sQ7kNvwFKA3fi&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsrkKBNTPkm2p_2gMNTjkDLAwXoLP3_awjWx1CATli1sQ&oe=699A004B&_nc_sid=0055be",
+              "evidence": "Massive overlap; band has its own alcohol partnerships.",
+              "data": {
+                "bio": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=6DeAVWZRA7sQ7kNvwFKA3fi&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsrkKBNTPkm2p_2gMNTjkDLAwXoLP3_awjWx1CATli1sQ&oe=699A004B&_nc_sid=0055be",
+                "followers": 10560587,
+                "following": 241,
+                "posts": 446,
+                "externalUrl": "https://signup.ticketmaster.com/fuerzaregida",
+                "isVerified": true
+              },
+              "label": "Fuerza Regida"
             },
             "provenance": "[ID: 1672632164]",
             "name": "Fuerza Regida"
           },
           {
-            "label": "Blessd",
+            "label": "Jesus Ortiz Paz (JOP)",
             "type": "creator",
-            "val": 85,
+            "val": 96,
             "data": {
-              "bio": "Dios💕\nTICKETS COLOMBIA 🇨🇴 AQUI 👇🏻",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/624542081_18561272938019732_9137874051752649602_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=GvTDFkySU5sQ7kNvwHfQ94b&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfskdgMHp1GII9Q-a5MljS0Sb65oAREHSZ7eyPL8_AvTiw&oe=69993974&_nc_sid=0055be",
-              "evidence": "Colombian Reggaeton artist.",
-              "followers": 7312191,
-              "following": 357,
-              "posts": 1462,
-              "externalUrl": "https://linktr.ee/blessd",
-              "isVerified": true
+              "handle": "@jesusortizpazfr",
+              "bio": "👁️                                                \n@fuerzaregida \n@streetmobrecords \n@dontfallinlovefest",
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/625150602_18559159843040587_9214424432351114996_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=An0ON9C2Ud8Q7kNvwGDadaU&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvX84j6o_c61Xy-_UlJP-vkCBVA6CI7U-6bOSNu5C9McA&oe=6999F159&_nc_sid=0055be",
+              "evidence": "Frontman of Fuerza Regida, highly influential.",
+              "data": {
+                "bio": "👁️                                                \n@fuerzaregida \n@streetmobrecords \n@dontfallinlovefest",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/625150602_18559159843040587_9214424432351114996_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=An0ON9C2Ud8Q7kNvwGDadaU&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvX84j6o_c61Xy-_UlJP-vkCBVA6CI7U-6bOSNu5C9McA&oe=6999F159&_nc_sid=0055be",
+                "followers": 5521752,
+                "following": 549,
+                "posts": 54,
+                "externalUrl": "https://dontfallinlovefest.com/",
+                "isVerified": true
+              }
             },
-            "provenance": "[ID: 1618003731]",
-            "name": "Blessd",
-            "handle": "@blessd"
+            "provenance": "[ID: 204200586]",
+            "name": "Jesus Ortiz Paz (JOP)"
           },
           {
-            "label": "Farruko",
+            "label": "Xavi",
             "type": "creator",
-            "val": 85,
+            "val": 94,
             "data": {
-              "bio": "LA167 ⛽️ 🍃🪾🍂🛡️🏁",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/552884577_18533944069036575_3581394513607636577_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=ZGQxsJzTlqMQ7kNvwEwOiBt&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvQL1saBHBMfmj5YdYVvIIpijvc-D7fK23ENZvpUBxskg&oe=69991BC1&_nc_sid=0055be",
-              "evidence": "Global Latin urban artist.",
-              "followers": 22993673,
-              "following": 3007,
-              "posts": 815,
-              "externalUrl": "https://sml.lnk.to/AyDale",
-              "isVerified": true
-            },
-            "provenance": "[ID: 249828574]",
-            "name": "Farruko",
-            "handle": "@farruko"
-          },
-          {
-            "label": "Jaziel Avilez",
-            "type": "creator",
-            "val": 80,
-            "data": {
-              "bio": "999 En constante evolución 𒅒𒈔𒅒𒇫𒄆 La Fe por delante🇻🇮",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/601646771_18541807210004395_5633762338729808037_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45OTUuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QH6QSHmTHJ5g--kcNEayi31xjoBdatf24NClcqJixczJYGmnT-EMwOKGuhAtPwLjeM&_nc_ohc=JbKpSNm_4R0Q7kNvwEEscA2&_nc_gid=wgr6nrsjHfFR3rL5bH-jyg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv3mOpmCihm1a9rMgKcZxECK_rIx8W8l7d3jhW8spUzwg&oe=699942E1&_nc_sid=0055be",
-              "evidence": "Regional Mexican artist."
-            },
-            "provenance": "[ID: 1091140394]",
-            "name": "Jaziel Avilez"
-          },
-          {
-            "label": "El Bogueto",
-            "type": "creator",
-            "val": 78,
-            "data": {
-              "bio": "El Chakal Más Caro , El Boo , NHLQNC👑 CNEC , remix out now ! 👑👹👁️👹",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/602944666_18546047596045059_362291304507770872_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=iwBgxuxnwuYQ7kNvwGK-LGK&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afvgoxn5_hkL60H6P3_w2QaJOm0xuZt4eZFN_Iwm9_cJ8w&oe=69994122&_nc_sid=0055be",
-              "evidence": "Mexican urban artist."
-            },
-            "provenance": "[ID: 1151021058]",
-            "name": "El Bogueto"
-          },
-          {
-            "label": "Juanka El Problematik",
-            "type": "creator",
-            "val": 75,
-            "data": {
-              "bio": "Juannkaaaa @e.i.d.l.m 🏰 RipKolikaLaTorre🕊",
-              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/607795905_18551745988031770_2285967624091848558_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=-PL_yqTgFpYQ7kNvwGJyHVH&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvZT6p3M8aVm9_XGJ3S1wvuxE5euU6t95sxGW_unzC2-A&oe=69992311&_nc_sid=0055be",
-              "evidence": "Puerto Rican Reggaeton artist."
-            },
-            "provenance": "[ID: 42399769]",
-            "name": "Juanka El Problematik"
-          }
-        ],
-        "name": "Latin Urban & Regional Mexican Music"
-      },
-      {
-        "label": "Combat Sports (MMA & Boxing)",
-        "type": "cluster",
-        "data": {
-          "description": "Professional fighters and organizations, particularly UFC and Boxing, which heavily overlap with betting demographics.",
-          "keywords": [
-            "UFC",
-            "MMA",
-            "Boxing",
-            "Fighter",
-            "Champion"
-          ]
-        },
-        "children": [
-          {
-            "label": "UFC",
-            "type": "brand",
-            "val": 95,
-            "data": {
-              "bio": "The official UFC Instagram brings you fight photos and video from around the world.",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/460224848_904323201748535_5161631215796810656_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=TdWgpHV7SH8Q7kNvwFCohve&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afumun3N-aF7_JbLCqOfwf-fAVsvScr9ch04Uevf2WMDzQ&oe=699925CB&_nc_sid=0055be",
-              "evidence": "Premier MMA organization.",
-              "followers": 49623272,
-              "following": 1291,
-              "posts": 44255,
-              "externalUrl": "http://linktr.ee/UFCSOCIAL",
-              "isVerified": true
-            },
-            "provenance": "[ID: 22832340]",
-            "name": "UFC",
-            "handle": "@ufc"
-          },
-          {
-            "label": "Marlon 'Chito' Vera",
-            "type": "creator",
-            "val": 85,
-            "data": {
-              "bio": "Fighting is life. @chitoverapodcast",
-              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/610600517_18551693656024286_2950264396004903185_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40ODAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=XA3HS3C1MoQQ7kNvwEJsX2k&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv8V7C9oMmYw10iKs2jBtUfFW0tK2rz_Jm737ZzrrN3YQ&oe=69993022&_nc_sid=0055be",
-              "evidence": "Top UFC contender."
-            },
-            "provenance": "[ID: 214936285]",
-            "name": "Marlon 'Chito' Vera"
-          },
-          {
-            "label": "Ilia Topuria",
-            "type": "creator",
-            "val": 85,
-            "data": {
+              "handle": "@xavioficial",
               "bio": "No bio",
-              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/552698052_18529068400030276_2340663579980792983_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QF682x8BpiENbd926kYeteTRyxEnfWqvgnDtutt8Rk9G0fMlLDaUpjoXC4ywxmfqEY&_nc_ohc=pubA1a2Y8qAQ7kNvwFVUCS-&_nc_gid=VrlD_Msy5uWuJMu8SMQxtw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsO04FF8m3dedHuwk0n2kZ6bR_t-9aYHSv3ekycv-wgAQ&oe=69990E57&_nc_sid=0055be",
-              "evidence": "UFC Champion."
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/476488020_612977157990631_8711313563554703122_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=sQ04acwkInkQ7kNvwEE7CbT&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftFpeKmyOjBVwzc78ancUucGxm7IymIgrhJc1Sh49f80Q&oe=6999E0CB&_nc_sid=0055be",
+              "evidence": "Rising star in the Corridos Tumbados genre.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/476488020_612977157990631_8711313563554703122_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=sQ04acwkInkQ7kNvwEE7CbT&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftFpeKmyOjBVwzc78ancUucGxm7IymIgrhJc1Sh49f80Q&oe=6999E0CB&_nc_sid=0055be",
+                "followers": 3821654,
+                "following": 2188,
+                "posts": 45,
+                "externalUrl": "https://youtube.com/@xavi_official?si=59fzzJc2nKlf8Bs8",
+                "isVerified": true
+              },
+              "label": "Xavi Oficial🌀"
             },
-            "provenance": "[ID: 500894275]",
-            "name": "Ilia Topuria"
+            "provenance": "[ID: 5130046704]",
+            "name": "Xavi"
           },
           {
-            "label": "Paddy The Baddy",
-            "type": "creator",
-            "val": 80,
-            "data": {
-              "bio": "Gym: @nextgenmmalpool Manager: @graham_boylan Sponsored Athlete: @underarmour @appliednutrition",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/275252879_924206994943869_5211974124298049163_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MzMuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=7rIW0nJjQRsQ7kNvwHnCA0G&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuybHNC9PbF5OZh1dPfPzD-lponjf1As63aPvC1UUl0nQ&oe=69993E8A&_nc_sid=0055be",
-              "evidence": "Popular UFC fighter (handle: theufcbaddy)."
-            },
-            "provenance": "[ID: 51629244817]",
-            "name": "Paddy The Baddy"
-          },
-          {
-            "label": "Xander Zayas",
-            "type": "creator",
-            "val": 75,
-            "data": {
-              "bio": "UNIFICADO @worldboxingorg & @wbaboxingofficial 154👑 #CríaBoricua 🇵🇷",
-              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/624737477_18506169205079432_5926355179068110386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=BLrAwJpw4U0Q7kNvwE41gI7&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuOGECBrUAhFqf32kq8HAZNVovCEk0dbtONqUh5Y5ba3Q&oe=699911D2&_nc_sid=0055be",
-              "evidence": "Professional Boxer."
-            },
-            "provenance": "[ID: 2252303431]",
-            "name": "Xander Zayas"
-          }
-        ],
-        "name": "Combat Sports (MMA & Boxing)"
-      },
-      {
-        "label": "Global Sports Icons (NBA & Football)",
-        "type": "cluster",
-        "data": {
-          "description": "Top-tier athletes from NBA and European Football, representing the sports betting interest of the audience.",
-          "keywords": [
-            "NBA",
-            "Football",
-            "Basketball",
-            "Athlete",
-            "Soccer"
-          ]
-        },
-        "children": [
-          {
-            "label": "NBA",
-            "type": "brand",
-            "val": 95,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/582086582_18603572488024487_7141348984943669969_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=GhY728UCdL0Q7kNvwFVGSjS&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsENtM7LcgsE8iF7sWRA4oRq07oBC7GfyqmQ9fY_IZMCQ&oe=69990E6C&_nc_sid=0055be",
-              "evidence": "Major sports league.",
-              "isVerified": true
-            },
-            "provenance": "[ID: 20824486]",
-            "name": "NBA",
-            "handle": "@nba"
-          },
-          {
-            "label": "Kylian Mbappé",
-            "type": "creator",
-            "val": 92,
-            "data": {
-              "bio": "@realmadrid @equipedefrance",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/252713041_231066042425309_8989807381344431608_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=_yCcN1kCEI4Q7kNvwFSFzyN&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftZh8vbCuFHZFJhn1bZsuT-yybWvKD580wzucF29h7hOw&oe=69991E02&_nc_sid=0055be",
-              "evidence": "Global football superstar."
-            },
-            "provenance": "[ID: 4213518589]",
-            "name": "Kylian Mbappé"
-          },
-          {
-            "label": "LeBron James",
-            "type": "creator",
-            "val": 90,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/581636686_18588003070018588_8358206635436958501_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=_6H2G7fbT4UQ7kNvwG_vP3c&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvoOg2IdiCtEkakQGt6TKyrwrTT3OxjezT3IXp4uLmYdw&oe=69990D63&_nc_sid=0055be",
-              "evidence": "NBA Legend."
-            },
-            "provenance": "[ID: 19410587]",
-            "name": "LeBron James"
-          },
-          {
-            "label": "Stephen Curry",
+            "label": "DannyLux",
             "type": "creator",
             "val": 88,
             "data": {
+              "handle": "@dannyluxfr",
               "bio": "No bio",
-              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/456618331_336606462878714_3369030573647129701_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=wQNi6S8KC6gQ7kNvwHgEros&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft8pOcz7GSbyeEz1IwAIibnPoe9d6Gsoc8GwzryVB1pew&oe=6999302D&_nc_sid=0055be",
-              "evidence": "NBA Superstar."
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/627460633_18091030403036467_8945840005582068036_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44ODIuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QEk7L4ugb-_INadriL1SsKjH0BaSznJLoYf8AoNi4IRkS7vU4c4_f9xveUHHzfrot0&_nc_ohc=omGZJr0pxQkQ7kNvwGBfWZL&_nc_gid=9Y0oqY98AmhcRApQCjEsiA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuIVyyEaxumqwiR3kkEDlV4rlOOTtwX1P42IhNbg-agqQ&oe=699A13F0&_nc_sid=0055be",
+              "evidence": "Sad Sierreño artist popular with Gen Z.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/627460633_18091030403036467_8945840005582068036_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44ODIuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QEk7L4ugb-_INadriL1SsKjH0BaSznJLoYf8AoNi4IRkS7vU4c4_f9xveUHHzfrot0&_nc_ohc=omGZJr0pxQkQ7kNvwGBfWZL&_nc_gid=9Y0oqY98AmhcRApQCjEsiA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuIVyyEaxumqwiR3kkEDlV4rlOOTtwX1P42IhNbg-agqQ&oe=699A13F0&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "dannylux🐯"
             },
-            "provenance": "[ID: 324599988]",
-            "name": "Stephen Curry"
+            "provenance": "[ID: 31025596466]",
+            "name": "DannyLux"
           },
           {
-            "label": "Trae Young",
+            "label": "OhGeesy",
             "type": "creator",
             "val": 85,
             "data": {
-              "bio": "#3",
-              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/268423501_574373954011386_8025719458389483833_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=Rv7Eah89BXEQ7kNvwHY7p5Q&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvQNw8YMnqS9vW-HMyya3QvBOQXZoH6Gq5BNWy8-Dd7vw&oe=69992CB7&_nc_sid=0055be",
-              "evidence": "NBA Player."
+              "handle": "@ohgeesy",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/475076564_1117675116804112_1660899182276422613_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QExcsTmxuTYh1S43H11KOEG_idedp1hQj3lfn2j31g4kC2XBa95lbmAv2JV0kSaEV4&_nc_ohc=MfVbZpbBgtcQ7kNvwHGVS86&_nc_gid=FyL4JJVZtLWgTEpENAa5aw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsnGG8kbtfHpW28p2xNeA1pKw8MyEU9QuElqHCOIpt_ng&oe=699A1667&_nc_sid=0055be",
+              "evidence": "West Coast rapper with strong Latin fanbase overlap.",
+              "isVerified": true,
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/475076564_1117675116804112_1660899182276422613_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QExcsTmxuTYh1S43H11KOEG_idedp1hQj3lfn2j31g4kC2XBa95lbmAv2JV0kSaEV4&_nc_ohc=MfVbZpbBgtcQ7kNvwHGVS86&_nc_gid=FyL4JJVZtLWgTEpENAa5aw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsnGG8kbtfHpW28p2xNeA1pKw8MyEU9QuElqHCOIpt_ng&oe=699A1667&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "OHGEESY."
             },
-            "provenance": "[ID: 21823686]",
-            "name": "Trae Young"
+            "provenance": "[ID: 223816355]",
+            "name": "OhGeesy",
+            "handle": "@ohgeesy"
+          },
+          {
+            "label": "MoneySign Suede",
+            "type": "creator",
+            "val": 82,
+            "data": {
+              "handle": "@moneysignsuede",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/588835708_18087648731053420_4812914161796719788_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QEk7L4ugb-_INadriL1SsKjH0BaSznJLoYf8AoNi4IRkS7vU4c4_f9xveUHHzfrot0&_nc_ohc=iriXUB-IKN8Q7kNvwHbsP61&_nc_gid=9Y0oqY98AmhcRApQCjEsiA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv27y0IfaRbab82EqEEqMacVPAgKgrjpnvyKiKxLG6zDQ&oe=699A1117&_nc_sid=0055be",
+              "evidence": "Late rapper with cult following in this demographic.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/588835708_18087648731053420_4812914161796719788_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QEk7L4ugb-_INadriL1SsKjH0BaSznJLoYf8AoNi4IRkS7vU4c4_f9xveUHHzfrot0&_nc_ohc=iriXUB-IKN8Q7kNvwHbsP61&_nc_gid=9Y0oqY98AmhcRApQCjEsiA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv27y0IfaRbab82EqEEqMacVPAgKgrjpnvyKiKxLG6zDQ&oe=699A1117&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "MoneySign Suede"
+            },
+            "provenance": "[ID: 31476821419]",
+            "name": "MoneySign Suede"
           }
         ],
-        "name": "Global Sports Icons (NBA & Football)"
+        "name": "Regional Mexican & Latin Urban Music"
       },
       {
-        "label": "Balkan Influencers & Lifestyle",
+        "label": "Viral Entertainment & Influencers",
         "type": "cluster",
         "data": {
-          "description": "A distinct cluster of influencers, singers, and personalities from Serbia, Bosnia, and Croatia, suggesting a regional marketing focus or origin.",
+          "description": "Mainstream internet personalities, streamers, and comedians that appeal to a Gen Z/Young Millennial audience.",
           "keywords": [
-            "Serbia",
-            "Bosnia",
-            "Balkan",
-            "Singer",
-            "Influencer"
+            "TikTok Stars",
+            "Streamers",
+            "Comedy",
+            "Viral Content"
           ]
         },
         "children": [
           {
-            "label": "Milica Todorovic",
+            "label": "Charli D'Amelio",
+            "type": "creator",
+            "val": 95,
+            "data": {
+              "handle": "@charlidamelio",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/418830807_353794357285928_719688162853556590_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QG5T4_u0Zkkeym6u4ztMEbjS1FsCIxDsAQMiC9glUs-Y8BUeqJw3OGfsmfYetImlMk&_nc_ohc=IkuzwGz8RpQQ7kNvwGuZ8Yx&_nc_gid=rcxqQN9D-kl88equp_Wz5w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afvoi-dZ-ei5mj5bQl_w781hJsRMFtof-VWRzEahuxd5dg&oe=699A091B&_nc_sid=0055be",
+              "evidence": "Top-tier influencer indicating Gen Z demographic.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/418830807_353794357285928_719688162853556590_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QG5T4_u0Zkkeym6u4ztMEbjS1FsCIxDsAQMiC9glUs-Y8BUeqJw3OGfsmfYetImlMk&_nc_ohc=IkuzwGz8RpQQ7kNvwGuZ8Yx&_nc_gid=rcxqQN9D-kl88equp_Wz5w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afvoi-dZ-ei5mj5bQl_w781hJsRMFtof-VWRzEahuxd5dg&oe=699A091B&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "charli"
+            },
+            "provenance": "[ID: 183250726]",
+            "name": "Charli D'Amelio"
+          },
+          {
+            "label": "Kai Cenat",
+            "type": "creator",
+            "val": 93,
+            "data": {
+              "handle": "@kaicenat",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/599434236_18414758233140325_7983231959682916470_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFUZ2lo24_OMZPMQH3a9lrgGkxHG8jRpZuaCovGpEDNHWLX4j7kpU8LtlWqF2XsAok&_nc_ohc=RxpaN-K5XbcQ7kNvwFPslhQ&_nc_gid=sOnMx7WLXy6dm6AK2S-EuA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsy9bQJv4MBm9wBy9APqoHMhdn10z07ylGzOCtHByH9Jw&oe=6999F58D&_nc_sid=0055be",
+              "evidence": "Top streamer, high engagement with youth culture.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/599434236_18414758233140325_7983231959682916470_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFUZ2lo24_OMZPMQH3a9lrgGkxHG8jRpZuaCovGpEDNHWLX4j7kpU8LtlWqF2XsAok&_nc_ohc=RxpaN-K5XbcQ7kNvwFPslhQ&_nc_gid=sOnMx7WLXy6dm6AK2S-EuA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsy9bQJv4MBm9wBy9APqoHMhdn10z07ylGzOCtHByH9Jw&oe=6999F58D&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Kai Cenat"
+            },
+            "provenance": "[ID: 4180004324]",
+            "name": "Kai Cenat"
+          },
+          {
+            "label": "Sal Vulcano",
+            "type": "creator",
+            "val": 89,
+            "data": {
+              "handle": "@salvulcano",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/592482884_18545419183019924_3860544660602338354_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=EfvybhMUWcwQ7kNvwHLF6gR&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu2M2WUbmS3sEEhzCGWvjTcHFyhMaYzIZzWZGpZUs-Vuw&oe=699A0663&_nc_sid=0055be",
+              "evidence": "Impractical Jokers star, appeals to broad humor audience.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/592482884_18545419183019924_3860544660602338354_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=EfvybhMUWcwQ7kNvwHLF6gR&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu2M2WUbmS3sEEhzCGWvjTcHFyhMaYzIZzWZGpZUs-Vuw&oe=699A0663&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Sal Vulcano"
+            },
+            "provenance": "[ID: 51027923]",
+            "name": "Sal Vulcano"
+          },
+          {
+            "label": "Post Malone",
+            "type": "creator",
+            "val": 88,
+            "data": {
+              "handle": "@postmalone",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/491466821_988393333422025_3124259544269262334_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEdp4OqkOcmH0h86wox682g900V27AVnMk_DyMpa-EzHIYzxg1PK5Uv_kpl84aku-M&_nc_ohc=cqoXiB3ytfUQ7kNvwFF-081&_nc_gid=7I37oILpt4ymcm6BkjdxeQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftl9A6d5mdaEmraJF0gCJ_3J0yYWAb1L2tVwIxE6bMqDQ&oe=6999E8E0&_nc_sid=0055be",
+              "evidence": "Musician with strong party/alcohol brand affinity.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/491466821_988393333422025_3124259544269262334_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEdp4OqkOcmH0h86wox682g900V27AVnMk_DyMpa-EzHIYzxg1PK5Uv_kpl84aku-M&_nc_ohc=cqoXiB3ytfUQ7kNvwFF-081&_nc_gid=7I37oILpt4ymcm6BkjdxeQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftl9A6d5mdaEmraJF0gCJ_3J0yYWAb1L2tVwIxE6bMqDQ&oe=6999E8E0&_nc_sid=0055be",
+                "isVerified": true
+              }
+            },
+            "provenance": "[ID: 1432609192]",
+            "name": "Post Malone"
+          },
+          {
+            "label": "Baylen Levine",
             "type": "creator",
             "val": 85,
             "data": {
-              "bio": "🎶Singer🎶 Booking: +381646855303 Marko",
-              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/462524491_545049194772041_2925686720168680870_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=z23V4jFqRp4Q7kNvwECg2vf&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfswXRgyJ9z1JMFHpIWWIl7YaEFazvTuCW5l_uqtc9dszw&oe=69993672&_nc_sid=0055be",
-              "evidence": "Popular Serbian singer."
+              "handle": "@baylenlevine",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/508652550_18518030632042870_272464637365312036_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=gCPFtIcUuDwQ7kNvwFQrrjm&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvpXIfpM0TTRj9SEk_phlZA71Wdl3Qedgi-mjp3-HOcUA&oe=699A1465&_nc_sid=0055be",
+              "evidence": "Prankster/YouTuber popular with younger demographic.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/508652550_18518030632042870_272464637365312036_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=gCPFtIcUuDwQ7kNvwFQrrjm&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvpXIfpM0TTRj9SEk_phlZA71Wdl3Qedgi-mjp3-HOcUA&oe=699A1465&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Baylen Levine"
             },
-            "provenance": "[ID: 208469425]",
-            "name": "Milica Todorovic"
+            "provenance": "[ID: 488874869]",
+            "name": "Baylen Levine"
           },
           {
-            "label": "Pinki Prase",
+            "label": "Madison Beer",
             "type": "creator",
-            "val": 75,
+            "val": 84,
             "data": {
+              "handle": "@madisonbeerhq",
               "bio": "No bio",
-              "profilePicUrl": "https://scontent-gig4-1.cdninstagram.com/v/t51.2885-19/573323465_1219825463302212_7278921664109726296_n.png?stp=dst-jpg_e0_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xNTAuYzIifQ&_nc_ht=scontent-gig4-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEDOxmp5UJOOYNDZmmdjkAolczq8nzSQhYk1mRgi8BDgj39EEubpiutkI0aE5VlkWBZMGDCAxb8igucZvTTQALX&_nc_ohc=s7mE-xL-e24Q7kNvwH6Gpsr&_nc_gid=rmJT_IZaSQfb3gntwFdPlg&edm=ALCvFkgBAAAA&ccb=7-5&ig_cache_key=YW5vbnltb3VzX3Byb2ZpbGVfcGlj.3-ccb7-5&oh=00_Aft6yJrdi4ivyN-3Z3oh0jrXQDJkDPUbuS18c_68R8IU-w&oe=6999322A&_nc_sid=6d62aa",
-              "evidence": "Balkan YouTuber/Influencer."
+              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/569646887_18171811375368576_3755775644658435980_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QG5T4_u0Zkkeym6u4ztMEbjS1FsCIxDsAQMiC9glUs-Y8BUeqJw3OGfsmfYetImlMk&_nc_ohc=I8XZQrLCrGAQ7kNvwHC9YhY&_nc_gid=rcxqQN9D-kl88equp_Wz5w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvqcNqDeIDCMa-PHDj16EbsaDFULVCaExAlAh1CBWgVfw&oe=699A16F0&_nc_sid=0055be",
+              "evidence": "Pop culture icon.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/569646887_18171811375368576_3755775644658435980_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QG5T4_u0Zkkeym6u4ztMEbjS1FsCIxDsAQMiC9glUs-Y8BUeqJw3OGfsmfYetImlMk&_nc_ohc=I8XZQrLCrGAQ7kNvwHC9YhY&_nc_gid=rcxqQN9D-kl88equp_Wz5w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvqcNqDeIDCMa-PHDj16EbsaDFULVCaExAlAh1CBWgVfw&oe=699A16F0&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Madison Beer HQ"
             },
-            "provenance": "[ID: 79385555422]",
-            "name": "Pinki Prase"
-          },
-          {
-            "label": "Marko Vuletic",
-            "type": "creator",
-            "val": 70,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/346248837_1443561486381484_8791853541680320181_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFrqjNf4fiNJxIbHWBdkFQTJt0BIYeyAbiYAXgK8JGz8fsIRMW3vhWzsXBPmRjvIC4&_nc_ohc=lnlUuOWG9DoQ7kNvwEA9TaW&_nc_gid=GH7Ua4U8hvLYM79YiLM2kA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvRlmF7vM5XQaN5EIk4E2f07MStl6KlNvZBaRJzuGr0jQ&oe=69991901&_nc_sid=0055be",
-              "evidence": "Croatian influencer."
-            },
-            "provenance": "[ID: 328877004]",
-            "name": "Marko Vuletic"
-          },
-          {
-            "label": "Zombijana",
-            "type": "creator",
-            "val": 65,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/496863054_18507604444013694_6348779724540194496_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFrqjNf4fiNJxIbHWBdkFQTJt0BIYeyAbiYAXgK8JGz8fsIRMW3vhWzsXBPmRjvIC4&_nc_ohc=Pin1bPRvf4YQ7kNvwFkHxqi&_nc_gid=GH7Ua4U8hvLYM79YiLM2kA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuv05_9N3THHQfGc-vu9fHmTAgBztxOUDz0iJ2JxqE1mg&oe=69992379&_nc_sid=0055be",
-              "evidence": "Montenegrin/Balkan influencer.",
-              "isVerified": true
-            },
-            "provenance": "[ID: 342157693]",
-            "name": "Zombijana",
-            "handle": "@zombijana"
-          },
-          {
-            "label": "Lobanjica",
-            "type": "creator",
-            "val": 60,
-            "data": {
-              "bio": "No bio",
-              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/342706112_4216088511950141_7915095511491941313_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QEV-yjum-gqwwEojA_NRR3bdeXoOPjdDOcQV5n9Z6-wdkFK-6EO1rDGH0Nk4SZ0F1c&_nc_ohc=2O2IMEltvRIQ7kNvwGWkSw_&_nc_gid=tXmsledr8Lb8IR5rZavcaA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvkEdUHxQCpL5YDOUpjmudzl_duix-nJnzvkT2CQjmolA&oe=6999434D&_nc_sid=0055be",
-              "evidence": "Montenegrin CS:GO streamer/bodybuilder."
-            },
-            "provenance": "[ID: 7004961839]",
-            "name": "Lobanjica"
+            "provenance": "[ID: 11059552575]",
+            "name": "Madison Beer"
           }
         ],
-        "name": "Balkan Influencers & Lifestyle"
+        "name": "Viral Entertainment & Influencers"
       },
       {
-        "label": "Hip Hop & Underground Music",
+        "label": "EDM & Festival Culture",
         "type": "cluster",
         "data": {
-          "description": "Independent rappers, producers, and music magazines, distinct from the Latin cluster.",
+          "description": "Creators and entities related to the electronic dance music scene, a key consumption occasion for BuzzBallz.",
           "keywords": [
-            "Rapper",
-            "Producer",
-            "Underground",
-            "Hip Hop",
-            "Music"
+            "Rave",
+            "Dubstep",
+            "House Music",
+            "Festivals"
           ]
         },
         "children": [
           {
-            "label": "Russ P",
+            "label": "Subtronics",
             "type": "creator",
-            "val": 70,
+            "val": 90,
             "data": {
-              "bio": "📀Music Exec. @fredthegodsonmusic 🕊 •Founder of 𝐆𝐨𝐝𝐋𝐞𝐠𝐚𝐜𝐲 EST. 941 ™️",
-              "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/329603506_3373121326244883_7525387571551100766_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=85aX5bdeTQMQ7kNvwHmzs1r&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvIfBj_CCazBL5-G2e1N4YKgBiD0bSi2RhvPRHRuuM51w&oe=69993D7A&_nc_sid=0055be",
-              "evidence": "Music executive and producer."
+              "handle": "@subtronics",
+              "bio": "Fibonacci Pt 2: Infinity - Out Now",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/559543042_18537038377029546_4654940071709219376_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=zIOKIQeGvd4Q7kNvwH7jaNW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuq7SGf7CObdOcKfxfJJUo-ucCI-_qzTYAZaZuS9rf8Pg&oe=6999F376&_nc_sid=0055be",
+              "evidence": "Major Dubstep DJ, heavy festival presence.",
+              "followers": 813514,
+              "following": 4307,
+              "posts": 334,
+              "externalUrl": "https://laylo.com/subtronics/cyclops-island-26",
+              "isVerified": true,
+              "data": {
+                "bio": "Fibonacci Pt 2: Infinity - Out Now",
+                "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/559543042_18537038377029546_4654940071709219376_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=zIOKIQeGvd4Q7kNvwH7jaNW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuq7SGf7CObdOcKfxfJJUo-ucCI-_qzTYAZaZuS9rf8Pg&oe=6999F376&_nc_sid=0055be",
+                "followers": 813514,
+                "following": 4307,
+                "posts": 334,
+                "externalUrl": "https://laylo.com/subtronics/cyclops-island-26",
+                "isVerified": true
+              },
+              "label": "Subtronics"
             },
-            "provenance": "[ID: 191211984]",
-            "name": "Russ P"
+            "provenance": "[ID: 343325545]",
+            "name": "Subtronics",
+            "handle": "@subtronics"
           },
           {
-            "label": "Undrgrnd Magazine",
+            "label": "John Summit",
+            "type": "creator",
+            "val": 89,
+            "data": {
+              "handle": "@johnsummit",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/622384866_18556218940034958_5138972666901412394_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEyDmtptCsWnwBEqG3CVt5FiPxNDKn7QPyvMHIHTJ-WkQXnkyk7prQg3Zqgcy3mOfU&_nc_ohc=E-5UFEvfH3UQ7kNvwGBdWp3&_nc_gid=5RifoGn77FwY-3XhHVz_2Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuNOWX_sAn3Mq9EbKuBK6zLuIFwrDJV2KgUb3cwkC6KvA&oe=6999EC74&_nc_sid=0055be",
+              "evidence": "Tech House DJ known for party lifestyle.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/622384866_18556218940034958_5138972666901412394_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEyDmtptCsWnwBEqG3CVt5FiPxNDKn7QPyvMHIHTJ-WkQXnkyk7prQg3Zqgcy3mOfU&_nc_ohc=E-5UFEvfH3UQ7kNvwGBdWp3&_nc_gid=5RifoGn77FwY-3XhHVz_2Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuNOWX_sAn3Mq9EbKuBK6zLuIFwrDJV2KgUb3cwkC6KvA&oe=6999EC74&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "John Summit"
+            },
+            "provenance": "[ID: 1461282957]",
+            "name": "John Summit"
+          },
+          {
+            "label": "Insomniac Concerts",
             "type": "brand",
-            "val": 65,
+            "val": 85,
             "data": {
-              "bio": "Hard Copy & Digital Music Magazine 👽 Home to @undrgrnd.studiola 🏡",
-              "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/273819738_503116344504210_8273331440584903591_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzkuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=incifPuh64YQ7kNvwF3_12Z&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsfxEq9c2mFFBRHytD2HmVqYsqA6w-juzeQ_ec5xz7g3A&oe=69991D15&_nc_sid=0055be",
-              "evidence": "Music publication."
+              "handle": "@insomniacconcerts",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/338157655_183517441125516_4397308572997777577_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFvExgrPoD2GxC96-CIp9scdQbR4ePSj9wjWYlmuyrIRTsozvCOV_SMucpJQJ7ydBo&_nc_ohc=X1nbUU5pPIgQ7kNvwE5Khe7&_nc_gid=BH-RUF_7OGdoSSggNJJ1Fg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftxfArc0Cm6vKL6jmisNzCY6WoBoIkWPghiC38UdvcQwg&oe=6999F3F3&_nc_sid=0055be",
+              "evidence": "Organizer of major raves (EDC), key demographic overlap.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/338157655_183517441125516_4397308572997777577_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QFvExgrPoD2GxC96-CIp9scdQbR4ePSj9wjWYlmuyrIRTsozvCOV_SMucpJQJ7ydBo&_nc_ohc=X1nbUU5pPIgQ7kNvwE5Khe7&_nc_gid=BH-RUF_7OGdoSSggNJJ1Fg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftxfArc0Cm6vKL6jmisNzCY6WoBoIkWPghiC38UdvcQwg&oe=6999F3F3&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Insomniac Concerts"
             },
-            "provenance": "[ID: 26101955371]",
-            "name": "Undrgrnd Magazine"
-          },
-          {
-            "label": "Young Certifyed",
-            "type": "creator",
-            "val": 60,
-            "data": {
-              "bio": "ROSE UP FROM THE CONCRETE🪨🌹 BORN 2 STEP ON THE DEVIL🥾🐍",
-              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/603253176_18546297472033025_5158977280718951595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MzkuYzIifQ&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=UmHd4nyOd6kQ7kNvwFP5bHF&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuSxM4yCFNn6YAdh_7_Svo0Uo4Z1kdCHMIQCM_eAaaqmw&oe=69990F02&_nc_sid=0055be",
-              "evidence": "Independent artist."
-            },
-            "provenance": "[ID: 253729024]",
-            "name": "Young Certifyed"
+            "provenance": "[ID: 43980318196]",
+            "name": "Insomniac Concerts"
           }
         ],
-        "name": "Hip Hop & Underground Music"
+        "name": "EDM & Festival Culture"
+      },
+      {
+        "label": "Lifestyle, Fashion & Retail",
+        "type": "cluster",
+        "data": {
+          "description": "Brands and aesthetics that define the visual identity of the audience, mixing streetwear, nostalgia, and mall culture.",
+          "keywords": [
+            "Streetwear",
+            "Y2K",
+            "Mall Goth",
+            "Casual"
+          ]
+        },
+        "children": [
+          {
+            "label": "Cookies SF",
+            "type": "brand",
+            "val": 92,
+            "data": {
+              "handle": "@cookiessf",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/42731689_2404078716275722_8560453116141502464_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDIyLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QE0h_sw4Q3imgeRhalhHfgj67SsrWT3dvdZD8aSHj-lIWOxWsxJF-hlmPRubP3EKns&_nc_ohc=klBvPF-TnmwQ7kNvwGFn8we&_nc_gid=x0CrYy1sK84mXEpBz0AdPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsbwivirt6u5CjqSIl8qz7WLqQ0Z-bGEC8vbxBF1pNrFg&oe=6999E403&_nc_sid=0055be",
+              "evidence": "Streetwear brand deeply linked to cannabis culture.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/42731689_2404078716275722_8560453116141502464_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDIyLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QE0h_sw4Q3imgeRhalhHfgj67SsrWT3dvdZD8aSHj-lIWOxWsxJF-hlmPRubP3EKns&_nc_ohc=klBvPF-TnmwQ7kNvwGFn8we&_nc_gid=x0CrYy1sK84mXEpBz0AdPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsbwivirt6u5CjqSIl8qz7WLqQ0Z-bGEC8vbxBF1pNrFg&oe=6999E403&_nc_sid=0055be",
+                "followers": 1051288,
+                "following": 2379,
+                "posts": 8003,
+                "externalUrl": "http://www.cookiessf.com/",
+                "isVerified": true
+              },
+              "label": "COOKIES CLOTHING"
+            },
+            "provenance": "[ID: 264393639]",
+            "name": "Cookies SF"
+          },
+          {
+            "label": "True Religion",
+            "type": "brand",
+            "val": 88,
+            "data": {
+              "handle": "@truereligion",
+              "bio": "Been That Stitch Since ‘02\n#OwnYourTrue",
+              "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/449691750_492056486676952_6263920988647916834_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QE0h_sw4Q3imgeRhalhHfgj67SsrWT3dvdZD8aSHj-lIWOxWsxJF-hlmPRubP3EKns&_nc_ohc=_HtNsXCJ3PIQ7kNvwExqa6v&_nc_gid=x0CrYy1sK84mXEpBz0AdPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftvtIQFs4Zk7kA6Maox7EqwNWspikf8DbyCT98AXDdqCg&oe=6999E823&_nc_sid=0055be",
+              "evidence": "Y2K fashion revival brand.",
+              "data": {
+                "bio": "Been That Stitch Since ‘02\n#OwnYourTrue",
+                "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/449691750_492056486676952_6263920988647916834_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QE0h_sw4Q3imgeRhalhHfgj67SsrWT3dvdZD8aSHj-lIWOxWsxJF-hlmPRubP3EKns&_nc_ohc=_HtNsXCJ3PIQ7kNvwExqa6v&_nc_gid=x0CrYy1sK84mXEpBz0AdPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftvtIQFs4Zk7kA6Maox7EqwNWspikf8DbyCT98AXDdqCg&oe=6999E823&_nc_sid=0055be",
+                "followers": 1029916,
+                "following": 903,
+                "posts": 6674,
+                "externalUrl": "https://truereligion.like2buy.curalate.com/",
+                "isVerified": true
+              },
+              "label": "True Religion"
+            },
+            "provenance": "[ID: 290157162]",
+            "name": "True Religion"
+          },
+          {
+            "label": "Ed Hardy",
+            "type": "brand",
+            "val": 85,
+            "data": {
+              "handle": "@edhardy",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/50658584_403303330238258_342896642585788416_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zNDkuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFUZ2lo24_OMZPMQH3a9lrgGkxHG8jRpZuaCovGpEDNHWLX4j7kpU8LtlWqF2XsAok&_nc_ohc=8VxsRCZHFFMQ7kNvwG8WIxB&_nc_gid=sOnMx7WLXy6dm6AK2S-EuA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsn1Xy3MyROfy22v2txBXGRaOc3Un2NT1ktMOTnDStKOg&oe=6999F7A0&_nc_sid=0055be",
+              "evidence": "McBling/Y2K aesthetic popular with this crowd.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/50658584_403303330238258_342896642585788416_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zNDkuYzIifQ&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QFUZ2lo24_OMZPMQH3a9lrgGkxHG8jRpZuaCovGpEDNHWLX4j7kpU8LtlWqF2XsAok&_nc_ohc=8VxsRCZHFFMQ7kNvwG8WIxB&_nc_gid=sOnMx7WLXy6dm6AK2S-EuA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsn1Xy3MyROfy22v2txBXGRaOc3Un2NT1ktMOTnDStKOg&oe=6999F7A0&_nc_sid=0055be"
+              },
+              "label": "Ed Hardy USA"
+            },
+            "provenance": "[ID: 50320184]",
+            "name": "Ed Hardy"
+          },
+          {
+            "label": "SKIMS",
+            "type": "brand",
+            "val": 90,
+            "data": {
+              "handle": "@skims",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/328698483_1641687269593311_1311019168842483373_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHvKL_suyikT-o0jJdc5g_l-H94sQsfnIASUEyYx7B9SWHS97jGr-HK5du64jNWpTg&_nc_ohc=ejq1fSce-XAQ7kNvwEQN5XE&_nc_gid=UC6jRbRh40A8lULU2gnt1Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsJ3W83bkftNzU9urk8DM0TJj0jw03YBtpfhMH3Tke1cw&oe=699A0D41&_nc_sid=0055be",
+              "evidence": "Massively popular shapewear/loungewear.",
+              "isVerified": true,
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/328698483_1641687269593311_1311019168842483373_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHvKL_suyikT-o0jJdc5g_l-H94sQsfnIASUEyYx7B9SWHS97jGr-HK5du64jNWpTg&_nc_ohc=ejq1fSce-XAQ7kNvwEQN5XE&_nc_gid=UC6jRbRh40A8lULU2gnt1Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsJ3W83bkftNzU9urk8DM0TJj0jw03YBtpfhMH3Tke1cw&oe=699A0D41&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "SKIMS"
+            },
+            "provenance": "[ID: 8688762057]",
+            "name": "SKIMS",
+            "handle": "@skims"
+          },
+          {
+            "label": "Liquid Death",
+            "type": "brand",
+            "val": 86,
+            "data": {
+              "handle": "@liquiddeath",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/477013312_874201444706953_2226540145936831140_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHvKL_suyikT-o0jJdc5g_l-H94sQsfnIASUEyYx7B9SWHS97jGr-HK5du64jNWpTg&_nc_ohc=bJshQAVjVr8Q7kNvwGQbRe9&_nc_gid=UC6jRbRh40A8lULU2gnt1Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsCDEKPrGLLws5-cJDyUkyI09LKsWaaOeCQeSvNjGHiVw&oe=6999E3E9&_nc_sid=0055be",
+              "evidence": "Edgy branding similar to BuzzBallz's fun/irreverent tone.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/477013312_874201444706953_2226540145936831140_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHvKL_suyikT-o0jJdc5g_l-H94sQsfnIASUEyYx7B9SWHS97jGr-HK5du64jNWpTg&_nc_ohc=bJshQAVjVr8Q7kNvwGQbRe9&_nc_gid=UC6jRbRh40A8lULU2gnt1Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsCDEKPrGLLws5-cJDyUkyI09LKsWaaOeCQeSvNjGHiVw&oe=6999E3E9&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Liquid Death"
+            },
+            "provenance": "[ID: 6231587801]",
+            "name": "Liquid Death"
+          },
+          {
+            "label": "Miniso USA",
+            "type": "brand",
+            "val": 80,
+            "data": {
+              "handle": "@miniso.usa",
+              "bio": "Plush, Blind Boxes, and Lifestyle 💕✨\nUse #minisousa for a feature 😉\nClick the link to find a MINISO near you ♡",
+              "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/416311037_1088237855698446_4835115560134833133_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=JcSdaIoruJsQ7kNvwGlhNeH&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuVkIQmxchxG2z0ZVfdQoaBLMMHOAODcNPkllT3A6vXaA&oe=6999EA76&_nc_sid=0055be",
+              "evidence": "Affordable lifestyle goods, popular with Gen Z.",
+              "data": {
+                "bio": "Plush, Blind Boxes, and Lifestyle 💕✨\nUse #minisousa for a feature 😉\nClick the link to find a MINISO near you ♡",
+                "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/416311037_1088237855698446_4835115560134833133_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=JcSdaIoruJsQ7kNvwGlhNeH&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuVkIQmxchxG2z0ZVfdQoaBLMMHOAODcNPkllT3A6vXaA&oe=6999EA76&_nc_sid=0055be",
+                "followers": 401968,
+                "following": 289,
+                "posts": 2478,
+                "externalUrl": "http://miniso-us.com/"
+              },
+              "label": "MINISO USA"
+            },
+            "provenance": "[ID: 4780681361]",
+            "name": "Miniso USA"
+          }
+        ],
+        "name": "Lifestyle, Fashion & Retail"
+      },
+      {
+        "label": "Foodies & Casual Dining",
+        "type": "cluster",
+        "data": {
+          "description": "Interest in casual dining, viral food trends, and comfort food.",
+          "keywords": [
+            "Foodies",
+            "Casual Dining",
+            "Viral Recipes",
+            "Munchies"
+          ]
+        },
+        "children": [
+          {
+            "label": "Dave & Buster's",
+            "type": "brand",
+            "val": 88,
+            "data": {
+              "handle": "@daveandbusters",
+              "bio": "Welcome to game day HQ. Catch game day deals and watch every play on our 40-ft screen and 30+ TVs.",
+              "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/463102858_2865028903663776_6402099129711835824_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=6PvUmKoW7ToQ7kNvwE5JhMW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftbxtO-lj2pP4QeEVzh9OEtJPGKSyyhT01gL7FLxzRbqA&oe=6999EAD5&_nc_sid=0055be",
+              "evidence": "Entertainment/Dining venue matching the 'fun' brand vibe.",
+              "data": {
+                "bio": "Welcome to game day HQ. Catch game day deals and watch every play on our 40-ft screen and 30+ TVs.",
+                "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/463102858_2865028903663776_6402099129711835824_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=6PvUmKoW7ToQ7kNvwE5JhMW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftbxtO-lj2pP4QeEVzh9OEtJPGKSyyhT01gL7FLxzRbqA&oe=6999EAD5&_nc_sid=0055be",
+                "followers": 169881,
+                "following": 345,
+                "posts": 2173,
+                "externalUrl": "https://www.daveandbusters.com/us/en/eatertainment/date-night",
+                "isVerified": true
+              },
+              "label": "Dave & Buster's"
+            },
+            "provenance": "[ID: 180181524]",
+            "name": "Dave & Buster's"
+          },
+          {
+            "label": "Righteous Eats",
+            "type": "creator",
+            "val": 85,
+            "data": {
+              "handle": "@righteouseats",
+              "bio": "🧑🏻‍🍳 by @brianlee @jaekicho\n🍲 Serving those who serve us\n📧 email: brian@flavorthing.com",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/368107088_1010817620344003_9029243570765098386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjEuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFHolDM1T2gJ_-Bj4L3OrITONzJPtNy69mIxU51mnkHh-jLRCQdTJ70CqSGV2WT6fs&_nc_ohc=tA5UQ109RgEQ7kNvwEan2Lg&_nc_gid=mu42F2OhT4Cj0xoC1u7yqA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuoFiPSiMDOgWa5N0U5F4sIV8B9s2teOKklwNFtTxwa_w&oe=699A0884&_nc_sid=0055be",
+              "evidence": "Viral food content creator.",
+              "data": {
+                "bio": "🧑🏻‍🍳 by @brianlee @jaekicho\n🍲 Serving those who serve us\n📧 email: brian@flavorthing.com",
+                "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/368107088_1010817620344003_9029243570765098386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjEuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFHolDM1T2gJ_-Bj4L3OrITONzJPtNy69mIxU51mnkHh-jLRCQdTJ70CqSGV2WT6fs&_nc_ohc=tA5UQ109RgEQ7kNvwEan2Lg&_nc_gid=mu42F2OhT4Cj0xoC1u7yqA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuoFiPSiMDOgWa5N0U5F4sIV8B9s2teOKklwNFtTxwa_w&oe=699A0884&_nc_sid=0055be",
+                "followers": 298084,
+                "following": 936,
+                "posts": 774,
+                "externalUrl": "https://www.instagram.com/righteouseats"
+              },
+              "label": "Righteous Eats"
+            },
+            "provenance": "[ID: 9390567076]",
+            "name": "Righteous Eats"
+          },
+          {
+            "label": "Jae Ki Cho",
+            "type": "creator",
+            "val": 82,
+            "data": {
+              "handle": "@jaekicho",
+              "bio": "✍🏼 Ex-rap journalist → 🌍 Traveler\n🚀 Founder @righteouseats @creatorslunch\n🇰🇷 Born | 🇨🇳 Schooled | 🇺🇸 Raised in NYC",
+              "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/281476657_716301263158387_1802020808936948492_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjYuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFHolDM1T2gJ_-Bj4L3OrITONzJPtNy69mIxU51mnkHh-jLRCQdTJ70CqSGV2WT6fs&_nc_ohc=-JTgD6ngr1QQ7kNvwFBMNbI&_nc_gid=mu42F2OhT4Cj0xoC1u7yqA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvrjXJt-7Zvp5RG2aCcx7k3YAmyuvOfwf26OKwQv9tkQQ&oe=6999E889&_nc_sid=0055be",
+              "evidence": "Face of Righteous Eats.",
+              "data": {
+                "bio": "✍🏼 Ex-rap journalist → 🌍 Traveler\n🚀 Founder @righteouseats @creatorslunch\n🇰🇷 Born | 🇨🇳 Schooled | 🇺🇸 Raised in NYC",
+                "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/281476657_716301263158387_1802020808936948492_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjYuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFHolDM1T2gJ_-Bj4L3OrITONzJPtNy69mIxU51mnkHh-jLRCQdTJ70CqSGV2WT6fs&_nc_ohc=-JTgD6ngr1QQ7kNvwFBMNbI&_nc_gid=mu42F2OhT4Cj0xoC1u7yqA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvrjXJt-7Zvp5RG2aCcx7k3YAmyuvOfwf26OKwQv9tkQQ&oe=6999E889&_nc_sid=0055be",
+                "followers": 415439,
+                "following": 3275,
+                "posts": 294,
+                "externalUrl": "https://stan.store/jaekicho",
+                "isVerified": true
+              },
+              "label": "Jaeki Cho"
+            },
+            "provenance": "[ID: 460342207]",
+            "name": "Jae Ki Cho"
+          },
+          {
+            "label": "Juju Min",
+            "type": "creator",
+            "val": 80,
+            "data": {
+              "handle": "@jujumaoeats",
+              "bio": "No bio",
+              "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/399205702_1534183900665046_2530536660719093425_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHh0mDwz0PpetxRV_HNzSDh4rRCt0CC-1pN_htJf6MzwjA4gO4jrkVh002scYUUK4Q&_nc_ohc=vUJd5xvniaAQ7kNvwGK6rLb&_nc_gid=tSGIaF19p0uld7cu0mkWxw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft736r5_cRTp8qgkA85xkE9yoavriLTK5ZOlIRgisxnYA&oe=6999E36F&_nc_sid=0055be",
+              "evidence": "Food content creator.",
+              "data": {
+                "bio": "Bio unavailable",
+                "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/399205702_1534183900665046_2530536660719093425_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHh0mDwz0PpetxRV_HNzSDh4rRCt0CC-1pN_htJf6MzwjA4gO4jrkVh002scYUUK4Q&_nc_ohc=vUJd5xvniaAQ7kNvwGK6rLb&_nc_gid=tSGIaF19p0uld7cu0mkWxw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft736r5_cRTp8qgkA85xkE9yoavriLTK5ZOlIRgisxnYA&oe=6999E36F&_nc_sid=0055be",
+                "isVerified": true
+              },
+              "label": "Jujumao"
+            },
+            "provenance": "[ID: 47601642418]",
+            "name": "Juju Min"
+          }
+        ],
+        "name": "Foodies & Casual Dining"
       }
     ],
-    "name": "Follower Analysis: @betpandaofficial"
+    "name": "BuzzBallz Audience Analysis"
   },
   "analytics": {
     "clusters": [
-      "Crypto Gambling & Casino Ecosystem",
-      "Latin Urban & Regional Mexican Music",
-      "Combat Sports (MMA & Boxing)",
-      "Global Sports Icons (NBA & Football)",
-      "Balkan Influencers & Lifestyle",
-      "Hip Hop & Underground Music"
+      "Ready-to-Drink (RTD) & Party Alcohol",
+      "Regional Mexican & Latin Urban Music",
+      "Viral Entertainment & Influencers",
+      "EDM & Festival Culture",
+      "Lifestyle, Fashion & Retail",
+      "Foodies & Casual Dining"
     ],
     "topics": [
       {
-        "label": "Online Gambling",
+        "label": "Party Culture",
         "val": 100,
         "type": "topic",
-        "name": "Online Gambling"
+        "name": "Party Culture"
       },
       {
-        "label": "Reggaeton",
-        "val": 90,
+        "label": "Corridos Tumbados",
+        "val": 95,
         "type": "topic",
-        "name": "Reggaeton"
+        "name": "Corridos Tumbados"
       },
       {
-        "label": "MMA/UFC",
+        "label": "Viral Humor",
         "val": 85,
         "type": "topic",
-        "name": "MMA/UFC"
+        "name": "Viral Humor"
       },
       {
-        "label": "Cryptocurrency",
+        "label": "Y2K Fashion",
         "val": 80,
         "type": "topic",
-        "name": "Cryptocurrency"
+        "name": "Y2K Fashion"
       },
       {
-        "label": "Basketball",
+        "label": "EDM Festivals",
         "val": 75,
         "type": "topic",
-        "name": "Basketball"
-      },
-      {
-        "label": "Regional Mexican Music",
-        "val": 70,
-        "type": "topic",
-        "name": "Regional Mexican Music"
-      },
-      {
-        "label": "Balkan Lifestyle",
-        "val": 60,
-        "type": "topic",
-        "name": "Balkan Lifestyle"
+        "name": "EDM Festivals"
       }
     ],
     "subtopics": [
       {
-        "label": "Corridos Tumbados",
+        "label": "Alucin Culture",
+        "val": 90,
+        "type": "subtopic",
+        "name": "Alucin Culture"
+      },
+      {
+        "label": "Rave Fam",
         "val": 85,
         "type": "subtopic",
-        "name": "Corridos Tumbados"
+        "name": "Rave Fam"
       },
       {
-        "label": "Crypto Casino Streamers",
+        "label": "Munchies",
         "val": 80,
         "type": "subtopic",
-        "name": "Crypto Casino Streamers"
+        "name": "Munchies"
       },
       {
-        "label": "Balkan YouTube Scene",
-        "val": 60,
+        "label": "Streetwear Resale",
+        "val": 75,
         "type": "subtopic",
-        "name": "Balkan YouTube Scene"
+        "name": "Streetwear Resale"
       }
     ],
     "creators": [
       {
-        "label": "Lux27 Casino",
-        "handle": "@lux27casino",
+        "label": "Jesus Ortiz Paz",
+        "handle": "@jesusortizpazfr",
+        "val": 98,
+        "data": {
+          "bio": "👁️                                                \n@fuerzaregida \n@streetmobrecords \n@dontfallinlovefest",
+          "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/625150602_18559159843040587_9214424432351114996_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=An0ON9C2Ud8Q7kNvwGDadaU&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvX84j6o_c61Xy-_UlJP-vkCBVA6CI7U-6bOSNu5C9McA&oe=6999F159&_nc_sid=0055be",
+          "evidence": "Central figure in the music scene most relevant to this audience.",
+          "followers": 5521752,
+          "following": 549,
+          "posts": 54,
+          "externalUrl": "https://dontfallinlovefest.com/",
+          "isVerified": true
+        },
+        "provenance": "[ID: 204200586]",
+        "name": "Jesus Ortiz Paz"
+      },
+      {
+        "label": "Charli D'Amelio",
+        "handle": "@charlidamelio",
         "val": 95,
         "data": {
-          "bio": "PROMO CODE ON BETPANDA: lux27\nGAMBLER & STREAMER 🎰\n5000$ MONTHLY REWARDS 💰",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/628405638_17854316337657913_569228393642367761_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=-XQEOzru4w8Q7kNvwHwcVoo&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuy3q78cPfQPiUYhfKhstglPN-v9eEuNxlhGjCaHwBFzg&oe=699940CC&_nc_sid=0055be",
-          "evidence": "Direct affiliate.",
-          "followers": 27370,
-          "following": 2,
-          "externalUrl": "https://bit.ly/Lux27"
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/418830807_353794357285928_719688162853556590_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QG5T4_u0Zkkeym6u4ztMEbjS1FsCIxDsAQMiC9glUs-Y8BUeqJw3OGfsmfYetImlMk&_nc_ohc=IkuzwGz8RpQQ7kNvwGuZ8Yx&_nc_gid=rcxqQN9D-kl88equp_Wz5w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afvoi-dZ-ei5mj5bQl_w781hJsRMFtof-VWRzEahuxd5dg&oe=699A091B&_nc_sid=0055be",
+          "evidence": "Massive Gen Z reach.",
+          "isVerified": true
         },
-        "provenance": "[ID: 79708897912]",
-        "name": "Lux27 Casino"
+        "provenance": "[ID: 183250726]",
+        "name": "Charli D'Amelio"
       },
       {
-        "label": "Anuel Fan Page",
-        "handle": "@anuelfan29",
+        "label": "Xavi",
+        "handle": "@xavioficial",
+        "val": 94,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/476488020_612977157990631_8711313563554703122_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=sQ04acwkInkQ7kNvwEE7CbT&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftFpeKmyOjBVwzc78ancUucGxm7IymIgrhJc1Sh49f80Q&oe=6999E0CB&_nc_sid=0055be",
+          "evidence": "High relevance in Latin music cluster.",
+          "followers": 3821654,
+          "following": 2188,
+          "posts": 45,
+          "externalUrl": "https://youtube.com/@xavi_official?si=59fzzJc2nKlf8Bs8",
+          "isVerified": true
+        },
+        "provenance": "[ID: 5130046704]",
+        "name": "Xavi"
+      },
+      {
+        "label": "Kai Cenat",
+        "handle": "@kaicenat",
+        "val": 93,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/599434236_18414758233140325_7983231959682916470_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFUZ2lo24_OMZPMQH3a9lrgGkxHG8jRpZuaCovGpEDNHWLX4j7kpU8LtlWqF2XsAok&_nc_ohc=RxpaN-K5XbcQ7kNvwFPslhQ&_nc_gid=sOnMx7WLXy6dm6AK2S-EuA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsy9bQJv4MBm9wBy9APqoHMhdn10z07ylGzOCtHByH9Jw&oe=6999F58D&_nc_sid=0055be",
+          "evidence": "Top streamer.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 4180004324]",
+        "name": "Kai Cenat"
+      },
+      {
+        "label": "Subtronics",
+        "handle": "@subtronics",
         "val": 90,
         "data": {
-          "bio": "@anuel fanpage",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/533514226_18359023894159905_4904428351951327466_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=109&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=2SARMGF3BSMQ7kNvwH6jf25&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu7YytU8A67uMbXBc7itPKVqdOUP5V6GPnSZu-Uu-rwOA&oe=6999289F&_nc_sid=0055be",
-          "evidence": "Fan page for main sponsor.",
-          "followers": 54207,
-          "following": 85,
-          "posts": 567,
-          "externalUrl": "https://www.instagram.com/anuelfan29"
+          "bio": "Fibonacci Pt 2: Infinity - Out Now",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/559543042_18537038377029546_4654940071709219376_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=zIOKIQeGvd4Q7kNvwH7jaNW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuq7SGf7CObdOcKfxfJJUo-ucCI-_qzTYAZaZuS9rf8Pg&oe=6999F376&_nc_sid=0055be",
+          "evidence": "Key figure for the EDM/Rave demographic.",
+          "followers": 813514,
+          "following": 4307,
+          "posts": 334,
+          "externalUrl": "https://laylo.com/subtronics/cyclops-island-26",
+          "isVerified": true
         },
-        "provenance": "[ID: 4633551904]",
-        "name": "Anuel Fan Page"
+        "provenance": "[ID: 343325545]",
+        "name": "Subtronics"
       },
       {
-        "label": "Marlon 'Chito' Vera",
-        "handle": "@chitoveraufc",
+        "label": "John Summit",
+        "handle": "@johnsummit",
+        "val": 89,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/622384866_18556218940034958_5138972666901412394_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEyDmtptCsWnwBEqG3CVt5FiPxNDKn7QPyvMHIHTJ-WkQXnkyk7prQg3Zqgcy3mOfU&_nc_ohc=E-5UFEvfH3UQ7kNvwGBdWp3&_nc_gid=5RifoGn77FwY-3XhHVz_2Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuNOWX_sAn3Mq9EbKuBK6zLuIFwrDJV2KgUb3cwkC6KvA&oe=6999EC74&_nc_sid=0055be",
+          "evidence": "DJ with high crossover appeal to party crowds.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 1461282957]",
+        "name": "John Summit"
+      },
+      {
+        "label": "Sal Vulcano",
+        "handle": "@salvulcano",
         "val": 88,
         "data": {
-          "bio": "Fighting is life.\n @chitoverapodcast",
-          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/610600517_18551693656024286_2950264396004903185_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40ODAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=XA3HS3C1MoQQ7kNvwEJsX2k&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv8V7C9oMmYw10iKs2jBtUfFW0tK2rz_Jm737ZzrrN3YQ&oe=69993022&_nc_sid=0055be",
-          "evidence": "UFC Fighter.",
-          "followers": 1416075,
-          "following": 730,
-          "posts": 3873,
-          "externalUrl": "https://linktr.ee/chitovera",
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/592482884_18545419183019924_3860544660602338354_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=EfvybhMUWcwQ7kNvwHLF6gR&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afu2M2WUbmS3sEEhzCGWvjTcHFyhMaYzIZzWZGpZUs-Vuw&oe=699A0663&_nc_sid=0055be",
+          "evidence": "Comedy appeal.",
           "isVerified": true
         },
-        "provenance": "[ID: 214936285]",
-        "name": "Marlon 'Chito' Vera"
+        "provenance": "[ID: 51027923]",
+        "name": "Sal Vulcano"
       },
       {
-        "label": "Blessd",
-        "handle": "@blessd",
+        "label": "Post Malone",
+        "handle": "@postmalone",
+        "val": 87,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/491466821_988393333422025_3124259544269262334_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEdp4OqkOcmH0h86wox682g900V27AVnMk_DyMpa-EzHIYzxg1PK5Uv_kpl84aku-M&_nc_ohc=cqoXiB3ytfUQ7kNvwFF-081&_nc_gid=7I37oILpt4ymcm6BkjdxeQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aftl9A6d5mdaEmraJF0gCJ_3J0yYWAb1L2tVwIxE6bMqDQ&oe=6999E8E0&_nc_sid=0055be",
+          "evidence": "Music and lifestyle alignment.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 1432609192]",
+        "name": "Post Malone"
+      },
+      {
+        "label": "Baylen Levine",
+        "handle": "@baylenlevine",
         "val": 85,
         "data": {
-          "bio": "Dios💕\nTICKETS COLOMBIA 🇨🇴 AQUI 👇🏻",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/624542081_18561272938019732_9137874051752649602_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=GvTDFkySU5sQ7kNvwHfQ94b&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfskdgMHp1GII9Q-a5MljS0Sb65oAREHSZ7eyPL8_AvTiw&oe=69993974&_nc_sid=0055be",
-          "evidence": "Reggaeton Artist.",
-          "followers": 7312191,
-          "following": 357,
-          "posts": 1462,
-          "externalUrl": "https://linktr.ee/blessd",
-          "isVerified": true
-        },
-        "provenance": "[ID: 1618003731]",
-        "name": "Blessd"
-      },
-      {
-        "label": "Milica Todorovic",
-        "handle": "@milicatodorovicofficial",
-        "val": 80,
-        "data": {
-          "bio": "🎶Singer🎶\nBooking: +381646855303 Marko",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/462524491_545049194772041_2925686720168680870_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=z23V4jFqRp4Q7kNvwECg2vf&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfswXRgyJ9z1JMFHpIWWIl7YaEFazvTuCW5l_uqtc9dszw&oe=69993672&_nc_sid=0055be",
-          "evidence": "Serbian Singer.",
-          "followers": 796653,
-          "following": 2758,
-          "posts": 201,
-          "externalUrl": "https://linktr.ee/milicatodorovic",
-          "isVerified": true
-        },
-        "provenance": "[ID: 208469425]",
-        "name": "Milica Todorovic"
-      },
-      {
-        "label": "Paddy The Baddy",
-        "handle": "@theufcbaddy",
-        "val": 80,
-        "data": {
-          "bio": "Gym: @nextgenmmalpool \nManager: @graham_boylan\nSponsored Athlete: @underarmour @appliednutrition",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/275252879_924206994943869_5211974124298049163_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby45MzMuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=7rIW0nJjQRsQ7kNvwHnCA0G&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuybHNC9PbF5OZh1dPfPzD-lponjf1As63aPvC1UUl0nQ&oe=69993E8A&_nc_sid=0055be",
-          "evidence": "UFC Fighter.",
-          "followers": 5292772,
-          "following": 116,
-          "posts": 1081,
-          "externalUrl": "https://thebaddy.com/the-baddy-foundation/",
-          "isVerified": true
-        },
-        "provenance": "[ID: 51629244817]",
-        "name": "Paddy The Baddy"
-      },
-      {
-        "label": "Fuerza Regida",
-        "handle": "@fuerzaregida",
-        "val": 78,
-        "data": {
-          "bio": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=RmEPyRKScGwQ7kNvwEIIQC1&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsT6mjmRAILCpEcQOEQWBjBN0zDY1MHmXMcy0cTOMaLzA&oe=69991F4B&_nc_sid=0055be",
-          "evidence": "Regional Mexican Group.",
-          "followers": 10560561,
-          "following": 241,
-          "posts": 444,
-          "externalUrl": "https://signup.ticketmaster.com/fuerzaregida",
-          "isVerified": true
-        },
-        "provenance": "[ID: 1672632164]",
-        "name": "Fuerza Regida"
-      },
-      {
-        "label": "Slot King Rob",
-        "handle": "@slotkingrob_",
-        "val": 75,
-        "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/625977042_17892261111421599_2278366003890663474_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=rfVw9tcAFOUQ7kNvwFN9KA7&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft_2GMICkT-oSPKQ_EcZY3RnsGbty67_xGx3omQa9Ax4A&oe=6999175A&_nc_sid=0055be",
-          "evidence": "Gambling Creator.",
+          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/508652550_18518030632042870_272464637365312036_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHlmi4coj4NeQyIF_8tajYjnWuiXM0TxKNg1DkF1SV-gO4l29ePoRYVDNnQvpkyq8o&_nc_ohc=gCPFtIcUuDwQ7kNvwFQrrjm&_nc_gid=9r8Jm1tjan_SxtBfGwzaPQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvpXIfpM0TTRj9SEk_phlZA71Wdl3Qedgi-mjp3-HOcUA&oe=699A1465&_nc_sid=0055be",
+          "evidence": "Viral YouTuber.",
           "isVerified": true
         },
-        "provenance": "[ID: 72579261598]",
-        "name": "Slot King Rob"
+        "provenance": "[ID: 488874869]",
+        "name": "Baylen Levine"
       },
       {
-        "label": "Lobanjica",
-        "handle": "@lobanjica853",
-        "val": 70,
+        "label": "Jae Ki Cho",
+        "handle": "@jaekicho",
+        "val": 82,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/342706112_4216088511950141_7915095511491941313_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QEV-yjum-gqwwEojA_NRR3bdeXoOPjdDOcQV5n9Z6-wdkFK-6EO1rDGH0Nk4SZ0F1c&_nc_ohc=2O2IMEltvRIQ7kNvwGWkSw_&_nc_gid=tXmsledr8Lb8IR5rZavcaA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvkEdUHxQCpL5YDOUpjmudzl_duix-nJnzvkT2CQjmolA&oe=6999434D&_nc_sid=0055be",
-          "evidence": "Streamer/Influencer.",
+          "bio": "✍🏼 Ex-rap journalist → 🌍 Traveler\n🚀 Founder @righteouseats @creatorslunch\n🇰🇷 Born | 🇨🇳 Schooled | 🇺🇸 Raised in NYC",
+          "profilePicUrl": "https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/281476657_716301263158387_1802020808936948492_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby43MjYuYzIifQ&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFHolDM1T2gJ_-Bj4L3OrITONzJPtNy69mIxU51mnkHh-jLRCQdTJ70CqSGV2WT6fs&_nc_ohc=-JTgD6ngr1QQ7kNvwFBMNbI&_nc_gid=mu42F2OhT4Cj0xoC1u7yqA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvrjXJt-7Zvp5RG2aCcx7k3YAmyuvOfwf26OKwQv9tkQQ&oe=6999E889&_nc_sid=0055be",
+          "evidence": "Food influencer.",
+          "followers": 415439,
+          "following": 3275,
+          "posts": 294,
+          "externalUrl": "https://stan.store/jaekicho",
           "isVerified": true
         },
-        "provenance": "[ID: 7004961839]",
-        "name": "Lobanjica"
-      },
-      {
-        "label": "Russ P",
-        "handle": "@russpg22",
-        "val": 65,
-        "data": {
-          "bio": "📀Music Exec. @fredthegodsonmusic 🕊\n •Founder of 𝐆𝐨𝐝𝐋𝐞𝐠𝐚𝐜𝐲 EST. 941 ™️\n •A&R | Curator | Creator | #𝗧𝗕𝗠®️FTG 📍\nSway in the Morning Interview: 🔗⬇️",
-          "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/329603506_3373121326244883_7525387571551100766_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=85aX5bdeTQMQ7kNvwHmzs1r&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvIfBj_CCazBL5-G2e1N4YKgBiD0bSi2RhvPRHRuuM51w&oe=69993D7A&_nc_sid=0055be",
-          "evidence": "Music Executive.",
-          "followers": 49784,
-          "following": 3124,
-          "posts": 472,
-          "externalUrl": "https://youtu.be/qSZqGFeVz6Y?si=m1tKv-EyAeTA7zMO",
-          "isVerified": true
-        },
-        "provenance": "[ID: 191211984]",
-        "name": "Russ P"
+        "provenance": "[ID: 460342207]",
+        "name": "Jae Ki Cho"
       }
     ],
     "brands": [
       {
-        "label": "Stake",
-        "handle": "@stake",
+        "label": "Twisted Tea",
+        "handle": "@twistedtea",
         "val": 95,
         "data": {
-          "bio": "World’s Largest Casino\nStake.com unavailable in US UK AU 18+",
-          "profilePicUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/250299809_421319846102557_2690881369803074364_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHyQ9y2NJ7hjCe75FOSuKy-UjOpZtc2Q3-bE64v542SFm6CVGNVSOOGdy3DgwkJ4nA&_nc_ohc=bvpk9lU0TtoQ7kNvwHb9QkY&_nc_gid=8jN4G713pbY8YtAyQY3xrg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftAiyiNLjQ2fd5ukY5n82vw1n1wWO8R-SUgi8Au2w1P4A&oe=69992E4D&_nc_sid=0055be",
-          "evidence": "Major Competitor.",
-          "externalUrl": "http://stake.com",
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/361386928_1746201442464527_583423675011543650_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40MDAuYzIifQ&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGiQCsecTTnZwxBAdkyznuLY_mGPGRxF58kmjrOo8Umy-CO2_6HKKVobO3pdJx9Jm8&_nc_ohc=MNTDH7LGN8MQ7kNvwHkVq7O&_nc_gid=9N3EsvIXPyhoavtO6Kz4Qg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftcsigZWULmM5c7qc4sSyXFPg0dym0YJ2Qmri3GzMWTCw&oe=699A1052&_nc_sid=0055be",
+          "evidence": "Top competitor/complementary brand.",
           "isVerified": true
         },
-        "provenance": "[ID: 1751416]",
-        "name": "Stake"
+        "provenance": "[ID: 399342807]",
+        "name": "Twisted Tea"
       },
       {
-        "label": "UFC",
-        "handle": "@ufc",
+        "label": "BeatBox Beverages",
+        "handle": "@beatboxbeverages",
+        "val": 92,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/629809024_18560696128057294_3358270637487750171_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QG6okiDhnP8xVy9fHBIpiACSyBFmS1j3c2uEZOULPJHkmhij3U9c16E8W3w9k1fi9g&_nc_ohc=vDsnGzkDyzoQ7kNvwG38Tvp&_nc_gid=HegjQG8w2-MjcppbMmqnwQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft41apdbFzKCCUVVeyPjCd43daVwQSBJ2gRnCD0aylCNQ&oe=6999E2EA&_nc_sid=0055be",
+          "evidence": "High affinity party drink.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 222649293]",
+        "name": "BeatBox Beverages"
+      },
+      {
+        "label": "Cookies SF",
+        "handle": "@cookiessf",
         "val": 90,
         "data": {
-          "bio": "The official UFC Instagram brings you fight photos and video from around the world.",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/460224848_904323201748535_5161631215796810656_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=TdWgpHV7SH8Q7kNvwFCohve&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afumun3N-aF7_JbLCqOfwf-fAVsvScr9ch04Uevf2WMDzQ&oe=699925CB&_nc_sid=0055be",
-          "evidence": "Sports Organization.",
-          "followers": 49623272,
-          "following": 1291,
-          "posts": 44255,
-          "externalUrl": "http://linktr.ee/UFCSOCIAL",
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/42731689_2404078716275722_8560453116141502464_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDIyLmMyIn0&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QE0h_sw4Q3imgeRhalhHfgj67SsrWT3dvdZD8aSHj-lIWOxWsxJF-hlmPRubP3EKns&_nc_ohc=klBvPF-TnmwQ7kNvwGFn8we&_nc_gid=x0CrYy1sK84mXEpBz0AdPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afsbwivirt6u5CjqSIl8qz7WLqQ0Z-bGEC8vbxBF1pNrFg&oe=6999E403&_nc_sid=0055be",
+          "evidence": "Lifestyle brand overlap.",
+          "followers": 1051288,
+          "following": 2379,
+          "posts": 8003,
+          "externalUrl": "http://www.cookiessf.com/",
           "isVerified": true
         },
-        "provenance": "[ID: 22832340]",
-        "name": "UFC"
+        "provenance": "[ID: 264393639]",
+        "name": "Cookies SF"
       },
       {
-        "label": "Roobet",
-        "handle": "@roobet",
-        "val": 85,
+        "label": "Big Sipz",
+        "handle": "@bigsipz",
+        "val": 89,
+        "data": {
+          "bio": "Fuerza Regida's Cherry Manifest Available Now 🍒💥\nENTER TO WIN $16,000 DOLLARS 💵\nEnjoy Responsibly 21+\n© 2026 Patco Brands, Big Sipz® Las Vegas, NV",
+          "profilePicUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/466504967_1764658864303048_2878163338664500410_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=Ks9tB-Dt6QsQ7kNvwExLtKx&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsU838J-ctoq8OONeaftD1Qwbr9yHgDF8Q2b-W4RL4hEw&oe=699A02A7&_nc_sid=0055be",
+          "evidence": "Direct competitor with strong music ties.",
+          "externalUrl": "https://hoo.be/bigsipz"
+        },
+        "provenance": "[ID: 55611814352]",
+        "name": "Big Sipz"
+      },
+      {
+        "label": "Fireball Whisky",
+        "handle": "@fireballwhisky",
+        "val": 88,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/556952413_18074357984325843_1973776644057861089_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zMjAuYzIifQ&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=4bjB1P3AS0sQ7kNvwG5C_Z0&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftHBfo2zeI1GcUDnB6gCI43fd6anMmej9Oom-tMNYxxtQ&oe=69990E76&_nc_sid=0055be",
-          "evidence": "Crypto Casino.",
+          "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/491463187_18505526386041267_2187880176853067514_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4zODQuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QFXNDx5xGWWtGoKTxe7mFIdMdvZ_1XggpLrYQcMf4fkL9VgA-aYOGEjF5MjBRmjr-U&_nc_ohc=aZSeFEiiEJQQ7kNvwFHtXTY&_nc_gid=UlXdOH0SmF7tu-ZpHG2O8w&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afus92YyVp9CfCSqYEQ98xOOGZzOpUUUkxpUpSMUpn5sVw&oe=6999E4BF&_nc_sid=0055be",
+          "evidence": "Party shot staple.",
           "isVerified": true
         },
-        "provenance": "[ID: 39624597842]",
-        "name": "Roobet"
+        "provenance": "[ID: 12073266]",
+        "name": "Fireball Whisky"
       },
       {
-        "label": "NBA",
-        "handle": "@nba",
+        "label": "Dave & Buster's",
+        "handle": "@daveandbusters",
         "val": 85,
         "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/582086582_18603572488024487_7141348984943669969_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHLYNzVkgtRLRGcgOIH4iwg4O7JHGYWgZXxERzuq0_NWBmQMbfohObm6XMQp_au9Ec&_nc_ohc=GhY728UCdL0Q7kNvwFVGSjS&_nc_gid=vlKV08G57PQv_fFc4xnOYg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsENtM7LcgsE8iF7sWRA4oRq07oBC7GfyqmQ9fY_IZMCQ&oe=69990E6C&_nc_sid=0055be",
-          "evidence": "Sports League.",
+          "bio": "Welcome to game day HQ. Catch game day deals and watch every play on our 40-ft screen and 30+ TVs.",
+          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/463102858_2865028903663776_6402099129711835824_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=6PvUmKoW7ToQ7kNvwE5JhMW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftbxtO-lj2pP4QeEVzh9OEtJPGKSyyhT01gL7FLxzRbqA&oe=6999EAD5&_nc_sid=0055be",
+          "evidence": "Shared 'fun' occasion.",
+          "followers": 169881,
+          "following": 345,
+          "posts": 2173,
+          "externalUrl": "https://www.daveandbusters.com/us/en/eatertainment/date-night",
           "isVerified": true
         },
-        "provenance": "[ID: 20824486]",
-        "name": "NBA"
+        "provenance": "[ID: 180181524]",
+        "name": "Dave & Buster's"
       },
       {
-        "label": "Rollbit",
-        "handle": "@rollbit",
+        "label": "SKIMS",
+        "handle": "@skims",
+        "val": 84,
+        "data": {
+          "bio": "No bio",
+          "profilePicUrl": "https://scontent-atl3-3.cdninstagram.com/v/t51.2885-19/328698483_1641687269593311_1311019168842483373_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHvKL_suyikT-o0jJdc5g_l-H94sQsfnIASUEyYx7B9SWHS97jGr-HK5du64jNWpTg&_nc_ohc=ejq1fSce-XAQ7kNvwEQN5XE&_nc_gid=UC6jRbRh40A8lULU2gnt1Q&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsJ3W83bkftNzU9urk8DM0TJj0jw03YBtpfhMH3Tke1cw&oe=699A0D41&_nc_sid=0055be",
+          "evidence": "Fashion interest.",
+          "isVerified": true
+        },
+        "provenance": "[ID: 8688762057]",
+        "name": "SKIMS"
+      },
+      {
+        "label": "True Religion",
+        "handle": "@truereligion",
+        "val": 82,
+        "data": {
+          "bio": "Been That Stitch Since ‘02\n#OwnYourTrue",
+          "profilePicUrl": "https://scontent-dfw5-3.cdninstagram.com/v/t51.2885-19/449691750_492056486676952_6263920988647916834_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby42MDAuYzIifQ&_nc_ht=scontent-dfw5-3.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QE0h_sw4Q3imgeRhalhHfgj67SsrWT3dvdZD8aSHj-lIWOxWsxJF-hlmPRubP3EKns&_nc_ohc=_HtNsXCJ3PIQ7kNvwExqa6v&_nc_gid=x0CrYy1sK84mXEpBz0AdPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftvtIQFs4Zk7kA6Maox7EqwNWspikf8DbyCT98AXDdqCg&oe=6999E823&_nc_sid=0055be",
+          "evidence": "Nostalgic fashion brand.",
+          "followers": 1029916,
+          "following": 903,
+          "posts": 6674,
+          "externalUrl": "https://truereligion.like2buy.curalate.com/",
+          "isVerified": true
+        },
+        "provenance": "[ID: 290157162]",
+        "name": "True Religion"
+      },
+      {
+        "label": "Cutwater Spirits",
+        "handle": "@cutwaterspirits",
         "val": 80,
         "data": {
           "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/276026894_146862697802968_6333519285539505276_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=s97DkS62xBUQ7kNvwFvuMPF&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Aft03BOn2lMXxBp0w5wPyLyNly5ShHPEkx_5-d7hdIxgNg&oe=69990F35&_nc_sid=0055be",
-          "evidence": "Crypto Casino."
-        },
-        "provenance": "[ID: 30281096002]",
-        "name": "Rollbit"
-      },
-      {
-        "label": "Undrgrnd Magazine",
-        "handle": "@undrgrndmagazine",
-        "val": 70,
-        "data": {
-          "bio": "Hard Copy & Digital Music Magazine 👽\nHome to @undrgrnd.studiola 🏡 \nIssue 17 OUT NOW‼️hard copies👇\nAndrew Mason & @pofsky3 👨‍💻🧑‍💻",
-          "profilePicUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/273819738_503116344504210_8273331440584903591_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzkuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=incifPuh64YQ7kNvwF3_12Z&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsfxEq9c2mFFBRHytD2HmVqYsqA6w-juzeQ_ec5xz7g3A&oe=69991D15&_nc_sid=0055be",
-          "evidence": "Music Media.",
-          "followers": 8737,
-          "following": 6027,
-          "posts": 3667,
-          "externalUrl": "http://undrgrndmag.com/magazines"
-        },
-        "provenance": "[ID: 26101955371]",
-        "name": "Undrgrnd Magazine"
-      },
-      {
-        "label": "Betplay.io",
-        "handle": "@betplayio",
-        "val": 65,
-        "data": {
-          "bio": "No bio",
-          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/424543895_1327257191264026_3045383881870516180_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4yMDAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QHSXHe1-dNNBBOOITppGx4PMN-2Yz0egpRXw5ZifiQmGDHeEspVUachG04IXRBZQ4c&_nc_ohc=EKOwFJaQWE8Q7kNvwGUHm2K&_nc_gid=ys4Yn2hzL06Om-GrcJTfPw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfvNm8nFI7kcPmQUNsYVbI91dg0Hq3f5uuIOkVJptU39og&oe=69992145&_nc_sid=0055be",
-          "evidence": "Crypto Betting Site."
-        },
-        "provenance": "[ID: 63155888447]",
-        "name": "Betplay.io"
-      },
-      {
-        "label": "Golden Panorama Apartments",
-        "handle": "@golden.panorama.apartments",
-        "val": 60,
-        "data": {
-          "bio": "Gradimo Vaše snove!\nLuksuzni apartmani u mirnom delu Zlatibora!\n📧 info@goldenpanorama.rs\n📞+381640360000- prodaja \n📞+381640270000- izdavanje",
-          "profilePicUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/289433371_382787370384555_7683088273940263222_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=103&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=SxgD9FNE0DkQ7kNvwHT7QOT&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsN1eW5LbB56rEMAaxnk-5SQnm8BfaTTAioS0yP51AsNQ&oe=699939A3&_nc_sid=0055be",
-          "evidence": "Real Estate (Balkan).",
-          "followers": 443160,
-          "posts": 466,
-          "externalUrl": "https://goldenpanorama.rs/ponuda-apartmana/",
+          "profilePicUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/323712856_196322259617505_9210405387377694286_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QG6okiDhnP8xVy9fHBIpiACSyBFmS1j3c2uEZOULPJHkmhij3U9c16E8W3w9k1fi9g&_nc_ohc=KepBexo-NzgQ7kNvwG2sKLs&_nc_gid=HegjQG8w2-MjcppbMmqnwQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afubs9x7hnVJQkHaJH-llJc-4LdwB6GWvVaN_iBa0wghtA&oe=6999F377&_nc_sid=0055be",
+          "evidence": "RTD competitor.",
           "isVerified": true
         },
-        "provenance": "[ID: 53003221864]",
-        "name": "Golden Panorama Apartments"
+        "provenance": "[ID: 3036563271]",
+        "name": "Cutwater Spirits"
+      },
+      {
+        "label": "Miniso USA",
+        "handle": "@miniso.usa",
+        "val": 78,
+        "data": {
+          "bio": "Plush, Blind Boxes, and Lifestyle 💕✨\nUse #minisousa for a feature 😉\nClick the link to find a MINISO near you ♡",
+          "profilePicUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/416311037_1088237855698446_4835115560134833133_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=JcSdaIoruJsQ7kNvwGlhNeH&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuVkIQmxchxG2z0ZVfdQoaBLMMHOAODcNPkllT3A6vXaA&oe=6999EA76&_nc_sid=0055be",
+          "evidence": "Gen Z retail interest.",
+          "followers": 401968,
+          "following": 289,
+          "posts": 2478,
+          "externalUrl": "http://miniso-us.com/"
+        },
+        "provenance": "[ID: 4780681361]",
+        "name": "Miniso USA"
       }
     ],
     "topContent": [
       {
-        "label": "Welcome Bonus up to 1 BTC 🎰 Proud Sponsor @anuel @g2esports @afaseleccion 🐼",
-        "val": 100,
+        "label": "Fuerza Regida Stadium Tour Announcement",
+        "val": 98,
         "data": {
-          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/626037939_18034613603780795_5220742144397691696_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=111&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=DwAaKIu9kkUQ7kNvwEHbYEu&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsyC7PF6vhOo3CoGUh1TxahXbqJOYy9XTbEwDoU0yMlfg&oe=69994004&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/betpandaofficial"
-        },
-        "name": "Welcome Bonus up to 1 BTC 🎰 Proud Sponsor @anuel @g2esports @afaseleccion 🐼"
-      },
-      {
-        "label": "PROMO CODE ON BETPANDA: lux27 GAMBLER & STREAMER 🎰",
-        "val": 95,
-        "data": {
-          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/628405638_17854316337657913_569228393642367761_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=-XQEOzru4w8Q7kNvwHwcVoo&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuy3q78cPfQPiUYhfKhstglPN-v9eEuNxlhGjCaHwBFzg&oe=699940CC&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/lux27casino"
-        },
-        "name": "PROMO CODE ON BETPANDA: lux27 GAMBLER & STREAMER 🎰"
-      },
-      {
-        "label": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️",
-        "val": 90,
-        "data": {
-          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=RmEPyRKScGwQ7kNvwEIIQC1&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsT6mjmRAILCpEcQOEQWBjBN0zDY1MHmXMcy0cTOMaLzA&oe=69991F4B&_nc_sid=0055be",
+          "mediaUrl": "https://scontent-dfw5-1.cdninstagram.com/v/t51.2885-19/632044919_18568558039056165_4288630174355470421_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-1.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=6DeAVWZRA7sQ7kNvwFKA3fi&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsrkKBNTPkm2p_2gMNTjkDLAwXoLP3_awjWx1CATli1sQ&oe=699A004B&_nc_sid=0055be",
           "postUrl": "https://instagram.com/fuerzaregida"
         },
-        "name": "“THIS IS OUR DREAM” STADIUM TOUR 2026 🏟️"
+        "name": "Fuerza Regida Stadium Tour Announcement"
       },
       {
-        "label": "World’s Largest Casino Stake.com unavailable in US UK AU 18+",
-        "val": 85,
+        "label": "Big Sipz Cherry Manifest Promo",
+        "val": 95,
         "data": {
-          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/250299809_421319846102557_2690881369803074364_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=101&_nc_oc=Q6cZ2QHyQ9y2NJ7hjCe75FOSuKy-UjOpZtc2Q3-bE64v542SFm6CVGNVSOOGdy3DgwkJ4nA&_nc_ohc=bvpk9lU0TtoQ7kNvwHb9QkY&_nc_gid=8jN4G713pbY8YtAyQY3xrg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AftAiyiNLjQ2fd5ukY5n82vw1n1wWO8R-SUgi8Au2w1P4A&oe=69992E4D&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/stake"
+          "mediaUrl": "https://scontent-dfw5-2.cdninstagram.com/v/t51.2885-19/466504967_1764658864303048_2878163338664500410_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_cat=104&_nc_oc=Q6cZ2QFPCOWi5kDKDb6vZZhCcMTOPRmnW73PS29ufexGDvUuY_UvWmgINtOy4NyYfG31sLw&_nc_ohc=Ks9tB-Dt6QsQ7kNvwExLtKx&_nc_gid=C7Rs7NfTEk4gwCDLOFdAuw&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsU838J-ctoq8OONeaftD1Qwbr9yHgDF8Q2b-W4RL4hEw&oe=699A02A7&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/bigsipz"
         },
-        "name": "World’s Largest Casino Stake.com unavailable in US UK AU 18+"
+        "name": "Big Sipz Cherry Manifest Promo"
       },
       {
-        "label": "Dios💕 TICKETS COLOMBIA 🇨🇴 AQUI 👇🏻",
-        "val": 80,
+        "label": "Subtronics Album Release",
+        "val": 90,
         "data": {
-          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/624542081_18561272938019732_9137874051752649602_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=GvTDFkySU5sQ7kNvwHfQ94b&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfskdgMHp1GII9Q-a5MljS0Sb65oAREHSZ7eyPL8_AvTiw&oe=69993974&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/blessd"
+          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/559543042_18537038377029546_4654940071709219376_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QGgfggaR4ToKBHQry8etCEtiohCVZ87pIeGCCftiDMOVyquKhoXy73dTryFWmfdE00&_nc_ohc=zIOKIQeGvd4Q7kNvwH7jaNW&_nc_gid=YUn9xkVEpTIC17INd0n1mA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afuq7SGf7CObdOcKfxfJJUo-ucCI-_qzTYAZaZuS9rf8Pg&oe=6999F376&_nc_sid=0055be",
+          "postUrl": "https://instagram.com/subtronics"
         },
-        "name": "Dios💕 TICKETS COLOMBIA 🇨🇴 AQUI 👇🏻"
-      },
-      {
-        "label": "Fighting is life. @chitoverapodcast",
-        "val": 75,
-        "data": {
-          "mediaUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/610600517_18551693656024286_2950264396004903185_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby40ODAuYzIifQ&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=102&_nc_oc=Q6cZ2QEoxwmjYrGDA0xezFBSaHi1T_N27OKgnoHf1Wu47NCVmx1AzwG7f1TmHs1CvgZ-KTY&_nc_ohc=XA3HS3C1MoQQ7kNvwEJsX2k&_nc_gid=PHHDVwjadS61fVafR7p8sQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_Afv8V7C9oMmYw10iKs2jBtUfFW0tK2rz_Jm737ZzrrN3YQ&oe=69993022&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/chitoveraufc"
-        },
-        "name": "Fighting is life. @chitoverapodcast"
-      },
-      {
-        "label": "🎶Singer🎶 Booking: +381646855303 Marko",
-        "val": 70,
-        "data": {
-          "mediaUrl": "https://scontent-lga3-2.cdninstagram.com/v/t51.2885-19/462524491_545049194772041_2925686720168680870_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-2.cdninstagram.com&_nc_cat=1&_nc_oc=Q6cZ2QEmxfBaFfZvRTLSa30aVPYZnWJugpT6m0aB9N2UTYRbHi4ihAOok84DSwiET551fkE&_nc_ohc=z23V4jFqRp4Q7kNvwECg2vf&_nc_gid=pRZhC27p5mkf0NvpKlmYEg&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfswXRgyJ9z1JMFHpIWWIl7YaEFazvTuCW5l_uqtc9dszw&oe=69993672&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/milicatodorovicofficial"
-        },
-        "name": "🎶Singer🎶 Booking: +381646855303 Marko"
-      },
-      {
-        "label": "Hard Copy & Digital Music Magazine 👽 Home to @undrgrnd.studiola 🏡",
-        "val": 65,
-        "data": {
-          "mediaUrl": "https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/273819738_503116344504210_8273331440584903591_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby41NzkuYzIifQ&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=106&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=incifPuh64YQ7kNvwF3_12Z&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfsfxEq9c2mFFBRHytD2HmVqYsqA6w-juzeQ_ec5xz7g3A&oe=69991D15&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/undrgrndmagazine"
-        },
-        "name": "Hard Copy & Digital Music Magazine 👽 Home to @undrgrnd.studiola 🏡"
-      },
-      {
-        "label": "UNIFICADO @worldboxingorg & @wbaboxingofficial 154👑 #CríaBoricua 🇵🇷",
-        "val": 60,
-        "data": {
-          "mediaUrl": "https://scontent-lga3-3.cdninstagram.com/v/t51.2885-19/624737477_18506169205079432_5926355179068110386_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_cat=108&_nc_oc=Q6cZ2QHm0xt6UI4xZLZ29XpNYMMn4obuq9C5tVHEhq6oFncaREtaW3zhelrr5PmPMvfINLE&_nc_ohc=BLrAwJpw4U0Q7kNvwE41gI7&_nc_gid=RrWa0b4Hi7OE6i0Zw29iqQ&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuOGECBrUAhFqf32kq8HAZNVovCEk0dbtONqUh5Y5ba3Q&oe=699911D2&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/xander.zayas"
-        },
-        "name": "UNIFICADO @worldboxingorg & @wbaboxingofficial 154👑 #CríaBoricua 🇵🇷"
-      },
-      {
-        "label": "ROSE UP FROM THE CONCRETE🪨🌹 BORN 2 STEP ON THE DEVIL🥾🐍",
-        "val": 55,
-        "data": {
-          "mediaUrl": "https://scontent-atl3-2.cdninstagram.com/v/t51.2885-19/603253176_18546297472033025_5158977280718951595_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MzkuYzIifQ&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_cat=105&_nc_oc=Q6cZ2QFEyYpdPwCIRCunTXFrQ07Sg9xrwGgahveBWnmJVsbSsXpvSBUwvHiJmj2YkvVFH0Y&_nc_ohc=UmHd4nyOd6kQ7kNvwFP5bHF&_nc_gid=yJvnI6vyxWbxr87yGRR1LA&edm=ANg5bX4BAAAA&ccb=7-5&oh=00_AfuSxM4yCFNn6YAdh_7_Svo0Uo4Z1kdCHMIQCM_eAaaqmw&oe=69990F02&_nc_sid=0055be",
-          "postUrl": "https://instagram.com/youngcertifyed"
-        },
-        "name": "ROSE UP FROM THE CONCRETE🪨🌹 BORN 2 STEP ON THE DEVIL🥾🐍"
+        "name": "Subtronics Album Release"
       }
     ],
-    "vibeDescription": "The audience is a high-energy mix of crypto-gambling enthusiasts, Latin urban music fans, and combat sports followers. There is a strong overlap between betting culture and the fanbases of Reggaeton/Trap artists (like Anuel AA) and UFC fighters. A distinct, localized cluster of Balkan influencers suggests a specific regional foothold or origin for the brand.",
+    "vibeDescription": "The BuzzBallz audience is a high-energy, culturally diverse mix of Gen Z and young Millennials. They are deeply embedded in the 'party' lifestyle, over-indexing on convenient, high-ABV drinks like Twisted Tea and BeatBox. Culturally, there is a massive affinity for the modern Regional Mexican music scene (Fuerza Regida, Xavi), alongside mainstream viral internet culture (Kai Cenat, Charli D'Amelio) and the EDM/Rave scene (Subtronics, John Summit). Their fashion sense leans towards streetwear and Y2K revivals (Cookies SF, True Religion, Ed Hardy).",
     "visualAnalysis": {
       "brands": [],
       "aestheticTags": [
-        "Modern",
-        "Bold",
         "Grunge",
-        "Vibrant",
-        "Dark"
+        "Playful",
+        "Modern",
+        "Dark",
+        "Pastel"
       ],
-      "vibeDescription": "A dynamic blend of urban lifestyle and personal expression, characterized by high-contrast imagery and streetwear aesthetics. The collection shifts between dark, edgy tones and vibrant pops of color, reflecting a raw and authentic social media energy.",
+      "vibeDescription": "An eclectic mix of moody, low-light snapshots and cute digital art, creating a chaotic but personal social media aesthetic that blends edgy vibes with wholesome humor.",
       "colorPalette": [
         "#1A1A1A",
-        "#E31C25",
-        "#F1C40F",
-        "#4A6572",
-        "#FFFFFF"
+        "#FFC4D6",
+        "#66FF66",
+        "#D99E6B",
+        "#C23B22"
       ],
       "products": []
     },
     "visualTheme": {
       "primaryColor": "#1A1A1A",
-      "textureStyle": "Modern",
+      "textureStyle": "Grunge",
       "nodeTypeMapping": {}
     }
   }
